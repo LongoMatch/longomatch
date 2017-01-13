@@ -17,19 +17,23 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Drawing;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
+using VAS.Drawing;
 using VAS.UI;
 using VAS.Video.Utils;
 
@@ -59,6 +63,8 @@ namespace LongoMatch.Gui
 			MainWindow = new MainWindow (this);
 			MainWindow.Hide ();
 			Scanner.ScanViews (App.Current.ViewLocator);
+			DrawingInit.ScanViews ();
+			LMDrawingInit.ScanViews ();
 		}
 
 		public override IMainController MainController {
@@ -184,12 +190,20 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public override void OpenProject (Project project, ProjectType projectType,
-										  CaptureSettings props, EventsFilter filter,
-										  out IAnalysisWindowBase analysisWindow)
+		public override void OpenProject (ProjectVM project, CaptureSettings props)
 		{
-			Log.Information ("Open project");
-			analysisWindow = MainWindow.SetProject (project as LMProject, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
+			Log.Information ($"Open project {project.ProjectType}");
+			dynamic settings = new ExpandoObject ();
+			settings.Project = project;
+			settings.CaptureSettings = props;
+
+			if (project.ProjectType == ProjectType.FileProject || project.ProjectType == ProjectType.EditProject) {
+				App.Current.StateController.MoveTo (ProjectAnalysisState.NAME, settings, true);
+			} else if (project.ProjectType == ProjectType.FakeCaptureProject) {
+				App.Current.StateController.MoveTo (FakeLiveProjectAnalysisState.NAME, settings, true);
+			} else {
+				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
+			}
 		}
 
 		public override EndCaptureResponse EndCapture (bool isCapturing)

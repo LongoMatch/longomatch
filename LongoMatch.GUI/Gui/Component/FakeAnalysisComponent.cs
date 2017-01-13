@@ -15,33 +15,31 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.Collections.Generic;
-using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
-using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using LMFilters = LongoMatch.Core.Filters;
+using LKeyAction = LongoMatch.Core.Common.KeyAction;
+using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class FakeAnalysisComponent : Gtk.Bin, IAnalysisWindow
+	[View (FakeLiveProjectAnalysisState.NAME)]
+	public partial class FakeAnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
-		LMProject project;
+		LMProjectAnalysisVM viewModel;
 
 		public FakeAnalysisComponent ()
 		{
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
-			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
-			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
 
 		public void Dispose ()
@@ -52,13 +50,37 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
-			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
-			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
+			codingwidget1.Destroy ();
 		}
 
-		#region IAnalysisWindow implementation
 
-		public event VAS.Core.Handlers.BackEventHandle BackEvent;
+		public IVideoPlayerController Player {
+			get {
+				return null;
+			}
+		}
+
+		public ICapturerBin Capturer {
+			get {
+				return capturerbin;
+			}
+		}
+
+		public LMProjectAnalysisVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				codingwidget1.ViewModel = value;
+			}
+		}
+
+		public string Title {
+			get {
+				return ViewModel?.Project.ShortDescription;
+			}
+		}
 
 		public void OnLoad ()
 		{
@@ -70,53 +92,29 @@ namespace LongoMatch.Gui.Component
 
 		public KeyContext GetKeyContext ()
 		{
-			return new KeyContext ();
+			var keyContext = new KeyContext ();
+			keyContext.AddAction (
+				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
+								() => codingwidget1.ZoomIn ()));
+			keyContext.AddAction (
+				new VKeyAction ("ZOOM_OUT", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomOut],
+								() => codingwidget1.ZoomOut ()));
+			keyContext.AddAction (
+				new VKeyAction ("FIT_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.FitTimeline],
+								() => codingwidget1.FitTimeline ()));
+			keyContext.AddAction (
+				new VKeyAction ("SHOW_DASHBOARD", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
+								() => codingwidget1.ShowDashboard ()));
+			keyContext.AddAction (
+				new VKeyAction ("SHOW_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
+								() => codingwidget1.ShowTimeline ()));
+			return keyContext;
 		}
+
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new System.NotImplementedException ();
-		}
-
-		public string Title {
-			get {
-				return project?.ShortDescription;
-			}
-		}
-
-		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
-		{
-			this.project = (LMProject)project;
-			codingwidget1.SetProject (this.project, projectType, (LMFilters.EventsFilter)filter);
-		}
-
-		public void ReloadProject ()
-		{
-		}
-
-		public void CloseOpenedProject ()
-		{
-		}
-
-		public void UpdateCategories ()
-		{
-			codingwidget1.UpdateCategories ();
-		}
-
-		public void DetachPlayer ()
-		{
-		}
-
-		public void ZoomIn ()
-		{
-		}
-
-		public void ZoomOut ()
-		{
-		}
-
-		public void FitTimeline ()
-		{
+			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
 		public void ShowDashboard ()
@@ -149,28 +147,5 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.TagTeam (team);
 		}
 
-		public IVideoPlayerController Player {
-			get {
-				return null;
-			}
-		}
-
-		public ICapturerBin Capturer {
-			get {
-				return capturerbin;
-			}
-		}
-
-		#endregion
-
-		void HandleEventCreated (EventCreatedEvent e)
-		{
-			codingwidget1.AddPlay ((LMTimelineEvent)e.TimelineEvent);
-		}
-
-		void HandleEventsDeleted (EventsDeletedEvent e)
-		{
-			codingwidget1.DeletePlays (e.TimelineEvents.Cast<LMTimelineEvent> ().ToList ());
-		}
 	}
 }

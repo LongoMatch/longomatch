@@ -39,6 +39,8 @@ using Constants = LongoMatch.Core.Common.Constants;
 namespace LongoMatch.Services
 {
 	[Controller (ProjectAnalysisState.NAME)]
+	[Controller (LiveProjectAnalysisState.NAME)]
+	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	public class ProjectAnalysisController : DisposableBase, IController
 	{
 		LMProjectAnalysisVM viewModel;
@@ -226,9 +228,7 @@ namespace LongoMatch.Services
 					return false;
 				}
 
-			} else if (Project.ProjectType == ProjectType.CaptureProject ||
-					   Project.ProjectType == ProjectType.URICaptureProject ||
-					   Project.ProjectType == ProjectType.FakeCaptureProject) {
+			} else if (Project.IsLive) {
 				try {
 					Capturer.Run (analysisVM.CaptureSettings, Project.FileSet.First ().Model);
 				} catch (Exception ex) {
@@ -363,7 +363,8 @@ namespace LongoMatch.Services
 			}
 			bool closeOk = await CloseOpenedProject (!cancel);
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
-				return await App.Current.StateController.MoveTo (ProjectAnalysisState.NAME, Project);
+				Project.ProjectType = ProjectType.FileProject;
+				App.Current.GUIToolkit.OpenProject (Project, new CaptureSettings ());
 			}
 			return false;
 		}

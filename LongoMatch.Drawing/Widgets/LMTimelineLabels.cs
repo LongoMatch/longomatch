@@ -29,7 +29,7 @@ using VUtils = VAS.Drawing.Utils;
 namespace LongoMatch.Drawing.Widgets
 {
 	[View ("TimelineLabelsView")]
-	public class LMTimelineLabels : TimelineLabels, ICanvasView<AnalysisVM>
+	public class LMTimelineLabels : TimelineLabels, ICanvasView<LMProjectAnalysisVM>
 	{
 		public LMTimelineLabels (IWidget widget) : base (widget)
 		{
@@ -41,9 +41,9 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		public new AnalysisVM ViewModel {
+		public new LMProjectAnalysisVM ViewModel {
 			get {
-				return base.ViewModel as AnalysisVM;
+				return base.ViewModel as LMProjectAnalysisVM;
 			}
 			set {
 				int i = 0;
@@ -55,7 +55,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void SetViewModel (object viewModel)
 		{
-			ViewModel = (AnalysisVM)viewModel;
+			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
 		protected override void FillCanvas (ref int i)

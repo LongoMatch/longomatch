@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 Andoni Morales Alastruey
+//  Copyright (C) 2016 Fluendo S.A.
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using VAS.Core.Interfaces.MVVMC;
-using VAS.Services.State;
 using LongoMatch.Services.ViewModel;
-using System.Threading.Tasks;
-using VAS.Core;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Core.Store;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.ViewModel;
+using VAS.Services;
+using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
-	public class NewProjectState : ScreenState<IViewModel>
+	/// <summary>
+	/// A state for live analysis of projects.
+	/// </summary>
+	public class LiveProjectAnalysisState : ScreenState<LMProjectAnalysisVM>
 	{
-		public const string NAME = "NewProject";
+		public const string NAME = "LiveProjectAnalysis";
 
 		public override string Name {
 			get {
@@ -38,24 +39,19 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			if (data == null) {
-				data = new LMProjectVM ();
-			}
-			ViewModel = data;
+			ViewModel = new LMProjectAnalysisVM ();
+			ViewModel.Project = data.Project;
+			ViewModel.CaptureSettings = data.CaptureSettings;
+			ViewModel.VideoPlayer = new VideoPlayerVM ();
+			// FIXME: use this hack until the capturer uses a controller
+			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
 		}
 
-		public override async Task<bool> LoadState (dynamic data)
+		protected override void CreateControllers (dynamic data)
 		{
-			Initialize (data);
-			if (!await App.Current.Device.CheckExternalStoragePermission ()) {
-				var warningMessage = string.Format (Catalog.GetString ("{0} can't create new projects without permissions"),
-												   App.Current.SoftwareName);
-				App.Current.Dialogs.WarningMessage (warningMessage);
-				return false;
-			}
-			await App.Current.Device.CheckCapturePermissions ();
-			return true;
+			var playerController = new VideoPlayerController ();
+			playerController.SetViewModel (ViewModel.VideoPlayer);
+			Controllers.Add (playerController);
 		}
 	}
 }
-

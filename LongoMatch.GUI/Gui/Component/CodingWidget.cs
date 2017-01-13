@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,36 +26,36 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class CodingWidget : Gtk.Bin
+	public partial class CodingWidget : Gtk.Bin, IView<LMProjectAnalysisVM>
 	{
 		TeamTagger teamtagger;
-		ProjectType projectType;
-		LMProject project;
 		List<LMPlayer> selectedPlayers;
 		List<Window> activeWindows;
 		Helpers.IconNotebookHelper notebookHelper;
 		bool sizeAllocated;
-		IVideoPlayerController player;
+		LMProjectAnalysisVM viewModel;
 
 		public CodingWidget ()
 		{
 			this.Build ();
-			
+
 			LoadIcons ();
-			
+
 			notebook.ShowBorder = false;
 			notebook.Group = this.Handle;
 			notebook.SwitchPage += HandleSwitchPage;
@@ -74,21 +75,20 @@ namespace LongoMatch.Gui.Component
 			teamsdrawingarea.WidthRequest = 300;
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
-			
+
 			App.Current.EventsBroker.Subscribe<PlayerTickEvent> (HandleTick);
 			App.Current.EventsBroker.Subscribe<CapturerTickEvent> (HandleCapturerTick);
-			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			App.Current.EventsBroker.Subscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
 			App.Current.EventsBroker.Subscribe<EventEditedEvent> (HandleEventEdited);
 
 			Helpers.Misc.SetFocus (this, false);
-			
+
 			buttonswidget.Mode = DashboardMode.Code;
 			buttonswidget.FitMode = FitMode.Fit;
 			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
-			
+
 			dashboardhpaned.SizeAllocated += HandleSizeAllocated;
 			TagPositions = true;
 		}
@@ -105,7 +105,6 @@ namespace LongoMatch.Gui.Component
 			}
 			App.Current.EventsBroker.Unsubscribe<PlayerTickEvent> (HandleTick);
 			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
-			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Unsubscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
 			App.Current.EventsBroker.Unsubscribe<EventEditedEvent> (HandleEventEdited);
 			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
@@ -138,9 +137,9 @@ namespace LongoMatch.Gui.Component
 
 		public void ShowTimeline ()
 		{
-			if (projectType == ProjectType.FileProject) {
+			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				SelectPage (timeline);
-			} 
+			}
 		}
 
 		public void ShowZonalTags ()
@@ -163,57 +162,19 @@ namespace LongoMatch.Gui.Component
 			teamtagger.Select (team);
 		}
 
-		public IVideoPlayerController Player {
+		public LMProjectAnalysisVM ViewModel {
 			get {
-				return player;
+				return viewModel;
 			}
 			set {
-				player = value;
-				timeline.Player = player;
+				viewModel = value;
+				LoadProject ();
 			}
 		}
 
-		public void SetProject (LMProject project, ProjectType projectType, EventsFilter filter)
+		public void SetViewModel (object viewModel)
 		{
-			this.projectType = projectType;
-			this.project = project;
-			buttonswidget.Visible = true;
-			if (project != null) {
-				buttonswidget.Project = project;
-			}
-			buttonswidget.Mode = DashboardMode.Code;
-			teamtagger.Project = project;
-			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-				project.Dashboard.FieldBackground);
-			teamtagger.CurrentTime = new Time (0);
-			if (projectType == ProjectType.FileProject) {
-				timeline.SetProject (project, filter);
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				eventslistwidget.SetProject (project, filter);
-			}
-			eventslistwidget.Visible = projectType == ProjectType.FakeCaptureProject;
-			timeline.Visible = projectType == ProjectType.FileProject;
-			playspositionviewer1.LoadProject (project, filter);
-		}
-
-		public void AddPlay (LMTimelineEvent play)
-		{
-			if (projectType == ProjectType.FileProject) {
-				timeline.AddPlay (play);
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				eventslistwidget.AddPlay (play);
-			}
-			playspositionviewer1.AddPlay (play);
-		}
-
-		public void DeletePlays (List<LMTimelineEvent> plays)
-		{
-			if (projectType == ProjectType.FileProject) {
-				timeline.RemovePlays (plays.Cast<TimelineEvent> ().ToList ());
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				eventslistwidget.RemovePlays (plays);
-			}
-			playspositionviewer1.RemovePlays (plays);
+			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
 		public void UpdateCategories ()
@@ -234,6 +195,30 @@ namespace LongoMatch.Gui.Component
 				Catalog.GetString ("Events list"));
 
 			notebookHelper.UpdateTabs ();
+		}
+
+		void LoadProject ()
+		{
+			buttonswidget.Visible = true;
+			// FIXME: dashboard is not ported yet to MVVM
+			buttonswidget.Project = ViewModel.Project.Model;
+			buttonswidget.Mode = DashboardMode.Code;
+			// FIXME: team tagger is not ported yet to MVVM
+			teamtagger.Project = ViewModel.Project.Model;
+			teamtagger.LoadTeams (ViewModel.Project.Model.LocalTeamTemplate,
+								  ViewModel.Project.Model.VisitorTeamTemplate,
+								  ViewModel.Project.Model.Dashboard.FieldBackground);
+			teamtagger.CurrentTime = new Time (0);
+
+			eventslistwidget.Visible = ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject;
+			timeline.Visible = ViewModel.Project.ProjectType == ProjectType.FileProject;
+
+			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
+				timeline.ViewModel = ViewModel;
+			} else if (ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject) {
+				//eventslistwidget.SetViewModel (ViewModel);
+			}
+			playspositionviewer1.ViewModel = ViewModel.Project;
 		}
 
 		void SelectPage (Widget widget)
@@ -300,15 +285,9 @@ namespace LongoMatch.Gui.Component
 			notebook.SetTabDetachable (notebook.GetNthPage ((int)args.PageNum), true);
 		}
 
-		void HandlePlayLoaded (EventLoadedEvent e)
-		{
-			timeline.LoadPlay (e.TimelineEvent as LMTimelineEvent);
-		}
-
 		void HandleCapturerTick (CapturerTickEvent e)
 		{
-			if (projectType != ProjectType.FileProject) {
-				timeline.CurrentTime = e.Time;
+			if (ViewModel.Project.ProjectType != ProjectType.FileProject) {
 				buttonswidget.CurrentTime = e.Time;
 				teamtagger.CurrentTime = e.Time;
 			}
@@ -316,7 +295,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTick (PlayerTickEvent e)
 		{
-			if (projectType == ProjectType.FileProject) {
+			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.CurrentTime = e.Time;
 				buttonswidget.CurrentTime = e.Time;
 				teamtagger.CurrentTime = e.Time;
@@ -329,27 +308,19 @@ namespace LongoMatch.Gui.Component
 		}
 
 		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
-		                        Time start, Time stop, Time eventTime, DashboardButton btn)
+								Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
-			LMTimelineEvent play = project.AddEvent (eventType, start, stop, eventTime,
-				                               null, false) as LMTimelineEvent;
-			play.Teams = new ObservableCollection<Team> (teamtagger.SelectedTeams);
-			if (selectedPlayers != null) {
-				play.Players = new ObservableCollection<Player> (selectedPlayers);
-			} else {
-				play.Players = new ObservableCollection<Player> (); 
-			}
-			if (tags != null) {
-				play.Tags = new ObservableCollection <Tag> (tags);
-			} else {
-				play.Tags = new ObservableCollection<Tag> ();
-			}
+			LMTimelineEvent play = ViewModel.Project.Model.AddEvent (eventType, start, stop, eventTime,
+																	 null, false) as LMTimelineEvent;
+			play.Teams.Replace (teamtagger.SelectedTeams);
+			play.Players.Replace (selectedPlayers);
+			play.Tags.Replace (tags);
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
 			App.Current.EventsBroker.Publish<NewDashboardEvent> (
 				new NewDashboardEvent {
 					TimelineEvent = play,
-					DashboardButton = btn, 
+					DashboardButton = btn,
 					Edit = true,
 					DashboardButtons = null
 				}
@@ -357,7 +328,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-		                                     SubstitutionReason reason, Time time)
+											 SubstitutionReason reason, Time time)
 		{
 			App.Current.EventsBroker.Publish<PlayerSubstitutionEvent> (
 				new PlayerSubstitutionEvent {
@@ -376,13 +347,13 @@ namespace LongoMatch.Gui.Component
 				dashboardhpaned.Position = dashboardhpaned.MaxPosition / 2;
 				sizeAllocated = true;
 			}
-			
 		}
 
 		void HandleTimeNodeStoppedEvent (TimeNodeStoppedEvent e)
 		{
-			if (e.TimerButton is TimerButton)
-				timeline.AddTimerNode (((TimerButton)e.TimerButton).Timer, e.TimeNode);
+			if (e.TimerButton is TimerButton) {
+				ViewModel.Project.Timers.Model.Add (e.TimerButton.Timer);
+			}
 		}
 
 		void HandleEventEdited (EventEditedEvent e)

@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Queries.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IAnalysisWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProjectsImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\EventTypeStats.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\PercentualStat.cs" />

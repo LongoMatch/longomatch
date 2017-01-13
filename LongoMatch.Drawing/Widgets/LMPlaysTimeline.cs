@@ -30,7 +30,7 @@ namespace LongoMatch.Drawing.Widgets
 	/// A timeline that renders <see cref="TimelineEvent"/> objects.
 	/// </summary>
 	[View ("PlaysTimelineView")]
-	public class LMPlaysTimeline : PlaysTimeline, ICanvasView<AnalysisVM>
+	public class LMPlaysTimeline : PlaysTimeline, ICanvasView<LMProjectAnalysisVM>
 	{
 		public LMPlaysTimeline (IWidget widget) : base (widget)
 		{
@@ -40,9 +40,9 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		public new AnalysisVM ViewModel {
+		public new LMProjectAnalysisVM ViewModel {
 			get {
-				return base.ViewModel as AnalysisVM;
+				return base.ViewModel as LMProjectAnalysisVM;
 			}
 			set {
 				base.ViewModel = value;
@@ -54,7 +54,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void SetViewModel (object viewModel)
 		{
-			ViewModel = (AnalysisVM)viewModel;
+			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
 		protected override void FillCanvas (ref int line)

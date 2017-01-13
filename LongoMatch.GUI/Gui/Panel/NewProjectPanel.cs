@@ -94,8 +94,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			OnUnload ();
 
-			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
-
 			teamtagger?.Dispose ();
 			projectperiods1?.Destroy ();
 
@@ -290,7 +288,6 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
-			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuit);
 		}
 
 		void FillProjectDetails ()
@@ -448,6 +445,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.FileSet = mediafilesetselection1.FileSet;
 			project.UpdateEventTypesAndTimers ();
 			project.ConsolidateDescription ();
+			project.ProjectType = projectType;
 		}
 
 		bool CreateProject ()
@@ -485,6 +483,7 @@ namespace LongoMatch.Gui.Panel
 			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
+			ViewModel.Model = project;
 
 
 			encSettings = new EncodingSettings ();
@@ -545,20 +544,12 @@ namespace LongoMatch.Gui.Panel
 
 		void StartProject ()
 		{
-			if (CreateProject ()) {
-				if (projectType == ProjectType.EditProject) {
-					projectType = ProjectType.FileProject;
-				} else {
-					project.CreateLineupEvent ();
-				}
-				App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
-					new OpenNewProjectEvent {
-						Project = project,
-						ProjectType = projectType,
-						CaptureSettings = captureSettings
-					}
-				);
+			if (projectType == ProjectType.EditProject) {
+				projectType = ProjectType.FileProject;
+			} else {
+				project.CreateLineupEvent ();
 			}
+			App.Current.GUIToolkit.OpenProject (ViewModel, captureSettings);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
@@ -609,13 +600,6 @@ namespace LongoMatch.Gui.Panel
 			HandleNextClicked (this, e);
 		}
 
-		void HandleQuit (QuitApplicationEvent e)
-		{
-			// When the application is quitting while we are on the new project panel we need to properly destroy widgets.
-			// To do that we go back to the welcome panel, a little bit like the analysis window closes the opened project first.
-			App.Current.StateController.MoveBack ();
-		}
-
 		void HandleBackClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == PROJECT_PERIODS) {
@@ -641,17 +625,8 @@ namespace LongoMatch.Gui.Panel
 				if (!CreateProject ()) {
 					return;
 				}
-				if (projectType == ProjectType.CaptureProject ||
-					projectType == ProjectType.FakeCaptureProject ||
-					projectType == ProjectType.URICaptureProject) {
-					project.CreateLineupEvent ();
-					App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
-						new OpenNewProjectEvent {
-							Project = project,
-							ProjectType = projectType,
-							CaptureSettings = captureSettings
-						}
-					);
+				if (ViewModel.IsLive) {
+					StartProject ();
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {

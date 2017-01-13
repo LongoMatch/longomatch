@@ -215,6 +215,7 @@
 		<Reference Include="System.Drawing" />
 		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
 		<Reference Include="Mono.Posix" />
+		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">

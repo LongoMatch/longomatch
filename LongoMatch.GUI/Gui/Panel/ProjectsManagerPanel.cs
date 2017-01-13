@@ -33,6 +33,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
@@ -104,6 +105,7 @@ namespace LongoMatch.Gui.Panel
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
+			projectperiods1.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -271,18 +273,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = project.ID,
-						Project = project
-					}
-				);
-				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
-				// player controller that is inside that view. becuase the open project is not
-				// used with the new Navigation, we should then replace this open method to a 
-				// new navigation state and then in the unloads methods of Views we should
-				// Unsuscribe to events.
-				projectperiods1.Destroy ();
+				App.Current.GUIToolkit.OpenProject (new ProjectVM { Model = project });
 			}
 		}
 
@@ -333,10 +324,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				string filename = App.Current.Dialogs.SaveFile (
-					                  Catalog.GetString ("Export project"),
-					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					                  App.Current.HomeDir, Constants.PROJECT_NAME,
-					                  new string [] { Constants.PROJECT_EXT });
+									  Catalog.GetString ("Export project"),
+									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
+									  App.Current.HomeDir, Constants.PROJECT_NAME,
+									  new string [] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 					Serializer.Instance.Save (loadedProject, filename);
@@ -363,7 +354,7 @@ namespace LongoMatch.Gui.Panel
 			deletedProjects = new List<LMProject> ();
 			foreach (LMProject selectedProject in selectedProjects) {
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-				             selectedProject.Description.Title;
+							 selectedProject.Description.Title;
 				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
@@ -391,18 +382,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = loadedProject.ID,
-						Project = loadedProject
-					}
-				);
-				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
-				// player controller that is inside that view. becuase the open project is not
-				// used with the new Navigation, we should then replace this open method to a 
-				// new navigation state and then in the unloads methods of Views we should
-				// Unsuscribe to events.
-				projectperiods1.Destroy ();
+				App.Current.GUIToolkit.OpenProject (new ProjectVM { Model = loadedProject });
 			}
 		}
 	}
