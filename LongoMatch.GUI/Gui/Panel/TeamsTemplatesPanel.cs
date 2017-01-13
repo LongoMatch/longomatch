@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof (LMTeamVM));
+			teamsStore = new ListStore (typeof (LMTeamVM), typeof (bool));
 
 			var cell = new CellRendererText ();
 			cell.Editable = true;
