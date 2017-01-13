@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		void DisableDragInto (TreePath path, DragContext context, uint time, TreeViewDropPosition pos)
+		void DisableDragInto (TreePath path, Gdk.DragContext context, uint time, TreeViewDropPosition pos)
 		{
 			if (pos == TreeViewDropPosition.IntoOrAfter) {
 				pos = TreeViewDropPosition.After;
@@ -236,7 +236,7 @@ namespace LongoMatch.Gui.Component
 			Gdk.Drag.Status (context, context.SuggestedAction, time);
 		}
 
-		protected override bool OnDragDrop (DragContext context, int x, int y, uint time)
+		protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time)
 		{
 			TreePath path;
 			TreeViewDropPosition pos;
@@ -258,7 +258,7 @@ namespace LongoMatch.Gui.Component
 			return true;
 		}
 
-		protected override bool OnDragMotion (DragContext context, int x, int y, uint time)
+		protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
 		{
 			TreePath path;
 			TreeViewDropPosition pos;
@@ -275,7 +275,7 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		protected override void OnDragBegin (DragContext context)
+		protected override void OnDragBegin (Gdk.DragContext context)
 		{
 			TreePath path;
 			TreeViewColumn col;

@@ -42,10 +42,10 @@ namespace LongoMatch.Gui.Component
 		public PlaysSelectionWidget ()
 		{
 			this.Build ();
-			
+
 			LoadIcons ();
 			AddFilters ();
-			Helpers.Misc.SetFocus (this, false, typeof(TreeView));
+			Helpers.Misc.SetFocus (this, false, typeof (TreeView));
 			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground));
 			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackgroundLight));
 			notebook.Page = 0;
@@ -126,12 +126,12 @@ namespace LongoMatch.Gui.Component
 			Label l;
 			ScrolledWindow s1 = new ScrolledWindow ();
 			ScrolledWindow s2 = new ScrolledWindow ();
-			
+
 			playersfilter = new PlayersFilterTreeView ();
 			playersfilter.Name = "backgroundtreeviewplayers";
 			categoriesfilter = new CategoriesFilterTreeView ();
 			categoriesfilter.Name = "backgroundtreeviewcategories";
-			
+
 			s1.Add (categoriesfilter);
 			s2.Add (playersfilter);
 			l = new Gtk.Label (Catalog.GetString ("Categories filter"));

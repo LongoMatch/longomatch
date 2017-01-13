@@ -204,12 +204,12 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
-			play.Players = new ObservableCollection<Player> (players);
+			play.Players.Replace (players);
 		}
 
 		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
 		{
-			play.Teams = new ObservableCollection<Team> (teams);
+			play.Teams.Replace (teams);
 		}
 	}
 }

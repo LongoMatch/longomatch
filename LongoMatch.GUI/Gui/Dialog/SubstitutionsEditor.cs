@@ -16,7 +16,6 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -117,7 +116,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		void LoadTeams (LMProject project, List<LMPlayer> homeFieldPlayers, List<LMPlayer> homeBenchPlayers,
-		                List<LMPlayer> awayFieldPlayers, List<LMPlayer> awayBenchPlayers)
+						List<LMPlayer> awayFieldPlayers, List<LMPlayer> awayBenchPlayers)
 		{
 			List<LMPlayer> homeTeamPlayers, awayTeamPlayers;
 
@@ -128,8 +127,8 @@ namespace LongoMatch.Gui.Dialog
 					ActiveColor = project.LocalTeamTemplate.ActiveColor,
 					ID = project.LocalTeamTemplate.ID,
 					Formation = project.LocalTeamTemplate.Formation,
-					List = new ObservableCollection<Player> (homeTeamPlayers)
 				};
+				homeTeam.List.Replace (homeTeamPlayers);
 			}
 
 			if (awayFieldPlayers != null) {
@@ -139,8 +138,8 @@ namespace LongoMatch.Gui.Dialog
 					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
 					Formation = project.VisitorTeamTemplate.Formation,
-					List = new ObservableCollection<Player> (awayTeamPlayers)
 				};
+				awayTeam.List.Replace (awayTeamPlayers);
 			}
 
 			tagger.LoadTeams (homeTeam, awayTeam, project.Dashboard.FieldBackground);

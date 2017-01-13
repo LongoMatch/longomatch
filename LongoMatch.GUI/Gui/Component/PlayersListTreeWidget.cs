@@ -143,7 +143,7 @@ namespace LongoMatch.Gui.Component
 			
 			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
 				new RenderPlaylistEvent {
-					Playlist = playlist					
+					Playlist = playlist
 				}
 			);
 		}
