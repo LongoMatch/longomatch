@@ -273,7 +273,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				App.Current.GUIToolkit.OpenProject (new ProjectVM { Model = project });
+				LMStateHelper.OpenProject (new ProjectVM { Model = project });
 			}
 		}
 
@@ -382,7 +382,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				App.Current.GUIToolkit.OpenProject (new ProjectVM { Model = loadedProject });
+				LMStateHelper.OpenProject (new ProjectVM { Model = loadedProject });
 			}
 		}
 	}

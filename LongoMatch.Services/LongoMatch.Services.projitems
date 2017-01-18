@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMEventsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMPlaylistController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\ProjectAnalysisController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\LMStateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

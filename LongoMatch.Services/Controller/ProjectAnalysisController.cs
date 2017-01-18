@@ -364,7 +364,7 @@ namespace LongoMatch.Services
 			bool closeOk = await CloseOpenedProject (!cancel);
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				Project.ProjectType = ProjectType.FileProject;
-				App.Current.GUIToolkit.OpenProject (Project, new CaptureSettings ());
+				LMStateHelper.OpenProject (Project);
 			}
 			return false;
 		}

@@ -549,7 +549,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				project.CreateLineupEvent ();
 			}
-			App.Current.GUIToolkit.OpenProject (ViewModel, captureSettings);
+			LMStateHelper.OpenProject (ViewModel, captureSettings);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)

@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleProjectSelected (LMProject project)
 		{
 			project.ProjectType = ProjectType.FileProject;
-			App.Current.GUIToolkit.OpenProject (new LMProjectVM { Model = project });
+			LMStateHelper.OpenProject (new LMProjectVM { Model = project });
 		}
 	}
 }

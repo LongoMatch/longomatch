@@ -190,22 +190,6 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public override void OpenProject (ProjectVM project, CaptureSettings props)
-		{
-			Log.Information ($"Open project {project.ProjectType}");
-			dynamic settings = new ExpandoObject ();
-			settings.Project = project;
-			settings.CaptureSettings = props;
-
-			if (project.ProjectType == ProjectType.FileProject || project.ProjectType == ProjectType.EditProject) {
-				App.Current.StateController.MoveTo (ProjectAnalysisState.NAME, settings, true);
-			} else if (project.ProjectType == ProjectType.FakeCaptureProject) {
-				App.Current.StateController.MoveTo (FakeLiveProjectAnalysisState.NAME, settings, true);
-			} else {
-				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
-			}
-		}
-
 		public override EndCaptureResponse EndCapture (bool isCapturing)
 		{
 			int res;
