@@ -19,19 +19,20 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class EventsListWidget : Gtk.Bin
+	public partial class EventsListWidget : Gtk.Bin, IView<LMProjectVM>
 	{
-		LMProject project;
+		LMTimelineEventsTreeView playsList;
+		LMProjectVM viewModel;
 		Helpers.IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
@@ -42,6 +43,10 @@ namespace LongoMatch.Gui.Component
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			App.Current.EventsBroker.Subscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
+
+			playsList = new LMTimelineEventsTreeView ();
+			playsList.Show ();
+			eventsScrolledWindow.Add (playsList);
 		}
 
 		protected override void OnDestroyed ()
@@ -54,51 +59,57 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (LMProject project, EventsFilter filter)
+		public LMProjectVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				playsList.ViewModel = viewModel.Timeline;
+				playsList.Project = viewModel;
+				visitorPlayersList.Project = viewModel.Model;
+				localPlayersList.Project = viewModel.Model;
+				LoadIcons ();
+				UpdateTeamsModels (new TeamTagsChangedEvent ());
+			}
+		}
+
+		public void SetViewModel (object viewModel)
 		{
-			this.project = project;
-			playsList.Filter = filter;
-			localPlayersList.Filter = filter;
-			visitorPlayersList.Filter = filter;
-			playsList.Project = project;
-			visitorPlayersList.Project = project;
-			localPlayersList.Project = project;
-			LoadIcons ();
-			UpdateTeamsModels (new TeamTagsChangedEvent ());
+			ViewModel = viewModel as LMProjectVM;
 		}
 
 		public void AddPlay (LMTimelineEvent play)
 		{
-			playsList.AddPlay (play);
 			localPlayersList.AddEvent (play);
 			visitorPlayersList.AddEvent (play);
 		}
 
 		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
-			playsList.RemovePlays (plays);
 			localPlayersList.RemoveEvents (plays);
 			visitorPlayersList.RemoveEvents (plays);
 		}
 
 		void UpdateTeamsModels (TeamTagsChangedEvent e)
 		{
-			if (project == null)
+			if (viewModel == null)
 				return;
 
-			var timeline = project.Timeline.OfType<LMTimelineEvent> ();
-			localPlayersList.SetTeam (project.LocalTeamTemplate, timeline);
-			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, timeline);
+			var timeline = viewModel.Model.Timeline.OfType<LMTimelineEvent> ();
+			localPlayersList.SetTeam (ViewModel.Model.LocalTeamTemplate, timeline);
+			visitorPlayersList.SetTeam (ViewModel.Model.VisitorTeamTemplate, timeline);
 		}
 
 		void LoadIcons ()
 		{
+			LMProject project = ViewModel.Model;
 			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
 			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
 				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                StyleConf.NotebookTabIconSize).Value;
+									StyleConf.NotebookTabIconSize).Value;
 				notebookHelper.SetTabIcon (localPlayersList, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
 				notebookHelper.SetTabIcon (localPlayersList, "longomatch-default-shield", "longomatch-default-shield",
@@ -107,7 +118,7 @@ namespace LongoMatch.Gui.Component
 
 			if (project.VisitorTeamTemplate.Shield != null) {
 				var visitorIcon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                  StyleConf.NotebookTabIconSize).Value;
+									  StyleConf.NotebookTabIconSize).Value;
 				notebookHelper.SetTabIcon (visitorPlayersList, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
 				notebookHelper.SetTabIcon (visitorPlayersList, "longomatch-default-shield", "longomatch-default-shield",

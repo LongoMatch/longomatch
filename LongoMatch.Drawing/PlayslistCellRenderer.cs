@@ -24,12 +24,13 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Drawing
 {
 	public class PlayslistCellRenderer
 	{
-	
+
 		public static ISurface EyeSurface = null;
 		public static ISurface ArrowRight = null;
 		public static ISurface ArrowDown = null;
@@ -286,6 +287,17 @@ namespace LongoMatch.Drawing
 		public static void Render (object item, LMProject project, int count, bool isExpanded, IDrawingToolkit tk,
 		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
+			// HACK: to be remove when all treeviews are migrated to user VM's
+			if (item is TimelineEventVM) {
+				item = ((TimelineEventVM)item).Model;
+			} else if (item is EventTypeTimelineVM) {
+				item = ((EventTypeTimelineVM)item).Model;
+			} else if (item is PlaylistElementVM) {
+				item = ((PlaylistElementVM)item).Model;
+			} else if (item is PlaylistVM) {
+				item = ((PlaylistVM)item).Model;
+			}
+
 			if (item is EventType) {
 				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
 					context, backgroundArea, cellArea);

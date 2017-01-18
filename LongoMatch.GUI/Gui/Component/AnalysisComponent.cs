@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				playercapturer.ViewModel = viewModel.VideoPlayer;
 				codingwidget.ViewModel = viewModel;
-				//playsSelection.ViewModel = viewModel;
+				playsSelection.ViewModel = viewModel.Project;
 				if (viewModel.Project.Model.ProjectType == ProjectType.FileProject) {
 					playercapturer.Mode = PlayerViewOperationMode.Analysis;
 				} else {

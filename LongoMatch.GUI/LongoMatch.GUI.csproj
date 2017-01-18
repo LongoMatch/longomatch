@@ -173,6 +173,9 @@
 		<Compile Include="Gui\Menu\EventTypeMenu.cs" />
 		<Compile Include="Gui\Menu\PlayerMenu.cs" />
 		<Compile Include="Gui\Dialog\SportDrawingTool.cs" />
+		<Compile Include="Gui\TreeView\LMTimelineEventsTreeView.cs" />
+		<Compile Include="Gui\TreeView\LMPlaylistTreeView.cs" />
+		<Compile Include="Gui\TreeView\EventsFilterTreeView.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">

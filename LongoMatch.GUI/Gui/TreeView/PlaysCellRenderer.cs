@@ -17,7 +17,6 @@
 //
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
 using VAS.Core.Common;
@@ -27,7 +26,7 @@ using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
-	public class PlaysCellRenderer: CellRenderer
+	public class PlaysCellRenderer : CellRenderer
 	{
 
 		public object Item {
@@ -61,15 +60,15 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
-		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
+										Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
 			CellState state = (CellState)flags;
 
 			using (IContext context = new CairoContext (window)) {
 				Area bkg = new Area (new Point (backgroundArea.X, backgroundArea.Y),
-					           backgroundArea.Width, backgroundArea.Height);
+							   backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
-					            cellArea.Width, cellArea.Height);
+								cellArea.Width, cellArea.Height);
 				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, App.Current.DrawingToolkit,
 					context, bkg, cell, state);
 			}

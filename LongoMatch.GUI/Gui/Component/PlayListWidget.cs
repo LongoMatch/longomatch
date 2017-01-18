@@ -17,30 +17,30 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using System.Linq;
 using Gtk;
-using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Interfaces;
-using VAS.Core.Store.Playlists;
-using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.ViewModel;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class PlayListWidget : Gtk.Bin
+	public partial class PlayListWidget : Gtk.Bin, IView<PlaylistCollectionVM>
 	{
-		LMProject project;
+		PlaylistCollectionVM viewModel;
+		LMPlaylistTreeView playlistTreeView;
 
 		public PlayListWidget ()
 		{
 			this.Build ();
-			playlisttreeview1.Reorderable = true;
-			playlisttreeview1.RowActivated += HandleRowActivated;
+
+			playlistTreeView = new LMPlaylistTreeView ();
+			playlistTreeView.Show ();
+			scrolledwindow1.Add (playlistTreeView);
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
@@ -50,60 +50,28 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			App.Current.EventsBroker.Subscribe<PlaylistElementLoadedEvent> (HandlePlaylistElementLoaded);
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
-		public LMProject Project {
-			set {
-				project = value;
-				playlisttreeview1.Project = value;
-			}
+		public PlaylistCollectionVM ViewModel {
 			get {
-				return project;
+				return viewModel;
 			}
-		}
-
-		void HandlePlaylistElementLoaded (PlaylistElementLoadedEvent e)
-		{
-			playlisttreeview1.QueueDraw ();
-		}
-
-		void HandleRowActivated (object o, RowActivatedArgs args)
-		{
-			TreeIter iter;
-			Playlist playlist;
-			IPlaylistElement element;
-				
-			playlisttreeview1.Model.GetIterFromString (out iter, args.Path.ToString ());
-			var el = playlisttreeview1.Model.GetValue (iter, 0);
-			if (el is Playlist) {
-				playlist = el as Playlist;
-				element = playlist.Elements.FirstOrDefault ();
-			} else {
-				TreeIter parent;
-				playlisttreeview1.Model.IterParent (out parent, iter);
-				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
-				element = el as IPlaylistElement;
-			}
-			App.Current.EventsBroker.Publish<LoadPlaylistElementEvent> (
-				new LoadPlaylistElementEvent {
-					Playlist = playlist,
-					Element = element,
-					Playing = true
+			set {
+				viewModel = value;
+				playlistTreeView.ViewModel = value;
+				if (viewModel != null) {
+					// FIXME: bind with command when it exists
+					//newbutton.Bind (viewModel.NewPlaylistCommand);
 				}
-			);
+			}
 		}
 
-		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
+		public void SetViewModel (object viewModel)
 		{
-			App.Current.EventsBroker.Publish<NewPlaylistEvent> (
-				new NewPlaylistEvent { 
-					Project = project 
-				} 
-			);
+			ViewModel = (PlaylistCollectionVM)viewModel;
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
@@ -111,13 +79,10 @@ namespace LongoMatch.Gui.Component
 			Menu menu;
 
 			menu = new Menu ();
-			foreach (Playlist playlist in Project.Playlists) {
+			foreach (PlaylistVM playlist in ViewModel.ViewModels) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
-					new RenderPlaylistEvent {
-						Playlist = playlist
-					}
-				);
+				plmenu.Activated += (s, e) => App.Current.EventsBroker.Publish (
+					new RenderPlaylistEvent { Playlist = playlist.Model });
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();
