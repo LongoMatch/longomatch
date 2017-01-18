@@ -19,6 +19,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
@@ -31,14 +32,14 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Services.Controller;
 using KeyAction = VAS.Core.Hotkeys.KeyAction;
 using LMKeyAction = LongoMatch.Core.Common.KeyAction;
-using System.Linq;
 
 namespace LongoMatch.Services
 {
 	[Controller (ProjectAnalysisState.NAME)]
-	public class EventsController : DisposableBase, IController
+	public class LMEventsController : EventsController
 	{
 		TimelineEvent loadedPlay;
 		IVideoPlayerController player;
@@ -54,11 +55,12 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void Start ()
+		public override void Start ()
 		{
 			if (started) {
 				throw new InvalidOperationException ("Controller is already started");
 			}
+			base.Start ();
 			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
@@ -66,11 +68,12 @@ namespace LongoMatch.Services
 			started = true;
 		}
 
-		public void Stop ()
+		public override void Stop ()
 		{
 			if (!started) {
 				throw new InvalidOperationException ("Controller is already stoped");
 			}
+			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
@@ -78,9 +81,10 @@ namespace LongoMatch.Services
 			started = false;
 		}
 
-		public void SetViewModel (IViewModel viewModel)
+		public override void SetViewModel (IViewModel viewModel)
 		{
 			this.viewModel = (LMProjectAnalysisVM)(viewModel as dynamic);
+			base.SetViewModel (viewModel);
 		}
 
 		public IEnumerable<KeyAction> GetDefaultKeyActions ()

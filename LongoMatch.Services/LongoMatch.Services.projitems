@@ -37,7 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\ProjectAnalysisState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LiveProjectAnalysisState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\FakeLiveAnalysisState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controller\EventsController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\LMEventsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMPlaylistController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\ProjectAnalysisController.cs" />
   </ItemGroup>
