@@ -5,127 +5,127 @@ namespace LongoMatch.Gui.Component
 	public partial class TeamTemplateEditor
 	{
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.HBox hbox4;
-		
+
 		private global::Gtk.Frame teamframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment3;
-		
+
 		private global::Gtk.VBox vbox5;
-		
+
 		private global::Gtk.HBox hbox2;
-		
+
 		private global::Gtk.Frame shieldframe;
-		
+
 		private global::Gtk.Alignment shieldalignment;
-		
+
 		private global::Gtk.EventBox shieldeventbox;
-		
+
 		private global::Gtk.VBox shieldvbox;
-		
+
 		private global::Gtk.Image shieldimage;
-		
+
 		private global::Gtk.Label teamshieldlabel1;
-		
+
 		private global::Gtk.Label teamshieldlabel2;
-		
+
 		private global::Gtk.Table teamtable;
-		
+
 		private global::Gtk.Label GtkLabel4;
-		
+
 		private global::Gtk.HBox hbox5;
-		
+
 		private global::Gtk.Entry tacticsentry;
-		
+
 		private global::Gtk.Button applybutton;
-		
+
 		private global::Gtk.HBox hbox6;
-		
+
 		private global::Gtk.ColorButton colorbutton1;
-		
+
 		private global::Gtk.ColorButton colorbutton2;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.Label label4;
-		
+
 		private global::Gtk.Entry teamnameentry;
-		
+
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		private global::Gtk.Alignment alignment2;
-		
+
 		private global::Gtk.Frame playerframe;
-		
+
 		private global::Gtk.Alignment playerpropertyalignment;
-		
+
 		private global::Gtk.HBox playerpropertyhbox;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.Frame playerimageframe;
-		
+
 		private global::Gtk.Alignment playerimagealignment;
-		
+
 		private global::Gtk.EventBox playereventbox;
-		
+
 		private global::Gtk.VBox playervbox;
-		
+
 		private global::Gtk.Image playerimage;
-		
+
 		private global::Gtk.Label playerimagelabel1;
-		
+
 		private global::Gtk.Label playerimagelabel2;
-		
+
 		private global::Gtk.Table table1;
 
 		private global::VAS.UI.UI.Component.DatePicker bdaydatepicker;
 
 		private global::Gtk.SpinButton heightspinbutton;
-		
+
 		private global::Gtk.Label label11;
-		
+
 		private global::Gtk.Label label12;
-		
+
 		private global::Gtk.Label label13;
-		
+
 		private global::Gtk.Label label14;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::Gtk.Label label6;
-		
+
 		private global::Gtk.Label label7;
-		
+
 		private global::Gtk.Label label8;
-		
+
 		private global::Gtk.Entry lastnameentry;
-		
+
 		private global::Gtk.Entry mailentry;
-		
+
 		private global::Gtk.Label maillabel;
-		
+
 		private global::Gtk.Entry nameentry;
-		
+
 		private global::Gtk.Entry nationalityentry;
-		
+
 		private global::Gtk.Entry nicknameentry;
-		
+
 		private global::Gtk.SpinButton numberspinbutton;
-		
+
 		private global::Gtk.Entry positionentry;
-		
+
 		private global::Gtk.SpinButton weightspinbutton;
-		
+
 		private global::Gtk.HButtonBox hbuttonbox2;
-		
+
 		private global::Gtk.Button savebutton;
-		
+
 		private global::Gtk.Button newplayerbutton;
-		
+
 		private global::Gtk.Button deletebutton;
 
 		protected virtual void Build ()
@@ -429,7 +429,7 @@ namespace LongoMatch.Gui.Component
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.bdaydatepicker = new global::VAS.UI.UI.Component.DatePicker();
+			this.bdaydatepicker = new global::VAS.UI.UI.Component.DatePicker ();
 			this.bdaydatepicker.Events = ((global::Gdk.EventMask)(256));
 			this.bdaydatepicker.Name = "bdaydatepicker";
 			this.bdaydatepicker.Date = new global::System.DateTime (0);

@@ -5,25 +5,25 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EntryDialog
 	{
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.CheckButton checkbutton;
-		
+
 		private global::Gtk.Entry entry1;
-		
+
 		private global::Gtk.Label existentemplatelabel;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.Label playerslabel;
-		
+
 		private global::Gtk.SpinButton playersspinbutton;
-		
+
 		private global::Gtk.ComboBox combobox;
-		
+
 		private global::Gtk.Button buttonCancel;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

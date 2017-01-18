@@ -11,7 +11,7 @@
     <widget-library name="../../bin/VAS.UI.Multimedia.Gtk2.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -1992,20 +1992,7 @@ Away</property>
                 <property name="MemberName" />
                 <property name="ShadowType">None</property>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox1">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="LongoMatch.Gui.Component.PlayListTreeView" id="playlisttreeview1">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                      </packing>
-                    </child>
-                  </widget>
+                  <placeholder />
                 </child>
               </widget>
             </child>
@@ -2027,7 +2014,6 @@ Away</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
-                <signal name="Clicked" handler="OnNewbuttonClicked" />
                 <child>
                   <widget class="Gtk.Image" id="newimage">
                     <property name="MemberName" />
@@ -2047,7 +2033,6 @@ Away</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
-                <signal name="Clicked" handler="OnNewvideobuttonClicked" />
                 <child>
                   <widget class="Gtk.Image" id="recimage">
                     <property name="MemberName" />
@@ -2972,7 +2957,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Notebook" id="notebook">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
+            <property name="CurrentPage">2</property>
             <property name="TabPos">Left</property>
             <child>
               <widget class="LongoMatch.Gui.Component.EventsListWidget" id="eventslistwidget">
@@ -9313,9 +9298,19 @@ You can continue with the current capture, cancel it or save your project.
         <property name="CurrentPage">0</property>
         <property name="TabPos">Bottom</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="playsList">
+          <widget class="Gtk.ScrolledWindow" id="eventsScrolledWindow">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
+            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.Viewport" id="GtkViewport">
+                <property name="MemberName" />
+                <property name="ShadowType">None</property>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
           </widget>
         </child>
         <child>

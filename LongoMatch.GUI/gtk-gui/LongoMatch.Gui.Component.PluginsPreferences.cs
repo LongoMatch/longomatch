@@ -5,43 +5,43 @@ namespace LongoMatch.Gui.Component
 	public partial class PluginsPreferences
 	{
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		
+
 		private global::Gtk.TreeView treeview1;
-		
+
 		private global::Gtk.VBox vbox1;
-		
+
 		private global::Gtk.Frame frame1;
-		
+
 		private global::Gtk.Alignment GtkAlignment;
-		
+
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Label authorlabel;
-		
+
 		private global::Gtk.Label desclabel;
-		
+
 		private global::Gtk.Label filelabel;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.Label label4;
-		
+
 		private global::Gtk.Label namelabel;
-		
+
 		private global::Gtk.Label GtkLabel;
-		
+
 		private global::Gtk.Frame configframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment1;
-		
+
 		private global::Gtk.VBox configbox;
-		
+
 		private global::Gtk.Label GtkLabel1;
 
 		protected virtual void Build ()

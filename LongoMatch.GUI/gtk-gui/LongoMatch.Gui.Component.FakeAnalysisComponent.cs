@@ -5,13 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class FakeAnalysisComponent
 	{
 		private global::Gtk.EventBox lightbackgroundeventbox;
-		
+
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::VAS.UI.CapturerBin capturerbin;
-		
+
 		private global::Gtk.HSeparator hseparator1;
-		
+
 		private global::LongoMatch.Gui.Component.CodingWidget codingwidget1;
 
 		protected virtual void Build ()

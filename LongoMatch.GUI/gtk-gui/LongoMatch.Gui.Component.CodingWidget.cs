@@ -5,27 +5,27 @@ namespace LongoMatch.Gui.Component
 	public partial class CodingWidget
 	{
 		private global::Gtk.Notebook notebook;
-		
+
 		private global::Gtk.HPaned dashboardhpaned;
-		
+
 		private global::Gtk.DrawingArea teamsdrawingarea;
-		
+
 		private global::Gtk.HBox hbox5;
-		
+
 		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::LongoMatch.Gui.Component.Timeline timeline;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
-		
+
 		private global::Gtk.Label label13;
 
 		protected virtual void Build ()

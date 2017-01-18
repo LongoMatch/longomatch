@@ -5,31 +5,31 @@ namespace LongoMatch.Gui.Component
 	public partial class VideoFileInfo
 	{
 		private global::Gtk.EventBox eventbox3;
-		
+
 		private global::Gtk.VBox vbox4;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.Image snapshotimage;
-		
+
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Label audiolabel;
-		
+
 		private global::Gtk.Label containerlabel;
-		
+
 		private global::Gtk.Label durationlabel;
-		
+
 		private global::Gtk.Label filelabel;
-		
+
 		private global::Gtk.Label formatlabel;
-		
+
 		private global::Gtk.Label namelabel;
-		
+
 		private global::Gtk.Label offsetlabel;
-		
+
 		private global::Gtk.Label videolabel;
-		
+
 		private global::Gtk.HSeparator hseparator2;
 
 		protected virtual void Build ()

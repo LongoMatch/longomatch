@@ -5,17 +5,17 @@ namespace LongoMatch.Gui.Component
 	public partial class EventsListWidget
 	{
 		private global::Gtk.Notebook playsnotebook;
-		
-		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playsList;
-		
+
+		private global::Gtk.ScrolledWindow eventsScrolledWindow;
+
 		private global::Gtk.Label playsList1;
-		
+
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget localPlayersList;
-		
+
 		private global::Gtk.Label localPlaysList;
-		
+
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
-		
+
 		private global::Gtk.Label visitorPlaysList;
 
 		protected virtual void Build ()
@@ -31,15 +31,16 @@ namespace LongoMatch.Gui.Component
 			this.playsnotebook.CurrentPage = 0;
 			this.playsnotebook.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.playsList = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
-			this.playsList.Events = ((global::Gdk.EventMask)(256));
-			this.playsList.Name = "playsList";
-			this.playsnotebook.Add (this.playsList);
+			this.eventsScrolledWindow = new global::Gtk.ScrolledWindow ();
+			this.eventsScrolledWindow.CanFocus = true;
+			this.eventsScrolledWindow.Name = "eventsScrolledWindow";
+			this.eventsScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+			this.playsnotebook.Add (this.eventsScrolledWindow);
 			// Notebook tab
 			this.playsList1 = new global::Gtk.Label ();
 			this.playsList1.Name = "playsList1";
 			this.playsList1.LabelProp = global::VAS.Core.Catalog.GetString ("Events");
-			this.playsnotebook.SetTabLabel (this.playsList, this.playsList1);
+			this.playsnotebook.SetTabLabel (this.eventsScrolledWindow, this.playsList1);
 			this.playsList1.ShowAll ();
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild
 			this.localPlayersList = new global::LongoMatch.Gui.Component.PlayersListTreeWidget ();

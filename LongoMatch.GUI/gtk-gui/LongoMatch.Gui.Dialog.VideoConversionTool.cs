@@ -5,39 +5,39 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoConversionTool
 	{
 		private global::Gtk.EventBox eventbox1;
-		
+
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-		
+
 		private global::Gtk.VBox filesbox;
-		
+
 		private global::Gtk.Button addbutton1;
-		
+
 		private global::Gtk.Image addimage;
-		
+
 		private global::Gtk.HSeparator hseparator1;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.Image convertimage;
-		
+
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.ComboBox bitratecombobox;
-		
+
 		private global::Gtk.Label filenamelabel;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.Label label3;
 
 		private global::VAS.UI.Component.MediaFileChooser mediafilechooser1;
 
 		private global::Gtk.ComboBox sizecombobox;
-		
+
 		private global::Gtk.Button buttonCancel;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

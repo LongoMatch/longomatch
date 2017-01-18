@@ -5,15 +5,15 @@ namespace LongoMatch.Gui.Panel
 	public partial class WelcomePanel
 	{
 		private global::Gtk.VBox vbox1;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.Button preferencesbutton;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.VBox vbox2;
 
 		protected virtual void Build ()

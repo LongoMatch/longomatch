@@ -5,19 +5,19 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EditPlaylistElementProperties
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.Table nametable;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Entry nameentry;
-		
+
 		private global::Gtk.Table slidetable;
-		
+
 		private global::Gtk.SpinButton durationspinbutton;
-		
+
 		private global::Gtk.Label label6;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

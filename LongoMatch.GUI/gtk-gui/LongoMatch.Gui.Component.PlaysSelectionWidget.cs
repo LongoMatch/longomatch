@@ -7,31 +7,31 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox3;
 
 		private global::Gtk.Notebook notebook;
-		
+
 		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::LongoMatch.Gui.Component.PlayListWidget playlistwidget;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.VBox filtersvbox;
-		
+
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.EventBox eventbox;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.HBox hbox4;
-		
+
 		private global::Gtk.Button clearButton;
-		
+
 		private global::Gtk.HSeparator hseparator1;
-		
+
 		private global::Gtk.Notebook filtersnotebook;
-		
+
 		private global::Gtk.Label label2;
 
 		private global::Gtk.Notebook notebookPlaylist;
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 0;
+			this.notebook.CurrentPage = 2;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget ();

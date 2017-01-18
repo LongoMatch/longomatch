@@ -5,95 +5,95 @@ namespace LongoMatch.Gui.Component
 	public partial class CategoryProperties
 	{
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.Table maintable;
-		
+
 		private global::Gtk.ColorButton colorbutton1;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Label label4;
-		
+
 		private global::Gtk.Entry nameentry;
-		
+
 		private global::Gtk.Table texttable;
-		
+
 		private global::Gtk.HBox hbox5;
-		
+
 		private global::Gtk.Label hotKeyLabel;
-		
+
 		private global::Gtk.Button changebuton;
-		
+
 		private global::Gtk.Label label6;
-		
+
 		private global::Gtk.ColorButton textcolorbutton;
-		
+
 		private global::Gtk.Label textcolorlabel;
-		
+
 		private global::Gtk.Table timetable;
-		
+
 		private global::Gtk.Label label7;
-		
+
 		private global::Gtk.Label label8;
-		
+
 		private global::Gtk.SpinButton lagtimebutton;
-		
+
 		private global::Gtk.SpinButton leadtimebutton;
-		
+
 		private global::Gtk.Label taglabel;
-		
+
 		private global::Gtk.ComboBox tagmodecombobox;
-		
+
 		private global::Gtk.Table postable;
-		
+
 		private global::Gtk.ComboBox fieldcombobox;
-		
+
 		private global::Gtk.ComboBox goalcombobox;
-		
+
 		private global::Gtk.ComboBox hfieldcombobox;
-		
+
 		private global::Gtk.Label label10;
-		
+
 		private global::Gtk.Label label11;
-		
+
 		private global::Gtk.Label label12;
-		
+
 		private global::Gtk.Label label9;
-		
+
 		private global::Gtk.ComboBox sortmethodcombobox;
-		
+
 		private global::Gtk.Table cattable;
-		
+
 		private global::Gtk.Label label15;
-		
+
 		private global::Gtk.Label showtagslabel;
-		
+
 		private global::Gtk.CheckButton tagscheckbutton;
-		
+
 		private global::Gtk.SpinButton tprbutton;
-		
+
 		private global::Gtk.Table cardtable;
-		
+
 		private global::Gtk.Label label16;
-		
+
 		private global::Gtk.ComboBox shapecombobox;
-		
+
 		private global::Gtk.Table scoretable;
-		
+
 		private global::Gtk.Label label17;
-		
+
 		private global::Gtk.SpinButton pointsbutton;
-		
+
 		private global::Gtk.Table timertable;
-		
+
 		private global::Gtk.Label label18;
-		
+
 		private global::Gtk.ComboBox teamcombobox;
-		
+
 		private global::Gtk.Table tagtable;
-		
+
 		private global::Gtk.Entry groupentry;
-		
+
 		private global::Gtk.Label label19;
 
 		protected virtual void Build ()

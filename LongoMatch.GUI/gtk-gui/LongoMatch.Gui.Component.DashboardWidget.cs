@@ -5,123 +5,123 @@ namespace LongoMatch.Gui.Component
 	public partial class DashboardWidget
 	{
 		private global::Gtk.HBox hbox2;
-		
+
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.HButtonBox hbuttonbox2;
-		
+
 		private global::Gtk.Button addcatbutton;
-		
+
 		private global::Gtk.Image addcatbuttonimage;
-		
+
 		private global::Gtk.Button addtimerbutton;
-		
+
 		private global::Gtk.Image addtimerbuttonimage;
-		
+
 		private global::Gtk.Button addscorebutton;
-		
+
 		private global::Gtk.Image addscorebuttonimage;
-		
+
 		private global::Gtk.Button addcardbutton;
-		
+
 		private global::Gtk.Image addcardbuttonimage;
-		
+
 		private global::Gtk.Button addtagbutton;
-		
+
 		private global::Gtk.Image addtagbuttonimage;
-		
+
 		private global::Gtk.ScrolledWindow dashscrolledwindow;
-		
+
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		private global::Gtk.VBox rightbox;
-		
+
 		private global::Gtk.Frame propertiesframe;
-		
+
 		private global::Gtk.Alignment propertiesalignment;
-		
+
 		private global::Gtk.VBox vbox10;
-		
+
 		private global::Gtk.HBox positionsbox;
-		
+
 		private global::Gtk.VBox fieldvbox;
-		
+
 		private global::Gtk.Frame fieldframe;
-		
+
 		private global::Gtk.Alignment fieldalignment;
-		
+
 		private global::Gtk.EventBox fieldeventbox;
-		
+
 		private global::Gtk.VBox vbox12;
-		
+
 		private global::Gtk.Image fieldimage;
-		
+
 		private global::Gtk.Label fieldlabel1;
-		
+
 		private global::Gtk.Label fieldlabel2;
-		
+
 		private global::Gtk.Button resetfieldbutton;
-		
+
 		private global::Gtk.VBox hfieldvbox;
-		
+
 		private global::Gtk.Frame hfieldframe;
-		
+
 		private global::Gtk.Alignment halffieldalignment;
-		
+
 		private global::Gtk.EventBox hfieldeventbox;
-		
+
 		private global::Gtk.VBox vbox14;
-		
+
 		private global::Gtk.Image hfieldimage;
-		
+
 		private global::Gtk.Label hfieldlabel1;
-		
+
 		private global::Gtk.Label hfieldlabel2;
-		
+
 		private global::Gtk.Button resethfieldbutton;
-		
+
 		private global::Gtk.VBox goalvbox;
-		
+
 		private global::Gtk.Frame goalframe;
-		
+
 		private global::Gtk.Alignment goalalignment;
-		
+
 		private global::Gtk.EventBox goaleventbox;
-		
+
 		private global::Gtk.VBox vbox16;
-		
+
 		private global::Gtk.Image goalimage;
-		
+
 		private global::Gtk.Label goallabel1;
-		
+
 		private global::Gtk.Label goallabel2;
-		
+
 		private global::Gtk.Button resetgoalbutton;
-		
+
 		private global::Gtk.HBox periodsbox;
-		
+
 		private global::Gtk.Label periodslabel;
-		
+
 		private global::Gtk.Entry periodsentry;
-		
+
 		private global::Gtk.Button applybutton;
-		
+
 		private global::Gtk.Image applyimage;
-		
+
 		private global::Gtk.ScrolledWindow propertiesscrolledwindow;
-		
+
 		private global::Gtk.Alignment tagpropertiesalignment;
-		
+
 		private global::Gtk.Notebook propertiesnotebook;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::LongoMatch.Gui.Component.LinkProperties linkproperties;
-		
+
 		private global::Gtk.Label label5;
 
 		protected virtual void Build ()

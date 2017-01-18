@@ -5,9 +5,9 @@ namespace LongoMatch.Gui.Component
 	public partial class ToggleTopBar
 	{
 		private global::Gtk.EventBox gradienttopbar;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.HBox buttoncontainer;
 
 		protected virtual void Build ()

@@ -5,9 +5,9 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ChooseProjectDialog
 	{
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
-		
+
 		private global::Gtk.Button buttonCancel;
-		
+
 		private global::Gtk.Button okButton;
 
 		protected virtual void Build ()

@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EditCategoryDialog
 	{
 		private global::LongoMatch.Gui.Component.CategoryProperties timenodeproperties2;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

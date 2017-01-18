@@ -5,12 +5,12 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysCoordinatesTagger
 	{
 		private global::Gtk.HBox mainbox;
-		
-		private global::LongoMatch.Gui.Component.CoordinatesTagger field;
-		
-		private global::LongoMatch.Gui.Component.CoordinatesTagger hfield;
-		
-		private global::LongoMatch.Gui.Component.CoordinatesTagger goal;
+
+		private global::Gtk.DrawingArea fieldDrawingarea;
+
+		private global::Gtk.DrawingArea hfieldDrawingarea;
+
+		private global::Gtk.DrawingArea goalDrawingarea;
 
 		protected virtual void Build ()
 		{
@@ -23,25 +23,22 @@ namespace LongoMatch.Gui.Component
 			this.mainbox.Name = "mainbox";
 			this.mainbox.Spacing = 6;
 			// Container child mainbox.Gtk.Box+BoxChild
-			this.field = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.field.Events = ((global::Gdk.EventMask)(256));
-			this.field.Name = "field";
-			this.mainbox.Add (this.field);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.field]));
+			this.fieldDrawingarea = new global::Gtk.DrawingArea ();
+			this.fieldDrawingarea.Name = "fieldDrawingarea";
+			this.mainbox.Add (this.fieldDrawingarea);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.fieldDrawingarea]));
 			w1.Position = 0;
 			// Container child mainbox.Gtk.Box+BoxChild
-			this.hfield = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.hfield.Events = ((global::Gdk.EventMask)(256));
-			this.hfield.Name = "hfield";
-			this.mainbox.Add (this.hfield);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.hfield]));
+			this.hfieldDrawingarea = new global::Gtk.DrawingArea ();
+			this.hfieldDrawingarea.Name = "hfieldDrawingarea";
+			this.mainbox.Add (this.hfieldDrawingarea);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.hfieldDrawingarea]));
 			w2.Position = 1;
 			// Container child mainbox.Gtk.Box+BoxChild
-			this.goal = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.goal.Events = ((global::Gdk.EventMask)(256));
-			this.goal.Name = "goal";
-			this.mainbox.Add (this.goal);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.goal]));
+			this.goalDrawingarea = new global::Gtk.DrawingArea ();
+			this.goalDrawingarea.Name = "goalDrawingarea";
+			this.mainbox.Add (this.goalDrawingarea);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.goalDrawingarea]));
 			w3.Position = 2;
 			this.Add (this.mainbox);
 			if ((this.Child != null)) {

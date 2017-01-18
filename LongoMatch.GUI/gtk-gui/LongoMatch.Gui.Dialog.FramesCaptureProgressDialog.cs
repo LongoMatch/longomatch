@@ -5,13 +5,13 @@ namespace LongoMatch.Gui.Dialog
 	public partial class FramesCaptureProgressDialog
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.ProgressBar progressbar;
-		
+
 		private global::Gtk.Image image;
-		
+
 		private global::Gtk.Button okbutton;
-		
+
 		private global::Gtk.Button cancelbutton;
 
 		protected virtual void Build ()

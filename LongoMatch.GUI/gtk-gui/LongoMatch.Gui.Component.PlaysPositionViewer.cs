@@ -5,13 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysPositionViewer
 	{
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::LongoMatch.Gui.Component.CoordinatesTagger field;
-		
+
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::LongoMatch.Gui.Component.CoordinatesTagger hfield;
-		
+
 		private global::LongoMatch.Gui.Component.CoordinatesTagger goal;
 
 		protected virtual void Build ()

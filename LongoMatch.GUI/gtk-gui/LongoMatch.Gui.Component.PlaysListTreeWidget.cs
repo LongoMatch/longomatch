@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysListTreeWidget
 	{
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		
+
 		private global::LongoMatch.Gui.Component.PlaysTreeView treeview;
 
 		protected virtual void Build ()

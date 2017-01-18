@@ -5,25 +5,25 @@ namespace LongoMatch.Gui.Component
 	public partial class GameDescriptionHeader
 	{
 		private global::Gtk.HBox descbox;
-		
+
 		private global::Gtk.Image homeimage;
-		
+
 		private global::Gtk.VSeparator vseparator1;
-		
+
 		private global::Gtk.Label homenamelabel;
-		
+
 		private global::Gtk.EventBox homescoreeventbox;
-		
+
 		private global::Gtk.Label homescorelabel;
-		
+
 		private global::Gtk.EventBox awayscoreeventbox;
-		
+
 		private global::Gtk.Label awayscorelabel;
-		
+
 		private global::Gtk.Label awaynamelabel;
-		
+
 		private global::Gtk.VSeparator vseparator2;
-		
+
 		private global::Gtk.Image awayimage;
 
 		protected virtual void Build ()

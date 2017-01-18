@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersListTreeWidget
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-		
+
 		private global::LongoMatch.Gui.Component.PlayersTreeView playerstreeview;
 
 		protected virtual void Build ()
