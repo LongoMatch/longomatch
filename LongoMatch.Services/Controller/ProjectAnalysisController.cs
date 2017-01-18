@@ -44,9 +44,6 @@ namespace LongoMatch.Services
 	public class ProjectAnalysisController : DisposableBase, IController
 	{
 		LMProjectAnalysisVM viewModel;
-		IGUIToolkit guiToolkit;
-		IMultimediaToolkit multimediaToolkit;
-		EventToken closeOpenedProjectEventToken;
 
 		public ICapturerBin Capturer {
 			set;
@@ -84,8 +81,6 @@ namespace LongoMatch.Services
 
 		public void Start ()
 		{
-			multimediaToolkit = App.Current.MultimediaToolkit;
-			guiToolkit = App.Current.GUIToolkit;
 			Load (viewModel);
 			App.Current.EventsBroker.SubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.SubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
@@ -96,8 +91,6 @@ namespace LongoMatch.Services
 
 		public void Stop ()
 		{
-			multimediaToolkit = null;
-			guiToolkit = null;
 			App.Current.EventsBroker.UnsubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.UnsubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Unsubscribe<CaptureErrorEvent> (HandleCaptureError);
@@ -153,7 +146,7 @@ namespace LongoMatch.Services
 				}
 
 				/* Remuxing suceed, delete old file */
-				if (guiToolkit.RemuxFile (tmpFile, outFile, muxer) == outFile) {
+				if (App.Current.GUIToolkit.RemuxFile (tmpFile, outFile, muxer) == outFile) {
 					System.IO.File.Delete (tmpFile);
 				} else {
 					System.IO.File.Delete (outFile);
@@ -177,7 +170,7 @@ namespace LongoMatch.Services
 #endif
 
 				Log.Debug ("Reloading saved file: " + filePath);
-				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
+				project.Description.FileSet [0] = App.Current.MultimediaToolkit.DiscoverFile (filePath);
 				project.Periods.Replace (Capturer.Periods);
 				App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
 				return true;
@@ -214,7 +207,7 @@ namespace LongoMatch.Services
 			if (Project.ProjectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if (!Project.FileSet.Model.CheckFiles ()) {
-					if (!guiToolkit.SelectMediaFiles (Project.FileSet.Model)) {
+					if (!App.Current.GUIToolkit.SelectMediaFiles (Project.FileSet.Model)) {
 						await CloseOpenedProject (true);
 						return false;
 					}
@@ -263,7 +256,7 @@ namespace LongoMatch.Services
 				else
 					isCapturing = true;
 
-				res = guiToolkit.EndCapture (isCapturing);
+				res = App.Current.GUIToolkit.EndCapture (isCapturing);
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
