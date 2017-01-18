@@ -157,16 +157,24 @@ namespace LongoMatch.Gui.Panel
 				return viewModel;
 			}
 			set {
-				viewModel = value;
-				foreach (LMDashboardVM dashboard in viewModel.ViewModels) {
-					Add (dashboard);
+				if (viewModel != null) {
+					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
+					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
+					viewModel.PropertyChanged -= HandleViewModelChanged;
 				}
-				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
-				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-				viewModel.PropertyChanged += HandleViewModelChanged;
-				deletetemplatebutton.Sensitive = viewModel.DeleteSensitive;
-				savetemplatebutton.Sensitive = viewModel.SaveSensitive;
-				exporttemplatebutton.Sensitive = viewModel.ExportSensitive;
+				viewModel = value;
+				if (viewModel != null) {
+					foreach (LMDashboardVM dashboard in viewModel.ViewModels) {
+						Add (dashboard);
+					}
+					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
+					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+					viewModel.PropertyChanged += HandleViewModelChanged;
+					deletetemplatebutton.Sensitive = viewModel.DeleteSensitive;
+					savetemplatebutton.Sensitive = viewModel.SaveSensitive;
+					exporttemplatebutton.Sensitive = viewModel.ExportSensitive;
+					UpdateLoadedTemplate ();
+				}
 			}
 		}
 
@@ -231,6 +239,14 @@ namespace LongoMatch.Gui.Panel
 				}
 				dashboardsStore.IterNext (ref iter);
 			}
+		}
+
+		void UpdateLoadedTemplate ()
+		{
+			// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
+			buttonswidget.Template = ViewModel.LoadedTemplate.Model;
+			buttonswidget.Sensitive = true;
+			Select (ViewModel.LoadedTemplate);
 		}
 
 		void HandleEnterTemplateButton (object sender, EventArgs e)
@@ -302,10 +318,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Model") {
-				// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
-				buttonswidget.Template = ViewModel.LoadedTemplate.Model;
-				buttonswidget.Sensitive = true;
-				Select (ViewModel.LoadedTemplate);
+				UpdateLoadedTemplate ();
 			}
 		}
 
