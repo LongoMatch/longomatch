@@ -158,7 +158,7 @@ namespace LongoMatch.Drawing.Widgets
 					break;
 				}
 			case NotifyCollectionChangedAction.Reset: {
-					eventToView.Clear ();
+					ViewModel = ViewModel;
 					break;
 				}
 			}
