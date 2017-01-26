@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Migration
 {
@@ -43,6 +45,8 @@ namespace LongoMatch.Core.Migration
 			{ "LongoMatch.Core.Store.Project", typeof(LongoMatch.Core.Store.LMProject) },
 			{ "LongoMatch.Core.Store.TimelineEvent", typeof(LongoMatch.Core.Store.LMTimelineEvent) },
 			{ "LongoMatch.Core.Store.Timer", typeof(LongoMatch.Core.Store.LMTimer) },
+			{ "System.Collections.Generic.Dictionary`2[[LongoMatch.Core.Common.MediaFileAngle, LongoMatch.Core],"+
+				"[LongoMatch.Core.Store.MediaFile, LongoMatch.Core]]", typeof(Dictionary<MediaFileAngle, MediaFile>)},
 		};
 	}
 }
