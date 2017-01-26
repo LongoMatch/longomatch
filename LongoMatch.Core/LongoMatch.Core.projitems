@@ -62,6 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ScoreEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayersCollectionVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

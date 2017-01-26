@@ -229,7 +229,7 @@ namespace LongoMatch.Gui.Panel
 
 		void LoadTeams (LMProject project)
 		{
-			List<LMTeam> teams;
+			List<Team> teams;
 			bool hasLocalTeam = false;
 			bool hasAwayTeam = false;
 
@@ -253,7 +253,7 @@ namespace LongoMatch.Gui.Panel
 			if (hasAwayTeam) {
 				awayteamscombobox.Load (new List<LMTeam> { project.VisitorTeamTemplate });
 			} else {
-				awayteamscombobox.Load (teams);
+				awayteamscombobox.Load (teams.OfType<LMTeam> ().ToList ());
 				awayteamscombobox.Changed += (sender, e) => {
 					LoadTemplate (awayteamscombobox.ActiveTeam.Clone (), TeamType.VISITOR, false);
 				};
@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Panel
 			if (hasLocalTeam) {
 				hometeamscombobox.Load (new List<LMTeam> { project.LocalTeamTemplate });
 			} else {
-				hometeamscombobox.Load (teams);
+				hometeamscombobox.Load (teams.OfType<LMTeam> ().ToList ());
 				hometeamscombobox.Changed += (sender, e) => {
 					LoadTemplate (hometeamscombobox.ActiveTeam.Clone (), TeamType.LOCAL, false);
 				};

@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 		TeamTagger tagger;
 		SelectionCanvas incanvas, outcanvas;
-		SportsPlayerObject inpo, outpo;
+		LMPlayerView inpo, outpo;
 		LMPlayer inPlayer, outPlayer, selectedPlayer;
 		LMTeam homeTeam, awayTeam;
 		LineupEvent lineup;
@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Dialog
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			incanvas = new SelectionCanvas (new WidgetWrapper (drawingarea2));
 			outcanvas = new SelectionCanvas (new WidgetWrapper (drawingarea3));
-			inpo = new SportsPlayerObject ();
-			outpo = new SportsPlayerObject ();
+			inpo = new LMPlayerView ();
+			outpo = new LMPlayerView ();
 			inpo.ClickedEvent += HandleClickedEvent;
 			outpo.ClickedEvent += HandleClickedEvent;
 			inpo.Size = PLAYER_SIZE;
@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			if (inPlayer != null) {
 				this.inPlayer = inPlayer;
-				inpo.Player = inPlayer;
+				inpo.Model = inPlayer;
 				inpo.Active = false;
 				drawingarea2.QueueDraw ();
 				tagger.ResetSelection ();
@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 			if (outPlayer != null) {
 				this.outPlayer = outPlayer;
-				outpo.Player = outPlayer;
+				outpo.Model = outPlayer;
 				outpo.Active = false;
 				drawingarea3.QueueDraw ();
 				tagger.ResetSelection ();
@@ -194,7 +194,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleClickedEvent (ICanvasObject co)
 		{
-			SportsPlayerObject po = co as SportsPlayerObject;
+			LMPlayerView po = co as LMPlayerView;
 
 			if (po == inpo) {
 				if (outpo.Active) {

@@ -17,10 +17,10 @@
 //
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
@@ -29,7 +29,7 @@ namespace LongoMatch.Services.Controller
 	/// Controller for teams.
 	/// </summary>
 	[ControllerAttribute ("TeamsManager")]
-	public class TeamsController : TemplatesController<LMTeam, LMTeamVM, LMPlayer, LMPlayerVM>
+	public class TeamsController : TemplatesController<Team, TeamVM, Player, PlayerVM>
 	{
 		public TeamsController ()
 		{
@@ -52,7 +52,7 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Team name:");
 		}
 
-		protected override bool SaveValidations (LMTeam model)
+		protected override bool SaveValidations (Team model)
 		{
 			return true;
 		}

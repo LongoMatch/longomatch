@@ -178,7 +178,7 @@ namespace Tests.Services
 			LMTeam auxdelete = teamA;
 			teamtemplateprovider.Copy (teamB, "A");
 			teamtemplateprovider.Delete (auxdelete);
-			teamA = teamtemplateprovider.Templates [0];
+			teamA = teamtemplateprovider.Templates [0] as LMTeam;
 
 			Assert.AreEqual (4, teamtemplateprovider.Templates.Count);
 			Assert.AreEqual ("A", teamA.Name);

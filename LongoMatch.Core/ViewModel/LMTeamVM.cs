@@ -15,8 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
 
@@ -26,8 +24,13 @@ namespace LongoMatch.Core.ViewModel
 	/// <summary>
 	/// ViewModel for a sports team.
 	/// </summary>
-	public class LMTeamVM : TemplateViewModel<LMTeam, LMPlayer, LMPlayerVM>
+	public class LMTeamVM : TeamVM
 	{
+
+		public LMTeamVM ()
+		{
+			SubViewModel = new LMPlayersCollectionVM ();
+		}
 
 		/// <summary>
 		/// Gets or sets the icon of the team.

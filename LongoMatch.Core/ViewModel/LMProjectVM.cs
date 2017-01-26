@@ -17,7 +17,6 @@
 //
 using System;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
 

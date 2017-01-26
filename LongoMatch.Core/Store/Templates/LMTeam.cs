@@ -30,7 +30,7 @@ using VAS.Core.Store.Templates;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class LMTeam : Team<LMPlayer>
+	public class LMTeam : Team
 	{
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;

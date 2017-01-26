@@ -16,32 +16,41 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
-using VAS.Core;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Store.Drawables;
-using VAS.Drawing.CanvasObjects;
+using VAS.Core.MVVMC;
 using VAS.Drawing.CanvasObjects.Teams;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class SportsPlayerObject: PlayerObject
+	[View ("PlayerView")]
+	public class LMPlayerView : PlayerView, ICanvasObjectView<LMPlayerVM>
 	{
 		static ISurface ArrowOut;
 		static ISurface ArrowIn;
-		static bool surfacesCached = false;
 
-		public SportsPlayerObject ()
+		static LMPlayerView ()
 		{
-			Init ();
+			ArrowOut = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowOut);
+			ArrowIn = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowIn);
 		}
 
-		public SportsPlayerObject (LMPlayer player, Point position = null)
+		public LMPlayerView ()
 		{
-			// Set the base Player too, because it's a different Property
-			base.Player = Player = player;
-			Init (position);
+			Position = new Point (0, 0);
+			DrawPhoto = true;
+			Size = (int)PlayersIconSize.Medium;
+			Toggle = true;
+		}
+
+		public LMPlayerVM ViewModel {
+			get {
+				return Player as LMPlayerVM;
+			}
+			set {
+				Player = value;
+			}
 		}
 
 		public bool SubstitutionMode {
@@ -54,13 +63,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public new LMPlayer Player {
-			get {
-				return base.Player as LMPlayer;
-			}
-			set {
-				base.Player = value;
-			}
+		public TeamType Team {
+			get;
+			set;
 		}
 
 		Color Color {
@@ -69,31 +74,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public override double Width {
-			get {
-				return Size;
-			}
-		}
-
-		public override double Height {
-			get {
-				return Size;
-			}
-		}
-
-		public TeamType Team {
-			get;
-			set;
-		}
-
-		public override void LoadSurfaces ()
+		public void SetViewModel (object viewModel)
 		{
-			if (!surfacesCached) {
-				base.LoadSurfaces ();
-				ArrowOut = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowOut);
-				ArrowIn = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowIn);
-				surfacesCached = true;
-			}
+			Player = viewModel as LMPlayerVM;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -118,7 +101,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			tk.Begin ();
-			start = new Point (Size / 2, Size / 2);
+			start = new Point (Width / 2, Height / 2);
 			tk.TranslateAndScale (Center - start, new Point (scale, scale));
 
 			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
@@ -135,7 +118,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (Player.Photo != null) {
 				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, PlayerObject.DefaultPhoto, ScaleMode.AspectFit);
+				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, DefaultPhoto, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */
@@ -167,13 +150,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.StrokeColor = Color.White;
 			tk.FontAlignment = FontAlignment.Center;
 			tk.FontWeight = FontWeight.Normal;
-			if (Player.Number >= 100) {
+			if (ViewModel.Number >= 100) {
 				tk.FontSize = 12;
 			} else {
 				tk.FontSize = 16;
 			}
 			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
-				Player.Number.ToString ());
+						 ViewModel.Number.ToString ());
 
 			if (Active) {
 				Color c = Color.Copy ();
@@ -183,18 +166,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			tk.End ();
-		}
-
-		void Init (Point pos = null)
-		{
-			if (pos == null) {
-				pos = new Point (0, 0);
-			}
-			Position = pos;
-			DrawPhoto = true;
-			Size = (int)PlayersIconSize.Medium;
-			Toggle = true;
-			LoadSurfaces ();
 		}
 	}
 }

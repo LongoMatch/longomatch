@@ -17,9 +17,9 @@
 //
 //
 using System.Threading.Tasks;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Store.Templates;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.States
@@ -43,7 +43,7 @@ namespace LongoMatch.Services.States
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new TeamsManagerVM ();
-			ViewModel.Model = new RangeObservableCollection<LMTeam> (App.Current.TeamTemplatesProvider.Templates);
+			ViewModel.Model = new RangeObservableCollection<Team> (App.Current.TeamTemplatesProvider.Templates);
 		}
 	}
 }

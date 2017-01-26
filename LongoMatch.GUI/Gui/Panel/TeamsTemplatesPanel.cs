@@ -19,6 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
@@ -28,6 +29,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -194,12 +196,12 @@ namespace LongoMatch.Gui.Panel
 			(cell as CellRendererText).Text = teamVM.Name;
 		}
 
-		void Add (LMTeamVM teamVM)
+		void Add (TeamVM teamVM)
 		{
 			teamsStore.AppendValues (teamVM, teamVM.Editable);
 		}
 
-		void Remove (LMTeamVM teamVM)
+		void Remove (TeamVM teamVM)
 		{
 			TreeIter iter;
 			teamsStore.GetIterFirst (out iter);
@@ -212,12 +214,12 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void Select (LMTeamVM teamVM)
+		void Select (TeamVM teamVM)
 		{
 			TreeIter iter;
 			teamsStore.GetIterFirst (out iter);
 			while (teamsStore.IterIsValid (iter)) {
-				if ((teamsStore.GetValue (iter, COL_TEAM) as LMTeamVM).Model.Equals (teamVM.Model)) {
+				if ((teamsStore.GetValue (iter, COL_TEAM) as TeamVM).Model.Equals (teamVM.Model)) {
 					teamseditortreeview.Selection.SelectIter (iter);
 					break;
 				}
@@ -228,7 +230,7 @@ namespace LongoMatch.Gui.Panel
 		void UpdateLoadedTemplate ()
 		{
 			// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
-			teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model;
+			teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model as LMTeam;
 			teamtemplateeditor1.Sensitive = true;
 			Select (ViewModel.LoadedTemplate);
 		}

@@ -15,9 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
@@ -25,8 +27,12 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for the teams manager.
 	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<LMTeam, LMTeamVM, LMPlayer, LMPlayerVM>
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>
 	{
+		protected override TeamVM CreateInstance (Team model)
+		{
+			return new LMTeamVM { Model = (LMTeam)model };
+		}
 	}
 }
 
