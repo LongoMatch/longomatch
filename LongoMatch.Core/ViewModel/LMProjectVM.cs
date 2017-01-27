@@ -168,9 +168,9 @@ namespace LongoMatch.Core.ViewModel
 			protected set;
 		}
 
-		protected override void UpdateModels ()
+		protected override void SyncLoadedModel ()
 		{
-			base.UpdateModels ();
+			base.SyncLoadedModel ();
 			HomeTeam.Model = Model.LocalTeamTemplate;
 			AwayTeam.Model = Model.VisitorTeamTemplate;
 			(Timeline as LMTimelineVM).UpdatePredicates ();
