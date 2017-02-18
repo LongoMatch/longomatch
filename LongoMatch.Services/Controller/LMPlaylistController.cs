@@ -76,7 +76,7 @@ namespace LongoMatch.Services
 
 		protected override void HandleLoadPlayEvent (LoadEventEvent e)
 		{
-			if (projectViewModel == null || projectViewModel.Model.ProjectType == ProjectType.FakeCaptureProject) {
+			if (ProjectViewModel == null || ProjectViewModel.ProjectType == ProjectType.FakeCaptureProject) {
 				return;
 			}
 			base.HandleLoadPlayEvent (e);

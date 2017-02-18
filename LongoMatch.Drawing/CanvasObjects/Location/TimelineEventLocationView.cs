@@ -29,10 +29,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 	{
 		LMTimelineEventVM viewModel;
 
-		protected override void Dispose (bool disposing)
+		protected override void DisposeManagedResources ()
 		{
 			ViewModel = null;
-			base.Dispose (disposing);
+			base.DisposeManagedResources ();
 		}
 
 		override protected Color Color {

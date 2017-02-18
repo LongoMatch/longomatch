@@ -44,52 +44,29 @@ namespace LongoMatch.Services
 		TimelineEvent loadedPlay;
 		IVideoPlayerController player;
 		LMProjectAnalysisVM viewModel;
-		bool started;
-
-		protected override void Dispose (bool disposing)
-		{
-			base.Dispose (disposing);
-			if (started) {
-				Log.Error ("Controller disposed wihtout being stopped: " + this);
-				Stop ();
-			}
-		}
 
 		public override void Start ()
 		{
-			if (started) {
-				throw new InvalidOperationException ("Controller is already started");
-			}
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
-			started = true;
 		}
 
 		public override void Stop ()
 		{
-			if (!started) {
-				throw new InvalidOperationException ("Controller is already stoped");
-			}
-			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
-			started = false;
+			base.Stop ();
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			this.viewModel = (LMProjectAnalysisVM)(viewModel as dynamic);
 			base.SetViewModel (viewModel);
-		}
-
-		public IEnumerable<KeyAction> GetDefaultKeyActions ()
-		{
-			return Enumerable.Empty<KeyAction> ();
 		}
 
 		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)

@@ -54,16 +54,10 @@ namespace LongoMatch.Core.Store
 			VisitorTeamTemplate = new LMTeam ();
 		}
 
-		protected override void Dispose (bool disposing)
+		protected override void DisposeManagedResources ()
 		{
-			if (Disposed) {
-				return;
-			}
-			base.Dispose (disposing);
-			if (disposing) {
-				LocalTeamTemplate?.Dispose ();
-				VisitorTeamTemplate?.Dispose ();
-			}
+			LocalTeamTemplate?.Dispose ();
+			VisitorTeamTemplate?.Dispose ();
 		}
 		#endregion
 

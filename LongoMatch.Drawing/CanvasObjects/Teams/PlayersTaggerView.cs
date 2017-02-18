@@ -84,7 +84,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			ShowTeamsButtons = false;
 		}
 
-		protected override void Dispose (bool disposing)
+		protected override void DisposeManagedResources ()
 		{
 			ResetSelection ();
 			ClearPlayers ();
@@ -95,7 +95,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			subInjury.Dispose ();
 			homeButton.Dispose ();
 			awayButton.Dispose ();
-			base.Dispose (disposing);
+			base.DisposeManagedResources ();
 		}
 
 		public Time CurrentTime {

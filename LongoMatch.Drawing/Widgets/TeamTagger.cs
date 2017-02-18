@@ -60,10 +60,10 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		protected override void Dispose (bool disposing)
+		protected override void DisposeManagedResources ()
 		{
-			base.Dispose (disposing);
 			tagger.Dispose ();
+			base.DisposeManagedResources ();
 		}
 
 		public void LoadTeams (LMTeam homeTeam, LMTeam awayTeam, Image background)
