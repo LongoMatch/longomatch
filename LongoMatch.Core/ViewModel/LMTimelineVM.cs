@@ -1,13 +1,12 @@
 ﻿//
 //  Copyright (C) 2016 Fluendo S.A.
-using System.Collections.Generic;
 using System.Linq;
-using VAS.Core.Events;
+using LongoMatch.Core.Store;
 using VAS.Core.Filters;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
-using Predicate = VAS.Core.Filters.Predicate<LongoMatch.Core.ViewModel.LMTimelineEventVM>;
+using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>;
 
 namespace LongoMatch.Core.ViewModel
 {
@@ -19,79 +18,48 @@ namespace LongoMatch.Core.ViewModel
 		{
 			homeTeamVM = homeTeam;
 			awayTeamVM = awayTeam;
-			Filters = new AndPredicate<LMTimelineEventVM> ();
 			Filters.IgnoreEvents = true;
-			CategoriesPredicate = new OrPredicate<LMTimelineEventVM> {
+			CategoriesPredicate = new OrPredicate<TimelineEventVM> {
 				Name = Catalog.GetString ("Categories")
 			};
-			TeamsPredicate = new OrPredicate<LMTimelineEventVM> {
+			TeamsPredicate = new OrPredicate<TimelineEventVM> {
 				Name = Catalog.GetString ("Teams"),
 			};
 
-			ViewModels.CollectionChanged += (sender, e) => UpdateEventTypesPredicates ();
+			EventTypesTimeline.ViewModels.CollectionChanged += (sender, e) => UpdateEventTypesPredicates ();
 			Filters.Add (CategoriesPredicate);
 			Filters.Add (TeamsPredicate);
 			Filters.IgnoreEvents = false;
 		}
 
 		/// <summary>
-		/// Gets or sets the filters used in this timeline.
-		/// </summary>
-		/// <value>The filters.</value>
-		public AndPredicate<LMTimelineEventVM> Filters {
-			get;
-			protected set;
-		}
-
-		/// <summary>
 		/// Gets or sets the categories predicate.
 		/// </summary>
 		/// <value>The categories predicate.</value>
-		OrPredicate<LMTimelineEventVM> CategoriesPredicate {
+		public OrPredicate<TimelineEventVM> CategoriesPredicate {
 			get;
-			set;
+			private set;
 		}
 
 		/// <summary>
 		/// Gets or sets the teams predicate.
 		/// </summary>
 		/// <value>The teams predicate.</value>
-		OrPredicate<LMTimelineEventVM> TeamsPredicate {
+		public OrPredicate<TimelineEventVM> TeamsPredicate {
 			get;
-			set;
+			private set;
 		}
 
-		/// <summary>
-		/// Load a TimelineEvent to the player to start playing it. The EventsController should be the responsible
-		/// to Add the Events to the player
-		/// </summary>
-		/// <param name="vm">LMTimelineEventVM ViewModel</param>
-		/// <param name="playing">If set to <c>true</c> playing. Else starts paused</param>
-		public void LoadEvent (LMTimelineEventVM vm, bool playing)
-		{
-			App.Current.EventsBroker.Publish (new LoadTimelineEvent<TimelineEvent> { Object = vm.Model, Playing = playing });
+		public TeamTimelineVM HomeTeamTimelineVM {
+			get {
+				return TeamsTimeline.First ();
+			}
 		}
 
-		/// <summary>
-		/// Loads a List of Events to the player in order to start playing them, The EventsController should be the responsible
-		/// to Add the Events to the player
-		/// </summary>
-		/// <param name="vm">A list of LMTimelineEventVM</param>
-		/// <param name="playing">If set to <c>true</c> playing. Else starts paused</param>
-		public void LoadEvent (IEnumerable<LMTimelineEventVM> vm, bool playing)
-		{
-			App.Current.EventsBroker.Publish (new LoadTimelineEvent<IEnumerable<TimelineEvent>> {
-				Object = vm.Select (p => p.Model),
-				Playing = playing
-			});
-		}
-
-		/// <summary>
-		/// Unloads the events from the player
-		/// </summary>
-		public void UnloadEvents ()
-		{
-			App.Current.EventsBroker.Publish (new LoadTimelineEvent<TimelineEvent> { Object = null, Playing = false });
+		public TeamTimelineVM AwayTeamTimelineVM {
+			get {
+				return TeamsTimeline.Last ();
+			}
 		}
 
 		protected override CollectionViewModel<TimelineEvent, TimelineEventVM> CreateFullTimeline ()
@@ -109,19 +77,25 @@ namespace LongoMatch.Core.ViewModel
 		{
 			Filters.IgnoreEvents = true;
 			TeamsPredicate.Clear ();
-			TeamsPredicate.Add (new Predicate {
-				Name = "No team",
-				Expression = ev =>
-					!ev.Model.TaggedTeams.Any ()
-			});
-			TeamsPredicate.Add (new Predicate {
-				Name = homeTeamVM.Name,
-				Expression = ev => ev.Model.TaggedTeams.Contains (homeTeamVM.Model)
-			});
-			TeamsPredicate.Add (new Predicate {
-				Name = awayTeamVM.Name,
-				Expression = ev => ev.Model.TaggedTeams.Contains (awayTeamVM.Model)
-			});
+
+			foreach (var team in new LMTeamVM [] { homeTeamVM, awayTeamVM }) {
+				var teamPredicate = new OrPredicate<TimelineEventVM> {
+					Name = team.Name,
+				};
+				teamPredicate.Add (new Predicate {
+					Name = Catalog.GetString ("Team"),
+					Expression = ev =>
+						(ev.Model as LMTimelineEvent).TaggedTeams.Contains (team.Model)
+				});
+				foreach (var player in team) {
+					teamPredicate.Add (new Predicate {
+						Name = player.Model.Name,
+						Expression = ev =>
+							(ev.Model as LMTimelineEvent).Players.Contains (player.Model)
+					});
+				}
+				TeamsPredicate.Add (teamPredicate);
+			}
 			Filters.IgnoreEvents = false;
 			RaisePropertyChanged ("Collection", this);
 		}
@@ -131,7 +105,7 @@ namespace LongoMatch.Core.ViewModel
 			Filters.IgnoreEvents = true;
 			CategoriesPredicate.Clear ();
 
-			foreach (var eventType in this) {
+			foreach (var eventType in EventTypesTimeline) {
 				var predicate = new Predicate {
 					Name = eventType.EventTypeVM.Name,
 					Expression = ev => ev.Model.EventType == eventType.Model
@@ -140,6 +114,10 @@ namespace LongoMatch.Core.ViewModel
 			}
 			Filters.IgnoreEvents = false;
 			RaisePropertyChanged ("Collection", this);
+		}
+
+		void UpdatePeriodsPredicates ()
+		{
 		}
 	}
 }
