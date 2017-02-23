@@ -36,7 +36,7 @@ namespace LongoMatch.Services.States
 
 		public override Task<bool> ShowState ()
 		{
-			ViewModel.Save (false);
+			ViewModel.SaveCommand.Execute (false);
 			return base.ShowState ();
 		}
 

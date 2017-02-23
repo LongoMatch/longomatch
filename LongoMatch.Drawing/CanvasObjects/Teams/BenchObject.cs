@@ -28,10 +28,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 	{
 		public BenchObject ()
 		{
-			BenchPlayers = new List<SportsPlayerObject> ();
+			BenchPlayers = new List<LMPlayerView> ();
 		}
 
-		public List<SportsPlayerObject> BenchPlayers {
+		public List<LMPlayerView> BenchPlayers {
 			get;
 			set;
 		}
@@ -72,7 +72,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return;
 			}
 			for (int i = 0; i < BenchPlayers.Count; i++) {
-				SportsPlayerObject po;
+				LMPlayerView po;
 				double x, y;
 				double s = Width / PlayersPerRow;
 				
@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.DrawRectangle (new Point (0, 0), Width, Height);
 			tk.LineStyle = LineStyle.Normal;
 
-			foreach (SportsPlayerObject po in BenchPlayers) {
+			foreach (LMPlayerView po in BenchPlayers) {
 				po.Playing = false;
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
@@ -119,7 +119,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			
 			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 			
-			foreach (SportsPlayerObject po in BenchPlayers) {
+			foreach (LMPlayerView po in BenchPlayers) {
 				selection = po.GetSelection (point, precision);
 				if (selection != null)
 					break;

@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2015 Fluendo S.A.
+//  Copyright (C) 2017 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,24 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store.Templates;
-using VAS.Core.Store.Templates;
-using VAS.DB.Views;
+using LongoMatch.Services.State;
+using VAS.Core.Common;
+using VAS.Core.MVVMC;
+using VAS.Core.Store;
+using VAS.Services.Controller;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Services.Controller
 {
-	public class DashboardsView : GenericView<Dashboard, LMDashboard>
+	[Controller (ProjectAnalysisState.NAME)]
+	[Controller (LiveProjectAnalysisState.NAME)]
+	[Controller (FakeLiveProjectAnalysisState.NAME)]
+	public class LMTaggingController : TaggingController
 	{
-		public DashboardsView (CouchbaseStorageLongoMatch storage) : base (storage)
-		{
-			DocumentType = "Dashboard";
-		}
 
-		protected override string ViewVersion {
-			get {
-				return "1";
-			}
+		protected override TimelineEvent CreateTimelineEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature)
+		{
+			return project.Model.CreateEvent (type, start, stop, eventTime, miniature,
+											  project.Model.EventsByType (type).Count + 1);
 		}
 	}
 }
-

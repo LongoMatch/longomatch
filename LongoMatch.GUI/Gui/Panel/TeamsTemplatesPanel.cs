@@ -30,6 +30,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
+using VAS.UI.Helpers.Bindings;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -43,6 +44,7 @@ namespace LongoMatch.Gui.Panel
 
 		ListStore teamsStore;
 		TeamsManagerVM viewModel;
+		BindingContext ctx;
 
 		public TeamsTemplatesPanel ()
 		{
@@ -54,30 +56,20 @@ namespace LongoMatch.Gui.Panel
 
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
-			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			importteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
-			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
-			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
-			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
 			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
 			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
-			newteambutton.Clicked += HandleNewTeamClicked;
 			importteambutton.Entered += HandleEnterTeamButton;
 			importteambutton.Left += HandleLeftTeamButton;
-			importteambutton.Clicked += HandleImportTeamClicked;
 			exportteambutton.Entered += HandleEnterTeamButton;
 			exportteambutton.Left += HandleLeftTeamButton;
-			exportteambutton.Clicked += HandleExportTeamClicked;
 			deleteteambutton.Entered += HandleEnterTeamButton;
 			deleteteambutton.Left += HandleLeftTeamButton;
-			deleteteambutton.Clicked += HandleDeleteTeamClicked;
 			saveteambutton.Entered += HandleEnterTeamButton;
 			saveteambutton.Left += HandleLeftTeamButton;
-			saveteambutton.Clicked += HandleSaveTeamClicked;
 
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
@@ -105,13 +97,12 @@ namespace LongoMatch.Gui.Panel
 
 			teamsvbox.WidthRequest = 280;
 
-			deleteteambutton.Sensitive = false;
-			exportteambutton.Sensitive = false;
-			saveteambutton.Sensitive = false;
 			teamtemplateeditor1.VisibleButtons = false;
 
 			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 			editplayerslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
+
+			Bind ();
 		}
 
 		public override void Destroy ()
@@ -150,19 +141,15 @@ namespace LongoMatch.Gui.Panel
 				if (viewModel != null) {
 					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
-					viewModel.PropertyChanged -= HandleViewModelChanged;
 				}
 				viewModel = value;
+				ctx.UpdateViewModel (viewModel);
 				if (viewModel != null) {
 					foreach (LMTeamVM team in viewModel.ViewModels) {
 						Add (team);
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					viewModel.PropertyChanged += HandleViewModelChanged;
-					deleteteambutton.Sensitive = viewModel.DeleteSensitive;
-					saveteambutton.Sensitive = viewModel.SaveSensitive;
-					exportteambutton.Sensitive = viewModel.ExportSensitive;
 					UpdateLoadedTemplate ();
 				}
 			}
@@ -182,6 +169,16 @@ namespace LongoMatch.Gui.Panel
 		{
 			OnUnload ();
 			base.OnDestroyed ();
+		}
+
+		void Bind ()
+		{
+			ctx = this.GetBindingContext ();
+			ctx.Add (deleteteambutton.Bind (vm => ((TeamsManagerVM)vm).DeleteCommand));
+			ctx.Add (newteambutton.Bind (vm => ((TeamsManagerVM)vm).NewCommand));
+			ctx.Add (importteambutton.Bind (vm => ((TeamsManagerVM)vm).ImportCommand));
+			ctx.Add (exportteambutton.Bind (vm => ((TeamsManagerVM)vm).ExportCommand));
+			ctx.Add (saveteambutton.Bind (vm => ((TeamsManagerVM)vm).SaveCommand, true));
 		}
 
 		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
@@ -300,42 +297,6 @@ namespace LongoMatch.Gui.Panel
 			if (e.PropertyName == "Model") {
 				UpdateLoadedTemplate ();
 			}
-		}
-
-		void HandleViewModelChanged (object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "SaveSensitive") {
-				saveteambutton.Sensitive = ViewModel.SaveSensitive;
-			} else if (e.PropertyName == "ExportSensitive") {
-				exportteambutton.Sensitive = ViewModel.ExportSensitive;
-			} else if (e.PropertyName == "DeleteSensitive") {
-				deleteteambutton.Sensitive = ViewModel.DeleteSensitive;
-			}
-		}
-
-		void HandleSaveTeamClicked (object sender, EventArgs e)
-		{
-			ViewModel.Save (false);
-		}
-
-		void HandleDeleteTeamClicked (object sender, EventArgs e)
-		{
-			ViewModel.DeleteCommand.Execute ();
-		}
-
-		void HandleImportTeamClicked (object sender, EventArgs e)
-		{
-			ViewModel.Import ();
-		}
-
-		void HandleExportTeamClicked (object sender, EventArgs e)
-		{
-			ViewModel.Export ();
-		}
-
-		void HandleNewTeamClicked (object sender, EventArgs e)
-		{
-			ViewModel.NewCommand.Execute ();
 		}
 
 		void HandleEdited (object o, EditedArgs args)

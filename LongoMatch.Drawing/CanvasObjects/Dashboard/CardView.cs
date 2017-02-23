@@ -16,23 +16,30 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
-	public class CardObject: TimedTaggerObject
+	[View ("PenaltyCardButtonView")]
+	public class CardView : TimedTaggerButtonView, IView<PenaltyCardButtonVM>
 	{
-		public CardObject (PenaltyCardButton card) : base (card)
-		{
-			Button = card;
+		public PenaltyCardButtonVM ViewModel {
+			get {
+				return TimedButtonVM as PenaltyCardButtonVM;
+			}
+			set {
+				TimedButtonVM = value;
+			}
 		}
 
-		public PenaltyCardButton Button {
-			get;
-			set;
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (PenaltyCardButtonVM)viewModel;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -56,7 +63,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 
 			/* Draw Shape */
-			switch (Button.PenaltyCard.Shape) {
+			switch (ViewModel.Model.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
 				tk.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
 				break;
@@ -77,9 +84,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			tk.FontWeight = FontWeight.Light;
 			tk.FontAlignment = FontAlignment.Center;
 			if (Recording) {
-				tk.DrawText (Position, Button.Width, Button.Height, (CurrentTime - Start).ToSecondsString ());
+				tk.DrawText (Position, Button.Width, Button.Height, (ViewModel.CurrentTime - Start).ToSecondsString ());
 			} else {
-				tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
+				tk.DrawText (Position, Button.Width, Button.Height, ViewModel.Model.Name);
 			}
 			DrawSelectionArea (tk);
 			if (ShowLinks) {

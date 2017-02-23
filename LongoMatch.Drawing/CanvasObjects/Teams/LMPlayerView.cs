@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -53,6 +54,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
+		// FIXME: We keep this to be compatible with View that are not using MVVM yet
+		public LMPlayer Model {
+			get {
+				return ViewModel.Model as LMPlayer;
+			}
+			set {
+				ViewModel = new LMPlayerVM { Model = value };
+			}
+		}
+
 		public bool SubstitutionMode {
 			get;
 			set;
@@ -81,7 +92,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Point zero, start, p;
+			Point zero, p;
 			double size, scale;
 			ISurface arrowin, arrowout;
 
@@ -101,8 +112,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			tk.Begin ();
-			start = new Point (Width / 2, Height / 2);
-			tk.TranslateAndScale (Center - start, new Point (scale, scale));
+			tk.TranslateAndScale (Position, new Point (scale, scale));
 
 			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
 				tk.End ();

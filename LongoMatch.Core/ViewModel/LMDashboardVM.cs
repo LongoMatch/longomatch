@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 Fluendo S.A.
+//  Copyright (C) 2017 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,23 +16,21 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store.Templates;
-using VAS.Core.Common;
-using VAS.Core.ViewModel;
+using LongoMatch.Core.Store;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Core.ViewModel
 {
-	public class LMDashboardVM : TemplateViewModel<LMDashboard, DashboardButton, DashboardButtonVM>
+	public class LMDashboardVM : DashboardVM
 	{
-
-		public override Image Icon {
-			get {
-				return Model.Image;
-			}
-			set {
-				Model.Image = Icon;
-			}
+		public override CollectionViewModel<DashboardButton, DashboardButtonVM> CreateSubViewModel ()
+		{
+			var collection = base.CreateSubViewModel ();
+			collection.TypeMappings.Add (typeof (ScoreButton), typeof (ScoreButtonVM));
+			collection.TypeMappings.Add (typeof (PenaltyCardButton), typeof (PenaltyCardButtonVM));
+			return collection;
 		}
 	}
 }

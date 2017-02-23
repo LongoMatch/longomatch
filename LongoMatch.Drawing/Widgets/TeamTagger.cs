@@ -31,20 +31,20 @@ using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class TeamTagger: SelectionCanvas
+	public class TeamTagger : SelectionCanvas
 	{
-	
+
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
-		PlayersTaggerObject tagger;
+		PlayersTaggerView tagger;
 
 		public TeamTagger (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
-			tagger = new PlayersTaggerObject {
+			tagger = new PlayersTaggerView {
 				SelectionMode = MultiSelectionMode.Single,
 			};
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
@@ -167,12 +167,12 @@ namespace LongoMatch.Drawing.Widgets
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<LMPlayer> { (sel.Drawable as SportsPlayerObject).Player };
+					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.Player };
 				}
 			} else {
 				players = tagger.SelectedPlayers;
 			}
-			
+
 			if (ShowMenuEvent != null) {
 				ShowMenuEvent (players);
 			}
@@ -188,7 +188,7 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-		                                     SubstitutionReason reason, Time time)
+											 SubstitutionReason reason, Time time)
 		{
 			widget?.ReDraw ();
 			if (PlayersSubstitutionEvent != null) {

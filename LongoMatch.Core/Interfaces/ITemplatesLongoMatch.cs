@@ -26,7 +26,7 @@ namespace LongoMatch.Core.Interfaces
 
 	}
 
-	public interface ICategoriesTemplatesProvider : ITemplateProvider<LMDashboard>
+	public interface ICategoriesTemplatesProvider : ITemplateProvider<Dashboard>
 	{
 	}
 }

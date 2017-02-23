@@ -23,7 +23,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -34,7 +33,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMProjectVM>
+	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject
 	{
 
 		/* This object can be used like single object filling a canvas or embedded
@@ -253,9 +252,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			LMPlayerView po;
 
-			po = homePlayers.FirstOrDefault (p => p.Player == player);
+			po = homePlayers.FirstOrDefault (p => p.Model == player);
 			if (po == null) {
-				po = awayPlayers.FirstOrDefault (p => p.Player == player);
+				po = awayPlayers.FirstOrDefault (p => p.Model == player);
 			}
 			if (po != null) {
 				if (reset) {
@@ -290,12 +289,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
 		{
 			if (team == homeTeam) {
-				Substitute (homePlayers.FirstOrDefault (p => p.Player == p1),
-					homePlayers.FirstOrDefault (p => p.Player == p2),
+				Substitute (homePlayers.FirstOrDefault (p => p.Model == p1),
+							homePlayers.FirstOrDefault (p => p.Model == p2),
 					homePlayingPlayers, homeBenchPlayers);
 			} else {
-				Substitute (awayPlayers.FirstOrDefault (p => p.Player == p1),
-					awayPlayers.FirstOrDefault (p => p.Player == p2),
+				Substitute (awayPlayers.FirstOrDefault (p => p.Model == p1),
+							awayPlayers.FirstOrDefault (p => p.Model == p2),
 					awayPlayingPlayers, awayBenchPlayers);
 			}
 		}
@@ -579,7 +578,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			playerObjects = new List<LMPlayerView> ();
 			foreach (var player in players) {
-				LMPlayerView po = new LMPlayerView { Player = player, Team = team };
+				LMPlayerView po = new LMPlayerView { Model = player, Team = team };
 				po.ClickedEvent += HandlePlayerClickedEvent;
 				po.RedrawEvent += (co, area) => {
 					EmitRedrawEvent (po, area);
@@ -608,16 +607,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (PlayersSubstitutionEvent != null) {
 				if (bench.Contains (player1) && bench.Contains (player2)) {
-					PlayersSubstitutionEvent (team, player1.Player, player2.Player,
+					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
 						SubstitutionReason.BenchPositionChange, CurrentTime);
 				} else if (!bench.Contains (player1) && !bench.Contains (player2)) {
-					PlayersSubstitutionEvent (team, player1.Player, player2.Player,
+					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
 						SubstitutionReason.PositionChange, CurrentTime);
 				} else if (bench.Contains (player1)) {
-					PlayersSubstitutionEvent (team, player1.Player, player2.Player,
+					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
 						SubstitutionReason.PlayersSubstitution, CurrentTime);
 				} else {
-					PlayersSubstitutionEvent (team, player2.Player, player1.Player,
+					PlayersSubstitutionEvent (team, player2.Model, player1.Model,
 						SubstitutionReason.PlayersSubstitution, CurrentTime);
 				}
 			}
@@ -641,9 +640,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 			} else {
 				if (player.Active) {
-					SelectedPlayers.Add (player.Player);
+					SelectedPlayers.Add (player.Model);
 				} else {
-					SelectedPlayers.Remove (player.Player);
+					SelectedPlayers.Remove (player.Model);
 				}
 				if (PlayersSelectionChangedEvent != null) {
 					PlayersSelectionChangedEvent (SelectedPlayers);
@@ -702,13 +701,21 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 			}
 
+			// FIXME: this is very awkward, click events should be forwarded to the child views
 			point = VASDrawing.Utils.ToUserCoords (point, offset, scaleX, scaleY);
 			selection = homeBench.GetSelection (point, 0, false);
 			if (selection == null) {
 				selection = awayBench.GetSelection (point, 0, false);
 				if (selection == null) {
 					selection = field.GetSelection (point, 0, false);
+					if (selection != null) {
+						point = VASDrawing.Utils.ToUserCoords (point, field.Position, 1, 1);
+					}
+				} else {
+					point = VASDrawing.Utils.ToUserCoords (point, awayBench.Position, 1, 1);
 				}
+			} else {
+				point = VASDrawing.Utils.ToUserCoords (point, homeBench.Position, 1, 1);
 			}
 			if (selection != null) {
 				clickedPlayer = selection.Drawable as LMPlayerView;

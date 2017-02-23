@@ -22,13 +22,14 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
 {
 	[ControllerAttribute ("DashboardsManager")]
-	public class DashboardsController : TemplatesController<LMDashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>
+	public class DashboardsController : TemplatesController<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>
 	{
 		public DashboardsController ()
 		{
@@ -52,7 +53,7 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Dashboard name:");
 		}
 
-		protected override bool SaveValidations (LMDashboard model)
+		protected override bool SaveValidations (Dashboard model)
 		{
 			return true;
 		}

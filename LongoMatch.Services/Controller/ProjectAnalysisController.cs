@@ -29,7 +29,6 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;

@@ -33,6 +33,7 @@ namespace LongoMatch.Core.ViewModel
 			HomeTeam = new LMTeamVM ();
 			AwayTeam = new LMTeamVM ();
 			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
+			Dashboard = new LMDashboardVM ();
 		}
 
 		/// <summary>

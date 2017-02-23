@@ -15,14 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
@@ -30,13 +28,11 @@ using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
-using VAS.Core.ViewModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -84,10 +80,8 @@ namespace LongoMatch.Gui.Component
 
 			Helpers.Misc.SetFocus (this, false);
 
-			buttonswidget.Mode = DashboardMode.Code;
-			buttonswidget.FitMode = FitMode.Fit;
-			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
+			buttonswidget.CodingDashboardMode = true;
 
 			dashboardhpaned.SizeAllocated += HandleSizeAllocated;
 			TagPositions = true;
@@ -147,11 +141,6 @@ namespace LongoMatch.Gui.Component
 			SelectPage (playspositionviewer1);
 		}
 
-		public void ClickButton (DashboardButton button, Tag tag = null)
-		{
-			buttonswidget.ClickButton (button, tag);
-		}
-
 		public void TagPlayer (LMPlayer player)
 		{
 			teamtagger.Select (player);
@@ -177,11 +166,6 @@ namespace LongoMatch.Gui.Component
 			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
-		public void UpdateCategories ()
-		{
-			buttonswidget.Refresh ();
-		}
-
 		public void LoadIcons ()
 		{
 			notebookHelper = new Helpers.IconNotebookHelper (notebook);
@@ -200,9 +184,8 @@ namespace LongoMatch.Gui.Component
 		void LoadProject ()
 		{
 			buttonswidget.Visible = true;
-			// FIXME: dashboard is not ported yet to MVVM
-			buttonswidget.Project = ViewModel.Project.Model;
-			buttonswidget.Mode = DashboardMode.Code;
+			ViewModel.Project.Dashboard.Mode = DashboardMode.Code;
+			buttonswidget.ViewModel = ViewModel.Project.Dashboard;
 			// FIXME: team tagger is not ported yet to MVVM
 			teamtagger.Project = ViewModel.Project.Model;
 			teamtagger.LoadTeams (ViewModel.Project.Model.LocalTeamTemplate,
@@ -216,7 +199,7 @@ namespace LongoMatch.Gui.Component
 			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.ViewModel = ViewModel;
 			} else if (ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject) {
-				//eventslistwidget.SetViewModel (ViewModel);
+				eventslistwidget.ViewModel = ViewModel;
 			}
 			playspositionviewer1.ViewModel = ViewModel.Project;
 		}
@@ -310,8 +293,8 @@ namespace LongoMatch.Gui.Component
 		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 								Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
-			LMTimelineEvent play = ViewModel.Project.Model.AddEvent (eventType, start, stop, eventTime,
-																	 null, false) as LMTimelineEvent;
+			int index = ViewModel.Project.Model.EventsByType (eventType).Count + 1;
+			LMTimelineEvent play = ViewModel.Project.Model.CreateEvent (eventType, start, stop, eventTime, null, index) as LMTimelineEvent;
 			play.Teams.Replace (teamtagger.SelectedTeams);
 			play.Players.Replace (selectedPlayers);
 			play.Tags.Replace (tags);

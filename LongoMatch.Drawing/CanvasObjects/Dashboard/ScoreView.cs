@@ -15,29 +15,32 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
-	public class ScoreObject: TimedTaggerObject
+	[View ("ScoreButtonView")]
+	public class ScoreView : TimedTaggerButtonView, IView<ScoreButtonVM>
 	{
 		static Image iconImage;
 
-		public ScoreObject (ScoreButton score) : base (score)
+		static ScoreView ()
 		{
-			ScoreButton = score;
-			if (iconImage == null) {
-				iconImage = Resources.LoadImage (StyleConf.ButtonScoreIcon);
-			}
+			iconImage = Resources.LoadImage (StyleConf.ButtonScoreIcon);
 		}
 
-		public ScoreButton ScoreButton {
-			get;
-			set;
+		public ScoreButtonVM ViewModel {
+			get {
+				return TimedButtonVM as ScoreButtonVM;
+			}
+			set {
+				TimedButtonVM = value;
+			}
 		}
 
 		public override Image Icon {
@@ -49,11 +52,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		public override string Text {
 			get {
 				if (Recording) {
-					return (CurrentTime - Start).ToSecondsString ();
+					return (ViewModel.CurrentTime - Start).ToSecondsString ();
 				} else {
-					return ScoreButton.Name;
+					return ViewModel.Name;
 				}
 			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (ScoreButtonVM)viewModel;
 		}
 	}
 }
