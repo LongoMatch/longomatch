@@ -22,6 +22,7 @@ using VAS.Core.Store;
 using VAS.DB;
 using LongoMatch.DB.Views;
 using VAS.Core.Store.Playlists;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
