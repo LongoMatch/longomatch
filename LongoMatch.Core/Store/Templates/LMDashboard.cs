@@ -97,11 +97,11 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		/// <summary>
-		/// Adds a new <see cref="AnalysisEventButton"/> with the default values
+		/// Create a new <see cref="AnalysisEventButton"/> with the default values
 		/// </summary>
 		/// <returns>A new button.</returns>
 		/// <param name="index">Index of this button used to name it</param>
-		public override AnalysisEventButton AddDefaultItem (int index)
+		public override AnalysisEventButton CreateDefaultItem (int index)
 		{
 			AnalysisEventButton button;
 			AnalysisEventType evtype;
@@ -127,7 +127,6 @@ namespace LongoMatch.Core.Store.Templates
 				Height = CAT_HEIGHT,
 				ShowIcon = true,
 			};
-			List.Insert (index, button);
 			return button;
 		}
 	}

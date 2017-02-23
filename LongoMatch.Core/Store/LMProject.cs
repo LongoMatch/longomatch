@@ -284,14 +284,14 @@ namespace LongoMatch.Core.Store
 				Sum (e => (e.EventType as ScoreEventType).Score.Points);
 		}
 
-		public override TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-												bool addToTimeline = true)
+		public override TimelineEvent CreateEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
+												int index)
 		{
 			LMTimelineEvent evt;
 			string count;
 			string name;
 
-			count = String.Format ("{0:000}", EventsByType (type).Count + 1);
+			count = String.Format ("{0:000}", index);
 			name = String.Format ("{0} {1}", type.Name, count);
 			evt = new LMTimelineEvent ();
 
@@ -306,15 +306,6 @@ namespace LongoMatch.Core.Store
 			evt.FileSet = Description.FileSet;
 			evt.Project = this;
 
-			if (addToTimeline) {
-				Timeline.Add (evt);
-			}
-
-			if (addToTimeline) {
-				if (evt.EventType is ScoreEventType) {
-					UpdateScore ();
-				}
-			}
 			return evt;
 		}
 

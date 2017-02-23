@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
@@ -168,11 +169,18 @@ namespace LongoMatch.Core.ViewModel
 			protected set;
 		}
 
+		public override IEnumerable<TeamVM> Teams {
+			get {
+				yield return HomeTeam;
+				yield return AwayTeam;
+			}
+		}
+
 		protected override void SyncLoadedModel ()
 		{
-			base.SyncLoadedModel ();
 			HomeTeam.Model = Model.LocalTeamTemplate;
 			AwayTeam.Model = Model.VisitorTeamTemplate;
+			base.SyncLoadedModel ();
 			(Timeline as LMTimelineVM).UpdatePredicates ();
 		}
 	}
