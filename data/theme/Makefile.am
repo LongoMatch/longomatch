@@ -1,6 +1,14 @@
 themedir = @datadir@/@PACKAGE@/theme
 nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Arrows/arrow-up-down.png \
+	gtk-2.0/Button/button_n_a.svg \
+	gtk-2.0/Button/button_n_i.svg \
+	gtk-2.0/Button/button_n_n.svg \
+	gtk-2.0/Button/button_n_p.svg \
+	gtk-2.0/Button/button_tl_a.svg \
+	gtk-2.0/Button/button_tl_i.svg \
+	gtk-2.0/Button/button_tl_n.svg \
+	gtk-2.0/Button/button_tl_p.svg \
 	gtk-2.0/Buttons/button-entry-default.svg \
 	gtk-2.0/Buttons/button-entry-prelight.svg \
 	gtk-2.0/Buttons/button-entry-pressed.svg \
