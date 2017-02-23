@@ -146,8 +146,8 @@ namespace LongoMatch.Gui.Panel
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					dashboardwidget.ViewModel = ViewModel.LoadedTemplate;
 					viewModel.LoadedTemplate.Mode = DashboardMode.Edit;
+					dashboardwidget.ViewModel = viewModel.LoadedTemplate;
 					UpdateLoadedTemplate ();
 				}
 			}
