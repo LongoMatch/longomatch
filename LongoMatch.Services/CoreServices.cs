@@ -31,6 +31,7 @@ using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
+using VAS.Services.AppUpdater;
 using VAS.Services.ViewModel;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -160,6 +161,9 @@ namespace LongoMatch.Services
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
+
+			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
+			RegisterService (notifier);
 		}
 
 		public static void StartServices ()
