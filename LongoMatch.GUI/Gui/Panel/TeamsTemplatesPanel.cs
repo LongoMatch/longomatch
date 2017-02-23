@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Panel
 	{
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
-
+		const int SHIELD_SIZE = 50;
 		ListStore teamsStore;
 		TeamsManagerVM viewModel;
 		BindingContext ctx;
@@ -184,7 +184,7 @@ namespace LongoMatch.Gui.Panel
 		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
 			LMTeamVM teamVM = (LMTeamVM)model.GetValue (iter, COL_TEAM);
-			(cell as CellRendererPixbuf).Pixbuf = teamVM.Icon.Value;
+			(cell as CellRendererPixbuf).Pixbuf = teamVM.Icon.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
