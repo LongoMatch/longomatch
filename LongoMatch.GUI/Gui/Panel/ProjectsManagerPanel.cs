@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
@@ -273,7 +274,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				LMStateHelper.OpenProject (new ProjectVM { Model = project });
+				LMStateHelper.OpenProject (new LMProjectVM { Model = project });
 			}
 		}
 
@@ -382,7 +383,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				LMStateHelper.OpenProject (new ProjectVM { Model = loadedProject });
+				LMStateHelper.OpenProject (new LMProjectVM { Model = loadedProject });
 			}
 		}
 	}

@@ -48,11 +48,6 @@ namespace LongoMatch.Gui.Component
 			c.Count = model.IterNChildren (iter);
 		}
 
-		protected override void ShowMenu ()
-		{
-			base.ShowMenu ();
-		}
-
 		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element)
 		{
 			PlaylistElementMenu menu = new PlaylistElementMenu (this, playlist, new List<IPlaylistElement> { element });

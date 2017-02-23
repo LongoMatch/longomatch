@@ -15,14 +15,11 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-//
+using System.Threading.Tasks;
+using LongoMatch.Core.ViewModel;
+using VAS.Core;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
-using LongoMatch.Services.ViewModel;
-using System.Threading.Tasks;
-using VAS.Core;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.Services.State
 {

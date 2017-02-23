@@ -152,11 +152,6 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void ClickButton (DashboardButton button, Tag tag = null)
-		{
-			codingwidget.ClickButton (button, tag);
-		}
-
 		public void TagPlayer (Player player)
 		{
 			codingwidget.TagPlayer ((LMPlayer)player);

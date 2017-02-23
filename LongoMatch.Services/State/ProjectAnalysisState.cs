@@ -56,7 +56,14 @@ namespace LongoMatch.Services.State
 			if (!projectVM.Model.IsLoaded) {
 				try {
 					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Loading project..."), null);
-					busy.ShowSync (projectVM.Model.Load);
+					busy.ShowSync (() => {
+						try {
+							projectVM.Model.Load ();
+						} catch (Exception ex) {
+							Log.Exception (ex);
+							throw;
+						}
+					});
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);

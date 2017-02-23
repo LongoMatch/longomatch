@@ -16,9 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
@@ -39,7 +37,7 @@ namespace LongoMatch.Gui.Component
 		EventsFilterTreeView categoriesfilter;
 		EventsFilterTreeView playersfilter;
 		LMProjectVM viewModel;
-		Helpers.IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
+		IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
 
 		public PlaysSelectionWidget ()
 		{
@@ -100,16 +98,6 @@ namespace LongoMatch.Gui.Component
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = viewModel as LMProjectVM;
-		}
-
-		public void AddPlay (LMTimelineEvent play)
-		{
-			eventslistwidget.AddPlay (play);
-		}
-
-		public void RemovePlays (List<LMTimelineEvent> plays)
-		{
-			eventslistwidget.RemovePlays (plays);
 		}
 
 		#endregion

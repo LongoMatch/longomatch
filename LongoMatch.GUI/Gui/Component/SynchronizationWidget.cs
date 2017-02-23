@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
 using Pango;
@@ -283,7 +284,7 @@ namespace LongoMatch.Gui.Component
 					 * project ones to resynchronize the events in SaveChanges() */
 					periods = project.Periods.Clone ();
 				}
-				ProjectVM viewModel = new ProjectVM { Model = project };
+				ProjectVM viewModel = new LMProjectVM { Model = project };
 				camerasLabels.Load (fileSet);
 				camerasTimeline.ViewModel = viewModel;
 

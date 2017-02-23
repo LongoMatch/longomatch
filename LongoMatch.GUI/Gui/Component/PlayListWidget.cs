@@ -23,7 +23,10 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.ViewModel;
+using VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
+using VAS.Core.MVVMC;
+using VAS.UI.Helpers.Bindings;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,6 +36,7 @@ namespace LongoMatch.Gui.Component
 	{
 		PlaylistCollectionVM viewModel;
 		LMPlaylistTreeView playlistTreeView;
+		BindingContext ctx;
 
 		public PlayListWidget ()
 		{
@@ -53,6 +57,8 @@ namespace LongoMatch.Gui.Component
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
+			ctx = this.GetBindingContext ();
+			ctx.Add (newbutton.Bind (vm => ((PlaylistCollectionVM)vm).NewCommand));
 		}
 
 		public PlaylistCollectionVM ViewModel {
@@ -62,10 +68,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				viewModel = value;
 				playlistTreeView.ViewModel = value;
-				if (viewModel != null) {
-					// FIXME: bind with command when it exists
-					//newbutton.Bind (viewModel.NewPlaylistCommand);
-				}
+				ctx.UpdateViewModel (viewModel);
 			}
 		}
 
