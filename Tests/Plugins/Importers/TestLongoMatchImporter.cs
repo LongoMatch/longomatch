@@ -22,7 +22,7 @@ namespace Tests.Plugins.Importers
 	{
 		LongoMatchImporter importer;
 		Mock<IGUIToolkit> mockGUI;
-		ProjectsManager manager;
+		ProjectAnalysisController manager;
 		Mock<IDialogs> mockDialog;
 
 		[TestFixtureSetUp]
@@ -30,7 +30,7 @@ namespace Tests.Plugins.Importers
 		{
 			importer = new LongoMatchImporter ();
 			mockGUI = new Mock<IGUIToolkit> ();
-			manager = new ProjectsManager ();
+			manager = new ProjectAnalysisController ();
 			mockDialog = new Mock<IDialogs> ();
 			manager.Start ();
 			App.Current.ProjectExtension = ".tmp";

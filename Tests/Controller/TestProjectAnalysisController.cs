@@ -82,8 +82,6 @@ namespace Tests.Controller
 
 			gtkMock = new Mock<IGUIToolkit> ();
 			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
-			gtkMock.Setup (m => m.OpenProject (It.IsAny<LMProject> (), It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> ()));
 			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
 				.Returns (() => settings.EncodingSettings.OutputFile)
 				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
@@ -326,9 +324,6 @@ namespace Tests.Controller
 			);
 
 			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
-
-			gtkMock.Verify (g => g.OpenProject (project, It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> ()), Times.Once ());
 
 		}
 	}

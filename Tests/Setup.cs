@@ -41,6 +41,7 @@ namespace Tests
 			// Initialize LongoMath.Core by using a type, this will call the module initialization
 			var st = new LMTeam ();
 			VFS.SetCurrent (new FileSystem ());
+			Resources.TEST_MODE = true;
 			Initialize ();
 		}
 

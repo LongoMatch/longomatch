@@ -36,7 +36,7 @@ using VAS.DB.Views;
 
 namespace Tests.DB
 {
-	class StorableContainerTest: StorableBase
+	class StorableContainerTest : StorableBase
 	{
 		public StorableContainerTest ()
 		{
@@ -46,7 +46,7 @@ namespace Tests.DB
 		public StorableImageTest Image { get; set; }
 	}
 
-	class StorableListTest: StorableBase
+	class StorableListTest : StorableBase
 	{
 		public StorableListTest ()
 		{
@@ -56,7 +56,7 @@ namespace Tests.DB
 		public List<StorableImageTest> Images { get; set; }
 	}
 
-	class StorableListNoChildrenTest: StorableListTest
+	class StorableListNoChildrenTest : StorableListTest
 	{
 		public override bool DeleteChildren {
 			get {
@@ -80,11 +80,11 @@ namespace Tests.DB
 		public List<Image> Images { get; set; }
 	}
 
-	class StorableImageTest2: StorableImageTest
+	class StorableImageTest2 : StorableImageTest
 	{
 	}
 
-	class StorableView: GenericView <IStorable>
+	class StorableView : GenericView<IStorable>
 	{
 		public StorableView (CouchbaseStorage storage) : base (storage)
 		{
@@ -136,7 +136,7 @@ namespace Tests.DB
 		public void CleanDB ()
 		{
 			db.RunInTransaction (() => {
-				foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
+				foreach (var d in db.CreateAllDocumentsQuery ().Run ()) {
 					db.GetDocument (d.DocumentId).Delete ();
 				}
 				return true;
@@ -156,7 +156,7 @@ namespace Tests.DB
 			storage.Store (t);
 
 			// After loading an object
-			t1 = DocumentsSerializer.LoadObject (typeof(LMTeam), t.ID, db) as LMTeam;
+			t1 = DocumentsSerializer.LoadObject (typeof (LMTeam), t.ID, db) as LMTeam;
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
@@ -191,7 +191,7 @@ namespace Tests.DB
 			Assert.IsNotNull (dashboard2.HalfFieldBackground);
 			Assert.IsNotNull (dashboard2.GoalBackground);
 			Assert.IsNotNull (dashboard2.DocumentID);
-			Assert.AreEqual (16, dashboard2.Image.Width); 
+			Assert.AreEqual (16, dashboard2.Image.Width);
 			Assert.AreEqual (16, dashboard2.Image.Height);
 			storage.Delete (dashboard);
 			Assert.AreEqual (1, db.DocumentCount);
@@ -200,7 +200,8 @@ namespace Tests.DB
 		[Test ()]
 		public void TestPlayer ()
 		{
-			LMPlayer player1 = new LMPlayer {Name = "andoni", Position = "runner",
+			LMPlayer player1 = new LMPlayer {
+				Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true, Mail = "test@test", Color = Color.Red
@@ -261,7 +262,7 @@ namespace Tests.DB
 			DocumentsSerializer.SaveObject (p, db);
 			Assert.AreEqual (3, db.DocumentCount);
 
-			LMTimelineEvent evt2 = storage.Retrieve <LMTimelineEvent> (evt.ID);
+			LMTimelineEvent evt2 = storage.Retrieve<LMTimelineEvent> (evt.ID);
 			Assert.IsNotNull (evt2.EventType);
 			Assert.IsNotNull (evt2.DocumentID);
 
@@ -282,7 +283,7 @@ namespace Tests.DB
 			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
 			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null, "Test asset");
+							   "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
@@ -313,7 +314,7 @@ namespace Tests.DB
 			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
 			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null, "Test asset");
+							   "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
@@ -324,8 +325,8 @@ namespace Tests.DB
 					EventType = p.EventTypes [i],
 					Start = new Time (1000),
 					Stop = new Time (2000),
-					Players = new ObservableCollection<Player> { p.LocalTeamTemplate.Players [0] },
 				};
+				evt.Players.Add (p.LocalTeamTemplate.Players [0]);
 				p.Timeline.Add (evt);
 			}
 

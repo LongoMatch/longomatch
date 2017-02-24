@@ -35,7 +35,7 @@ namespace Tests.Core.Store
 		{
 			LMTimelineEvent evt = new LMTimelineEvent ();
 			evtType1 = new EventType { Name = "Cat1" };
-			
+
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Playing = true;
@@ -62,10 +62,10 @@ namespace Tests.Core.Store
 		{
 			LMTimelineEvent p = new LMTimelineEvent ();
 			Utils.CheckSerialization (p);
-			
+
 			p = CreateTimelineEvent ();
 			var newp = Utils.SerializeDeserialize (p);
-			
+
 			Assert.AreEqual (p.EventType.ID, newp.EventType.ID);
 			Assert.AreEqual (p.Notes, newp.Notes);
 			Assert.AreEqual (p.Teams, newp.Teams);
@@ -110,7 +110,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.TagsDescription (), "test");
 			evt.Tags.Add (new Tag ("test2"));
 			Assert.AreEqual (evt.TagsDescription (), "test-test2");
-			evt.Tags = new ObservableCollection<Tag> ();
+			evt.Tags.Replace (new ObservableCollection<Tag> ());
 			Assert.AreEqual (evt.TagsDescription (), "");
 		}
 
@@ -132,7 +132,7 @@ namespace Tests.Core.Store
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = false;
 			evt.EventType.TagGoalPosition = false;
-			
+
 			Assert.IsNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
@@ -140,20 +140,20 @@ namespace Tests.Core.Store
 			Assert.IsNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = true;
 			evt.AddDefaultPositions ();
 			Assert.IsNotNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = true;
 			evt.AddDefaultPositions ();
 			Assert.IsNotNull (evt.FieldPosition);
 			Assert.IsNotNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = false;
 			evt.EventType.TagGoalPosition = true;
@@ -195,11 +195,11 @@ namespace Tests.Core.Store
 			evt.UpdateCoordinates (FieldPositionType.Field, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
-			
+
 			evt.UpdateCoordinates (FieldPositionType.HalfField, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
-			
+
 			evt.UpdateCoordinates (FieldPositionType.Goal, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.GoalPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
@@ -233,9 +233,6 @@ namespace Tests.Core.Store
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.Tags.Add (new Tag ("2"));
-			Assert.IsTrue (evt.IsChanged);
-			evt.IsChanged = false;
-			evt.Tags = null;
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.CamerasConfig.Add (new CameraConfig (2));

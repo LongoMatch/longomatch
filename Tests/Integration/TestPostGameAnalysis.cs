@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
@@ -51,7 +50,6 @@ namespace Tests.Integration
 		Mock<IDrawingToolkit> drawingToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
 		Mock<IGUIToolkit> guiToolkitMock;
-		Mock<IAnalysisWindow> analysisWindowMock;
 		Mock<IVideoPlayerController> playerControllerMock;
 		Mock<IFramesCapturer> capturerMock;
 		Mock<IVideoPlayer> playerMock;
@@ -86,12 +84,6 @@ namespace Tests.Integration
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
-
-			analysisWindowMock = new Mock<IAnalysisWindow> ();
-			analysisWindowMock.Setup (a => a.Player).Returns (() => playerControllerMock.Object);
-			IAnalysisWindowBase aw = analysisWindowMock.Object;
-			guiToolkitMock.Setup (g => g.OpenProject (It.IsAny<LMProject> (), It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out aw));
 		}
 
 		[TearDown]
@@ -272,9 +264,9 @@ namespace Tests.Integration
 		LMProject CreateProject ()
 		{
 			var project = new LMProject { Description = new ProjectDescription () };
-			project.LocalTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			project.LocalTeamTemplate = (LMTeam)App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
 			Assert.IsNotNull (project.LocalTeamTemplate);
-			project.VisitorTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			project.VisitorTeamTemplate = (LMTeam)App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
 			Assert.IsNotNull (project.VisitorTeamTemplate);
 			project.Dashboard = App.Current.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket") as LMDashboard;
 			Assert.IsNotNull (project.Dashboard);

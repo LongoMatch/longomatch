@@ -155,8 +155,8 @@ namespace Tests.Core.Store
 		public void TestAddEvent ()
 		{
 			LMProject p = CreateProject (false);
-			LMTimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
-											  null, null, false) as LMTimelineEvent;
+			LMTimelineEvent evt = p.CreateEvent (p.EventTypes [0], new Time (1000), new Time (2000),
+											  null, null, 0) as LMTimelineEvent;
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
