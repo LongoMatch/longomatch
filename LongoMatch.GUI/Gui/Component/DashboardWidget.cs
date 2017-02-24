@@ -258,7 +258,11 @@ namespace LongoMatch.Gui.Component
 
 		void HandleApplyClicked (object sender, EventArgs e)
 		{
-			ViewModel.GamePeriods = periodsentry.Text;
+			try {
+				ViewModel.GamePeriods = new ObservableCollection<string> (periodsentry.Text.Split ('-'));
+			} catch {
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
+			}
 		}
 
 		void HandleActionLinkCreatedEvent (ActionLink actionLink)
