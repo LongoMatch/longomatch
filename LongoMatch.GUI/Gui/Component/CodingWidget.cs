@@ -331,8 +331,8 @@ namespace LongoMatch.Gui.Component
 		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
-			TimelineEventLongoMatch play = project.AddEvent (eventType, start, stop, eventTime,
-				                               null, false) as TimelineEventLongoMatch;
+			TimelineEventLongoMatch play = project.CreateEvent (eventType, start, stop, eventTime,
+											   null) as TimelineEventLongoMatch;
 			play.Teams = new ObservableCollection<Team> (teamtagger.SelectedTeams);
 			if (selectedPlayers != null) {
 				play.Players = new ObservableCollection<Player> (selectedPlayers);

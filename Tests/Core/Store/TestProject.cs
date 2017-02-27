@@ -155,8 +155,8 @@ namespace Tests.Core.Store
 		public void TestAddEvent ()
 		{
 			ProjectLongoMatch p = CreateProject (false);
-			TimelineEventLongoMatch evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
-				                              null, null, false) as TimelineEventLongoMatch;
+			TimelineEventLongoMatch evt = p.CreateEvent (p.EventTypes [0], new Time (1000), new Time (2000),
+											  null, null) as TimelineEventLongoMatch;
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
