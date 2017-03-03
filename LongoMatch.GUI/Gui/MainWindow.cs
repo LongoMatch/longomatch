@@ -30,6 +30,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
@@ -220,7 +221,7 @@ namespace LongoMatch.Gui
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
 		public async Task<bool> CloseAndQuit ()
 		{
-			return await App.Current.StateController.MoveBack ();
+			return await App.Current.GUIToolkit.Quit ();
 		}
 
 		#endregion
@@ -281,8 +282,8 @@ namespace LongoMatch.Gui
 					}
 				);
 			};
-			QuitAction.Activated += async (o, e) => {
-				await CloseAndQuit ();
+			QuitAction.Activated += (o, e) => {
+				App.Current.GUIToolkit.Quit ();
 			};
 			OpenProjectAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<SaveProjectEvent> (
@@ -325,7 +326,7 @@ namespace LongoMatch.Gui
 
 		protected override bool OnDeleteEvent (Gdk.Event evnt)
 		{
-			CloseAndQuit ();
+			App.Current.GUIToolkit.Quit ();
 			return true;
 		}
 
