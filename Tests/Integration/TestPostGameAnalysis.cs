@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -166,7 +166,7 @@ namespace Tests.Integration
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 
-			// Now create a new ProjectLongoMatch with the same templates
+			// Now create a new LMProject with the same templates
 			p = CreateProject ();
 			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (p);
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());

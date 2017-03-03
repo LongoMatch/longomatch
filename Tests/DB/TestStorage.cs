@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2015 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -255,7 +255,7 @@ namespace Tests.DB
 				return true;
 			});
 
-			/* PlayerLongoMatch has not been added to the db, as it was already referenced
+			/* LMPlayer has not been added to the db, as it was already referenced
 			 * by the IDReferenceResolver */
 			Assert.AreEqual (2, db.DocumentCount);
 
@@ -367,13 +367,13 @@ namespace Tests.DB
 			p = storage.Retrieve<LMProject> (p.ID);
 
 			// Removing this object should not remove the EvenType from the database, which might be referenced by
-			// TimelineEventLongoMatch's in the timeline
+			// LMTimelineEvent's in the timeline
 			EventType evtType = (p.Dashboard.List [0] as AnalysisEventButton).EventType;
 			p.Dashboard.List.Remove (p.Dashboard.List [0]);
 			storage.Store (p);
 			Assert.DoesNotThrow (() => storage.Retrieve<LMProject> (p.ID));
 
-			// Delete an event with a PlayerLongoMatch, a Team and an EventType, it should delete only the timeline event
+			// Delete an event with a LMPlayer, a Team and an EventType, it should delete only the timeline event
 			p.Timeline [0].Teams.Add (p.LocalTeamTemplate);
 			p.Timeline [0].Players.Add (p.LocalTeamTemplate.List [0]);
 			p.Timeline.Remove (p.Timeline [0]);
