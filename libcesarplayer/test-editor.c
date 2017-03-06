@@ -114,7 +114,7 @@ main (int argc, char *argv[])
   g_signal_connect (editor, "error", G_CALLBACK (error_cb), editor);
   g_signal_connect (editor, "percent_completed", G_CALLBACK (percent_done_cb),
       editor);
-  gst_video_editor_start (editor);
+  gst_video_editor_start (editor, FALSE);
   g_main_loop_run (loop);
 
   return 0;

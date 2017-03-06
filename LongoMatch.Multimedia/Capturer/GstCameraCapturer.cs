@@ -65,7 +65,7 @@ namespace LongoMatch.Video.Capturer
 		static extern void gst_camera_capturer_start (IntPtr raw);
 
 		[DllImport ("libcesarplayer.dll")]
-		static extern void gst_camera_capturer_run (IntPtr raw);
+		static extern void gst_camera_capturer_run (IntPtr raw, bool hardwareAcceleration);
 
 		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_close (IntPtr raw);
@@ -478,7 +478,7 @@ namespace LongoMatch.Video.Capturer
 
 		public void Run ()
 		{
-			gst_camera_capturer_run (Handle);
+			gst_camera_capturer_run (Handle, LongoMatch.Config.HardwareAcceleration);
 		}
 
 		public void Close ()

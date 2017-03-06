@@ -88,7 +88,7 @@ EXPORT void gst_camera_capturer_configure                (GstCameraCapturer *gcc
                                                           guint output_height,
                                                           guintptr window_handle);
 
-EXPORT void gst_camera_capturer_run                       (GstCameraCapturer * gcc);
+EXPORT void gst_camera_capturer_run                       (GstCameraCapturer * gcc, gboolean hardware_acceleration);
 
 EXPORT void gst_camera_capturer_close                     (GstCameraCapturer * gcc);
 

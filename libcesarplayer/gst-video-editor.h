@@ -67,7 +67,7 @@ EXPORT GType gst_video_editor_get_type (void) G_GNUC_CONST;
 
 EXPORT void gst_video_editor_init_backend (int *argc, char ***argv);
 EXPORT GstVideoEditor *gst_video_editor_new (GError ** err);
-EXPORT void gst_video_editor_start (GstVideoEditor * gve);
+EXPORT void gst_video_editor_start (GstVideoEditor * gve, gboolean hardware_acceleration);
 EXPORT void gst_video_editor_cancel (GstVideoEditor * gve);
 EXPORT void gst_video_editor_set_encoding_format              (GstVideoEditor * gve,
                                                                gchar *output_file,

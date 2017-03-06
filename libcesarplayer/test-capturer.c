@@ -58,7 +58,7 @@ on_realized_cb (GtkWidget * video)
       0, 0, 0, 0,
       VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
       VIDEO_MUXER_MP4, 1000, 100, TRUE, 640, 480, window);
-  gst_camera_capturer_run (gvc);
+  gst_camera_capturer_run (gvc, FALSE);
   g_signal_connect (G_OBJECT (recbutton), "clicked",
       G_CALLBACK (rec_clicked_cb), gvc);
   g_signal_connect (G_OBJECT (stopbutton), "clicked",

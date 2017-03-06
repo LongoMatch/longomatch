@@ -154,7 +154,7 @@ EXPORT void lgm_set_window_handle (GstXOverlay *overlay, guintptr window_handle)
 void lgm_init_debug();
 gchar * lgm_filename_to_uri (const gchar *filena);
 GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
-    gboolean realtime, GQuark quark, GError **err);
+    gboolean realtime, GQuark quark, GError **err, gboolean hardware_acceleration);
 GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
     GQuark quark, GError **err);
 GstElement * lgm_create_muxer (VideoMuxerType type,

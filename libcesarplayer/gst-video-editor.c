@@ -221,7 +221,7 @@ gst_video_editor_error_quark (void)
 }
 
 static void
-gve_create_video_encode_bin (GstVideoEditor * gve)
+gve_create_video_encode_bin (GstVideoEditor * gve, gboolean hardware_acceleration)
 {
   GstPad *sinkpad = NULL;
   GstPad *srcpad = NULL;
@@ -234,7 +234,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   gve->priv->queue = gst_element_factory_make ("queue", "video-encode-queue");
   gve->priv->video_encoder =
       lgm_create_video_encoder (gve->priv->video_encoder_type,
-      gve->priv->video_quality, FALSE, GVE_ERROR, &error);
+      gve->priv->video_quality, FALSE, GVE_ERROR, &error, hardware_acceleration);
   if (error) {
     g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, error->message);
     g_error_free (error);
@@ -580,7 +580,7 @@ gst_video_editor_clear_segments_list (GstVideoEditor * gve)
 }
 
 void
-gst_video_editor_start (GstVideoEditor * gve)
+gst_video_editor_start (GstVideoEditor * gve, gboolean hardware_acceleration)
 {
   GError *error = NULL;
   GstPad *pad;
@@ -598,7 +598,7 @@ gst_video_editor_start (GstVideoEditor * gve)
     return;
   }
   gve->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
-  gve_create_video_encode_bin (gve);
+  gve_create_video_encode_bin (gve, hardware_acceleration);
 
   /* Set elements properties */
   g_object_set (G_OBJECT (gve->priv->file_sink), "location",

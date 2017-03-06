@@ -91,7 +91,7 @@ main (int argc, char *argv[])
   gtk_widget_show (GTK_WIDGET (gvc));
   gtk_widget_show (window);
 
-  gst_camera_capturer_run (gvc);
+  gst_camera_capturer_run (gvc, FALSE);
   gtk_main ();
 
   return 0;

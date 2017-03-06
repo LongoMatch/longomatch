@@ -1218,7 +1218,7 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
 
 static gboolean
 gst_camera_capturer_create_video_encoder (GstCameraCapturer * gcc,
-    VideoEncoderType type, GError ** err)
+    VideoEncoderType type, GError ** err, gboolean hardware_acceleration)
 {
   GstElement *encoder = NULL;
 
@@ -1226,7 +1226,7 @@ gst_camera_capturer_create_video_encoder (GstCameraCapturer * gcc,
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   encoder = lgm_create_video_encoder (type, gcc->priv->video_quality, TRUE,
-      GCC_ERROR, err);
+      GCC_ERROR, err, hardware_acceleration);
   if (!encoder) {
     return FALSE;
   }
@@ -1275,13 +1275,13 @@ gst_camera_capturer_create_video_muxer (GstCameraCapturer * gcc,
 }
 
 static void
-gst_camera_capturer_initialize (GstCameraCapturer * gcc)
+gst_camera_capturer_initialize (GstCameraCapturer * gcc, gboolean hardware_acceleration)
 {
   GError *err = NULL;
 
   GST_INFO_OBJECT (gcc, "Initializing encoders");
   if (!gst_camera_capturer_create_video_encoder (gcc,
-          gcc->priv->video_encoder_type, &err))
+          gcc->priv->video_encoder_type, &err, hardware_acceleration))
     goto missing_plugin;
   if (!gst_camera_capturer_create_audio_encoder (gcc,
           gcc->priv->audio_encoder_type, &err))
@@ -1506,12 +1506,12 @@ gcc_get_video_stream_info (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
  * ****************************************/
 
 void
-gst_camera_capturer_run (GstCameraCapturer * gcc)
+gst_camera_capturer_run (GstCameraCapturer * gcc, gboolean hardware_acceleration)
 {
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
-  gst_camera_capturer_initialize (gcc);
+  gst_camera_capturer_initialize (gcc, hardware_acceleration);
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
 }
 

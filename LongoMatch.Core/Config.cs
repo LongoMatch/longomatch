@@ -341,6 +341,15 @@ namespace LongoMatch
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Config"/> hardware acceleration enabled.
+		/// </summary>
+		/// <value><c>true</c> if hardware acceleration enabled; otherwise, <c>false</c>.</value>
+		static public bool HardwareAcceleration {
+			get;
+			set;
+		}
+
 		static public string LatestVersionURL {
 			get;
 			set;
