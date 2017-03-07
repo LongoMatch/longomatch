@@ -105,12 +105,12 @@ namespace LongoMatch.Services.State
 			Controllers.Add (new CoreEventsController ());
 		}
 
-		public override async Task<bool> UnloadState ()
+		public override async Task<bool> HideState ()
 		{
 			if (!await ViewModel.Close ()) {
 				return false;
 			}
-			return await base.UnloadState ();
+			return await base.HideState ();
 		}
 	}
 }

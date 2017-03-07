@@ -40,7 +40,7 @@ namespace LongoMatch.Services
 	[Controller (ProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
-	public class ProjectAnalysisController : DisposableBase, IController
+	public class ProjectAnalysisController : ControllerBase
 	{
 		LMProjectAnalysisVM viewModel;
 
@@ -68,19 +68,20 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void SetViewModel (IViewModel viewModel)
+		public override void SetViewModel (IViewModel viewModel)
 		{
 			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
-		public IEnumerable<KeyAction> GetDefaultKeyActions ()
+		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
 		{
 			return Enumerable.Empty<KeyAction> ();
 		}
 
-		public void Start ()
+		public async override void Start ()
 		{
-			Load (viewModel);
+			base.Start ();
+			await Load (viewModel);
 			App.Current.EventsBroker.SubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.SubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Subscribe<CaptureErrorEvent> (HandleCaptureError);
@@ -88,8 +89,9 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Subscribe<MultimediaErrorEvent> (HandleMultimediaError);
 		}
 
-		public void Stop ()
+		public async override void Stop ()
 		{
+			base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.UnsubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Unsubscribe<CaptureErrorEvent> (HandleCaptureError);

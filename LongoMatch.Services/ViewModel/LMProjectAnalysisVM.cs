@@ -35,10 +35,10 @@ namespace LongoMatch.Services.ViewModel
 			set;
 		}
 
-		public Task<bool> Close ()
+		public async Task<bool> Close ()
 		{
-			return App.Current.EventsBroker.PublishWithReturn (
-				new CloseEvent<LMProjectVM> { Object = Project });
+			return await App.Current.EventsBroker.PublishWithReturn (
+			   new CloseEvent<LMProjectVM> { Object = Project });
 		}
 	}
 }
