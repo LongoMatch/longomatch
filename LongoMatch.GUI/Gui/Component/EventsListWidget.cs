@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Component
 		{
 			LMProject project = ViewModel.Model;
 			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
-			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
+			notebookHelper.SetTabIcon (eventsScrolledWindow, "longomatch-category", "longomatch-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
 				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
