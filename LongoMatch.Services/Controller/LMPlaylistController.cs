@@ -19,7 +19,9 @@ using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services
@@ -51,6 +53,12 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
 			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+		}
+
+		public override void SetViewModel (IViewModel viewModel)
+		{
+			base.SetViewModel (viewModel);
+			ProjectViewModel = (ProjectVM) (viewModel as dynamic);
 		}
 
 		void HandleNext (NextPlaylistElementEvent e)

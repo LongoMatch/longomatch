@@ -56,6 +56,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void DisposeManagedResources ()
 		{
+			base.DisposeManagedResources ();
 			ViewModel = null;
 		}
 

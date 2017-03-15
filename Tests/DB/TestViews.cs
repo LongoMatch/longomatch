@@ -30,6 +30,7 @@ using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 using VAS.DB;
 using VAS.DB.Views;
 using LMDB = LongoMatch.DB;
@@ -115,7 +116,7 @@ namespace Tests.DB
 			d.Name = "Dashboard1";
 			storage.Store (d);
 
-			List<LMDashboard> dashboards = storage.RetrieveAll<LMDashboard> ().ToList ();
+			List<Dashboard> dashboards = storage.RetrieveAll<Dashboard> ().ToList ();
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
@@ -127,7 +128,7 @@ namespace Tests.DB
 				storage.Store (da);
 			}
 
-			dashboards = storage.RetrieveAll<LMDashboard> ().ToList ();
+			dashboards = storage.RetrieveAll<Dashboard> ().ToList ();
 			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 			Assert.AreEqual (6, dashboards.Count);
 		}
@@ -142,7 +143,7 @@ namespace Tests.DB
 			(d.List [8] as PenaltyCardButton).EventType = (d.List [7] as PenaltyCardButton).EventType;
 			(d.List [10] as ScoreButton).EventType = (d.List [9] as ScoreButton).EventType;
 			storage.Store (d);
-			LMDashboard d1 = storage.Retrieve<LMDashboard> (new QueryFilter ()).First ();
+			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()).First ();
 			d1.IsLoaded = true;
 			Utils.AreEquals (d, d1, false);
 			d1.IsLoaded = false;
@@ -157,7 +158,7 @@ namespace Tests.DB
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
 
-			List<LMTeam> teams = storage.RetrieveAll<LMTeam> ().ToList ();
+			List<Team> teams = storage.RetrieveAll<Team> ().ToList ();
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
@@ -170,7 +171,7 @@ namespace Tests.DB
 				storage.Store (te);
 			}
 
-			Assert.AreEqual (6, storage.RetrieveAll<LMTeam> ().Count ());
+			Assert.AreEqual (6, storage.RetrieveAll<Team> ().Count ());
 		}
 
 		[Test ()]
@@ -180,7 +181,7 @@ namespace Tests.DB
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
-			LMTeam t1 = storage.Retrieve<LMTeam> (new QueryFilter ()).First ();
+			Team t1 = storage.Retrieve<Team> (new QueryFilter ()).First ();
 			t1.IsLoaded = true;
 			Utils.AreEquals (t, t1, false);
 			t1.IsLoaded = false;
