@@ -34,7 +34,6 @@ namespace LongoMatch.Core.Handlers
 	public delegate void OpenProjectIDHandler (Guid project_id,LMProject project);
 	public delegate void OpenProjectHandler ();
 	public delegate void NewProjectHandler (LMProject project);
-	public delegate void OpenNewProjectHandler (LMProject project,ProjectType projectType,CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (LMProject project);
 	public delegate void CreateThumbnailsHandler (LMProject project);

@@ -76,7 +76,7 @@ namespace Tests.DB
 		public void TestQueryPreloaded ()
 		{
 			storage.Store (LMDashboard.DefaultTemplate (5));
-			var dashboards = storage.Retrieve<LMDashboard> (new QueryFilter ());
+			var dashboards = storage.Retrieve<Dashboard> (new QueryFilter ());
 			Assert.IsFalse (dashboards.Any (d => d.IsLoaded));
 		}
 
@@ -85,19 +85,19 @@ namespace Tests.DB
 		{
 			var dashboard = LMDashboard.DefaultTemplate (5);
 			storage.Store (dashboard);
-			var dashboards = storage.RetrieveFull<LMDashboard> (new QueryFilter (), null);
+			var dashboards = storage.RetrieveFull<Dashboard> (new QueryFilter (), null);
 			Assert.IsFalse (dashboards.Any (d => !d.IsLoaded));
 
 			StorableObjectsCache cache = new StorableObjectsCache ();
 			cache.AddReference (dashboard);
-			var newdashboard = storage.RetrieveFull<LMDashboard> (new QueryFilter (), cache).First ();
+			var newdashboard = storage.RetrieveFull<Dashboard> (new QueryFilter (), cache).First ();
 			Assert.IsTrue (Object.ReferenceEquals (dashboard, newdashboard));
 		}
 
 		[Test ()]
 		public void TestQueryDashboards ()
 		{
-			IEnumerable<LMDashboard> dashboards;
+			IEnumerable<Dashboard> dashboards;
 
 			for (int i = 0; i < 5; i++) {
 				var da = LMDashboard.DefaultTemplate (5);
@@ -107,26 +107,26 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Dashboard1");
-			dashboards = storage.Retrieve<LMDashboard> (filter);
+			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (1, dashboards.Count ());
 			Assert.AreEqual ("Dashboard1", dashboards.First ().Name);
 
 			filter.Add ("Name", "Dashboard1", "Dashboard3");
-			dashboards = storage.Retrieve<LMDashboard> (filter);
+			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (2, dashboards.Count ());
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard1"));
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
-			dashboards = storage.Retrieve<LMDashboard> (filter);
+			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (0, dashboards.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					dashboards = storage.Retrieve<LMDashboard> (filter).ToList ();
+					dashboards = storage.Retrieve<Dashboard> (filter).ToList ();
 				});
 			Assert.AreEqual (0, dashboards.Count ());
 		}
@@ -134,7 +134,7 @@ namespace Tests.DB
 		[Test ()]
 		public void TestQueryTeams ()
 		{
-			IEnumerable<LMTeam> teams;
+			IEnumerable<Team> teams;
 
 			for (int i = 0; i < 5; i++) {
 				var da = LMTeam.DefaultTemplate (5);
@@ -144,26 +144,26 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Team1");
-			teams = storage.Retrieve<LMTeam> (filter);
+			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (1, teams.Count ());
 			Assert.AreEqual ("Team1", teams.First ().Name);
 
 			filter.Add ("Name", "Team1", "Team3");
-			teams = storage.Retrieve<LMTeam> (filter);
+			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (2, teams.Count ());
 			Assert.IsTrue (teams.Any (d => d.Name == "Team1"));
 			Assert.IsTrue (teams.Any (d => d.Name == "Team3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
-			teams = storage.Retrieve<LMTeam> (filter);
+			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (0, teams.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					teams = storage.Retrieve<LMTeam> (filter).ToList ();
+					teams = storage.Retrieve<Team> (filter).ToList ();
 				});
 			Assert.AreEqual (0, teams.Count ());
 		}
@@ -368,7 +368,7 @@ namespace Tests.DB
 			filter.Add ("Parent", projects);
 
 			Assert.AreEqual (9, storage.Retrieve<EventType> (filter).Count ());
-			Assert.AreEqual (2, storage.Retrieve<LMTeam> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count ());
 			Assert.AreEqual (8, storage.Retrieve<LMPlayer> (filter).Count ());
 		}
 

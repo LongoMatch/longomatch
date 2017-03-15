@@ -27,16 +27,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Events
 {
-	public class OpenNewProjectEvent : Event
-	{
-		public LMProject Project { get; set; }
-
-		public ProjectType ProjectType { get; set; }
-
-		public CaptureSettings CaptureSettings { get; set; }
-	}
-
-	public class OpenProjectIDEvent : Event
+    public class OpenProjectIDEvent : Event
 	{
 		public Guid ProjectID { get; set; }
 

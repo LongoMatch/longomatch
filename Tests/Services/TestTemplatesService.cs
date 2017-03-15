@@ -197,7 +197,7 @@ namespace Tests.Services
 			// Template does not exists
 			Assert.DoesNotThrow (() => provider.Delete (LMDashboard.DefaultTemplate (1)));
 			// System template
-			Assert.Throws<TemplateNotFoundException<LMDashboard>> (() => provider.Delete (provider.Templates [0]));
+			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Delete (provider.Templates [0]));
 			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			provider.Save (d);

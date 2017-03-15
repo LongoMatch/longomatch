@@ -22,7 +22,6 @@ namespace Tests.Plugins.Importers
 	{
 		LongoMatchImporter importer;
 		Mock<IGUIToolkit> mockGUI;
-		ProjectAnalysisController manager;
 		Mock<IDialogs> mockDialog;
 
 		[TestFixtureSetUp]
@@ -30,9 +29,7 @@ namespace Tests.Plugins.Importers
 		{
 			importer = new LongoMatchImporter ();
 			mockGUI = new Mock<IGUIToolkit> ();
-			manager = new ProjectAnalysisController ();
 			mockDialog = new Mock<IDialogs> ();
-			manager.Start ();
 			App.Current.ProjectExtension = ".tmp";
 
 		}
@@ -40,7 +37,6 @@ namespace Tests.Plugins.Importers
 		[TestFixtureTearDown]
 		public void FixtureTearDown ()
 		{
-			manager.Stop ();
 		}
 
 		[Test ()]
