@@ -280,21 +280,15 @@ namespace LongoMatch.Services
 				return false;
 
 			Log.Debug ("Closing project " + Project.ShortDescription);
+
 			if (Capturer != null) {
 				Capturer.Close ();
 			}
-			if (VideoPlayer != null) {
-				VideoPlayer.Dispose ();
-			}
 
-			bool saveOk = true;
 			if (save) {
-				saveOk = SaveProject ();
+				return SaveProject ();
 			}
 
-			if (saveOk) {
-				return await App.Current.StateController.MoveToHome ();
-			}
 			return false;
 		}
 
