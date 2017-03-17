@@ -18,6 +18,7 @@
 
 using System.Dynamic;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.ViewModel;
 
 namespace LongoMatch.Services.State
@@ -38,6 +39,8 @@ namespace LongoMatch.Services.State
 			} else {
 				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
 			}
+
+			App.Current.EventsBroker.Publish (new OpenEvent<ProjectVM> { Object = project });
 		}
 	}
 }
