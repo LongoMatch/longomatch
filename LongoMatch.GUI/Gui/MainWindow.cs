@@ -25,6 +25,7 @@ using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
@@ -36,6 +37,7 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
 
@@ -46,7 +48,7 @@ namespace LongoMatch.Gui
 	public partial class MainWindow : Gtk.Window, IMainController
 	{
 		IGUIToolkit guiToolKit;
-		LMProject openedProject;
+		LMProjectVM openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
 
@@ -60,7 +62,6 @@ namespace LongoMatch.Gui
 			Title = Constants.SOFTWARE_NAME;
 			projectType = ProjectType.None;
 
-			ConnectSignals ();
 			ConnectMenuSignals ();
 
 			// Default screen
@@ -140,7 +141,7 @@ namespace LongoMatch.Gui
 			MenuItem parent = (MenuItem)this.UIManager.GetWidget ("/menubar1/ToolsAction/ExportProjectAction1");
 
 			MenuItem item = new MenuItem (name);
-			item.Activated += (sender, e) => (exportAction (openedProject, false));
+			item.Activated += (sender, e) => (exportAction (openedProject.Model, false));
 			item.Show ();
 			(parent.Submenu as Menu).Append (item);
 		}
@@ -194,7 +195,7 @@ namespace LongoMatch.Gui
 					itemAction.Activated += async (sender, e) => {
 						bool loadTool = true;
 						if (openedProject != null) {
-							loadTool = await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ());
+							loadTool = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<ProjectVM> { Object = openedProject });
 						}
 						if (loadTool) {
 							tool.Load (App.Current.GUIToolkit);
@@ -213,6 +214,8 @@ namespace LongoMatch.Gui
 			}
 			this.UIManager.EnsureUpdate ();
 			renderingstatebarview1.SetViewModel (App.Current.JobsManager);
+
+			ConnectSignals ();
 		}
 
 		/// <summary>
@@ -244,21 +247,16 @@ namespace LongoMatch.Gui
 
 		private void ConnectSignals ()
 		{
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (this.HandleOpenedProject);
+			App.Current.EventsBroker.Subscribe<OpenEvent<ProjectVM>> (HandleOpen);
 		}
 
 		private void ConnectMenuSignals ()
 		{
 			SaveProjectAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<SaveProjectEvent> (
-					new SaveProjectEvent {
-						Project = openedProject,
-						ProjectType = projectType
-					}
-				);
+				App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = openedProject });
 			};
 			CloseProjectAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
+				App.Current.StateController.MoveToHome ();
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
 				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null, true);
@@ -278,7 +276,7 @@ namespace LongoMatch.Gui
 			ShowProjectStatsAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<ShowProjectStatsEvent> (
 					new ShowProjectStatsEvent {
-						Project = openedProject
+						Project = openedProject.Model
 					}
 				);
 			};
@@ -288,7 +286,7 @@ namespace LongoMatch.Gui
 			OpenProjectAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<SaveProjectEvent> (
 					new SaveProjectEvent {
-						Project = openedProject,
+						Project = openedProject.Model,
 						ProjectType = projectType
 					}
 				);
@@ -369,9 +367,10 @@ namespace LongoMatch.Gui
 
 		#endregion
 
-		void HandleOpenedProject (OpenedProjectEvent e)
+		void HandleOpen (OpenEvent<ProjectVM> e)
 		{
-			openedProject = e.Project as LMProject;
+			openedProject = e.Object as LMProjectVM;
+			MakeActionsSensitive (true, openedProject.ProjectType);
 		}
 	}
 }

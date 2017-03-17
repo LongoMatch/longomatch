@@ -129,6 +129,7 @@
     <Compile Include="Drawing\Widgets\TestLMPlaysTimeline.cs" />
     <Compile Include="Controller\TestPlaylistController.cs" />
     <Compile Include="Controller\TestProjectAnalysisController.cs" />
+    <Compile Include="Services\TestLMStateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
