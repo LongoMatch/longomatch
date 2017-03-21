@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
 using LongoMatch.Core.Common;
+using System.Collections.Generic;
 
 namespace LongoMatch
 {
@@ -31,5 +32,10 @@ namespace LongoMatch
 			get;
 			set;
 		} = new Hotkeys();
+
+		public Config () : base ()
+		{
+			KeyConfigs = new List<VAS.Core.Hotkeys.KeyConfig> ();
+		}
 	}
 }

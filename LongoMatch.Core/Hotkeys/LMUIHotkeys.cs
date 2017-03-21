@@ -16,12 +16,31 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using VAS.Core.Hotkeys;
+
 namespace LongoMatch.Core.Hotkeys
 {
-	public class LMUIHotkeys
+	public static class LMUIHotkeys
 	{
-		public LMUIHotkeys ()
+		static List<KeyConfig> hotkeys;
+		public const string CATEGORY = "Longomatch Interface";
+
+		static LMUIHotkeys ()
 		{
+			hotkeys = new List<KeyConfig> {
+				new KeyConfig {
+					Name = "CLOSE_PROJECT",
+					Key = App.Current.Keyboard.ParseName ("<Control_L>+w"),
+					Category = CATEGORY,
+					Description = Catalog.GetString("Close project")
+				},
+			};
+		}
+
+		public static void RegisterDefaultHotkeys ()
+		{
+			App.Current.HotkeysService.Register (hotkeys);
 		}
 	}
 }

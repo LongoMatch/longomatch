@@ -15,7 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using System.Linq;
+using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Services.State;
@@ -38,6 +41,7 @@ namespace LongoMatch.Gui.Component
 	[View (LiveProjectAnalysisState.NAME)]
 	public partial class AnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
+		List<MenuItem> menuItems = new List<MenuItem>();
 		bool detachedPlayer;
 		LMProjectAnalysisVM viewModel;
 		Gtk.Window playerWindow;
@@ -123,7 +127,7 @@ namespace LongoMatch.Gui.Component
 		public KeyContext GetKeyContext ()
 		{
 			var keyContext = new KeyContext ();
-			keyContext.AddAction (
+			/*keyContext.AddAction (
 				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
 								() => codingwidget.ZoomIn ()));
 			keyContext.AddAction (
@@ -140,16 +144,42 @@ namespace LongoMatch.Gui.Component
 								() => codingwidget.ShowTimeline ()));
 			keyContext.AddAction (
 				new VKeyAction ("SHOW_ZONAL_TAGS", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget.ShowZonalTags ()));
+								() => codingwidget.ShowZonalTags ()));*/
 			return keyContext;
 		}
 
 		public void OnLoad ()
 		{
+			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
+			UIManager uimanager = window.GetUIManager ();
+
+			MenuItem close = this.ViewModel.CloseCommand.CreateMenuItem (Catalog.GetString ("Close Project"), 
+				                            							UIManager.AccelGroup, 
+				                            							"CLOSE_PROJECT");
+			MenuItem save = this.ViewModel.SaveCommand.CreateMenuItem (Catalog.GetString ("Save Project"), 
+			                                                           this.UIManager.AccelGroup, 
+			                                                           "SAVE_PROJECT");
+			menuItems.Add (save);
+			menuItems.Add (close);
+
+			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuName));
+			(fileMenu.Submenu as Menu).Insert (save, window.FileMenuEntryPoint);
+			window.FileMenuEntryPoint++;
+			(fileMenu.Submenu as Menu).Insert (close, window.FileMenuEntryPoint);
+			window.FileMenuEntryPoint++;
 		}
 
 		public void OnUnload ()
 		{
+			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
+			UIManager uimanager = window.GetUIManager ();
+
+			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuName));
+			foreach (MenuItem item in menuItems) {
+				(fileMenu.Submenu as Menu).Remove (item);
+			}
+
+			menuItems.Clear ();
 		}
 
 		public void TagPlayer (Player player)

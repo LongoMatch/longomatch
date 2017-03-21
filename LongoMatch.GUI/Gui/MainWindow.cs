@@ -110,6 +110,16 @@ namespace LongoMatch.Gui
 			return UIManager;
 		}
 
+		public string FileMenuName {
+			get { 
+				return "/menubar1/FileAction"; 
+			}
+		}
+
+		public int FileMenuEntryPoint {	get; set; }
+
+		public int ToolsMenuEntryPoint { get; set; }
+
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
 		/// </summary>
@@ -216,6 +226,8 @@ namespace LongoMatch.Gui
 			renderingstatebarview1.SetViewModel (App.Current.JobsManager);
 
 			ConnectSignals ();
+
+			this.FileMenuEntryPoint = 3;
 		}
 
 		/// <summary>
@@ -252,9 +264,9 @@ namespace LongoMatch.Gui
 
 		private void ConnectMenuSignals ()
 		{
-			SaveProjectAction.Activated += (o, e) => {
+			/*SaveProjectAction.Activated += (o, e) => {
 				App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = openedProject });
-			};
+			};*/
 			CloseProjectAction.Activated += (o, e) => {
 				App.Current.StateController.MoveToHome ();
 			};
@@ -315,11 +327,8 @@ namespace LongoMatch.Gui
 
 		private void MakeActionsSensitive (bool sensitive, ProjectType projectType)
 		{
-			bool sensitive2 = sensitive && projectType == ProjectType.FileProject;
-			CloseProjectAction.Sensitive = sensitive;
 			ExportProjectAction1.Sensitive = sensitive;
 			ShowProjectStatsAction.Sensitive = sensitive;
-			SaveProjectAction.Sensitive = sensitive2;
 		}
 
 		protected override bool OnDeleteEvent (Gdk.Event evnt)

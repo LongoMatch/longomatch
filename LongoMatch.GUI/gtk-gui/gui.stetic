@@ -1098,8 +1098,6 @@ Sort by competition</property>
                   <node type="Menu" action="FileAction">
                     <node type="Menuitem" action="NewPojectAction" />
                     <node type="Menuitem" action="OpenProjectAction" />
-                    <node type="Menuitem" action="SaveProjectAction" />
-                    <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="ImportProjectAction" />
                     <node type="Separator" />

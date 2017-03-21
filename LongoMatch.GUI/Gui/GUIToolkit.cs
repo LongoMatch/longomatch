@@ -237,7 +237,7 @@ namespace LongoMatch.Gui
 			return ret;
 		}
 
-		public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
+		/*public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
 		{
 			HotKeySelectorDialog dialog;
 			Window w;
@@ -251,7 +251,7 @@ namespace LongoMatch.Gui
 			}
 			dialog.Destroy ();
 			return hotkey;
-		}
+		}*/
 
 		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
 														 string countText, string emptyText,

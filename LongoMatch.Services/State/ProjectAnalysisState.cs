@@ -107,9 +107,7 @@ namespace LongoMatch.Services.State
 
 		public override async Task<bool> HideState ()
 		{
-			if (!await ViewModel.Close ()) {
-				return false;
-			}
+			ViewModel.CloseCommand.Execute ();
 			return await base.HideState ();
 		}
 	}

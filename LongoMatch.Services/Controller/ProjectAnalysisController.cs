@@ -285,8 +285,13 @@ namespace LongoMatch.Services
 				Capturer.Close ();
 			}
 
+			bool saveOk = true;
 			if (save) {
-				return SaveProject ();
+				saveOk = SaveProject ();
+			}
+
+			if (saveOk) {
+				return await App.Current.StateController.MoveToHome ();
 			}
 
 			return false;
@@ -354,7 +359,11 @@ namespace LongoMatch.Services
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				Project.ProjectType = ProjectType.FileProject;
 				LMStateHelper.OpenProject (Project);
+			} 
+			else {
+				await App.Current.StateController.MoveToHome ();
 			}
+
 			return false;
 		}
 

@@ -93,7 +93,7 @@ namespace LongoMatch.Gui.Component
 		public KeyContext GetKeyContext ()
 		{
 			var keyContext = new KeyContext ();
-			keyContext.AddAction (
+			/*keyContext.AddAction (
 				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
 								() => codingwidget1.ZoomIn ()));
 			keyContext.AddAction (
@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 								() => codingwidget1.ShowDashboard ()));
 			keyContext.AddAction (
 				new VKeyAction ("SHOW_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget1.ShowTimeline ()));
+								() => codingwidget1.ShowTimeline ()));*/
 			return keyContext;
 		}
 
