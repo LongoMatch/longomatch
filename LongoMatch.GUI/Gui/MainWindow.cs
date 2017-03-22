@@ -110,9 +110,9 @@ namespace LongoMatch.Gui
 			return UIManager;
 		}
 
-		public MenuExtensionEntry FileMenuEntry { get; protected set; }
+		public IMenuExtensionEntry FileMenuEntry { get; protected set; }
 
-		public MenuExtensionEntry ToolMenuEntry { get; protected set; }
+		public IMenuExtensionEntry ToolMenuEntry { get; protected set; }
 
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen

@@ -16,31 +16,31 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-namespace LongoMatch.Gui
+namespace LongoMatch
 {
-	public class MenuExtensionEntry : IMenuExtensionEntry
+	/// <summary>
+	/// Defines an entry point in a specified menu by a window
+	/// </summary>
+	public interface IMenuExtensionEntry
 	{
-		private int positionEntry;
+		/// <summary>
+		/// Position available to add a new menu entry
+		/// </summary>
+		int LastPosition { get; }
 
-		public MenuExtensionEntry (string menuName, int positionEntry)
-		{
-			this.MenuName = menuName;
-			this.LastPosition = positionEntry;
-			this.positionEntry = positionEntry;
-		}
+		/// <summary>
+		/// Name fo the menu to be extended
+		/// </summary>
+		string MenuName { get; }
 
-		public int LastPosition { get; protected set; }
+		/// <summary>
+		/// Called when a menu item is added to the extension
+		/// </summary>
+		void UpdateLastPosition ();
 
-		public string MenuName { get; }
-
-		public void UpdateLastPosition ()
-		{
-			this.LastPosition++;
-		}
-
-		public void ResetMenuEntry ()
-		{
-			this.LastPosition = this.positionEntry;
-		}
+		/// <summary>
+		/// Resets the menu entry to the original state
+		/// </summary>
+		void ResetMenuEntry ();
 	}
 }

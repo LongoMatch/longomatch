@@ -162,14 +162,16 @@ namespace LongoMatch.Gui.Component
 			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 			UIManager uimanager = window.GetUIManager ();
 
+			window.FileMenuEntry.ResetMenuEntry ();
 			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuEntry.MenuName));
 			foreach (MenuItem item in menuItems) {
 				(fileMenu.Submenu as Menu).Remove (item);
 			}
 
+			window.ToolMenuEntry.ResetMenuEntry ();
 			MenuItem toolsMenu = ((MenuItem)uimanager.GetWidget (window.ToolMenuEntry.MenuName));
 			foreach (MenuItem item in menuItems) {
-				(fileMenu.Submenu as Menu).Remove (item);
+				(toolsMenu.Submenu as Menu).Remove (item);
 			}
 
 			menuItems.Clear ();
@@ -257,6 +259,7 @@ namespace LongoMatch.Gui.Component
 				Name = "ExportProjectAction", Submenu = new Menu (), Visible = true };
 			(toolMenu.Submenu as Menu).Insert (exportMenu, window.ToolMenuEntry.LastPosition);
 			window.ToolMenuEntry.UpdateLastPosition ();
+			this.menuItems.Add (exportMenu);
 
 			foreach (IProjectExporter exporter in
 			    App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
@@ -268,7 +271,7 @@ namespace LongoMatch.Gui.Component
 			(toolMenu.Submenu as Menu).Insert (separator, window.ToolMenuEntry.LastPosition);
 		}
 
-		private void RegisterMenuItem (MenuItem item, Menu menu, MenuExtensionEntry menuEntry)
+		private void RegisterMenuItem (MenuItem item, Menu menu, IMenuExtensionEntry menuEntry)
 		{
 			menuItems.Add (item);
 			menu.Insert (item, menuEntry.LastPosition);
