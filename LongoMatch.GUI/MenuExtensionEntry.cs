@@ -15,34 +15,24 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.State;
-using NUnit.Framework;
-using VAS.Core.Common;
-using VAS.Core.Events;
-using VAS.Core.ViewModel;
-
-namespace Tests.Services
+using System;
+namespace LongoMatch.Gui
 {
-	public class TestLMStateHelper
+	public class MenuExtensionEntry
 	{
-		[Test]
-		public void OpenProject_NotifiesProjectOpened_Ok ()
+		public MenuExtensionEntry (string menuName, int lastPosition)
 		{
-			// Arrange
-			bool projectOpened = false;
-			LMProjectVM viewmodel = new LMProjectVM ();
-			viewmodel.Model = new LMProject ();
-			CaptureSettings settings = new CaptureSettings();
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ( e => projectOpened = true );
+			this.MenuName = menuName;
+			this.LastPosition = lastPosition;
+		}
 
-			// Act
-			LMStateHelper.OpenProject (viewmodel, settings);
+		public int LastPosition { get; protected set; }
 
-			// Assert
-			Assert.True (projectOpened);
+		public string MenuName { get; }
+
+		public void UpdateLastPosition ()
+		{
+			this.LastPosition++;
 		}
 	}
 }

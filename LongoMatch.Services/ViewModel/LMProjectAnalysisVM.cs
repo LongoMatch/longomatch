@@ -7,6 +7,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Events;
 using VAS.Services.ViewModel;
 using System.Threading.Tasks;
+using LongoMatch.Core.Events;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -18,6 +19,8 @@ namespace LongoMatch.Services.ViewModel
 			SaveCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = Project }),
 				() => Project.Edited);
+			ShowStatsCommand = new Command (
+				() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = Project.Model }));
 			CloseCommand = new Command (Close);
 		}
 
@@ -27,6 +30,11 @@ namespace LongoMatch.Services.ViewModel
 		}
 
 		public CaptureSettings CaptureSettings {
+			get;
+			set;
+		}
+
+		public Command ShowStatsCommand {
 			get;
 			set;
 		}

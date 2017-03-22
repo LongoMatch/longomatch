@@ -177,6 +177,7 @@
 		<Compile Include="Gui\TreeView\LMPlaylistTreeView.cs" />
 		<Compile Include="Gui\TreeView\EventsFilterTreeView.cs" />
 		<Compile Include="Gui\TreeView\TeamTimelineEventsTreeView.cs" />
+		<Compile Include="MenuExtensionEntry.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">

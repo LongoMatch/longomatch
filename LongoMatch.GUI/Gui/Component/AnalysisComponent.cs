@@ -15,8 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
@@ -27,6 +29,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Plugins;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.UI.Helpers;
@@ -150,23 +153,8 @@ namespace LongoMatch.Gui.Component
 
 		public void OnLoad ()
 		{
-			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
-			UIManager uimanager = window.GetUIManager ();
-
-			MenuItem close = this.ViewModel.CloseCommand.CreateMenuItem (Catalog.GetString ("Close Project"), 
-				                            							UIManager.AccelGroup, 
-				                            							"CLOSE_PROJECT");
-			MenuItem save = this.ViewModel.SaveCommand.CreateMenuItem (Catalog.GetString ("Save Project"), 
-			                                                           this.UIManager.AccelGroup, 
-			                                                           "SAVE_PROJECT");
-			menuItems.Add (save);
-			menuItems.Add (close);
-
-			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuName));
-			(fileMenu.Submenu as Menu).Insert (save, window.FileMenuEntryPoint);
-			window.FileMenuEntryPoint++;
-			(fileMenu.Submenu as Menu).Insert (close, window.FileMenuEntryPoint);
-			window.FileMenuEntryPoint++;
+			this.LoadFileMenu ();
+			this.LoadToolsMenu ();
 		}
 
 		public void OnUnload ()
@@ -174,7 +162,12 @@ namespace LongoMatch.Gui.Component
 			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 			UIManager uimanager = window.GetUIManager ();
 
-			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuName));
+			MenuItem fileMenu = ((MenuItem)uimanager.GetWidget (window.FileMenuEntry.MenuName));
+			foreach (MenuItem item in menuItems) {
+				(fileMenu.Submenu as Menu).Remove (item);
+			}
+
+			MenuItem toolsMenu = ((MenuItem)uimanager.GetWidget (window.ToolMenuEntry.MenuName));
 			foreach (MenuItem item in menuItems) {
 				(fileMenu.Submenu as Menu).Remove (item);
 			}
@@ -235,5 +228,58 @@ namespace LongoMatch.Gui.Component
 				DetachPlayer ();
 		}
 
+		private void LoadFileMenu ()
+		{
+			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
+			MenuItem fileMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.FileMenuEntry.MenuName));
+
+			MenuItem save = this.ViewModel.SaveCommand.CreateMenuItem (
+				Catalog.GetString ("Save Project"), UIManager.AccelGroup, "SAVE_PROJECT");
+			RegisterMenuItem (save, fileMenu.Submenu as Menu, window.FileMenuEntry);
+
+			MenuItem close = this.ViewModel.CloseCommand.CreateMenuItem (
+				Catalog.GetString ("Close Project"), UIManager.AccelGroup, "CLOSE_PROJECT");
+			RegisterMenuItem (close, fileMenu.Submenu as Menu, window.FileMenuEntry);
+		}
+
+		private void LoadToolsMenu ()
+		{
+			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
+			MenuItem toolMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.ToolMenuEntry.MenuName));
+
+			// show stats menu item
+			MenuItem show = this.ViewModel.ShowStatsCommand.CreateMenuItem (
+				Catalog.GetString ("Show projects stats"), UIManager.AccelGroup, null);
+			RegisterMenuItem (show, toolMenu.Submenu as Menu, window.ToolMenuEntry);
+
+			// Export menu item
+			MenuItem exportMenu = new MenuItem (Catalog.GetString ("Export Project")) {
+				Name = "ExportProjectAction", Submenu = new Menu (), Visible = true };
+			(toolMenu.Submenu as Menu).Insert (exportMenu, window.ToolMenuEntry.LastPosition);
+			window.ToolMenuEntry.UpdateLastPosition ();
+
+			foreach (IProjectExporter exporter in
+			    App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
+				AddExportEntry (exportMenu, exporter.Description, new Func<Project, bool, Task> (exporter.Export));
+			}
+
+			// Add final separator
+			SeparatorMenuItem separator = new SeparatorMenuItem () { Visible = true };
+			(toolMenu.Submenu as Menu).Insert (separator, window.ToolMenuEntry.LastPosition);
+		}
+
+		private void RegisterMenuItem (MenuItem item, Menu menu, MenuExtensionEntry menuEntry)
+		{
+			menuItems.Add (item);
+			menu.Insert (item, menuEntry.LastPosition);
+			menuEntry.UpdateLastPosition ();
+		}
+
+		private void AddExportEntry (MenuItem parent, string name, Func<Project, bool, Task> exportAction)
+		{
+			MenuItem item = new MenuItem (name) { Visible = true };
+			item.Activated += (sender, e) => (exportAction (viewModel.Project.Model, false));
+			(parent.Submenu as Menu).Append (item);
+		}
 	}
 }

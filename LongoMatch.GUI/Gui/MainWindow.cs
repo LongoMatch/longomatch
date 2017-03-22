@@ -110,15 +110,9 @@ namespace LongoMatch.Gui
 			return UIManager;
 		}
 
-		public string FileMenuName {
-			get { 
-				return "/menubar1/FileAction"; 
-			}
-		}
+		public MenuExtensionEntry FileMenuEntry { get; protected set; }
 
-		public int FileMenuEntryPoint {	get; set; }
-
-		public int ToolsMenuEntryPoint { get; set; }
+		public MenuExtensionEntry ToolMenuEntry { get; protected set; }
 
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
@@ -144,16 +138,6 @@ namespace LongoMatch.Gui
 				ResetGUI ();
 			}
 			return true;
-		}
-
-		public void AddExportEntry (string name, Func<Project, bool, Task> exportAction)
-		{
-			MenuItem parent = (MenuItem)this.UIManager.GetWidget ("/menubar1/ToolsAction/ExportProjectAction1");
-
-			MenuItem item = new MenuItem (name);
-			item.Activated += (sender, e) => (exportAction (openedProject.Model, false));
-			item.Show ();
-			(parent.Submenu as Menu).Append (item);
 		}
 
 		public void Initialize ()
@@ -188,12 +172,6 @@ namespace LongoMatch.Gui
 			uint mergeId;
 			mergeId = this.UIManager.NewMergeId ();
 
-			// Insert project exporters
-			foreach (IProjectExporter exporter in
-					 App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
-				AddExportEntry (exporter.Description, new Func<Project, bool, Task> (exporter.Export));
-			}
-
 			// Insert our tools
 			foreach (ITool tool in tools) {
 				if (tool.MenubarLabel != null) {
@@ -227,7 +205,8 @@ namespace LongoMatch.Gui
 
 			ConnectSignals ();
 
-			this.FileMenuEntryPoint = 3;
+			this.FileMenuEntry = new MenuExtensionEntry ("/menubar1/FileAction", 3);
+			this.ToolMenuEntry = new MenuExtensionEntry ("/menubar1/ToolsAction", 6);
 		}
 
 		/// <summary>
