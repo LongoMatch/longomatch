@@ -46,8 +46,6 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			// App.Current.EventsBroker.Subscribe<ManageDatabasesEvent> (HandleManageDatabase);
-			// App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			Manager = CreateStorageManager (App.Current.DBDir);
 			App.Current.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
@@ -57,8 +55,6 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
-			// App.Current.EventsBroker.Unsubscribe<ManageDatabasesEvent> (HandleManageDatabase);
-			// App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			App.Current.DatabaseManager = Manager = null;
 			return true;
 		}

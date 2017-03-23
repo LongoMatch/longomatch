@@ -17,13 +17,11 @@
 //
 //
 using System;
-using VAS.Core.Interfaces.GUI;
 using System.Collections.Generic;
 using LongoMatch.Services.State;
+using VAS.Core.Interfaces.GUI;
 using VAS.Services.State;
 using PreferencesState = LongoMatch.Services.State.PreferencesState;
-using VAS.Core.Hotkeys;
-using LongoMatch.Core.Hotkeys;
 
 namespace LongoMatch.Services.States
 {
@@ -92,8 +90,6 @@ namespace LongoMatch.Services.States
 				throw new NotImplementedException ();
 			}
 		}
-
-		public object LMToolHotkeys { get; private set; }
 
 		#endregion
 

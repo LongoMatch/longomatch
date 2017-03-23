@@ -16,11 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using Newtonsoft.Json;
-using VAS.Core.Serialization;
-using Constants = LongoMatch.Core.Common.Constants;
-using LongoMatch.Core.Common;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch
 {
@@ -28,14 +25,14 @@ namespace LongoMatch
 	[PropertyChanged.ImplementPropertyChanged]
 	public class Config : VAS.Config
 	{
-		public Hotkeys Hotkeys {
-			get;
-			set;
-		} = new Hotkeys();
-
 		public Config () : base ()
 		{
 			KeyConfigs = new List<VAS.Core.Hotkeys.KeyConfig> ();
 		}
+
+		public Hotkeys Hotkeys {
+			get;
+			set;
+		} = new Hotkeys ();
 	}
 }

@@ -32,7 +32,6 @@ using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
 
@@ -102,9 +101,17 @@ namespace LongoMatch.Gui
 			return UIManager;
 		}
 
-		public IMenuExtensionEntry FileMenuEntry { get; protected set; }
+		/// <summary>
+		/// Gets the file extension menu enter point
+		/// </summary>
+		/// <value>The file menu extension entry.</value>
+		public MenuExtensionEntry FileMenuEntry { get; protected set; }
 
-		public IMenuExtensionEntry ToolMenuEntry { get; protected set; }
+		/// <summary>
+		/// Gets the tools extension menu enter point
+		/// </summary>
+		/// <value>The tools menu extension entry.</value>
+		public MenuExtensionEntry ToolMenuEntry { get; protected set; }
 
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
@@ -173,9 +180,7 @@ namespace LongoMatch.Gui
 					itemAction.Sensitive = true;
 					itemAction.ShortLabel = tool.MenubarLabel;
 					itemAction.Activated += async (sender, e) => {
-						// what we need to do here to support correctly Itools ??
-						// tool.Load (App.Current.GUIToolkit);
-						App.Current.StateController.MoveTo (tool.UIFlow.First().Key, null);
+						App.Current.StateController.MoveTo (tool.UIFlow.First ().Key, null);
 					};
 
 					this.UIManager.AddUi (mergeId, "/menubar1/ToolsAction", actionName, actionName, UIManagerItemType.Menuitem, false);
@@ -193,8 +198,8 @@ namespace LongoMatch.Gui
 
 			ConnectSignals ();
 
-			this.FileMenuEntry = new MenuExtensionEntry ("/menubar1/FileAction", 3);
-			this.ToolMenuEntry = new MenuExtensionEntry ("/menubar1/ToolsAction", 6);
+			FileMenuEntry = new MenuExtensionEntry ("/menubar1/FileAction", 3);
+			ToolMenuEntry = new MenuExtensionEntry ("/menubar1/ToolsAction", 6);
 		}
 
 		/// <summary>

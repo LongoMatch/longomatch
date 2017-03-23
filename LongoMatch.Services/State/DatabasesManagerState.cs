@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2017 ${CopyrightHolder}
+//  Copyright (C) 2017 FLUENDO S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@ using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
+	/// <summary>
+	/// State of the Databases Manager View
+	/// </summary>
 	public class DatabasesManagerState : ScreenState<IViewModel>
 	{
 		public const string NAME = "DatabasesManager";

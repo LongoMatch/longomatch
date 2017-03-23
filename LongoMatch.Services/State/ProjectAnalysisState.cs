@@ -22,6 +22,7 @@ using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.ViewModel;
 using VAS.Services;
@@ -107,7 +108,13 @@ namespace LongoMatch.Services.State
 
 		public override async Task<bool> HideState ()
 		{
-			ViewModel.CloseCommand.Execute ();
+			// promt before executing the close operation
+			if (!await App.Current.EventsBroker.PublishWithReturn (
+					new CloseEvent<LMProjectVM> { Object = ViewModel })) 
+			{
+				return false;
+			}
+
 			return await base.HideState ();
 		}
 	}

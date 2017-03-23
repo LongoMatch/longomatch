@@ -30,15 +30,10 @@ namespace LongoMatch.Services.Controller
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	public class LMTaggingController : TaggingController
 	{
-
 		protected override TimelineEvent CreateTimelineEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature)
 		{
 			return project.Model.CreateEvent (type, start, stop, eventTime, miniature,
 											  project.Model.EventsByType (type).Count + 1);
-		}
-
-		protected override void PCardAction (ButtonModifier modifier, PlayerVM player)
-		{
 		}
 	}
 }

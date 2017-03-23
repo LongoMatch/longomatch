@@ -229,22 +229,6 @@ namespace LongoMatch.Gui
 			return ret;
 		}
 
-		/*public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
-		{
-			HotKeySelectorDialog dialog;
-			Window w;
-
-			w = parent != null ? (parent as Widget).Toplevel as Window : MainWindow;
-			dialog = new HotKeySelectorDialog (w);
-			if (dialog.Run () == (int)ResponseType.Ok) {
-				hotkey = dialog.HotKey;
-			} else {
-				hotkey = null;
-			}
-			dialog.Destroy ();
-			return hotkey;
-		}*/
-
 		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
 														 string countText, string emptyText,
 														 CreateEvent<T> evt)

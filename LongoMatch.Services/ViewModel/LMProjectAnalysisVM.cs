@@ -34,15 +34,18 @@ namespace LongoMatch.Services.ViewModel
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the command that displays the view of the statistics
+		/// </summary>
+		/// <value>The show statistics command.</value>
 		public Command ShowStatsCommand {
 			get;
 			set;
 		}
 
-		async Task<bool> Close ()
+		public async Task Close ()
 		{
-			return await App.Current.EventsBroker.PublishWithReturn (
-			   new CloseEvent<LMProjectVM> { Object = Project });
+			await App.Current.StateController.MoveToHome ();
 		}
 	}
 }

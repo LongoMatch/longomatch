@@ -285,13 +285,8 @@ namespace LongoMatch.Services
 				Capturer.Close ();
 			}
 
-			bool saveOk = true;
 			if (save) {
-				saveOk = SaveProject ();
-			}
-
-			if (saveOk) {
-				return await App.Current.StateController.MoveToHome ();
+				return SaveProject ();
 			}
 
 			return false;

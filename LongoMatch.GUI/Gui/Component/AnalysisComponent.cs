@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 	[View (LiveProjectAnalysisState.NAME)]
 	public partial class AnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
-		List<MenuItem> menuItems = new List<MenuItem>();
+		List<MenuItem> menuItems;
 		bool detachedPlayer;
 		LMProjectAnalysisVM viewModel;
 		Gtk.Window playerWindow;
@@ -53,6 +53,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			detachedPlayer = false;
+			menuItems = new List<MenuItem> ();
 		}
 
 		protected override void OnUnmapped ()
@@ -153,8 +154,8 @@ namespace LongoMatch.Gui.Component
 
 		public void OnLoad ()
 		{
-			this.LoadFileMenu ();
-			this.LoadToolsMenu ();
+			LoadFileMenu ();
+			LoadToolsMenu ();
 		}
 
 		public void OnUnload ()
@@ -230,7 +231,7 @@ namespace LongoMatch.Gui.Component
 				DetachPlayer ();
 		}
 
-		private void LoadFileMenu ()
+		void LoadFileMenu ()
 		{
 			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 			MenuItem fileMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.FileMenuEntry.MenuName));
@@ -244,7 +245,7 @@ namespace LongoMatch.Gui.Component
 			RegisterMenuItem (close, fileMenu.Submenu as Menu, window.FileMenuEntry);
 		}
 
-		private void LoadToolsMenu ()
+		void LoadToolsMenu ()
 		{
 			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 			MenuItem toolMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.ToolMenuEntry.MenuName));
@@ -271,14 +272,14 @@ namespace LongoMatch.Gui.Component
 			(toolMenu.Submenu as Menu).Insert (separator, window.ToolMenuEntry.LastPosition);
 		}
 
-		private void RegisterMenuItem (MenuItem item, Menu menu, IMenuExtensionEntry menuEntry)
+		void RegisterMenuItem (MenuItem item, Menu menu, MenuExtensionEntry menuEntry)
 		{
 			menuItems.Add (item);
 			menu.Insert (item, menuEntry.LastPosition);
 			menuEntry.UpdateLastPosition ();
 		}
 
-		private void AddExportEntry (MenuItem parent, string name, Func<Project, bool, Task> exportAction)
+		void AddExportEntry (MenuItem parent, string name, Func<Project, bool, Task> exportAction)
 		{
 			MenuItem item = new MenuItem (name) { Visible = true };
 			item.Activated += (sender, e) => (exportAction (viewModel.Project.Model, false));
