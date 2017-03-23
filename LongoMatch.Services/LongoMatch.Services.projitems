@@ -43,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\LMStateHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMDashboardEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTaggingController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\DatabasesManagerState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

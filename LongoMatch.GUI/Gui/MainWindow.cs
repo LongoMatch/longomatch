@@ -19,24 +19,19 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Plugins;
-using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
@@ -48,8 +43,6 @@ namespace LongoMatch.Gui
 	public partial class MainWindow : Gtk.Window, IMainController
 	{
 		IGUIToolkit guiToolKit;
-		LMProjectVM openedProject;
-		ProjectType projectType;
 		Widget currentPanel;
 
 		#region Constructors
@@ -60,7 +53,6 @@ namespace LongoMatch.Gui
 			this.Build ();
 			this.guiToolKit = guiToolkit;
 			Title = Constants.SOFTWARE_NAME;
-			projectType = ProjectType.None;
 
 			ConnectMenuSignals ();
 
@@ -181,13 +173,9 @@ namespace LongoMatch.Gui
 					itemAction.Sensitive = true;
 					itemAction.ShortLabel = tool.MenubarLabel;
 					itemAction.Activated += async (sender, e) => {
-						bool loadTool = true;
-						if (openedProject != null) {
-							loadTool = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<ProjectVM> { Object = openedProject });
-						}
-						if (loadTool) {
-							tool.Load (App.Current.GUIToolkit);
-						}
+						// what we need to do here to support correctly Itools ??
+						// tool.Load (App.Current.GUIToolkit);
+						App.Current.StateController.MoveTo (tool.UIFlow.First().Key, null);
 					};
 
 					this.UIManager.AddUi (mergeId, "/menubar1/ToolsAction", actionName, actionName, UIManagerItemType.Menuitem, false);
@@ -238,17 +226,12 @@ namespace LongoMatch.Gui
 
 		private void ConnectSignals ()
 		{
-			App.Current.EventsBroker.Subscribe<OpenEvent<ProjectVM>> (HandleOpen);
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpened);
+			App.Current.EventsBroker.Subscribe<CloseEvent<LMProjectVM>> (HandleClosed);
 		}
 
 		private void ConnectMenuSignals ()
 		{
-			/*SaveProjectAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = openedProject });
-			};*/
-			CloseProjectAction.Activated += (o, e) => {
-				App.Current.StateController.MoveToHome ();
-			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
 				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null, true);
 			};
@@ -259,28 +242,15 @@ namespace LongoMatch.Gui
 				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null, true);
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<ManageDatabasesEvent> (new ManageDatabasesEvent ());
+				App.Current.StateController.MoveTo (DatabasesManagerState.NAME, null, true);
 			};
 			PreferencesAction.Activated += (sender, e) => {
 				App.Current.StateController.MoveTo (PreferencesState.NAME, null);
-			};
-			ShowProjectStatsAction.Activated += (sender, e) => {
-				App.Current.EventsBroker.Publish<ShowProjectStatsEvent> (
-					new ShowProjectStatsEvent {
-						Project = openedProject.Model
-					}
-				);
 			};
 			QuitAction.Activated += (o, e) => {
 				App.Current.GUIToolkit.Quit ();
 			};
 			OpenProjectAction.Activated += (sender, e) => {
-				App.Current.EventsBroker.Publish<SaveProjectEvent> (
-					new SaveProjectEvent {
-						Project = openedProject.Model,
-						ProjectType = projectType
-					}
-				);
 				App.Current.StateController.MoveTo (OpenProjectState.NAME, null, true);
 			};
 			NewPojectAction.Activated += (sender, e) => {
@@ -301,13 +271,12 @@ namespace LongoMatch.Gui
 		private void ResetGUI ()
 		{
 			Title = Constants.SOFTWARE_NAME;
-			MakeActionsSensitive (false, projectType);
+			MakeActionsSensitive (true);
 		}
 
-		private void MakeActionsSensitive (bool sensitive, ProjectType projectType)
+		private void MakeActionsSensitive (bool sensitive)
 		{
-			ExportProjectAction1.Sensitive = sensitive;
-			ShowProjectStatsAction.Sensitive = sensitive;
+			DatabasesManagerAction.Sensitive = sensitive;
 		}
 
 		protected override bool OnDeleteEvent (Gdk.Event evnt)
@@ -355,10 +324,14 @@ namespace LongoMatch.Gui
 
 		#endregion
 
-		void HandleOpen (OpenEvent<ProjectVM> e)
+		void HandleOpened (OpenedProjectEvent e)
 		{
-			openedProject = e.Object as LMProjectVM;
-			MakeActionsSensitive (true, openedProject.ProjectType);
+			MakeActionsSensitive (false);
+		}
+
+		void HandleClosed (CloseEvent<LMProjectVM> e)
+		{
+			MakeActionsSensitive (true);
 		}
 	}
 }

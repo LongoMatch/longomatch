@@ -19,20 +19,27 @@ using System;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public partial class DatabasesManager : Gtk.Dialog
+	[ViewAttribute (DatabasesManagerState.NAME)]
+	public partial class DatabasesManager : Gtk.Dialog, IPanel<IViewModel>
 	{
 		IStorageManager manager;
 		ListStore store;
 
-		public DatabasesManager (Window parent)
+		public DatabasesManager ()
 		{
-			TransientFor = parent;
+			//TransientFor = parent;
 			this.Build ();
 			this.manager = App.Current.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
@@ -83,6 +90,16 @@ namespace LongoMatch.Gui.Dialog
 				
 				treeview.Selection.GetSelected (out iter);
 				return store.GetValue (iter, 0) as IStorage;
+			}
+		}
+
+		IViewModel IView<IViewModel>.ViewModel {
+			get {
+				throw new NotImplementedException ();
+			}
+
+			set {
+				throw new NotImplementedException ();
 			}
 		}
 
@@ -192,7 +209,24 @@ namespace LongoMatch.Gui.Dialog
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
 		}
-		
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
 	}
 }
 

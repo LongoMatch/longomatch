@@ -157,14 +157,6 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public override void OpenDatabasesManager ()
-		{
-			DatabasesManager dm = new DatabasesManager (MainWindow);
-			Log.Information ("Open db manager");
-			dm.Run ();
-			dm.Destroy ();
-		}
-
 		public override void LoadPanel (IPanel panel)
 		{
 			MainWindow.SetPanel (panel);

@@ -48,6 +48,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (ProjectAnalysisState.NAME, () => new ProjectAnalysisState ());
 			uiFlow.Add (LiveProjectAnalysisState.NAME, () => new LiveProjectAnalysisState ());
 			uiFlow.Add (FakeLiveProjectAnalysisState.NAME, () => new FakeLiveProjectAnalysisState ());
+			uiFlow.Add (DatabasesManagerState.NAME, () => new DatabasesManagerState ());
 		}
 
 		#region ITool implementation
@@ -108,11 +109,6 @@ namespace LongoMatch.Services.States
 			foreach (var ui in uiFlow) {
 				App.Current.StateController.UnRegister (ui.Key);
 			}
-		}
-
-		public void Load (IGUIToolkit toolkit)
-		{
-			throw new NotImplementedException ();
 		}
 	}
 }
