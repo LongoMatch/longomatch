@@ -65,13 +65,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ScoreButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PenaltyCardButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hotkeys\LMUIHotkeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Hotkeys\" />
   </ItemGroup>
 </Project>

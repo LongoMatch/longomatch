@@ -17,10 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.DB;
 using LongoMatch.Services.States;
@@ -169,7 +167,6 @@ namespace LongoMatch.Services
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 			PlaybackHotkeys.RegisterDefaultHotkeys ();
 			DrawingToolHotkeys.RegisterDefaultHotkeys ();
-			LMUIHotkeys.RegisterDefaultHotkeys ();
 
 			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
 			RegisterService (notifier);

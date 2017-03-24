@@ -81,6 +81,7 @@ namespace Tests.Drawing.Objects
 			timelineEvent.EventType.TagFieldPosition = true;
 
 			Assert.Greater (redrawCount, 1);
+			tkMock.Verify (tk => tk.DrawCircle (It.IsAny<Point> (), It.IsAny<double> ()), Times.Once ());
 		}
 	}
 }

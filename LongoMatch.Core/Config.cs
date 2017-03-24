@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
+using VAS.Core.Hotkeys;
 
 namespace LongoMatch
 {
@@ -27,7 +28,7 @@ namespace LongoMatch
 	{
 		public Config () : base ()
 		{
-			KeyConfigs = new List<VAS.Core.Hotkeys.KeyConfig> ();
+			KeyConfigs = new List<KeyConfig> ();
 		}
 
 		public Hotkeys Hotkeys {

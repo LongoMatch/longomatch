@@ -1,13 +1,13 @@
 ﻿//
 //  Copyright (C) 2016 Fluendo S.A.
-using LongoMatch.Core.ViewModel;
-using VAS.Core.MVVMC;
-using VAS.Core.Common;
-using VAS.Core.Interfaces.GUI;
-using VAS.Core.Events;
-using VAS.Services.ViewModel;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.ViewModel;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
+using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -43,7 +43,7 @@ namespace LongoMatch.Services.ViewModel
 			set;
 		}
 
-		public async Task Close ()
+		async Task Close ()
 		{
 			await App.Current.StateController.MoveToHome ();
 		}

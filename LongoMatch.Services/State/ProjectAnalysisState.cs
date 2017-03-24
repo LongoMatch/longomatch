@@ -109,8 +109,7 @@ namespace LongoMatch.Services.State
 		public override async Task<bool> HideState ()
 		{
 			// promt before executing the close operation
-			if (!await App.Current.EventsBroker.PublishWithReturn (
-					new CloseEvent<LMProjectVM> { Object = ViewModel })) 
+			if (!await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = ViewModel })) 
 			{
 				return false;
 			}

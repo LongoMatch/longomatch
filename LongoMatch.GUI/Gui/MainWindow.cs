@@ -334,6 +334,8 @@ namespace LongoMatch.Gui
 			MakeActionsSensitive (false);
 		}
 
+		// FIXME: This event does not mean that the project has been closed
+		// if user selects no then the items are enabled incorrectly
 		void HandleClosed (CloseEvent<LMProjectVM> e)
 		{
 			MakeActionsSensitive (true);
