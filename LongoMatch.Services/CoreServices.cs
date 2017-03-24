@@ -61,9 +61,6 @@ namespace LongoMatch.Services
 			FillVersion ();
 			Config.Init ();
 
-			kpiService = new KpiService ();
-			kpiService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
-
 			/* Check default folders */
 			CheckDirs ();
 
@@ -74,6 +71,9 @@ namespace LongoMatch.Services
 
 			/* Load user config */
 			Config.Load ();
+
+			kpiService = new KpiService ();
+			kpiService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
 
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
