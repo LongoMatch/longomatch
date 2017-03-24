@@ -40,7 +40,7 @@ namespace LongoMatch.Services.State
 				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
 			}
 
-			App.Current.EventsBroker.Publish (new OpenEvent<ProjectVM> { Object = project });
+			App.Current.EventsBroker.Publish (new OpenedProjectEvent { Project = project.Model });
 		}
 	}
 }

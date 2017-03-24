@@ -74,7 +74,7 @@ tools/deb-pkg.sh
 *test-results/
 *test-results.xml
 *.pc
-oneplay-longomatch
+longomatch-pro
 *Result.xml
 *covcfg.*
 obj/

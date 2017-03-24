@@ -354,7 +354,11 @@ namespace LongoMatch.Services
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				Project.ProjectType = ProjectType.FileProject;
 				LMStateHelper.OpenProject (Project);
+			} 
+			else {
+				await App.Current.StateController.MoveToHome ();
 			}
+
 			return false;
 		}
 

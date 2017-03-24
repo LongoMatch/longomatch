@@ -15,21 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Events;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
-using LongoMatch.DB;
-using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Events;
 using VAS.Core.Interfaces;
-using VAS.Core.Interfaces.GUI;
-using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
-using LMCommon = LongoMatch.Core.Common;
-using VASFilters = VAS.Core.Filters;
 
 namespace LongoMatch.Services
 {
@@ -37,33 +25,9 @@ namespace LongoMatch.Services
 	{
 		const int SUPPORTED_MAJOR_VERSION = Constants.DB_VERSION;
 
-		public DataBaseManager ()
-		{
-		}
-
-		public LMProject OpenedProject {
-			get;
-			set;
-		}
-
 		public IStorageManager Manager {
 			get;
 			set;
-		}
-
-		void HandleManageDatabase (ManageDatabasesEvent e)
-		{
-			if (OpenedProject != null) {
-				var msg = Catalog.GetString ("Close the current project to open the database manager");
-				App.Current.Dialogs.ErrorMessage (msg);
-			} else {
-				App.Current.GUIToolkit.OpenDatabasesManager ();
-			}
-		}
-
-		void HandleOpenedProjectChanged (OpenedProjectEvent e)
-		{
-			OpenedProject = e.Project as LMProject;
 		}
 
 		#region IService
@@ -82,8 +46,6 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			App.Current.EventsBroker.Subscribe<ManageDatabasesEvent> (HandleManageDatabase);
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			Manager = CreateStorageManager (App.Current.DBDir);
 			App.Current.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
@@ -93,8 +55,6 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
-			App.Current.EventsBroker.Unsubscribe<ManageDatabasesEvent> (HandleManageDatabase);
-			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			App.Current.DatabaseManager = Manager = null;
 			return true;
 		}

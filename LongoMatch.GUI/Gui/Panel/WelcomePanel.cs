@@ -103,8 +103,7 @@ namespace LongoMatch.Gui.Panel
 			foreach (ITool tool in tools) {
 				if (tool.WelcomePanelIconList.Any () && tool.WelcomePanelIconList.FirstOrDefault ().Icon != null) {
 					foreach (IWelcomeButton wpb in tool.WelcomePanelIconList) {
-						// FIXME: When LongoMatch is refactored with new ITools, 3rd  parameter will be: new Action (() => wpb.Activate ())
-						buttons.Add (new WelcomeButton (wpb.Icon, wpb.Title, new Action (() => tool.Load (App.Current.GUIToolkit))));
+						buttons.Add (new WelcomeButton (wpb.Icon, wpb.Title, new Action (() => { wpb.Activate (); })));
 					}
 				}
 			}

@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Interfaces;
@@ -25,6 +24,7 @@ using LongoMatch.DB;
 using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
@@ -161,6 +161,12 @@ namespace LongoMatch.Services
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
+			App.Current.HotkeysService = new HotkeysService ();
+			RegisterService (App.Current.HotkeysService);
+
+			GeneralUIHotkeys.RegisterDefaultHotkeys ();
+			PlaybackHotkeys.RegisterDefaultHotkeys ();
+			DrawingToolHotkeys.RegisterDefaultHotkeys ();
 
 			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
 			RegisterService (notifier);

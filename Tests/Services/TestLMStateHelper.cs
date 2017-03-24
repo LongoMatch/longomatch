@@ -36,7 +36,7 @@ namespace Tests.Services
 			LMProjectVM viewmodel = new LMProjectVM ();
 			viewmodel.Model = new LMProject ();
 			CaptureSettings settings = new CaptureSettings();
-			App.Current.EventsBroker.Subscribe<OpenEvent<ProjectVM>> ((e) => { projectOpened = true; });
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ( e => projectOpened = true );
 
 			// Act
 			LMStateHelper.OpenProject (viewmodel, settings);

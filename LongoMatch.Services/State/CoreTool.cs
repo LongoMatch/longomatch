@@ -17,10 +17,11 @@
 //
 //
 using System;
-using VAS.Core.Interfaces.GUI;
 using System.Collections.Generic;
 using LongoMatch.Services.State;
+using VAS.Core.Interfaces.GUI;
 using VAS.Services.State;
+using PreferencesState = LongoMatch.Services.State.PreferencesState;
 
 namespace LongoMatch.Services.States
 {
@@ -45,6 +46,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (ProjectAnalysisState.NAME, () => new ProjectAnalysisState ());
 			uiFlow.Add (LiveProjectAnalysisState.NAME, () => new LiveProjectAnalysisState ());
 			uiFlow.Add (FakeLiveProjectAnalysisState.NAME, () => new FakeLiveProjectAnalysisState ());
+			uiFlow.Add (DatabasesManagerState.NAME, () => new DatabasesManagerState ());
 		}
 
 		#region ITool implementation
@@ -103,11 +105,6 @@ namespace LongoMatch.Services.States
 			foreach (var ui in uiFlow) {
 				App.Current.StateController.UnRegister (ui.Key);
 			}
-		}
-
-		public void Load (IGUIToolkit toolkit)
-		{
-			throw new NotImplementedException ();
 		}
 	}
 }

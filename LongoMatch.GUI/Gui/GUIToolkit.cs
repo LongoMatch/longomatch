@@ -157,14 +157,6 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public override void OpenDatabasesManager ()
-		{
-			DatabasesManager dm = new DatabasesManager (MainWindow);
-			Log.Information ("Open db manager");
-			dm.Run ();
-			dm.Destroy ();
-		}
-
 		public override void LoadPanel (IPanel panel)
 		{
 			MainWindow.SetPanel (panel);
@@ -235,22 +227,6 @@ namespace LongoMatch.Gui
 			}
 			d.Destroy ();
 			return ret;
-		}
-
-		public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
-		{
-			HotKeySelectorDialog dialog;
-			Window w;
-
-			w = parent != null ? (parent as Widget).Toplevel as Window : MainWindow;
-			dialog = new HotKeySelectorDialog (w);
-			if (dialog.Run () == (int)ResponseType.Ok) {
-				hotkey = dialog.HotKey;
-			} else {
-				hotkey = null;
-			}
-			dialog.Destroy ();
-			return hotkey;
 		}
 
 		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,

@@ -15,10 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
@@ -28,7 +30,6 @@ namespace LongoMatch.Services.Controller
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	public class LMTaggingController : TaggingController
 	{
-
 		protected override TimelineEvent CreateTimelineEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature)
 		{
 			return project.Model.CreateEvent (type, start, stop, eventTime, miniature,
