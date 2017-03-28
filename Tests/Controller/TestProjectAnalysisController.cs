@@ -34,6 +34,7 @@ using VAS.Services;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.ViewModel;
+using LongoMatch.Core.Events;
 
 namespace Tests.Controller
 {
@@ -237,30 +238,6 @@ namespace Tests.Controller
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
 			Assert.AreEqual (project, projectsManager.Project.Model);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-		}
-
-		[Test ()]
-		public void TestOpenBadProject ()
-		{
-			// Test to try opening a project with duration = null
-			Assert.Greater (project.Description.FileSet.Count, 0);
-			foreach (var file in project.Description.FileSet) {
-				file.Duration = null;
-			}
-
-			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
-
-			projectsManager.Capturer = capturerBinMock.Object;
-			projectsManager.ViewModel.Project.Model = project;
-			// projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
-			/*App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = project.ID,
-					Project = project
-				}
-			);*/
-
-			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
 		}
 	}
 }

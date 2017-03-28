@@ -237,11 +237,11 @@ namespace LongoMatch.Gui.Component
 			MenuItem fileMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.FileMenuEntry.MenuName));
 
 			MenuItem save = this.ViewModel.SaveCommand.CreateMenuItem (
-				Catalog.GetString ("Save Project"), UIManager.AccelGroup, "SAVE_PROJECT");
+				Catalog.GetString ("Save Project"), window.GetUIManager ().AccelGroup, "SAVE_PROJECT");
 			RegisterMenuItem (save, fileMenu.Submenu as Menu, window.FileMenuEntry);
 
 			MenuItem close = this.ViewModel.CloseCommand.CreateMenuItem (
-				Catalog.GetString ("Close Project"), UIManager.AccelGroup, "CLOSE_PROJECT");
+				Catalog.GetString ("Close Project"), window.GetUIManager ().AccelGroup, "CLOSE_PROJECT");
 			RegisterMenuItem (close, fileMenu.Submenu as Menu, window.FileMenuEntry);
 		}
 
@@ -250,9 +250,14 @@ namespace LongoMatch.Gui.Component
 			MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 			MenuItem toolMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.ToolMenuEntry.MenuName));
 
+			// Add separator
+			SeparatorMenuItem separator = new SeparatorMenuItem () { Visible = true };
+			(toolMenu.Submenu as Menu).Insert (separator, window.ToolMenuEntry.LastPosition);
+			window.ToolMenuEntry.UpdateLastPosition ();
+
 			// show stats menu item
 			MenuItem show = this.ViewModel.ShowStatsCommand.CreateMenuItem (
-				Catalog.GetString ("Show projects stats"), UIManager.AccelGroup, null);
+				Catalog.GetString ("Show projects stats"), window.GetUIManager ().AccelGroup, null);
 			RegisterMenuItem (show, toolMenu.Submenu as Menu, window.ToolMenuEntry);
 
 			// Export menu item
@@ -266,10 +271,6 @@ namespace LongoMatch.Gui.Component
 			    App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
 				AddExportEntry (exportMenu, exporter.Description, new Func<Project, bool, Task> (exporter.Export));
 			}
-
-			// Add final separator
-			SeparatorMenuItem separator = new SeparatorMenuItem () { Visible = true };
-			(toolMenu.Submenu as Menu).Insert (separator, window.ToolMenuEntry.LastPosition);
 		}
 
 		void RegisterMenuItem (MenuItem item, Menu menu, MenuExtensionEntry menuEntry)
