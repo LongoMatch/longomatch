@@ -34,7 +34,7 @@ using VAS.Services;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.ViewModel;
-using LongoMatch.Core.Events;
+using VAS.Core;
 
 namespace Tests.Controller
 {
@@ -173,6 +173,7 @@ namespace Tests.Controller
 				}
 			);
 
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.Project.Model); // SP-Remark: check that project is null has no sense here 
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
@@ -221,7 +222,7 @@ namespace Tests.Controller
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
-			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project});
+			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
 			Assert.AreEqual (project, projectsManager.Project.Model);
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
@@ -233,11 +234,61 @@ namespace Tests.Controller
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
+			projectsManager.ViewModel.Project.CloseHandled = false;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
 			Assert.AreEqual (project, projectsManager.Project.Model);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
+		}
+
+		[Test ()]
+		public async Task HandleClose_PromtAlreadyDisplayed_ReturnTrue ()
+		{
+			// Arrange
+			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
+
+			projectsManager.Capturer = capturerBinMock.Object;
+			projectsManager.ViewModel.Project.Model = project;
+			projectsManager.ViewModel.CaptureSettings = settings;
+			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;
+			projectsManager.ViewModel.Project.CloseHandled = true;
+
+			// Act
+			bool result = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Assert
+			Assert.IsTrue (result);
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Verify (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Never);
+		}
+
+		[Test ()]
+		public async Task HandleClose_CloseRejected_AllowAskAgainForClosing ()
+		{
+			// Arrange
+			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
+
+			projectsManager.Capturer = capturerBinMock.Object;
+			projectsManager.ViewModel.Project.Model = project;
+			projectsManager.ViewModel.CaptureSettings = settings;
+			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;
+			projectsManager.ViewModel.Project.CloseHandled = false;
+
+			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (AsyncHelpers.Return (false));
+			await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Act
+			Assert.IsFalse (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
+			bool result = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Assert
+			Assert.IsTrue (result);
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Verify (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (2));
 		}
 	}
 }

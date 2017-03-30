@@ -16,18 +16,19 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using System.Threading.Tasks;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.ViewModel;
 using VAS.Services;
-using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
 	/// <summary>
 	/// A state for fake live analysis of projects.
 	/// </summary>
-	public class FakeLiveProjectAnalysisState : ScreenState<LMProjectAnalysisVM>
+	public class FakeLiveProjectAnalysisState : AnalysisStateBase
 	{
 		public const string NAME = "FakeLiveProjectAnalysis";
 
@@ -35,6 +36,18 @@ namespace LongoMatch.Services.State
 			get {
 				return NAME;
 			}
+		}
+
+		public override async Task<bool> LoadState (dynamic data)
+		{
+			LMProjectVM projectVM = data.Project;
+
+			if (!InternalLoad (projectVM)) {
+				return false;
+			}
+
+			projectVM.Model.UpdateEventTypesAndTimers ();
+			return await Initialize (data);
 		}
 
 		protected override void CreateViewModel (dynamic data)

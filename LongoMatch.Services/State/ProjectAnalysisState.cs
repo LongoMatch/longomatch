@@ -16,25 +16,20 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using System;
 using System.Threading.Tasks;
-using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
-using VAS.Core.Events;
-using VAS.Core.Interfaces.GUI;
 using VAS.Core.ViewModel;
 using VAS.Services;
 using VAS.Services.Controller;
-using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
 	/// <summary>
 	/// A state for post-match analysis of projects.
 	/// </summary>
-	public class ProjectAnalysisState : ScreenState<LMProjectAnalysisVM>
+	public class ProjectAnalysisState : AnalysisStateBase
 	{
 		public const string NAME = "ProjectAnalysis";
 
@@ -53,31 +48,16 @@ namespace LongoMatch.Services.State
 		{
 			LMProjectVM projectVM = data.Project;
 
-			// FIXME: Load project asynchronously
-			if (!projectVM.Model.IsLoaded) {
-				try {
-					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Loading project..."), null);
-					busy.ShowSync (() => {
-						try {
-							projectVM.Model.Load ();
-						} catch (Exception ex) {
-							Log.Exception (ex);
-							throw;
-						}
-					});
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
-					return false;
-				}
+			if (!InternalLoad (projectVM)) {
+				return false;
 			}
 
 			if (projectVM.Model.IsFakeCapture) {
 				/* If it's a fake live project prompt for a video file and
-				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
+			 	* create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
 				await App.Current.StateController.MoveTo (NewProjectState.NAME, projectVM);
-				return true;
+				return false;
 			}
 
 			if (projectVM.FileSet.Duration == null) {
@@ -104,17 +84,6 @@ namespace LongoMatch.Services.State
 			playerController.SetViewModel (ViewModel.VideoPlayer);
 			Controllers.Add (playerController);
 			Controllers.Add (new CoreEventsController ());
-		}
-
-		public override async Task<bool> HideState ()
-		{
-			// promt before executing the close operation
-			if (!await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = ViewModel })) 
-			{
-				return false;
-			}
-
-			return await base.HideState ();
 		}
 	}
 }
