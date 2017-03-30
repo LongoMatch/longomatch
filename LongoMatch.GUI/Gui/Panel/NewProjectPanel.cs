@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
@@ -28,7 +27,6 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
@@ -546,6 +544,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (projectType == ProjectType.EditProject) {
 				projectType = ProjectType.FileProject;
+				ViewModel.ProjectType = projectType;
 			} else {
 				project.CreateLineupEvent ();
 			}

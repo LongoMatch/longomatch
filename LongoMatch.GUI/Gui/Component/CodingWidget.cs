@@ -17,6 +17,7 @@
 //
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -72,7 +73,6 @@ namespace LongoMatch.Gui.Component
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 
-			App.Current.EventsBroker.Subscribe<PlayerTickEvent> (HandleTick);
 			App.Current.EventsBroker.Subscribe<CapturerTickEvent> (HandleCapturerTick);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			App.Current.EventsBroker.Subscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
@@ -97,11 +97,12 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-			App.Current.EventsBroker.Unsubscribe<PlayerTickEvent> (HandleTick);
+
 			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
 			App.Current.EventsBroker.Unsubscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
 			App.Current.EventsBroker.Unsubscribe<EventEditedEvent> (HandleEventEdited);
 			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
+
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -156,7 +157,13 @@ namespace LongoMatch.Gui.Component
 				return viewModel;
 			}
 			set {
+				if (viewModel != null) {
+					viewModel.PropertyChanged -= HandlePropertyChanged;
+				}
 				viewModel = value;
+				if (viewModel != null) {
+					viewModel.PropertyChanged += HandlePropertyChanged;
+				}
 				LoadProject ();
 			}
 		}
@@ -276,12 +283,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleTick (PlayerTickEvent e)
+		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
-				timeline.CurrentTime = e.Time;
-				buttonswidget.CurrentTime = e.Time;
-				teamtagger.CurrentTime = e.Time;
+			if (e.PropertyName == nameof (ViewModel.Capturer.CurrentCaptureTime)
+			    && ViewModel.Project.ProjectType == ProjectType.FileProject) {
+				timeline.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+					buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+					teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 			}
 		}
 
