@@ -66,6 +66,8 @@ namespace Tests
 			App.Current.StateController.Register (PreferencesState.NAME, () => CreateScreenState ());
 			App.Current.StateController.Register (ProjectsManagerState.NAME, () => CreateScreenState ());
 			App.Current.StateController.Register (OpenProjectState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (PlayEditorState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (SubstitutionsEditorState.NAME, () => CreateScreenState ());
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 		}
 
@@ -77,6 +79,7 @@ namespace Tests
 			screenStateMock.Setup (x => x.UnloadState ()).Returns (AsyncHelpers.Return (true));
 			screenStateMock.Setup (x => x.HideState ()).Returns (AsyncHelpers.Return (true));
 			screenStateMock.Setup (x => x.Panel).Returns (new Mock<IPanel> ().Object);
+
 			return screenStateMock.Object;
 		}
 	}

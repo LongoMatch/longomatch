@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
@@ -25,14 +24,12 @@ using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.UI;
 using VAS.Video.Utils;
@@ -121,27 +118,6 @@ namespace LongoMatch.Gui
 				fcpd.Destroy ();
 			} else
 				sd.Destroy ();
-		}
-
-		public override Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers,
-									   bool editNotes)
-		{
-			if (play is StatEvent) {
-				SubstitutionsEditor dialog = new SubstitutionsEditor (MainWindow as Gtk.Window);
-				dialog.Load (project as LMProject, play as StatEvent);
-				if (dialog.Run () == (int)ResponseType.Ok) {
-					dialog.SaveChanges ();
-				}
-				dialog.Destroy ();
-			} else {
-				PlayEditor dialog = new PlayEditor (MainWindow as Gtk.Window);
-				dialog.LoadPlay (play as LMTimelineEvent, project as LMProject, editTags, editPos,
-					editPlayers, editNotes);
-				dialog.Run ();
-				dialog.Destroy ();
-			}
-			return Task.Factory.StartNew (() => {
-			});
 		}
 
 		public override Project ChooseProject (List<Project> projects)

@@ -131,6 +131,7 @@
     <Compile Include="Controller\TestProjectAnalysisController.cs" />
     <Compile Include="Services\TestLMStateHelper.cs" />
     <Compile Include="State\TestProjectAnalysisState.cs" />
+    <Compile Include="Services\TestEventEditorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">

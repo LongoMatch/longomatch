@@ -114,7 +114,7 @@ namespace Tests.Controller
 			viewModel.Project = projectVM;
 
 			projectsManager = new ProjectAnalysisController ();
-			projectsManager.ViewModel = viewModel;
+			projectsManager.SetViewModel (viewModel);
 			projectsManager.Start ();
 		}
 

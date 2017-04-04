@@ -105,7 +105,9 @@ namespace LongoMatch.Services
 			case LMKeyAction.EditEvent:
 				bool playing = player.Playing;
 				player.Pause ();
-				App.Current.GUIToolkit.EditPlay (loadedPlay, viewModel.Project.Model, true, true, true, true);
+
+				App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = loadedPlay });
+
 				if (playing) {
 					player.Play ();
 				}

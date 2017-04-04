@@ -23,6 +23,7 @@ using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
+using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Store;
 using Color = Gdk.Color;
@@ -158,16 +159,13 @@ namespace LongoMatch.Gui.Component
 			LMTimelineEvent selectedEvent = SelectedPlay;
 			List<Player> players = selectedEvent.Players.ToList ();
 
-			App.Current.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
+			App.Current.EventsBroker.Publish<EditEventEvent> (
+				new EditEventEvent { TimelineEvent = selectedEvent });
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
 				App.Current.EventsBroker.Publish<TeamTagsChangedEvent> ();
 			}
-			App.Current.EventsBroker.Publish<EventEditedEvent> (
-				new EventEditedEvent {
-					TimelineEvent = selectedEvent
-				}
-			);
+
 			modelSort.SetSortFunc (0, SortFunction);
 			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}

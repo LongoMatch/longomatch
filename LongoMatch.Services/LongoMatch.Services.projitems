@@ -45,6 +45,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTaggingController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\DatabasesManagerState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\AnalysisStateBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\EditPlaylistState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\PlayEditorState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\SubstitutionsEditorState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlayEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SubstitutionsEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\EventEditorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

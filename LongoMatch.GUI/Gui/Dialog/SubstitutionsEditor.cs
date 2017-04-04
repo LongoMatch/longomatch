@@ -23,15 +23,22 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing;
 using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public partial class SubstitutionsEditor : Gtk.Dialog
+	// FIXME: Change the view to not use the model, use the VM provided
+	[ViewAttribute (SubstitutionsEditorState.NAME)]
+	public partial class SubstitutionsEditor : Gtk.Dialog, IPanel
 	{
 		TeamTagger tagger;
 		SelectionCanvas incanvas, outcanvas;
@@ -41,10 +48,10 @@ namespace LongoMatch.Gui.Dialog
 		LineupEvent lineup;
 		SubstitutionEvent substitution;
 		const int PLAYER_SIZE = 100;
+		SubstitutionsEditorVM editorVM;
 
-		public SubstitutionsEditor (Window parent)
+		public SubstitutionsEditor ()
 		{
-			TransientFor = parent;
 			this.Build ();
 			tagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
@@ -65,6 +72,48 @@ namespace LongoMatch.Gui.Dialog
 			drawingarea3.WidthRequest = drawingarea3.HeightRequest = PLAYER_SIZE;
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
+		public void OnLoad ()
+		{
+			if (editorVM.Play is LineupEvent) {
+				LoadLineup (editorVM.Model, editorVM.Play as LineupEvent);
+			} else {
+				LoadSubstitution (editorVM.Model, editorVM.Play as SubstitutionEvent);
+			}
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			editorVM = ((SubstitutionsEditorVM)viewModel as dynamic);
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
 		public void SaveChanges ()
 		{
 			if (lineup != null) {
@@ -75,15 +124,6 @@ namespace LongoMatch.Gui.Dialog
 			} else {
 				substitution.In = inPlayer;
 				substitution.Out = outPlayer;
-			}
-		}
-
-		public void Load (LMProject project, StatEvent evt)
-		{
-			if (evt is LineupEvent) {
-				LoadLineup (project, evt as LineupEvent);
-			} else {
-				LoadSubstitution (project, evt as SubstitutionEvent);
 			}
 		}
 
@@ -113,6 +153,22 @@ namespace LongoMatch.Gui.Dialog
 				LoadTeams (project, null, null, afp, abp);
 			}
 			SwitchPlayer (substitution.In, substitution.Out);
+		}
+
+		protected override void OnResponse (ResponseType response_id)
+		{
+			base.OnResponse (response_id);
+			if (response_id == ResponseType.Ok) {
+				SaveChanges ();
+			}
+
+			App.Current.StateController.MoveBack ();
+		}
+
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			OnUnload ();
 		}
 
 		void LoadTeams (LMProject project, List<LMPlayer> homeFieldPlayers, List<LMPlayer> homeBenchPlayers,
@@ -214,6 +270,5 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 		}
-
 	}
 }

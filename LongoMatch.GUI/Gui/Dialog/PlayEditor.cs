@@ -24,24 +24,29 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public partial class PlayEditor : Gtk.Dialog
+	// Fixme: Change the view to not use the model, use the VM provided
+	[ViewAttribute (PlayEditorState.NAME)]
+	public partial class PlayEditor : Gtk.Dialog, IPanel
 	{
 		const int TAGS_PER_ROW = 5;
 		TeamTagger teamtagger;
-		LMTimelineEvent play;
 		TimelineEventLocationTaggerView field, hfield, goal;
+		PlayEditorVM editorVM;
 
-		public PlayEditor (Window parent)
+		public PlayEditor ()
 		{
-			TransientFor = parent;
 			this.Build ();
 			field = new TimelineEventLocationTaggerView (new WidgetWrapper (fieldDrawingarea)) {
 				FieldPosition = FieldPositionType.Field
@@ -63,8 +68,86 @@ namespace LongoMatch.Gui.Dialog
 			nameentry.Changed += HandleChanged;
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
+		public void OnLoad ()
+		{
+			// FIXME: change to bindings
+			notesframe.Visible = editorVM.EditionSettings.EditNotes;
+			locationsBox.Visible = editorVM.EditionSettings.EditPositions &&
+				(editorVM.Play.EventType.TagFieldPosition ||
+				editorVM.Play.EventType.TagHalfFieldPosition ||
+				editorVM.Play.EventType.TagGoalPosition);
+			drawingarea3.Visible = editorVM.EditionSettings.EditPlayers;
+			nameframe.Visible = editorVM.EditionSettings.EditTags;
+			tagsvbox.Visible = editorVM.EditionSettings.EditTags;
+
+			nameentry.Text = editorVM.Play.Name;
+			nameentry.GrabFocus ();
+
+			if (editorVM.EditionSettings.EditPositions) {
+				LoadBackgrounds (editorVM.Model);
+				LoadTimelineEvent (editorVM.Play);
+			}
+
+			if (editorVM.EditionSettings.EditNotes) {
+				notes.Play = editorVM.Play;
+			}
+			if (editorVM.EditionSettings.EditPlayers) {
+				teamtagger.Project = editorVM.Model;
+				teamtagger.LoadTeams (editorVM.Model.LocalTeamTemplate, editorVM.Model.VisitorTeamTemplate,
+					editorVM.Model.Dashboard.FieldBackground);
+				/* Force lineup update */
+				teamtagger.CurrentTime = editorVM.Play.EventTime;
+				teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
+					editorVM.Play.Teams.Cast<LMTeam> ().ToList ());
+			}
+
+			if (editorVM.EditionSettings.EditTags) {
+				FillTags (editorVM.Model, editorVM.Play);
+			}
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			editorVM = ((PlayEditorVM)viewModel as dynamic);
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
+		protected override void OnResponse (ResponseType response_id)
+		{
+			base.OnResponse (response_id);
+			App.Current.StateController.MoveBack ();
+		}
+
 		protected override void OnDestroyed ()
 		{
+			OnUnload ();
 			teamtagger.Dispose ();
 			field.Dispose ();
 			hfield.Dispose ();
@@ -72,45 +155,7 @@ namespace LongoMatch.Gui.Dialog
 			base.OnDestroyed ();
 		}
 
-		public void LoadPlay (LMTimelineEvent play, LMProject project, bool editTags, bool editPos,
-							  bool editPlayers, bool editNotes)
-		{
-			this.play = play;
-			notesframe.Visible = editNotes;
-			locationsBox.Visible = editPos && (play.EventType.TagFieldPosition ||
-			play.EventType.TagHalfFieldPosition ||
-			play.EventType.TagGoalPosition);
-			drawingarea3.Visible = editPlayers;
-			nameframe.Visible = editTags;
-			tagsvbox.Visible = editTags;
-
-			nameentry.Text = play.Name;
-			nameentry.GrabFocus ();
-
-			if (editPos) {
-				LoadBackgrounds (project);
-				LoadTimelineEvent (play);
-			}
-
-			if (editNotes) {
-				notes.Play = play;
-			}
-			if (editPlayers) {
-				teamtagger.Project = project;
-				teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-					project.Dashboard.FieldBackground);
-				/* Force lineup update */
-				teamtagger.CurrentTime = play.EventTime;
-				teamtagger.Select (play.Players.Cast<LMPlayer> ().ToList (),
-					play.Teams.Cast<LMTeam> ().ToList ());
-			}
-
-			if (editTags) {
-				FillTags (project, play);
-			}
-		}
-
-		void LoadBackgrounds (LMProject project)
+		void LoadBackgrounds (Project project)
 		{
 			field.Background = project.GetBackground (FieldPositionType.Field);
 			hfield.Background = project.GetBackground (FieldPositionType.HalfField);
@@ -197,19 +242,19 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleChanged (object sender, EventArgs e)
 		{
-			if (play != null) {
-				play.Name = nameentry.Text;
+			if (editorVM.Play != null) {
+				editorVM.Play.Name = nameentry.Text;
 			}
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
-			play.Players.Replace (players);
+			editorVM.Play.Players.Replace (players);
 		}
 
 		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
 		{
-			play.Teams.Replace (teams);
+			editorVM.Play.Teams.Replace (teams);
 		}
 	}
 }

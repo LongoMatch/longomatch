@@ -71,6 +71,8 @@ namespace LongoMatch.Services
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			ViewModel = (LMProjectAnalysisVM)viewModel;
+			// Fixme: load project asynchronously
+			Load (ViewModel);
 		}
 
 		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
@@ -78,10 +80,9 @@ namespace LongoMatch.Services
 			return Enumerable.Empty<KeyAction> ();
 		}
 
-		public async override void Start ()
+		public override void Start ()
 		{
 			base.Start ();
-			await Load (viewModel);
 			App.Current.EventsBroker.SubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.SubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Subscribe<CaptureErrorEvent> (HandleCaptureError);
@@ -89,7 +90,7 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Subscribe<MultimediaErrorEvent> (HandleMultimediaError);
 		}
 
-		public async override void Stop ()
+		public override void Stop ()
 		{
 			base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
