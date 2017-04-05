@@ -5,25 +5,25 @@ namespace LongoMatch.Gui.Dialog
 	public partial class DatabasesManager
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.Label dblabel;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		
+
 		private global::Gtk.TreeView treeview;
-		
+
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.Button selectbutton;
-		
+
 		private global::Gtk.Button delbutton;
-		
+
 		private global::Gtk.Button backupbutton;
-		
+
 		private global::Gtk.Button addbutton;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

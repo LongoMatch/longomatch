@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
@@ -33,6 +34,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
@@ -44,8 +46,8 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel<SportsProjectsManagerVM>
 	{
 		SportsProjectsManagerVM viewModel;
-		ProjectLongoMatch loadedProject;
-		List<ProjectLongoMatch> selectedProjects;
+		LMProject loadedProject;
+		List<LMProject> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
 		IStorage DB;
 		IGUIToolkit gkit;
@@ -104,6 +106,7 @@ namespace LongoMatch.Gui.Panel
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
+			projectperiods1.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -174,7 +177,7 @@ namespace LongoMatch.Gui.Panel
 				if (save) {
 					try {
 						IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
+						busy.ShowSync (() => DB.Store<LMProject> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
@@ -186,7 +189,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadProject (ProjectLongoMatch project)
+		void LoadProject (LMProject project)
 		{
 			ProjectDescription pd = project.Description;
 
@@ -267,26 +270,15 @@ namespace LongoMatch.Gui.Panel
 			edited = true;
 		}
 
-		void HandleProjectSelected (ProjectLongoMatch project)
+		void HandleProjectSelected (LMProject project)
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = project.ID,
-						Project = project
-					}
-				);
-				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
-				// player controller that is inside that view. becuase the open project is not
-				// used with the new Navigation, we should then replace this open method to a 
-				// new navigation state and then in the unloads methods of Views we should
-				// Unsuscribe to events.
-				projectperiods1.Destroy ();
+				LMStateHelper.OpenProject (new LMProjectVM { Model = project });
 			}
 		}
 
-		void HandleProjectsSelected (List<ProjectLongoMatch> projects)
+		void HandleProjectsSelected (List<LMProject> projects)
 		{
 			SaveLoadedProject (false);
 			rbox.Visible = true;
@@ -333,10 +325,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				string filename = App.Current.Dialogs.SaveFile (
-					                  Catalog.GetString ("Export project"),
-					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					                  App.Current.HomeDir, Constants.PROJECT_NAME,
-					                  new string [] { Constants.PROJECT_EXT });
+									  Catalog.GetString ("Export project"),
+									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
+									  App.Current.HomeDir, Constants.PROJECT_NAME,
+									  new string [] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 					Serializer.Instance.Save (loadedProject, filename);
@@ -355,15 +347,15 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleDeleteClicked (object sender, EventArgs e)
 		{
-			List<ProjectLongoMatch> deletedProjects;
+			List<LMProject> deletedProjects;
 
 			if (selectedProjects == null)
 				return;
 
-			deletedProjects = new List<ProjectLongoMatch> ();
-			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
+			deletedProjects = new List<LMProject> ();
+			foreach (LMProject selectedProject in selectedProjects) {
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-				             selectedProject.Description.Title;
+							 selectedProject.Description.Title;
 				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
@@ -372,7 +364,7 @@ namespace LongoMatch.Gui.Panel
 					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
-							DB.Delete<ProjectLongoMatch> (selectedProject);
+							DB.Delete<LMProject> (selectedProject);
 						} catch (StorageException ex) {
 							App.Current.Dialogs.ErrorMessage (ex.Message);
 						}
@@ -383,7 +375,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<ProjectLongoMatch> () == 0) {
+			if (DB.Count<LMProject> () == 0) {
 				rbox.Visible = false;
 			}
 		}
@@ -391,18 +383,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = loadedProject.ID,
-						Project = loadedProject
-					}
-				);
-				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
-				// player controller that is inside that view. becuase the open project is not
-				// used with the new Navigation, we should then replace this open method to a 
-				// new navigation state and then in the unloads methods of Views we should
-				// Unsuscribe to events.
-				projectperiods1.Destroy ();
+				LMStateHelper.OpenProject (new LMProjectVM { Model = loadedProject });
 			}
 		}
 	}

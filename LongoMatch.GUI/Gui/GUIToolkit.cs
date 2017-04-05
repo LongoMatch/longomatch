@@ -17,19 +17,23 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Drawing;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
+using VAS.Drawing;
 using VAS.UI;
 using VAS.Video.Utils;
 
@@ -59,6 +63,8 @@ namespace LongoMatch.Gui
 			MainWindow = new MainWindow (this);
 			MainWindow.Hide ();
 			Scanner.ScanViews (App.Current.ViewLocator);
+			DrawingInit.ScanViews ();
+			LMDrawingInit.ScanViews ();
 		}
 
 		public override IMainController MainController {
@@ -108,7 +114,7 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play,
+				var fsc = new FramesSeriesCapturer (((LMProject)openedProject).Description.FileSet, play,
 							  interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, MainWindow as Gtk.Window);
 				fcpd.Run ();
@@ -122,14 +128,14 @@ namespace LongoMatch.Gui
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (MainWindow as Gtk.Window);
-				dialog.Load (project as ProjectLongoMatch, play as StatEvent);
+				dialog.Load (project as LMProject, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
 				PlayEditor dialog = new PlayEditor (MainWindow as Gtk.Window);
-				dialog.LoadPlay (play as TimelineEventLongoMatch, project as ProjectLongoMatch, editTags, editPos,
+				dialog.LoadPlay (play as LMTimelineEvent, project as LMProject, editTags, editPos,
 					editPlayers, editNotes);
 				dialog.Run ();
 				dialog.Destroy ();
@@ -141,22 +147,14 @@ namespace LongoMatch.Gui
 		public override Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
-			ProjectLongoMatch project = null;
+			LMProject project = null;
 			ChooseProjectDialog dialog = new ChooseProjectDialog (MainWindow);
-			dialog.Fill (projects.OfType<ProjectLongoMatch> ().ToList ());
+			dialog.Fill (projects.OfType<LMProject> ().ToList ());
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				project = dialog.Project;
 			}
 			dialog.Destroy ();
 			return project;
-		}
-
-		public override void OpenDatabasesManager ()
-		{
-			DatabasesManager dm = new DatabasesManager (MainWindow);
-			Log.Information ("Open db manager");
-			dm.Run ();
-			dm.Destroy ();
 		}
 
 		public override void LoadPanel (IPanel panel)
@@ -167,7 +165,7 @@ namespace LongoMatch.Gui
 		public override void ShowProjectStats (Project project)
 		{
 			Log.Information ("Show project stats");
-			Addins.AddinsManager.ShowStats (project as ProjectLongoMatch);
+			Addins.AddinsManager.ShowStats (project as LMProject);
 			System.GC.Collect ();
 		}
 
@@ -182,14 +180,6 @@ namespace LongoMatch.Gui
 				Log.Exception (e);
 				return null;
 			}
-		}
-
-		public override void OpenProject (Project project, ProjectType projectType,
-										  CaptureSettings props, EventsFilter filter,
-										  out IAnalysisWindowBase analysisWindow)
-		{
-			Log.Information ("Open project");
-			analysisWindow = MainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
 		}
 
 		public override EndCaptureResponse EndCapture (bool isCapturing)
@@ -237,22 +227,6 @@ namespace LongoMatch.Gui
 			}
 			d.Destroy ();
 			return ret;
-		}
-
-		public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
-		{
-			HotKeySelectorDialog dialog;
-			Window w;
-
-			w = parent != null ? (parent as Widget).Toplevel as Window : MainWindow;
-			dialog = new HotKeySelectorDialog (w);
-			if (dialog.Run () == (int)ResponseType.Ok) {
-				hotkey = dialog.HotKey;
-			} else {
-				hotkey = null;
-			}
-			dialog.Destroy ();
-			return hotkey;
 		}
 
 		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,

@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		Dictionary<EventType, TreeIter> itersDic;
 
 		public PlaysListTreeWidget ()
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
+		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
 			TreeIter iter, child;
 			TreeStore model;
@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Component
 
 				model.IterChildren (out child, iter);
 				do {
-					TimelineEventLongoMatch play = (TimelineEventLongoMatch)model.GetValue (child, 0);
+					LMTimelineEvent play = (LMTimelineEvent)model.GetValue (child, 0);
 					if (plays.Contains (play)) {
 						removeIters.Add (child);
 					}
@@ -93,7 +93,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			TreePath path;
 
@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 			treeview.ScrollToPoint (cellRect.X, Math.Max (cellRect.Y, 0));
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				project = value;
 				if (project != null) {
@@ -123,7 +123,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private TreeStore GetModel (ProjectLongoMatch project)
+		private TreeStore GetModel (LMProject project)
 		{
 			Gtk.TreeIter iter;
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof(object));

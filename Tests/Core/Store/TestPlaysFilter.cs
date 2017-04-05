@@ -29,7 +29,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestEmptyFilter ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -45,7 +45,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterCategory ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -85,7 +85,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterCategoryTags ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -143,7 +143,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterPlayers ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -174,7 +174,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterPlayersDuplicated ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 			p.VisitorTeamTemplate = p.LocalTeamTemplate;
 
 			try {
@@ -183,13 +183,13 @@ namespace Tests.Core.Store
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 
-				foreach (PlayerLongoMatch player in p.LocalTeamTemplate.List) {
+				foreach (LMPlayer player in p.LocalTeamTemplate.List) {
 					filter.FilterPlayer (player, true);
 				}
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 
-				foreach (PlayerLongoMatch player in p.VisitorTeamTemplate.List) {
+				foreach (LMPlayer player in p.VisitorTeamTemplate.List) {
 					filter.FilterPlayer (player, true);
 				}
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
@@ -208,7 +208,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestClearAll ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);

@@ -30,7 +30,7 @@ namespace LongoMatch.Plugins.Stats
 	{
 		TreeStore store;
 		ProjectStats pstats;
-		PlayerLongoMatch current;
+		LMPlayer current;
 
 		public PlayersViewer ()
 		{
@@ -44,7 +44,7 @@ namespace LongoMatch.Plugins.Stats
 			treeview1.EnableTreeLines = false;
 		}
 
-		public void LoadProject (ProjectLongoMatch project, ProjectStats stats)
+		public void LoadProject (LMProject project, ProjectStats stats)
 		{
 			TreePath path;
 			
@@ -58,7 +58,7 @@ namespace LongoMatch.Plugins.Stats
 			treeview1.SetCursor (path, null, false);
 		}
 
-		void AddTeam (SportsTeam tpl, Dashboard cats)
+		void AddTeam (LMTeam tpl, Dashboard cats)
 		{
 			TreeIter iter = store.AppendValues (tpl.TeamName, null);
 			foreach (Player p in tpl.List) {
@@ -71,7 +71,7 @@ namespace LongoMatch.Plugins.Stats
 			TreeIter iter;
 			
 			treeview1.Selection.GetSelected (out iter);
-			current = store.GetValue (iter, 1) as PlayerLongoMatch;
+			current = store.GetValue (iter, 1) as LMPlayer;
 			if (current != null) {
 				categoriesviewer.ReloadStats (current);
 			}

@@ -32,19 +32,19 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestSerialization ()
 		{
-			DashboardLongoMatch cat = new DashboardLongoMatch ();
-			
+			LMDashboard cat = new LMDashboard ();
+
 			Utils.CheckSerialization (cat);
-			
+
 			cat.Name = "test";
 			cat.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			cat.List.Add (new AnalysisEventButton { Name = "cat1" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat2" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat3" });
-			
+
 			Utils.CheckSerialization (cat);
-			
-			DashboardLongoMatch newcat = Utils.SerializeDeserialize (cat);
+
+			LMDashboard newcat = Utils.SerializeDeserialize (cat);
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
 			Assert.AreEqual (cat.GamePeriods.Count, newcat.GamePeriods.Count);
@@ -56,14 +56,14 @@ namespace Tests.Core.Store.Templates
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (Constants.DB_VERSION, new DashboardLongoMatch ().Version);
-			Assert.AreEqual (Constants.DB_VERSION, (DashboardLongoMatch.DefaultTemplate (1)).Version);
+			Assert.AreEqual (Constants.DB_VERSION, new LMDashboard ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, (LMDashboard.DefaultTemplate (1)).Version);
 		}
 
 		[Test ()]
 		public void TestCircularDepdencies ()
 		{
-			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
+			LMDashboard dashboard = new LMDashboard ();
 			DashboardButton b1 = new DashboardButton ();
 			DashboardButton b2 = new DashboardButton ();
 			DashboardButton b3 = new DashboardButton ();
@@ -82,7 +82,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestRemoveButton ()
 		{
-			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
+			LMDashboard dashboard = new LMDashboard ();
 			DashboardButton b1 = new DashboardButton ();
 			DashboardButton b2 = new DashboardButton ();
 			DashboardButton b3 = new DashboardButton ();
@@ -103,7 +103,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void RemoveDeadLinks ()
 		{
-			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
+			LMDashboard dashboard = new LMDashboard ();
 			AnalysisEventButton b1 = dashboard.AddDefaultItem (0);
 			AnalysisEventButton b2 = dashboard.AddDefaultItem (1);
 
@@ -126,7 +126,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard dashboard = LMDashboard.DefaultTemplate (10);
 			Assert.IsTrue (dashboard.IsChanged);
 			dashboard.IsChanged = false;
 			dashboard.Name = "new";
@@ -150,20 +150,13 @@ namespace Tests.Core.Store.Templates
 			dashboard.List.Add (new DashboardButton ());
 			Assert.IsTrue (dashboard.IsChanged);
 			dashboard.IsChanged = false;
-			dashboard.List = new ObservableCollection<DashboardButton> ();
-			Assert.IsTrue (dashboard.IsChanged);
-			dashboard.IsChanged = false;
-			dashboard.List = null;
-			Assert.IsTrue (dashboard.IsChanged);
-			dashboard.IsChanged = false;
-
 		}
 
 		[Test ()]
 		public void TestCopy ()
 		{
-			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (10);
-			DashboardLongoMatch copy = dashboard.Copy ("newName") as DashboardLongoMatch;
+			LMDashboard dashboard = LMDashboard.DefaultTemplate (10);
+			LMDashboard copy = dashboard.Copy ("newName") as LMDashboard;
 			Assert.AreNotEqual (dashboard.ID, copy.ID);
 			for (int i = 0; i < dashboard.List.Count; i++) {
 				AnalysisEventButton button = copy.List [i] as AnalysisEventButton;

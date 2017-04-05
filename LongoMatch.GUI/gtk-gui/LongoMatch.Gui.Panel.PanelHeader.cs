@@ -5,19 +5,19 @@ namespace LongoMatch.Gui.Panel
 	public partial class PanelHeader
 	{
 		private global::Gtk.EventBox headereventbox;
-		
+
 		private global::Gtk.HBox headerhbox;
-		
+
 		private global::Gtk.Image logoimage;
-		
+
 		private global::Gtk.Label titlelabel;
-		
+
 		private global::Gtk.Button applyroundedbutton;
-		
+
 		private global::Gtk.Image applyroundedbuttonimage;
-		
+
 		private global::Gtk.Button backrectbutton;
-		
+
 		private global::Gtk.Image backrectbuttonimage;
 
 		protected virtual void Build ()

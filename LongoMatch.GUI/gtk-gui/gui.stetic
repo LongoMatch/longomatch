@@ -11,7 +11,7 @@
     <widget-library name="../../bin/VAS.UI.Multimedia.Gtk2.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -47,7 +47,7 @@
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
-                          <widget class="VAS.UI.PlayerCapturerBin" id="playercapturer">
+                          <widget class="VAS.UI.VideoPlayerCapturerBin" id="playercapturer">
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
                           </widget>
@@ -822,7 +822,93 @@ Sort by competition</property>
           </packing>
         </child>
         <child>
-          <placeholder />
+          <widget class="Gtk.VBox" id="vbox4">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.ToggleButton" id="editbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ToggleButton" id="linksbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ToggleButton" id="popupbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ToggleButton" id="fitbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ToggleButton" id="fillbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">4</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ToggleButton" id="d11button">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">Custom</property>
+              </widget>
+              <packing>
+                <property name="Position">5</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+          </packing>
         </child>
       </widget>
     </child>
@@ -1012,8 +1098,6 @@ Sort by competition</property>
                   <node type="Menu" action="FileAction">
                     <node type="Menuitem" action="NewPojectAction" />
                     <node type="Menuitem" action="OpenProjectAction" />
-                    <node type="Menuitem" action="SaveProjectAction" />
-                    <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="ImportProjectAction" />
                     <node type="Separator" />
@@ -1027,8 +1111,6 @@ Sort by competition</property>
                     <node type="Menuitem" action="TeamsTemplatesManagerAction" />
                     <node type="Menuitem" action="DatabasesManagerAction" />
                     <node type="Separator" />
-                    <node type="Menuitem" action="ShowProjectStatsAction" />
-                    <node type="Menu" action="ExportProjectAction1" />
                     <node type="Separator" />
                     <node type="Menuitem" action="VideoConverterToolAction" />
                     <node type="Menuitem" action="MigrationToolAction" />
@@ -1992,20 +2074,7 @@ Away</property>
                 <property name="MemberName" />
                 <property name="ShadowType">None</property>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox1">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="LongoMatch.Gui.Component.PlayListTreeView" id="playlisttreeview1">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                      </packing>
-                    </child>
-                  </widget>
+                  <placeholder />
                 </child>
               </widget>
             </child>
@@ -2027,7 +2096,6 @@ Away</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
-                <signal name="Clicked" handler="OnNewbuttonClicked" />
                 <child>
                   <widget class="Gtk.Image" id="newimage">
                     <property name="MemberName" />
@@ -2047,7 +2115,6 @@ Away</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
-                <signal name="Clicked" handler="OnNewvideobuttonClicked" />
                 <child>
                   <widget class="Gtk.Image" id="recimage">
                     <property name="MemberName" />
@@ -4321,9 +4388,8 @@ You can continue with the current capture, cancel it or save your project.
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="field">
+          <widget class="Gtk.DrawingArea" id="fieldDrawingarea">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -4331,9 +4397,8 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="hfield">
+          <widget class="Gtk.DrawingArea" id="hfieldDrawingarea">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
             <property name="Position">1</property>
@@ -4341,9 +4406,8 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="goal">
+          <widget class="Gtk.DrawingArea" id="goalDrawingarea">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
             <property name="Position">2</property>
@@ -8078,10 +8142,9 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
-                          <widget class="LongoMatch.Gui.Component.DashboardWidget" id="buttonswidget">
+                          <widget class="LongoMatch.Gui.Component.DashboardWidget" id="dashboardwidget">
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
-                            <property name="Edited">False</property>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
@@ -8182,7 +8245,7 @@ You can continue with the current capture, cancel it or save your project.
       <widget class="Gtk.Notebook" id="notebook">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
-        <property name="CurrentPage">3</property>
+        <property name="CurrentPage">0</property>
         <property name="TabPos">Left</property>
         <property name="ShowBorder">False</property>
         <child>
@@ -8206,7 +8269,6 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="LongoMatch.Gui.Component.DashboardWidget" id="buttonswidget">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
-                    <property name="Edited">False</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -8305,7 +8367,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="VAS.UI.PlayerView" id="main_cam_playerbin">
+                      <widget class="VAS.UI.VideoPlayerView" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                         <property name="TogglePlayOnClick">True</property>
@@ -8374,7 +8436,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="Visible">False</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="VAS.UI.PlayerView" id="sec_cam_playerbin">
+                      <widget class="VAS.UI.VideoPlayerView" id="sec_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                         <property name="TogglePlayOnClick">False</property>
@@ -8869,10 +8931,36 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="LongoMatch.Gui.Component.PlaysCoordinatesTagger" id="tagger">
+                      <widget class="Gtk.HBox" id="locationsBox">
                         <property name="MemberName" />
-                        <property name="HeightRequest">200</property>
-                        <property name="Events">ButtonPressMask</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.DrawingArea" id="fieldDrawingarea">
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.DrawingArea" id="hfieldDrawingarea">
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.DrawingArea" id="goalDrawingarea">
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -9287,12 +9375,22 @@ You can continue with the current capture, cancel it or save your project.
       <widget class="Gtk.Notebook" id="playsnotebook">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
-        <property name="CurrentPage">0</property>
+        <property name="CurrentPage">2</property>
         <property name="TabPos">Bottom</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="playsList">
+          <widget class="Gtk.ScrolledWindow" id="eventsScrolledWindow">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
+            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.Viewport" id="GtkViewport">
+                <property name="MemberName" />
+                <property name="ShadowType">None</property>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
           </widget>
         </child>
         <child>
@@ -9305,9 +9403,19 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="localPlayersList">
+          <widget class="Gtk.ScrolledWindow" id="homescrolledwindow">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
+            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.Viewport" id="GtkViewport1">
+                <property name="MemberName" />
+                <property name="ShadowType">None</property>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
@@ -9322,9 +9430,19 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="visitorPlayersList">
+          <widget class="Gtk.ScrolledWindow" id="awayscrolledwindow">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
+            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.Viewport" id="GtkViewport2">
+                <property name="MemberName" />
+                <property name="ShadowType">None</property>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
           </widget>
           <packing>
             <property name="Position">2</property>

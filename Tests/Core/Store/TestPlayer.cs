@@ -29,7 +29,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			PlayerLongoMatch player = new PlayerLongoMatch {Name = "andoni", Position = "runner",
+			LMPlayer player = new LMPlayer {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true, Mail = "test@test", Color = Color.Red
@@ -37,7 +37,7 @@ namespace Tests.Core.Store
 				
 			Utils.CheckSerialization (player);
 			
-			PlayerLongoMatch newPlayer = Utils.SerializeDeserialize (player);
+			LMPlayer newPlayer = Utils.SerializeDeserialize (player);
 			Assert.AreEqual (player.Name, newPlayer.Name);
 			Assert.AreEqual (player.Position, newPlayer.Position);
 			Assert.AreEqual (player.Number, newPlayer.Number);
@@ -53,7 +53,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestToString ()
 		{
-			PlayerLongoMatch player = new PlayerLongoMatch { Name = "andoni", LastName = "morales", Number = 1 };
+			LMPlayer player = new LMPlayer { Name = "andoni", LastName = "morales", Number = 1 };
 			Assert.AreEqual ("1-andoni morales", player.ToString ());
 			player.NickName = "ylatuya";
 			Assert.AreEqual ("1-ylatuya", player.ToString ());
@@ -62,7 +62,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestPhoto ()
 		{
-			PlayerLongoMatch player = new PlayerLongoMatch {Name = "andoni", Position = "runner",
+			LMPlayer player = new LMPlayer {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true

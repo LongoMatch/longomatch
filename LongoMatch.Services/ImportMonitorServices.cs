@@ -128,19 +128,19 @@ namespace LongoMatch.Services
 					string ext = Path.GetExtension (path);
 					try {
 						if (ImportTeams && ext == Constants.TEAMS_TEMPLATE_EXT) {
-							SportsTeam team = App.Current.DependencyRegistry.
-							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<SportsTeam> (path);
+							LMTeam team = App.Current.DependencyRegistry.
+							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<LMTeam> (path);
 							App.Current.TeamTemplatesProvider.Add (team);
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {
 							Dashboard team = App.Current.DependencyRegistry.
 							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<Dashboard> (path);
-							App.Current.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
+							App.Current.CategoriesTemplatesProvider.Add (team as LMDashboard);
 							File.Delete (path);
 						} else if (ImportProjects && ext == Constants.PROJECT_EXT) {
-							ProjectLongoMatch project = App.Current.DependencyRegistry.
-							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<ProjectLongoMatch> (path);
-							App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
+							LMProject project = App.Current.DependencyRegistry.
+							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<LMProject> (path);
+							App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project, true);
 							File.Delete (path);
 						}
 					} catch (Exception ex) {

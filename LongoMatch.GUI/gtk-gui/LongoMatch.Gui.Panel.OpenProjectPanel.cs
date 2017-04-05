@@ -5,11 +5,11 @@ namespace LongoMatch.Gui.Panel
 	public partial class OpenProjectPanel
 	{
 		private global::Gtk.VBox vbox4;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.Alignment contentalignment;
-		
+
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget;
 
 		protected virtual void Build ()

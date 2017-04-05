@@ -12,16 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)PlayslistCellRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionTagger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\ProjectLocationsTaggerView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\PositionObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineEventObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimeNodeObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
@@ -29,10 +26,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\CircleImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\SportDashboardCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\SportsPlayerObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\SportCategoryTimeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\LMTimelineLabels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\LMPlayerView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\LMTimelineEventView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\LMPlaysTimeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineEventLocationTaggerView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionsViewerView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\TimelineEventLocationView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\LocationView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\PointLocationView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Init.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\PeriodsTimelineView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\" />
   </ItemGroup>
 </Project>

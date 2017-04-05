@@ -15,24 +15,29 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Services.State;
 using VAS.Core;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public partial class DatabasesManager : Gtk.Dialog
+	[ViewAttribute (DatabasesManagerState.NAME)]
+	public partial class DatabasesManager : Gtk.Dialog, IPanel
 	{
 		IStorageManager manager;
 		ListStore store;
 
-		public DatabasesManager (Window parent)
+		public DatabasesManager ()
 		{
-			TransientFor = parent;
+			//TransientFor = parent;
 			this.Build ();
 			this.manager = App.Current.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
@@ -45,6 +50,23 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+		}
+
 		void SetTreeView ()
 		{
 			/* DB name */
@@ -54,7 +76,7 @@ namespace LongoMatch.Gui.Dialog
 			nameCol.PackStart (nameCell, true);
 			nameCol.SetCellDataFunc (nameCell, new TreeCellDataFunc (RenderName));
 			treeview.AppendColumn (nameCol);
-			
+
 			/* DB last backup */
 			TreeViewColumn lastbackupCol = new TreeViewColumn ();
 			lastbackupCol.Title = Catalog.GetString ("Last backup");
@@ -62,7 +84,7 @@ namespace LongoMatch.Gui.Dialog
 			lastbackupCol.PackStart (lastbackupCell, true);
 			lastbackupCol.SetCellDataFunc (lastbackupCell, new TreeCellDataFunc (RenderLastbackup));
 			treeview.AppendColumn (lastbackupCol);
-			
+
 			/* DB Projects count */
 			TreeViewColumn countCol = new TreeViewColumn ();
 			countCol.Title = Catalog.GetString ("Projects count");
@@ -70,7 +92,7 @@ namespace LongoMatch.Gui.Dialog
 			countCol.PackStart (countCell, true);
 			countCol.SetCellDataFunc (countCell, new TreeCellDataFunc (RenderCount));
 			treeview.AppendColumn (countCol);
-			store = new ListStore (typeof(IStorage));
+			store = new ListStore (typeof (IStorage));
 			foreach (IStorage db in manager.Databases) {
 				store.AppendValues (db);
 			}
@@ -80,17 +102,19 @@ namespace LongoMatch.Gui.Dialog
 		IStorage SelectedDB {
 			get {
 				TreeIter iter;
-				
+
 				treeview.Selection.GetSelected (out iter);
 				return store.GetValue (iter, 0) as IStorage;
 			}
 		}
 
+		IViewModel ViewModel { get; set; }
+
 		void RenderCount (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.Count<ProjectLongoMatch> ().ToString ();
+			(cell as Gtk.CellRendererText).Text = db.Count<LMProject> ().ToString ();
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
@@ -137,13 +161,13 @@ namespace LongoMatch.Gui.Dialog
 			string dbname = Helpers.MessagesHelpers.QueryMessage (this, Catalog.GetString ("Database name"));
 			if (dbname == null || dbname == "")
 				return;
-			
+
 			if (manager.Databases.Where (d => d.Info.Name == dbname).Count () != 0) {
 				var msg = Catalog.GetString ("A database already exists with this name");
 				Helpers.MessagesHelpers.ErrorMessage (this, msg);
 				return;
 			}
-			
+
 			db = manager.Add (dbname);
 			if (db != null)
 				store.AppendValues (db);
@@ -153,10 +177,10 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TreeIter iter;
 			IStorage db;
-				
+
 			treeview.Selection.GetSelected (out iter);
 			db = store.GetValue (iter, 0) as IStorage;
-			
+
 			if (db == manager.ActiveDB) {
 				var msg = Catalog.GetString ("This database is the active one and can't be deleted");
 				Helpers.MessagesHelpers.ErrorMessage (this, msg);
@@ -187,12 +211,11 @@ namespace LongoMatch.Gui.Dialog
 		protected void OnTreeviewCursorChanged (object sender, System.EventArgs e)
 		{
 			bool selected = SelectedDB != null;
-			
+
 			delbutton.Sensitive = selected;
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
 		}
-		
 	}
 }
 

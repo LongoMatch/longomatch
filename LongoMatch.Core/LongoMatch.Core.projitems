@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Queries.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IAnalysisWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProjectsImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\EventTypeStats.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\PercentualStat.cs" />
@@ -33,29 +32,44 @@
     <Compile Include="$(MSBuildThisFileDirectory)Migration\ProjectMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TeamMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EncryptedObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\DashboardButtonLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\EventTypeLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\PlayerLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\TimelineEventLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\DashboardLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\LMProject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\ScoreButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\SubstitutionEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\LMPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\LMTimelineEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\LMDashboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\LMTimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\SportsTeam.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\LMTeam.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TypesMappings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardButtonVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineCollectionVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineEventVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\ScoreEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayersCollectionVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ScoreButtonVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PenaltyCardButtonVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
   </ItemGroup>
 </Project>

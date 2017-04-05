@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void Load (List<SportsTeam> teams)
+		public void Load (List<LMTeam> teams)
 		{
 			Clear ();
 			pixrender = new CellRendererPixbuf ();
@@ -52,8 +52,8 @@ namespace LongoMatch.Gui.Component
 				PackStart (texrender, true);
 			}
 			
-			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(SportsTeam));
-			foreach (SportsTeam t in teams) {
+			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(LMTeam));
+			foreach (LMTeam t in teams) {
 				Pixbuf shield;
 				int size = StyleConf.NewTeamsIconSize;
 
@@ -69,12 +69,12 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
 
-		public SportsTeam ActiveTeam {
+		public LMTeam ActiveTeam {
 			get {
 				TreeIter iter;
 
 				GetActiveIter (out iter);
-				return store.GetValue (iter, 2) as SportsTeam;
+				return store.GetValue (iter, 2) as LMTeam;
 			}
 		}
 	}

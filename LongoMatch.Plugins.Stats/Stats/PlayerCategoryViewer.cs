@@ -35,13 +35,13 @@ namespace LongoMatch.Plugins.Stats
 
 		public void LoadBackgrounds (Project project)
 		{
-			tagger.LoadBackgrounds (project as ProjectLongoMatch);
+			tagger.LoadBackgrounds (project as LMProject);
 		}
 
 		public void LoadStats (PlayerEventTypeStats stats)
 		{
-			tagger.LoadStats (stats, TeamType.BOTH);
-			
+			tagger.LoadStats (stats);
+
 			foreach (Widget child in vbox1.AllChildren) {
 				if (!(child is PlaysCoordinatesTagger))
 					vbox1.Remove (child);

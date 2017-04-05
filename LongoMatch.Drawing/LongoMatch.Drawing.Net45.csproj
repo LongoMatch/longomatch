@@ -49,5 +49,13 @@
       <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
       <Name>VAS.Drawing.Net45</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

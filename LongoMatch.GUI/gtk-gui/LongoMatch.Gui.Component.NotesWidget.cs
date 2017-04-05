@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class NotesWidget
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-		
+
 		private global::Gtk.TextView textview1;
 
 		protected virtual void Build ()

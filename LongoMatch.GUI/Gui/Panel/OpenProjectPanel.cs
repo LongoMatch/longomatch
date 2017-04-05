@@ -18,12 +18,13 @@
 using System;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
+using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
@@ -103,14 +104,10 @@ namespace LongoMatch.Gui.Panel
 			App.Current.StateController.MoveBack ();
 		}
 
-		void HandleProjectSelected (ProjectLongoMatch project)
+		void HandleProjectSelected (LMProject project)
 		{
-			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = project.ID,
-					Project = project
-				}
-			);
+			project.ProjectType = ProjectType.FileProject;
+			LMStateHelper.OpenProject (new LMProjectVM { Model = project });
 		}
 	}
 }

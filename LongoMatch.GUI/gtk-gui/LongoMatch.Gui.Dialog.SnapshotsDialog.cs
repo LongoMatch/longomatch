@@ -5,19 +5,19 @@ namespace LongoMatch.Gui.Dialog
 	public partial class SnapshotsDialog
 	{
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Entry entry1;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::Gtk.Label playLabel;
-		
+
 		private global::Gtk.SpinButton spinbutton1;
-		
+
 		private global::Gtk.Button button22;
 
 		protected virtual void Build ()

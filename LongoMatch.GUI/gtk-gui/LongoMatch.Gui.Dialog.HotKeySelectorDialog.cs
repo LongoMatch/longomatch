@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class HotKeySelectorDialog
 	{
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Button buttonCancel;
 
 		protected virtual void Build ()

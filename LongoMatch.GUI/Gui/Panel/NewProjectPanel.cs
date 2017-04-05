@@ -20,15 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
-using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
@@ -46,13 +44,13 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (NewProjectState.NAME)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel<SportsProjectVM>
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<LMProjectVM>
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
 		int firstPage;
-		ProjectLongoMatch project;
+		LMProject project;
 		ProjectType projectType;
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
@@ -61,11 +59,11 @@ namespace LongoMatch.Gui.Panel
 		IMultimediaToolkit mtoolkit;
 		IDialogs dialogs;
 		Gdk.Color red;
-		SportsTeam hometemplate, awaytemplate;
-		DashboardLongoMatch analysisTemplate;
+		LMTeam hometemplate, awaytemplate;
+		LMDashboard analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
-		SportsProjectVM viewModel;
+		LMProjectVM viewModel;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -94,8 +92,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			OnUnload ();
 
-			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
-
 			teamtagger?.Dispose ();
 			projectperiods1?.Destroy ();
 
@@ -114,7 +110,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public SportsProjectVM ViewModel {
+		public LMProjectVM ViewModel {
 			set {
 				viewModel = value;
 				project = viewModel.Model;
@@ -155,7 +151,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (SportsProjectVM)viewModel;
+			ViewModel = (LMProjectVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -229,9 +225,9 @@ namespace LongoMatch.Gui.Panel
 			sg.AddWidget (outputsizelabel);
 		}
 
-		void LoadTeams (ProjectLongoMatch project)
+		void LoadTeams (LMProject project)
 		{
-			List<SportsTeam> teams;
+			List<Team> teams;
 			bool hasLocalTeam = false;
 			bool hasAwayTeam = false;
 
@@ -253,18 +249,18 @@ namespace LongoMatch.Gui.Panel
 
 			// Update the combobox
 			if (hasAwayTeam) {
-				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<LMTeam> { project.VisitorTeamTemplate });
 			} else {
-				awayteamscombobox.Load (teams);
+				awayteamscombobox.Load (teams.OfType<LMTeam> ().ToList ());
 				awayteamscombobox.Changed += (sender, e) => {
 					LoadTemplate (awayteamscombobox.ActiveTeam.Clone (), TeamType.VISITOR, false);
 				};
 			}
 
 			if (hasLocalTeam) {
-				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<LMTeam> { project.LocalTeamTemplate });
 			} else {
-				hometeamscombobox.Load (teams);
+				hometeamscombobox.Load (teams.OfType<LMTeam> ().ToList ());
 				hometeamscombobox.Changed += (sender, e) => {
 					LoadTemplate (hometeamscombobox.ActiveTeam.Clone (), TeamType.LOCAL, false);
 				};
@@ -290,7 +286,6 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
-			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuit);
 		}
 
 		void FillProjectDetails ()
@@ -305,7 +300,7 @@ namespace LongoMatch.Gui.Panel
 			if (project.Dashboard != null) {
 				tagscombobox.Visible = false;
 				analysislabel.Visible = false;
-				analysisTemplate = project.Dashboard as DashboardLongoMatch;
+				analysisTemplate = project.Dashboard as LMDashboard;
 			} else {
 				project.Dashboard = analysisTemplate;
 			}
@@ -314,7 +309,7 @@ namespace LongoMatch.Gui.Panel
 			// otherwise set the loaded template
 			if (project.LocalTeamTemplate != null) {
 				hometeamscombobox.Sensitive = false;
-				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<LMTeam> { project.LocalTeamTemplate });
 				hometeamscombobox.Active = 0;
 				LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
 			} else {
@@ -323,7 +318,7 @@ namespace LongoMatch.Gui.Panel
 
 			if (project.VisitorTeamTemplate != null) {
 				awayteamscombobox.Sensitive = false;
-				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<LMTeam> { project.VisitorTeamTemplate });
 				awayteamscombobox.Active = 0;
 				LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
 			} else {
@@ -391,7 +386,7 @@ namespace LongoMatch.Gui.Panel
 			area.ModifyBg (StateType.Selected, gcolor);
 		}
 
-		void LoadTemplate (SportsTeam template, TeamType team, bool forceColor)
+		void LoadTemplate (LMTeam template, TeamType team, bool forceColor)
 		{
 			if (team == TeamType.LOCAL) {
 				hometemplate = template;
@@ -448,6 +443,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.FileSet = mediafilesetselection1.FileSet;
 			project.UpdateEventTypesAndTimers ();
 			project.ConsolidateDescription ();
+			project.ProjectType = projectType;
 		}
 
 		bool CreateProject ()
@@ -482,9 +478,10 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 
-			project = new ProjectLongoMatch ();
+			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
+			ViewModel.Model = project;
 
 
 			encSettings = new EncodingSettings ();
@@ -545,20 +542,13 @@ namespace LongoMatch.Gui.Panel
 
 		void StartProject ()
 		{
-			if (CreateProject ()) {
-				if (projectType == ProjectType.EditProject) {
-					projectType = ProjectType.FileProject;
-				} else {
-					project.CreateLineupEvent ();
-				}
-				App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
-					new OpenNewProjectEvent {
-						Project = project,
-						ProjectType = projectType,
-						CaptureSettings = captureSettings
-					}
-				);
+			if (projectType == ProjectType.EditProject) {
+				projectType = ProjectType.FileProject;
+				ViewModel.ProjectType = projectType;
+			} else {
+				project.CreateLineupEvent ();
 			}
+			LMStateHelper.OpenProject (ViewModel, captureSettings);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
@@ -580,7 +570,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			tagscombobox.GetActiveIter (out iter);
-			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as DashboardLongoMatch;
+			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as LMDashboard;
 			if (teamtagger != null) {
 				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
 			}
@@ -609,13 +599,6 @@ namespace LongoMatch.Gui.Panel
 			HandleNextClicked (this, e);
 		}
 
-		void HandleQuit (QuitApplicationEvent e)
-		{
-			// When the application is quitting while we are on the new project panel we need to properly destroy widgets.
-			// To do that we go back to the welcome panel, a little bit like the analysis window closes the opened project first.
-			App.Current.StateController.MoveBack ();
-		}
-
 		void HandleBackClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == PROJECT_PERIODS) {
@@ -641,17 +624,8 @@ namespace LongoMatch.Gui.Panel
 				if (!CreateProject ()) {
 					return;
 				}
-				if (projectType == ProjectType.CaptureProject ||
-					projectType == ProjectType.FakeCaptureProject ||
-					projectType == ProjectType.URICaptureProject) {
-					project.CreateLineupEvent ();
-					App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
-						new OpenNewProjectEvent {
-							Project = project,
-							ProjectType = projectType,
-							CaptureSettings = captureSettings
-						}
-					);
+				if (ViewModel.IsLive) {
+					StartProject ();
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
@@ -670,7 +644,7 @@ namespace LongoMatch.Gui.Panel
 			UpdateTitle ();
 		}
 
-		void HandleShowMenuEvent (List<PlayerLongoMatch> players)
+		void HandleShowMenuEvent (List<LMPlayer> players)
 		{
 			Menu menu = new Menu ();
 			MenuItem item;
@@ -695,7 +669,7 @@ namespace LongoMatch.Gui.Panel
 			menu.Popup ();
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
 											 SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
@@ -704,7 +678,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleTacticsChanged (object sender, EventArgs e)
 		{
-			SportsTeam team;
+			LMTeam team;
 			Entry entry;
 
 			if (sender == hometacticsbutton) {

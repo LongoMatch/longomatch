@@ -25,9 +25,9 @@ namespace LongoMatch.Core.Stats
 {
 	public class TimerStats
 	{
-		TimerLongoMatch timer;
+		LMTimer timer;
 
-		public TimerStats (ProjectLongoMatch project, TimerLongoMatch timer)
+		public TimerStats (LMProject project, LMTimer timer)
 		{
 			this.timer = timer;
 			Name = timer.Name;

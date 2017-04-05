@@ -5,124 +5,138 @@ namespace LongoMatch.Gui.Component
 	public partial class DashboardWidget
 	{
 		private global::Gtk.HBox hbox2;
-		
+
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.HButtonBox hbuttonbox2;
-		
+
 		private global::Gtk.Button addcatbutton;
-		
+
 		private global::Gtk.Image addcatbuttonimage;
-		
+
 		private global::Gtk.Button addtimerbutton;
-		
+
 		private global::Gtk.Image addtimerbuttonimage;
-		
+
 		private global::Gtk.Button addscorebutton;
-		
+
 		private global::Gtk.Image addscorebuttonimage;
-		
+
 		private global::Gtk.Button addcardbutton;
-		
+
 		private global::Gtk.Image addcardbuttonimage;
-		
+
 		private global::Gtk.Button addtagbutton;
-		
+
 		private global::Gtk.Image addtagbuttonimage;
-		
+
 		private global::Gtk.ScrolledWindow dashscrolledwindow;
-		
+
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		private global::Gtk.VBox rightbox;
-		
+
 		private global::Gtk.Frame propertiesframe;
-		
+
 		private global::Gtk.Alignment propertiesalignment;
-		
+
 		private global::Gtk.VBox vbox10;
-		
+
 		private global::Gtk.HBox positionsbox;
-		
+
 		private global::Gtk.VBox fieldvbox;
-		
+
 		private global::Gtk.Frame fieldframe;
-		
+
 		private global::Gtk.Alignment fieldalignment;
-		
+
 		private global::Gtk.EventBox fieldeventbox;
-		
+
 		private global::Gtk.VBox vbox12;
-		
+
 		private global::Gtk.Image fieldimage;
-		
+
 		private global::Gtk.Label fieldlabel1;
-		
+
 		private global::Gtk.Label fieldlabel2;
-		
+
 		private global::Gtk.Button resetfieldbutton;
-		
+
 		private global::Gtk.VBox hfieldvbox;
-		
+
 		private global::Gtk.Frame hfieldframe;
-		
+
 		private global::Gtk.Alignment halffieldalignment;
-		
+
 		private global::Gtk.EventBox hfieldeventbox;
-		
+
 		private global::Gtk.VBox vbox14;
-		
+
 		private global::Gtk.Image hfieldimage;
-		
+
 		private global::Gtk.Label hfieldlabel1;
-		
+
 		private global::Gtk.Label hfieldlabel2;
-		
+
 		private global::Gtk.Button resethfieldbutton;
-		
+
 		private global::Gtk.VBox goalvbox;
-		
+
 		private global::Gtk.Frame goalframe;
-		
+
 		private global::Gtk.Alignment goalalignment;
-		
+
 		private global::Gtk.EventBox goaleventbox;
-		
+
 		private global::Gtk.VBox vbox16;
-		
+
 		private global::Gtk.Image goalimage;
-		
+
 		private global::Gtk.Label goallabel1;
-		
+
 		private global::Gtk.Label goallabel2;
-		
+
 		private global::Gtk.Button resetgoalbutton;
-		
+
 		private global::Gtk.HBox periodsbox;
-		
+
 		private global::Gtk.Label periodslabel;
-		
+
 		private global::Gtk.Entry periodsentry;
-		
+
 		private global::Gtk.Button applybutton;
-		
+
 		private global::Gtk.Image applyimage;
-		
+
 		private global::Gtk.ScrolledWindow propertiesscrolledwindow;
-		
+
 		private global::Gtk.Alignment tagpropertiesalignment;
-		
+
 		private global::Gtk.Notebook propertiesnotebook;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::LongoMatch.Gui.Component.LinkProperties linkproperties;
-		
+
 		private global::Gtk.Label label5;
+
+		private global::Gtk.VBox vbox4;
+
+		private global::Gtk.ToggleButton editbutton;
+
+		private global::Gtk.ToggleButton linksbutton;
+
+		private global::Gtk.ToggleButton popupbutton;
+
+		private global::Gtk.ToggleButton fitbutton;
+
+		private global::Gtk.ToggleButton fillbutton;
+
+		private global::Gtk.ToggleButton d11button;
 
 		protected virtual void Build ()
 		{
@@ -596,6 +610,68 @@ namespace LongoMatch.Gui.Component
 			w61.Position = 1;
 			w61.Expand = false;
 			w61.Fill = false;
+			// Container child hbox2.Gtk.Box+BoxChild
+			this.vbox4 = new global::Gtk.VBox ();
+			this.vbox4.Name = "vbox4";
+			this.vbox4.Spacing = 6;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.editbutton = new global::Gtk.ToggleButton ();
+			this.editbutton.CanFocus = true;
+			this.editbutton.Name = "editbutton";
+			this.vbox4.Add (this.editbutton);
+			global::Gtk.Box.BoxChild w62 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.editbutton]));
+			w62.Position = 0;
+			w62.Expand = false;
+			w62.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.linksbutton = new global::Gtk.ToggleButton ();
+			this.linksbutton.CanFocus = true;
+			this.linksbutton.Name = "linksbutton";
+			this.vbox4.Add (this.linksbutton);
+			global::Gtk.Box.BoxChild w63 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.linksbutton]));
+			w63.Position = 1;
+			w63.Expand = false;
+			w63.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.popupbutton = new global::Gtk.ToggleButton ();
+			this.popupbutton.CanFocus = true;
+			this.popupbutton.Name = "popupbutton";
+			this.vbox4.Add (this.popupbutton);
+			global::Gtk.Box.BoxChild w64 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.popupbutton]));
+			w64.Position = 2;
+			w64.Expand = false;
+			w64.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.fitbutton = new global::Gtk.ToggleButton ();
+			this.fitbutton.CanFocus = true;
+			this.fitbutton.Name = "fitbutton";
+			this.vbox4.Add (this.fitbutton);
+			global::Gtk.Box.BoxChild w65 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.fitbutton]));
+			w65.Position = 3;
+			w65.Expand = false;
+			w65.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.fillbutton = new global::Gtk.ToggleButton ();
+			this.fillbutton.CanFocus = true;
+			this.fillbutton.Name = "fillbutton";
+			this.vbox4.Add (this.fillbutton);
+			global::Gtk.Box.BoxChild w66 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.fillbutton]));
+			w66.Position = 4;
+			w66.Expand = false;
+			w66.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.d11button = new global::Gtk.ToggleButton ();
+			this.d11button.CanFocus = true;
+			this.d11button.Name = "d11button";
+			this.vbox4.Add (this.d11button);
+			global::Gtk.Box.BoxChild w67 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.d11button]));
+			w67.Position = 5;
+			w67.Expand = false;
+			w67.Fill = false;
+			this.hbox2.Add (this.vbox4);
+			global::Gtk.Box.BoxChild w68 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.vbox4]));
+			w68.Position = 2;
+			w68.Expand = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

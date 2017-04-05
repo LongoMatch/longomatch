@@ -26,7 +26,7 @@ using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class CamerasLabels: Canvas
+	public class CamerasLabels : Canvas
 	{
 		MediaFileSet fileSet;
 
@@ -41,8 +41,8 @@ namespace LongoMatch.Drawing.Widgets
 		public double Scroll {
 			set {
 				foreach (var o in Objects) {
-					LabelObject cl = o as LabelObject;
-					cl.Scroll = value; 
+					LabelView cl = o as LabelView;
+					cl.Scroll = value;
 				}
 			}
 		}
@@ -55,21 +55,24 @@ namespace LongoMatch.Drawing.Widgets
 			widget?.ReDraw ();
 		}
 
-		void AddLabel (LabelObject label)
+		void AddLabel (LabelView label)
 		{
 			Objects.Add (label);
 		}
 
 		void FillCanvas ()
 		{
-			LabelObject l;
+			LabelView l;
 			int i = 0, w, h;
 
 			w = StyleConf.TimelineLabelsWidth * 2;
 			h = StyleConf.TimelineCameraHeight;
 
 			// Main camera
-			l = new CameraLabelObject (w, h, i * h) {
+			l = new CameraLabelView {
+				Width = w,
+				Height = h,
+				OffsetY = i * h,
 				Name = fileSet [0].Name,
 				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
@@ -77,7 +80,10 @@ namespace LongoMatch.Drawing.Widgets
 			i++;
 
 			// Periods
-			l = new CameraLabelObject (w, h, i * h) {
+			l = new CameraLabelView {
+				Width = w,
+				Height = h,
+				OffsetY = i * h,
 				Name = Catalog.GetString ("Periods"),
 				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
@@ -86,7 +92,10 @@ namespace LongoMatch.Drawing.Widgets
 
 			// Secondary cams
 			for (int j = 1; j < fileSet.Count; j++) {
-				l = new CameraLabelObject (w, h, i * h) {
+				l = new CameraLabelView {
+					Width = w,
+					Height = h,
+					OffsetY = i * h,
 					Name = fileSet [j].Name,
 					BackgroundColor = App.Current.Style.PaletteBackground
 				};
@@ -94,8 +103,8 @@ namespace LongoMatch.Drawing.Widgets
 				i++;
 			}
 
-			double width = Objects.Max (la => (la as LabelObject).RequiredWidth);
-			foreach (LabelObject label in Objects) {
+			double width = Objects.Max (la => (la as LabelView).RequiredWidth);
+			foreach (LabelView label in Objects) {
 				label.Width = width;
 			}
 			WidthRequest = (int)width;

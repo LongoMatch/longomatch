@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Migration
 {
@@ -36,13 +38,16 @@ namespace LongoMatch.Core.Migration
 		/// This is only needed when we can't replace the namespace prefix using <see cref="NamespacesReplacements"/>
 		/// </summary>
 		public static Dictionary<string, Type> TypesMappings = new Dictionary<string, Type> {
-			{ "LongoMatch.Core.Store.Templates.TeamTemplate", typeof(LongoMatch.Core.Store.Templates.SportsTeam) },
-			{ "LongoMatch.Core.Store.Templates.Team", typeof(LongoMatch.Core.Store.Templates.SportsTeam) },
-			{ "LongoMatch.Core.Store.Templates.Dashboard", typeof(LongoMatch.Core.Store.Templates.DashboardLongoMatch) },
-			{ "LongoMatch.Core.Store.Player", typeof(LongoMatch.Core.Store.PlayerLongoMatch) },
-			{ "LongoMatch.Core.Store.Project", typeof(LongoMatch.Core.Store.ProjectLongoMatch) },
-			{ "LongoMatch.Core.Store.TimelineEvent", typeof(LongoMatch.Core.Store.TimelineEventLongoMatch) },
-			{ "LongoMatch.Core.Store.Timer", typeof(LongoMatch.Core.Store.TimerLongoMatch) },
+			{ "LongoMatch.Core.Store.Templates.TeamTemplate", typeof(LongoMatch.Core.Store.Templates.LMTeam) },
+			{ "LongoMatch.Core.Store.Templates.Team", typeof(LongoMatch.Core.Store.Templates.LMTeam) },
+			{ "LongoMatch.Core.Store.Templates.Dashboard", typeof(LongoMatch.Core.Store.Templates.LMDashboard) },
+			{ "LongoMatch.Core.Store.Templates.DashboardLongoMatch", typeof(LongoMatch.Core.Store.Templates.LMDashboard) },
+			{ "LongoMatch.Core.Store.Player", typeof(LongoMatch.Core.Store.LMPlayer) },
+			{ "LongoMatch.Core.Store.Project", typeof(LongoMatch.Core.Store.LMProject) },
+			{ "LongoMatch.Core.Store.TimelineEvent", typeof(LongoMatch.Core.Store.LMTimelineEvent) },
+			{ "LongoMatch.Core.Store.Timer", typeof(LongoMatch.Core.Store.LMTimer) },
+			{ "System.Collections.Generic.Dictionary`2[[LongoMatch.Core.Common.MediaFileAngle, LongoMatch.Core],"+
+				"[LongoMatch.Core.Store.MediaFile, LongoMatch.Core]]", typeof(Dictionary<MediaFileAngle, MediaFile>)},
 		};
 	}
 }

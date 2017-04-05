@@ -40,7 +40,7 @@ namespace LongoMatch.Plugins.Stats
 
 		public string AwayName { get; set; }
 
-		public void LoadBackgrounds (ProjectLongoMatch project)
+		public void LoadBackgrounds (LMProject project)
 		{
 			alltagger.LoadBackgrounds (project);
 			hometagger.LoadBackgrounds (project);

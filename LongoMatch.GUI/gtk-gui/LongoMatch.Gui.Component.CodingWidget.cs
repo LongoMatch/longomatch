@@ -5,27 +5,27 @@ namespace LongoMatch.Gui.Component
 	public partial class CodingWidget
 	{
 		private global::Gtk.Notebook notebook;
-		
+
 		private global::Gtk.HPaned dashboardhpaned;
-		
+
 		private global::Gtk.DrawingArea teamsdrawingarea;
-		
+
 		private global::Gtk.HBox hbox5;
-		
+
 		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::LongoMatch.Gui.Component.Timeline timeline;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
-		
+
 		private global::Gtk.Label label13;
 
 		protected virtual void Build ()
@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 3;
+			this.notebook.CurrentPage = 0;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			this.notebook.ShowBorder = false;
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -60,7 +60,6 @@ namespace LongoMatch.Gui.Component
 			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
-			this.buttonswidget.Edited = false;
 			this.hbox5.Add (this.buttonswidget);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
 			w2.Position = 0;

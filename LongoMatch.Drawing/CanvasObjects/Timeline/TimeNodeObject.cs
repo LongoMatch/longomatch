@@ -19,12 +19,13 @@ using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
-	public class TimeNodeObject : VAS.Drawing.CanvasObjects.Timeline.TimeNodeObject
+	public class LTimeNodeView : TimeNodeView
 	{
-		public TimeNodeObject (TimeNode node) : base (node)
+		public LTimeNodeView ()
 		{
 		}
 

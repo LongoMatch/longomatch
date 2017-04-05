@@ -168,7 +168,7 @@ namespace LongoMatch.Addins
 			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
 				foreach (Dashboard dashboard in plugin.Dashboards) {
 					dashboard.Static = true;
-					provider.Register (dashboard as DashboardLongoMatch);
+					provider.Register (dashboard as LMDashboard);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ namespace LongoMatch.Addins
 			return plugins;
 		}
 
-		public static bool ShowStats (ProjectLongoMatch project)
+		public static bool ShowStats (LMProject project)
 		{
 			IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
 			if (statsUI != null) {

@@ -21,6 +21,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
 using VAS.Core;
 using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
 using VAS.Services;
 
 namespace LongoMatch.Services
@@ -75,18 +76,23 @@ namespace LongoMatch.Services
 		#endregion
 	}
 
-	public class TeamTemplatesProvider : TemplatesProvider<SportsTeam>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider : TemplatesProvider<Team>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
 			Register (Create (Catalog.GetString ("Home team"), 20));
-			systemTemplates.Last ().TeamName = Catalog.GetString ("Home");
+			(systemTemplates.Last () as LMTeam).TeamName = Catalog.GetString ("Home");
 			Register (Create (Catalog.GetString ("Away team"), 20));
-			systemTemplates.Last ().TeamName = Catalog.GetString ("Away");
+			(systemTemplates.Last () as LMTeam).TeamName = Catalog.GetString ("Away");
+		}
+
+		protected override Team CreateDefaultTemplate (int count)
+		{
+			return LMTeam.DefaultTemplate (count);
 		}
 	}
 
-	public class CategoriesTemplatesProvider : TemplatesProvider<DashboardLongoMatch>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{
@@ -94,6 +100,11 @@ namespace LongoMatch.Services
 			// of system templates to make it always available on the app 
 			// and also read-only
 			Register (Create (Catalog.GetString ("Default dashboard"), 20));
+		}
+
+		protected override Dashboard CreateDefaultTemplate (int count)
+		{
+			return LMDashboard.DefaultTemplate (count);
 		}
 	}
 }

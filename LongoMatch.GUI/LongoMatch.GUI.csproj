@@ -173,6 +173,14 @@
 		<Compile Include="Gui\Menu\EventTypeMenu.cs" />
 		<Compile Include="Gui\Menu\PlayerMenu.cs" />
 		<Compile Include="Gui\Dialog\SportDrawingTool.cs" />
+		<Compile Include="Gui\TreeView\LMTimelineEventsTreeView.cs" />
+		<Compile Include="Gui\TreeView\LMPlaylistTreeView.cs" />
+		<Compile Include="Gui\TreeView\EventsFilterTreeView.cs" />
+		<Compile Include="Gui\TreeView\TeamTimelineEventsTreeView.cs" />
+		<Compile Include="MenuExtensionEntry.cs" />
+		<Compile Include="MenuLoaderBase.cs" />
+		<Compile Include="ProjectFileMenuLoader.cs" />
+		<Compile Include="ProjectToolsMenuLoader.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -215,6 +223,7 @@
 		<Reference Include="System.Drawing" />
 		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
 		<Reference Include="Mono.Posix" />
+		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">

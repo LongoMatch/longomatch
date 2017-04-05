@@ -31,28 +31,27 @@ namespace LongoMatch.Core.Handlers
 	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
 
-	public delegate void OpenProjectIDHandler (Guid project_id,ProjectLongoMatch project);
+	public delegate void OpenProjectIDHandler (Guid project_id,LMProject project);
 	public delegate void OpenProjectHandler ();
-	public delegate void NewProjectHandler (ProjectLongoMatch project);
-	public delegate void OpenNewProjectHandler (ProjectLongoMatch project,ProjectType projectType,CaptureSettings captureSettings);
+	public delegate void NewProjectHandler (LMProject project);
 	public delegate void ImportProjectHandler ();
-	public delegate void ExportProjectHandler (ProjectLongoMatch project);
-	public delegate void CreateThumbnailsHandler (ProjectLongoMatch project);
+	public delegate void ExportProjectHandler (LMProject project);
+	public delegate void CreateThumbnailsHandler (LMProject project);
 
 	/* Playlists have been edited */
 	public delegate void PlaylistsChangedHandler (object sender);
 
 	/* Edit player properties */
-	public delegate void PlayerPropertiesHandler (PlayerLongoMatch player);
-	public delegate void PlayersPropertiesHandler (List<PlayerLongoMatch> players);
+	public delegate void PlayerPropertiesHandler (LMPlayer player);
+	public delegate void PlayersPropertiesHandler (List<LMPlayer> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (SportsTeam team,PlayerLongoMatch p1,PlayerLongoMatch p2,
+	public delegate void PlayersSubstitutionHandler (LMTeam team,LMPlayer p1,LMPlayer p2,
 		SubstitutionReason reason,Time time);
-	public delegate void PlayersSelectionChangedHandler (List<PlayerLongoMatch> players);
-	public delegate void TeamSelectionChangedHandler (ObservableCollection<SportsTeam> teams);
+	public delegate void PlayersSelectionChangedHandler (List<LMPlayer> players);
+	public delegate void TeamSelectionChangedHandler (ObservableCollection<LMTeam> teams);
 	/* A list of projects have been selected */
-	public delegate void ProjectsSelectedHandler (List<ProjectLongoMatch> projects);
-	public delegate void ProjectSelectedHandler (ProjectLongoMatch project);
+	public delegate void ProjectsSelectedHandler (List<LMProject> projects);
+	public delegate void ProjectSelectedHandler (LMProject project);
 	public delegate void PlaylistVisibiltyHandler (bool visible);
 	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);

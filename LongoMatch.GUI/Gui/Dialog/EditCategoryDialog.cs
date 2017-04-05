@@ -23,7 +23,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class EditCategoryDialog : Gtk.Dialog
 	{
-		public EditCategoryDialog (ProjectLongoMatch project, DashboardButton tagger, Window parent)
+		public EditCategoryDialog (LMProject project, DashboardButton tagger, Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();
@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 			timenodeproperties2.Dashboard = project.Dashboard;
 		}
 
-		public EditCategoryDialog (ProjectLongoMatch project, EventType eventType, Window parent)
+		public EditCategoryDialog (LMProject project, EventType eventType, Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();

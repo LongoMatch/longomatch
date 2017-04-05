@@ -5,21 +5,21 @@ namespace LongoMatch.Gui.Component
 	public partial class ProjectListWidget
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.Image focusimage;
-		
+
 		private global::Gtk.Entry filterEntry;
-		
+
 		private global::Gtk.ComboBox sortcombobox;
-		
+
 		private global::Gtk.ScrolledWindow icoscrolledwindow;
-		
+
 		private global::Gtk.IconView iconview;
-		
+
 		private global::Gtk.ScrolledWindow treeviewscrolledwindow;
-		
+
 		private global::Gtk.TreeView treeview;
 
 		protected virtual void Build ()

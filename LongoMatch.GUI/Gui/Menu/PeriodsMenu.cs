@@ -19,7 +19,6 @@ using Gtk;
 using VAS.Core;
 using VAS.Core.Store;
 using VAS.Drawing;
-using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -29,7 +28,6 @@ namespace LongoMatch.Gui.Menus
 		Timer timer;
 		Time time;
 		Project project;
-		TimerTimeline timertimeline;
 		SelectionCanvas selectionCanvas;
 
 		public PeriodsMenu ()
@@ -38,12 +36,11 @@ namespace LongoMatch.Gui.Menus
 		}
 
 		public void ShowMenu (Project project, Timer timer, Time time,
-		                      TimerTimeline timertimeline, SelectionCanvas selectionCanvas)
+							  SelectionCanvas selectionCanvas)
 		{
 			this.timer = timer;
 			this.time = time;
 			this.project = project;
-			this.timertimeline = timertimeline;
 			this.selectionCanvas = selectionCanvas;
 			delitem.Visible = project != null && timer != null;
 			Popup ();
@@ -54,8 +51,8 @@ namespace LongoMatch.Gui.Menus
 			additem = new MenuItem (Catalog.GetString ("Add period"));
 			additem.Activated += (sender, e) => {
 				string periodname = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Period name"), null,
-					                    (project.Periods.Count + 1).ToString (),
-					                    null).Result;
+										(project.Periods.Count + 1).ToString (),
+										null).Result;
 				if (periodname != null) {
 					project.Dashboard.GamePeriods.Add (periodname);
 					Period p = new Period { Name = periodname };
@@ -65,19 +62,12 @@ namespace LongoMatch.Gui.Menus
 						Stop = new Time { TotalSeconds = time.TotalSeconds + 10 }
 					});
 					project.Periods.Add (p);
-					if (timertimeline != null) {
-						timertimeline.AddTimer (p);
-					}
 				}
 			};
 			Add (additem);
 			delitem = new MenuItem (Catalog.GetString ("Delete period"));
 			delitem.Activated += (sender, e) => {
 				project.Periods.Remove (timer as Period);
-				if (timertimeline != null) {
-					timertimeline.RemoveTimer (timer);
-					selectionCanvas.ClearSelection ();
-				}
 			};
 			Add (delitem);
 			ShowAll ();

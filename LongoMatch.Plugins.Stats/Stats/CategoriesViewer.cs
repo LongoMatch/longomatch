@@ -43,7 +43,7 @@ namespace LongoMatch.Plugins.Stats
 			treeview.EnableTreeLines = false;
 		}
 
-		public void LoadStats (ProjectStats pstats, ProjectLongoMatch project)
+		public void LoadStats (ProjectStats pstats, LMProject project)
 		{
 			categoryviewer1.HomeName = project.LocalTeamTemplate.TeamName;
 			categoryviewer1.AwayName = project.VisitorTeamTemplate.TeamName;

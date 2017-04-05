@@ -5,89 +5,89 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel
 	{
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.Notebook notebook1;
-		
+
 		private global::Gtk.Alignment pm_content_alignment;
-		
+
 		private global::Gtk.HBox pm_hbox;
-		
+
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
-		
+
 		private global::Gtk.Alignment projectpropertiesalignment;
-		
+
 		private global::Gtk.VBox rbox;
-		
+
 		private global::Gtk.ScrolledWindow scrolledwindow3;
-		
+
 		private global::Gtk.VBox projectbox;
-		
+
 		private global::LongoMatch.Gui.Component.GameDescriptionHeader gamedescriptionheader1;
-		
+
 		private global::Gtk.EventBox infoeventbox;
-		
+
 		private global::Gtk.Label infolabel;
-		
+
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Entry competitionentry;
-		
+
 		private global::Gtk.Label Competitionlabel;
 
 		private global::VAS.UI.UI.Component.DatePicker datepicker;
 
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		
+
 		private global::Gtk.TextView desctextview;
-		
+
 		private global::Gtk.Label label14;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::Gtk.Label label9;
-		
+
 		private global::Gtk.Entry seasonentry;
-		
+
 		private global::Gtk.Label seasonlabel;
-		
+
 		private global::Gtk.Label templatelabel;
-		
+
 		private global::Gtk.EventBox videoseventbox;
-		
+
 		private global::Gtk.Label videoslabel;
-		
+
 		private global::Gtk.Alignment videofileinfo_alignment;
-		
+
 		private global::Gtk.VBox videofileinfo_vbox;
-		
+
 		private global::Gtk.HButtonBox hbuttonbox1;
-		
+
 		private global::Gtk.Button openbutton;
-		
+
 		private global::Gtk.Image openbuttonimage;
-		
+
 		private global::Gtk.Button savebutton;
-		
+
 		private global::Gtk.Image savebuttonimage;
-		
+
 		private global::Gtk.Button exportbutton;
-		
+
 		private global::Gtk.Image exportbuttonimage;
-		
+
 		private global::Gtk.Button resyncbutton;
-		
+
 		private global::Gtk.Image resyncbuttonimage;
-		
+
 		private global::Gtk.Button deletebutton;
-		
+
 		private global::Gtk.Image deletebuttonimage;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::LongoMatch.Gui.Component.SynchronizationWidget projectperiods1;
-		
+
 		private global::Gtk.Label label3;
 
 		protected virtual void Build ()
@@ -335,7 +335,6 @@ namespace LongoMatch.Gui.Panel
 			w25.Position = 0;
 			// Container child rbox.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox1.Name = "hbuttonbox1";
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.openbutton = new global::Gtk.Button ();
 			this.openbutton.TooltipMarkup = "Open";

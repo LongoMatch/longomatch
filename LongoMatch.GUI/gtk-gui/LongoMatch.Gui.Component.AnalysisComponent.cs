@@ -5,21 +5,21 @@ namespace LongoMatch.Gui.Component
 	public partial class AnalysisComponent
 	{
 		private global::Gtk.UIManager UIManager;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.EventBox lightbackgroundeventbox;
-		
+
 		private global::Gtk.VPaned centralpane;
-		
+
 		private global::Gtk.HPaned uppane;
-		
+
 		private global::LongoMatch.Gui.Component.PlaysSelectionWidget playsSelection;
-		
+
 		private global::Gtk.HBox videowidgetsbox;
-		
-		private global::VAS.UI.PlayerCapturerBin playercapturer;
-		
+
+		private global::VAS.UI.VideoPlayerCapturerBin playercapturer;
+
 		private global::LongoMatch.Gui.Component.CodingWidget codingwidget;
 
 		protected virtual void Build ()
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 			this.videowidgetsbox.Name = "videowidgetsbox";
 			this.videowidgetsbox.Spacing = 6;
 			// Container child videowidgetsbox.Gtk.Box+BoxChild
-			this.playercapturer = new global::VAS.UI.PlayerCapturerBin ();
+			this.playercapturer = new global::VAS.UI.VideoPlayerCapturerBin ();
 			this.playercapturer.Events = ((global::Gdk.EventMask)(256));
 			this.playercapturer.Name = "playercapturer";
 			this.videowidgetsbox.Add (this.playercapturer);

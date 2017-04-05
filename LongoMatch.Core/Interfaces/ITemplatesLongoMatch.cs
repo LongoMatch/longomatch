@@ -17,15 +17,16 @@
 //
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface ITeamTemplatesProvider: ITemplateProvider<SportsTeam>
+	public interface ITeamTemplatesProvider : ITemplateProvider<Team>
 	{
 
 	}
 
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<DashboardLongoMatch>
+	public interface ICategoriesTemplatesProvider : ITemplateProvider<Dashboard>
 	{
 	}
 }

@@ -18,7 +18,6 @@
 using System;
 using System.IO;
 using LongoMatch;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
 using LongoMatch.Services;
@@ -35,14 +34,14 @@ namespace Tests.Integration
 	{
 		Mock<IGUIToolkit> guiToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
-		Mock<IPlayer> player;
+		Mock<IVideoPlayer> player;
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
 		{
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
-			player = new Mock<IPlayer> ();
+			player = new Mock<IVideoPlayer> ();
 			multimediaToolkitMock.Setup (g => g.GetPlayer ()).Returns (player.Object);
 		}
 
@@ -84,7 +83,7 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
@@ -94,7 +93,7 @@ namespace Tests.Integration
 			App.Current.DatabaseManager.SetActiveByName ("longomatch");
 			Assert.AreEqual (4, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (2, App.Current.CategoriesTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "spain.ltt")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "france.ltt")));
@@ -123,14 +122,14 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
@@ -143,7 +142,7 @@ namespace Tests.Integration
 			dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 

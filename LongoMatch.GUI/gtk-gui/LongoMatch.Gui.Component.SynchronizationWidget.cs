@@ -5,63 +5,63 @@ namespace LongoMatch.Gui.Component
 	public partial class SynchronizationWidget
 	{
 		private global::Gtk.EventBox headereventbox;
-		
+
 		private global::Gtk.VPaned vpaned2;
-		
+
 		private global::Gtk.HBox playbins_hbox;
-		
+
 		private global::Gtk.VBox main_cam_vbox;
-		
-		private global::VAS.UI.PlayerView main_cam_playerbin;
-		
+
+		private global::VAS.UI.VideoPlayerView main_cam_playerbin;
+
 		private global::Gtk.HBox main_cam_hbox;
-		
+
 		private global::Gtk.Label main_cam_label;
-		
+
 		private global::Gtk.Alignment main_cam_audio_alignment;
-		
+
 		private global::Gtk.ToggleButton main_cam_audio_button;
-		
+
 		private global::Gtk.Image main_cam_audio_button_image;
-		
+
 		private global::Gtk.VBox sec_cam_vbox;
-		
-		private global::VAS.UI.PlayerView sec_cam_playerbin;
-		
+
+		private global::VAS.UI.VideoPlayerView sec_cam_playerbin;
+
 		private global::Gtk.HBox sec_cam_hbox;
-		
+
 		private global::Gtk.Label sec_cam_label;
-		
+
 		private global::Gtk.Alignment sec_cam_audio_alignment;
-		
+
 		private global::Gtk.ToggleButton sec_cam_audio_button;
-		
+
 		private global::Gtk.Image sec_cam_audio_button_image;
-		
+
 		private global::Gtk.Label sec_cam_didactic_label;
-		
+
 		private global::Gtk.HBox hbox5;
-		
+
 		private global::Gtk.Alignment labels_alignment;
-		
+
 		private global::Gtk.VBox labels_vbox;
-		
+
 		private global::Gtk.DrawingArea labelsarea;
-		
+
 		private global::Gtk.HBox zoomhbox;
-		
+
 		private global::Gtk.Image zoomoutimage;
-		
+
 		private global::Gtk.HScale zoomscale;
-		
+
 		private global::Gtk.Image zoominimage;
-		
+
 		private global::Gtk.VBox vbox9;
-		
+
 		private global::Gtk.DrawingArea timerulearea;
-		
+
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-		
+
 		private global::Gtk.DrawingArea timelinearea;
 
 		protected virtual void Build ()
@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Component
 			this.main_cam_vbox.Name = "main_cam_vbox";
 			this.main_cam_vbox.Spacing = 6;
 			// Container child main_cam_vbox.Gtk.Box+BoxChild
-			this.main_cam_playerbin = new global::VAS.UI.PlayerView ();
+			this.main_cam_playerbin = new global::VAS.UI.VideoPlayerView ();
 			this.main_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.main_cam_playerbin.Name = "main_cam_playerbin";
 			this.main_cam_playerbin.TogglePlayOnClick = true;
@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Component
 			this.sec_cam_vbox.Name = "sec_cam_vbox";
 			this.sec_cam_vbox.Spacing = 6;
 			// Container child sec_cam_vbox.Gtk.Box+BoxChild
-			this.sec_cam_playerbin = new global::VAS.UI.PlayerView ();
+			this.sec_cam_playerbin = new global::VAS.UI.VideoPlayerView ();
 			this.sec_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.sec_cam_playerbin.Name = "sec_cam_playerbin";
 			this.sec_cam_playerbin.TogglePlayOnClick = false;

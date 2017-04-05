@@ -22,10 +22,11 @@ using VAS.Core.Store;
 using VAS.DB;
 using LongoMatch.DB.Views;
 using VAS.Core.Store.Playlists;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
-	public class CouchbaseStorageLongoMatch: CouchbaseStorage
+	public class CouchbaseStorageLongoMatch : CouchbaseStorage
 	{
 		static CouchbaseStorageLongoMatch ()
 		{
@@ -46,19 +47,19 @@ namespace LongoMatch.DB
 
 		protected override void InitializeViews ()
 		{
-			AddView (typeof(EventType), new EventTypeView (this));
-			AddView (typeof(TimelineEventLongoMatch), new TimelineEventsView (this));
-			AddView (typeof(ProjectLongoMatch), new ProjectsView (this));
-			AddView (typeof(SportsTeam), new TeamsView (this));
-			AddView (typeof(DashboardLongoMatch), new DashboardsView (this));
-			AddView (typeof(PlayerLongoMatch), new PlayersView (this));
+			AddView (typeof (EventType), new EventTypeView (this));
+			AddView (typeof (LMTimelineEvent), new TimelineEventsView (this));
+			AddView (typeof (LMProject), new ProjectsView (this));
+			AddView (typeof (Team), new TeamsView (this));
+			AddView (typeof (Dashboard), new DashboardsView (this));
+			AddView (typeof (LMPlayer), new PlayersView (this));
 		}
 
 		protected override void InitializeDocumentTypeMappings ()
 		{
 			base.InitializeDocumentTypeMappings ();
-			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof(Playlist), "Playlist");
-			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof(MediaFileSet), "MediaFileSet");
+			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof (Playlist), "Playlist");
+			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof (MediaFileSet), "MediaFileSet");
 		}
 	}
 }

@@ -5,35 +5,41 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayEditor
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-		
+
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.HBox hbox4;
-		
+
 		private global::Gtk.Frame nameframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment3;
-		
+
 		private global::Gtk.HBox hbox3;
-		
+
 		private global::Gtk.Entry nameentry;
-		
+
 		private global::Gtk.Label GtkLabel3;
-		
+
 		private global::Gtk.Frame notesframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment;
-		
+
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
-		
+
 		private global::Gtk.Label GtkLabel1;
-		
+
 		private global::Gtk.VBox tagsvbox;
-		
-		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger tagger;
-		
+
+		private global::Gtk.HBox locationsBox;
+
+		private global::Gtk.DrawingArea fieldDrawingarea;
+
+		private global::Gtk.DrawingArea hfieldDrawingarea;
+
+		private global::Gtk.DrawingArea goalDrawingarea;
+
 		private global::Gtk.DrawingArea drawingarea3;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()
@@ -142,31 +148,48 @@ namespace LongoMatch.Gui.Dialog
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.tagsvbox]));
 			w11.Position = 1;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.tagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
-			this.tagger.HeightRequest = 200;
-			this.tagger.Events = ((global::Gdk.EventMask)(256));
-			this.tagger.Name = "tagger";
-			this.vbox3.Add (this.tagger);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.tagger]));
-			w12.Position = 2;
+			this.locationsBox = new global::Gtk.HBox ();
+			this.locationsBox.Name = "locationsBox";
+			this.locationsBox.Spacing = 6;
+			// Container child locationsBox.Gtk.Box+BoxChild
+			this.fieldDrawingarea = new global::Gtk.DrawingArea ();
+			this.fieldDrawingarea.Name = "fieldDrawingarea";
+			this.locationsBox.Add (this.fieldDrawingarea);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.locationsBox [this.fieldDrawingarea]));
+			w12.Position = 0;
+			// Container child locationsBox.Gtk.Box+BoxChild
+			this.hfieldDrawingarea = new global::Gtk.DrawingArea ();
+			this.hfieldDrawingarea.Name = "hfieldDrawingarea";
+			this.locationsBox.Add (this.hfieldDrawingarea);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.locationsBox [this.hfieldDrawingarea]));
+			w13.Position = 1;
+			// Container child locationsBox.Gtk.Box+BoxChild
+			this.goalDrawingarea = new global::Gtk.DrawingArea ();
+			this.goalDrawingarea.Name = "goalDrawingarea";
+			this.locationsBox.Add (this.goalDrawingarea);
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.locationsBox [this.goalDrawingarea]));
+			w14.Position = 2;
+			this.vbox3.Add (this.locationsBox);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.locationsBox]));
+			w15.Position = 2;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.drawingarea3 = new global::Gtk.DrawingArea ();
 			this.drawingarea3.HeightRequest = 200;
 			this.drawingarea3.Name = "drawingarea3";
 			this.vbox3.Add (this.drawingarea3);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.drawingarea3]));
-			w13.Position = 3;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.drawingarea3]));
+			w16.Position = 3;
 			w2.Add (this.vbox3);
 			this.scrolledwindow2.Add (w2);
 			w1.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(w1 [this.scrolledwindow2]));
-			w16.Position = 0;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1 [this.scrolledwindow2]));
+			w19.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.PlayEditor.ActionArea
-			global::Gtk.HButtonBox w17 = this.ActionArea;
-			w17.Name = "dialog1_ActionArea";
-			w17.Spacing = 10;
-			w17.BorderWidth = ((uint)(5));
-			w17.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w20 = this.ActionArea;
+			w20.Name = "dialog1_ActionArea";
+			w20.Spacing = 10;
+			w20.BorderWidth = ((uint)(5));
+			w20.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -176,9 +199,9 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w18 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w17 [this.buttonOk]));
-			w18.Expand = false;
-			w18.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20 [this.buttonOk]));
+			w21.Expand = false;
+			w21.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

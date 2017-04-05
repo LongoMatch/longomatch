@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		TreeIter selectedIter;
 		TreePath pathClicked;
 		TreeStore store;
@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			Cleanup ();
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				if (project != null) {
 					Cleanup ();

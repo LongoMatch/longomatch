@@ -5,33 +5,33 @@ namespace LongoMatch.Gui.Component
 	public partial class LinkProperties
 	{
 		private global::Gtk.Table tabledata;
-		
+
 		private global::Gtk.CheckButton checkbuttonkeepgenerictags;
-		
+
 		private global::Gtk.CheckButton checkbuttonkeepplayertags;
-		
+
 		private global::Gtk.ComboBox comboboxaction;
-		
+
 		private global::Gtk.ComboBox comboboxteamaction;
-		
+
 		private global::Gtk.Label labelaction;
-		
+
 		private global::Gtk.Label labelfrom;
-		
+
 		private global::Gtk.Label labelfromdata;
-		
+
 		private global::Gtk.Label labelfromtagsdata;
-		
+
 		private global::Gtk.Label labelkeepgenerictags;
-		
+
 		private global::Gtk.Label labelkeepplayertags;
-		
+
 		private global::Gtk.Label labelteamaction;
-		
+
 		private global::Gtk.Label labelto;
-		
+
 		private global::Gtk.Label labeltodata;
-		
+
 		private global::Gtk.Label labeltotagsdata;
 
 		protected virtual void Build ()

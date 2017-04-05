@@ -15,12 +15,11 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-//
+using System.Threading.Tasks;
+using LongoMatch.Core.ViewModel;
+using VAS.Core;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
-using LongoMatch.Services.ViewModel;
-using System.Threading.Tasks;
-using VAS.Core;
 
 namespace LongoMatch.Services.State
 {
@@ -36,7 +35,10 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			ViewModel = new SportsProjectVM { Model = data };
+			if (data == null) {
+				data = new LMProjectVM ();
+			}
+			ViewModel = data;
 		}
 
 		public override async Task<bool> LoadState (dynamic data)

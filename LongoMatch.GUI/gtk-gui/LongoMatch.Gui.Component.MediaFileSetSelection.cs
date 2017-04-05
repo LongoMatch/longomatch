@@ -5,9 +5,9 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileSetSelection
 	{
 		private global::Gtk.ScrolledWindow mfss_scrolledwindow;
-		
+
 		private global::Gtk.Alignment mfss_alignment;
-		
+
 		private global::Gtk.VBox mfss_vbox;
 
 		protected virtual void Build ()

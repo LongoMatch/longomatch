@@ -5,75 +5,75 @@ namespace LongoMatch.Gui.Panel
 	public partial class TeamsTemplatesPanel
 	{
 		private global::Gtk.VBox teameditorvbox;
-		
+
 		private global::Gtk.EventBox headereventbox;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.Alignment contentalignment;
-		
+
 		private global::Gtk.VBox contentvbox;
-		
+
 		private global::Gtk.HBox teameditorbuttonbar;
-		
+
 		private global::Gtk.Alignment templateimagealignment;
-		
+
 		private global::Gtk.Image teamimage;
-		
+
 		private global::Gtk.VBox editteamsvbox;
-		
+
 		private global::Gtk.Label editteamslabel;
-		
+
 		private global::Gtk.HBox hbox8;
-		
+
 		private global::Gtk.Button newteambutton;
-		
+
 		private global::Gtk.Image newteamimage;
-		
+
 		private global::Gtk.Button importteambutton;
-		
+
 		private global::Gtk.Image importteamimage;
-		
+
 		private global::Gtk.Button saveteambutton;
-		
+
 		private global::Gtk.Image saveteamimage;
-		
+
 		private global::Gtk.Button exportteambutton;
-		
+
 		private global::Gtk.Image exportteamimage;
-		
+
 		private global::Gtk.Button deleteteambutton;
-		
+
 		private global::Gtk.Image deleteteamimage;
-		
+
 		private global::Gtk.Image vseparatorimage;
-		
+
 		private global::Gtk.VBox editplayersvbox;
-		
+
 		private global::Gtk.Label editplayerslabel;
-		
+
 		private global::Gtk.HBox hbox7;
-		
+
 		private global::Gtk.Button newplayerbutton1;
-		
+
 		private global::Gtk.Image newplayerimage;
-		
+
 		private global::Gtk.Button deleteplayerbutton;
-		
+
 		private global::Gtk.Image deleteplayerimage;
-		
+
 		private global::Gtk.Alignment playerheaderalignment;
-		
+
 		private global::Gtk.Image playerheaderimage;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.VBox teamsvbox;
-		
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		
+
 		private global::Gtk.TreeView teamseditortreeview;
-		
+
 		private global::LongoMatch.Gui.Component.TeamTemplateEditor teamtemplateeditor1;
 
 		protected virtual void Build ()

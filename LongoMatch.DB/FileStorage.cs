@@ -29,11 +29,11 @@ namespace LongoMatch.DB
 		protected override void MigrateStorable (IStorable storable)
 		{
 			if (storable is Project) {
-				ProjectMigration.Migrate (storable as ProjectLongoMatch);
+				ProjectMigration.Migrate (storable as LMProject);
 			} else if (storable is Team) {
-				TeamMigration.Migrate (storable as SportsTeam);
-			} else if (storable is DashboardLongoMatch) {
-				DashboardMigration.Migrate (storable as DashboardLongoMatch);
+				TeamMigration.Migrate (storable as LMTeam);
+			} else if (storable is LMDashboard) {
+				DashboardMigration.Migrate (storable as LMDashboard);
 			}
 		}
 	}

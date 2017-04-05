@@ -5,15 +5,15 @@ namespace LongoMatch.Gui.Panel
 	public partial class PreferencesPanel
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.ScrolledWindow scrolledwindow1;
-		
+
 		private global::Gtk.TreeView treeview;
-		
+
 		private global::Gtk.VBox propsvbox;
 
 		protected virtual void Build ()

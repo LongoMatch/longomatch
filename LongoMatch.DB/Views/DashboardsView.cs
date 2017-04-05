@@ -16,11 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Store.Templates;
 using VAS.DB.Views;
 
 namespace LongoMatch.DB.Views
 {
-	public class DashboardsView: GenericView <DashboardLongoMatch>
+	public class DashboardsView : GenericView<Dashboard, LMDashboard>
 	{
 		public DashboardsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{

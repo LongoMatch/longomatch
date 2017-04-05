@@ -31,15 +31,15 @@ namespace Tests.Core.Store
 	{
 		EventType evtType1;
 
-		public TimelineEventLongoMatch CreateTimelineEvent ()
+		public LMTimelineEvent CreateTimelineEvent ()
 		{
-			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
+			LMTimelineEvent evt = new LMTimelineEvent ();
 			evtType1 = new EventType { Name = "Cat1" };
-			
+
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Playing = true;
-			evt.Teams.Add (new SportsTeam ());
+			evt.Teams.Add (new LMTeam ());
 			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
 			evt.HalfFieldPosition = new Coordinates ();
@@ -60,12 +60,12 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			TimelineEventLongoMatch p = new TimelineEventLongoMatch ();
+			LMTimelineEvent p = new LMTimelineEvent ();
 			Utils.CheckSerialization (p);
-			
+
 			p = CreateTimelineEvent ();
 			var newp = Utils.SerializeDeserialize (p);
-			
+
 			Assert.AreEqual (p.EventType.ID, newp.EventType.ID);
 			Assert.AreEqual (p.Notes, newp.Notes);
 			Assert.AreEqual (p.Teams, newp.Teams);
@@ -84,8 +84,8 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestEquals ()
 		{
-			TimelineEventLongoMatch evt1 = new TimelineEventLongoMatch ();
-			TimelineEventLongoMatch evt2 = new TimelineEventLongoMatch ();
+			LMTimelineEvent evt1 = new LMTimelineEvent ();
+			LMTimelineEvent evt2 = new LMTimelineEvent ();
 			Assert.AreNotEqual (evt1, evt2);
 			evt2.ID = evt1.ID;
 			Assert.AreEqual (evt1, evt2);
@@ -96,7 +96,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestProperties ()
 		{
-			TimelineEventLongoMatch evt = CreateTimelineEvent ();
+			LMTimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.HasDrawings, false);
 			Assert.AreEqual (evt.Color, evt.EventType.Color);
 			Assert.AreEqual (evt.Description,
@@ -106,18 +106,18 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestTagsDescription ()
 		{
-			TimelineEventLongoMatch evt = CreateTimelineEvent ();
+			LMTimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.TagsDescription (), "test");
 			evt.Tags.Add (new Tag ("test2"));
 			Assert.AreEqual (evt.TagsDescription (), "test-test2");
-			evt.Tags = new ObservableCollection<Tag> ();
+			evt.Tags.Replace (new ObservableCollection<Tag> ());
 			Assert.AreEqual (evt.TagsDescription (), "");
 		}
 
 		[Test ()]
 		public void TestTimesDescription ()
 		{
-			TimelineEventLongoMatch evt = CreateTimelineEvent ();
+			LMTimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.TimesDesription (),
 				String.Format ("0:01,000 - 0:02,000 ({0}X)", 2.3));
 			evt.Rate = 1;
@@ -127,12 +127,12 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestAddDefaultPositions ()
 		{
-			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
+			LMTimelineEvent evt = new LMTimelineEvent ();
 			evt.EventType = new EventType ();
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = false;
 			evt.EventType.TagGoalPosition = false;
-			
+
 			Assert.IsNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
@@ -140,20 +140,20 @@ namespace Tests.Core.Store
 			Assert.IsNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = true;
 			evt.AddDefaultPositions ();
 			Assert.IsNotNull (evt.FieldPosition);
 			Assert.IsNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = true;
 			evt.AddDefaultPositions ();
 			Assert.IsNotNull (evt.FieldPosition);
 			Assert.IsNotNull (evt.HalfFieldPosition);
 			Assert.IsNull (evt.GoalPosition);
-			
+
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = false;
 			evt.EventType.TagGoalPosition = true;
@@ -179,7 +179,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestCoordinatesInFieldPosition ()
 		{
-			TimelineEventLongoMatch evt = CreateTimelineEvent ();
+			LMTimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.CoordinatesInFieldPosition (FieldPositionType.Field),
 				evt.FieldPosition);
 			Assert.AreEqual (evt.CoordinatesInFieldPosition (FieldPositionType.HalfField),
@@ -191,15 +191,15 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestUpdateCoordinates ()
 		{
-			TimelineEventLongoMatch evt = CreateTimelineEvent ();
+			LMTimelineEvent evt = CreateTimelineEvent ();
 			evt.UpdateCoordinates (FieldPositionType.Field, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
-			
+
 			evt.UpdateCoordinates (FieldPositionType.HalfField, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
-			
+
 			evt.UpdateCoordinates (FieldPositionType.Goal, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.GoalPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
@@ -208,7 +208,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
+			LMTimelineEvent evt = new LMTimelineEvent ();
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.EventType = new EventType ();
@@ -220,7 +220,7 @@ namespace Tests.Core.Store
 			evt.Rate = 2f;
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-			evt.Teams.Add (new SportsTeam ());
+			evt.Teams.Add (new LMTeam ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.FieldPosition = new Coordinates ();
@@ -235,16 +235,13 @@ namespace Tests.Core.Store
 			evt.Tags.Add (new Tag ("2"));
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-			evt.Tags = null;
-			Assert.IsTrue (evt.IsChanged);
-			evt.IsChanged = false;
 			evt.CamerasConfig.Add (new CameraConfig (2));
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.CamerasConfig = null;
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-			evt.Players.Add (new PlayerLongoMatch ());
+			evt.Players.Add (new LMPlayer ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 		}

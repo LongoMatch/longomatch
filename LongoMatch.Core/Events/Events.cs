@@ -27,20 +27,11 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Events
 {
-	public class OpenNewProjectEvent : Event
-	{
-		public ProjectLongoMatch Project { get; set; }
-
-		public ProjectType ProjectType { get; set; }
-
-		public CaptureSettings CaptureSettings { get; set; }
-	}
-
-	public class OpenProjectIDEvent : Event
+    public class OpenProjectIDEvent : Event
 	{
 		public Guid ProjectID { get; set; }
 
-		public ProjectLongoMatch Project { get; set; }
+		public LMProject Project { get; set; }
 	}
 
 	public class ImportProjectEvent : Event
@@ -49,7 +40,7 @@ namespace LongoMatch.Core.Events
 
 	public class ExportProjectEvent : Event
 	{
-		public ProjectLongoMatch Project { get; set; }
+		public LMProject Project { get; set; }
 	}
 
 	public class ManageJobsEvent : Event
@@ -71,11 +62,11 @@ namespace LongoMatch.Core.Events
 
 	public class PlayerSubstitutionEvent : Event
 	{
-		public SportsTeam Team { get; set; }
+		public LMTeam Team { get; set; }
 
-		public PlayerLongoMatch Player1 { get; set; }
+		public LMPlayer Player1 { get; set; }
 
-		public PlayerLongoMatch Player2 { get; set; }
+		public LMPlayer Player2 { get; set; }
 
 		public SubstitutionReason SubstitutionReason { get; set; }
 

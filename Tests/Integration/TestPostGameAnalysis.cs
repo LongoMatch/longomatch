@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -24,12 +24,13 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.DB;
 using LongoMatch.Plugins;
 using LongoMatch.Services;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core;
@@ -42,6 +43,8 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
+using VAS.Services.Controller;
 
 namespace Tests.Integration
 {
@@ -51,12 +54,21 @@ namespace Tests.Integration
 		Mock<IDrawingToolkit> drawingToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
 		Mock<IGUIToolkit> guiToolkitMock;
-		Mock<IAnalysisWindow> analysisWindowMock;
-		Mock<IPlayerController> playerControllerMock;
+		Mock<IVideoPlayerController> playerControllerMock;
 		Mock<IFramesCapturer> capturerMock;
-		Mock<IPlayer> playerMock;
+		Mock<IVideoPlayer> playerMock;
 		Mock<IDialogs> mockDialogs;
 		string tmpPath, homePath;
+		CoreEventsController eventsController;
+		ToolsManager toolsManager;
+
+		[TestFixtureSetUp ()]
+		public void FixtureSetup ()
+		{
+			// Register the events manager
+			eventsController = new CoreEventsController ();
+			toolsManager = new ToolsManager ();
+		}
 
 		[SetUp]
 		public void Init ()
@@ -69,12 +81,12 @@ namespace Tests.Integration
 			drawingToolkitMock = new Mock<IDrawingToolkit> ();
 
 			capturerMock = new Mock<IFramesCapturer> ();
-			playerControllerMock = new Mock<IPlayerController> ();
+			playerControllerMock = new Mock<IVideoPlayerController> ();
 			playerControllerMock.Setup (p => p.StreamLength).Returns (new Time { TotalSeconds = 60000 });
 			playerControllerMock.Setup (p => p.CamerasConfig).Returns (
 				new ObservableCollection<CameraConfig> { new CameraConfig (0) });
 
-			playerMock = new Mock<IPlayer> ();
+			playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
 
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
@@ -86,18 +98,11 @@ namespace Tests.Integration
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
-
-			analysisWindowMock = new Mock<IAnalysisWindow> ();
-			analysisWindowMock.Setup (a => a.Player).Returns (() => playerControllerMock.Object);
-			IAnalysisWindowBase aw = analysisWindowMock.Object;
-			guiToolkitMock.Setup (g => g.OpenProject (It.IsAny<ProjectLongoMatch> (), It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out aw));
 		}
 
 		[TearDown]
 		public void Delete ()
 		{
-			CoreServices.Stop ();
 			try {
 				foreach (var db in App.Current.DatabaseManager.Databases) {
 					db.Reset ();
@@ -105,6 +110,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
+			CoreServices.Stop ();
 			SetupClass.Initialize ();
 		}
 
@@ -126,6 +132,10 @@ namespace Tests.Integration
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
+			// Do controllers start in here since the EventBroker is instantiante again in the test
+			eventsController.Start ();
+			toolsManager.Start ();
+
 			// Start importing templates
 			App.Current.TeamTemplatesProvider.Save (
 				App.Current.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
@@ -137,28 +147,29 @@ namespace Tests.Integration
 			Assert.AreEqual (2, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			// Create a new project and open it
-			ProjectLongoMatch p = CreateProject ();
+			LMProject p = CreateProject ();
 			projectID = p.ID;
-			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
-			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = p.ID,
-					Project = p
-				}
-			);
+			LMProjectAnalysisVM viewModel;
+			viewModel = new LMProjectAnalysisVM ();
+			IVideoPlayerController playerController = new Mock<IVideoPlayerController> ().Object;
+			viewModel.Project = new LMProjectVM { Model = p };
+			viewModel.VideoPlayer = new VideoPlayerVM { Player = playerController };
+			eventsController.SetViewModel (viewModel);
+
+			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (p, true);
 
 			// Tag some events
 			Assert.AreEqual (0, p.Timeline.Count);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (1, p.Timeline.Count);
-			ProjectLongoMatch savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			LMProject savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (1, savedP.Timeline.Count);
 			AddEvent (p, 6, 3000, 3050, 3025);
 			AddEvent (p, 7, 3000, 3050, 3025);
 			AddEvent (p, 8, 3000, 3050, 3025);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (5, p.Timeline.Count);
-			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
@@ -171,35 +182,26 @@ namespace Tests.Integration
 				}
 			);
 			Assert.AreEqual (3, p.Timeline.Count);
-			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 
-			// Now create a new ProjectLongoMatch with the same templates
-			p = CreateProject ();
-			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
-			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = p.ID,
-					Project = p
-				}
-			);
+			// Now create a new LMProject with the same templates
+			LMProject newProject = CreateProject ();
+			viewModel.Project.Model = newProject;
+			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (newProject);
+			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 
 			// Add some events and than remove it from the DB
-			AddEvent (p, 6, 3000, 3050, 3025);
-			AddEvent (p, 7, 3000, 3050, 3025);
-			AddEvent (p, 8, 3000, 3050, 3025);
-			AddEvent (p, 5, 3000, 3050, 3025);
-			App.Current.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (p);
+			AddEvent (newProject, 6, 3000, 3050, 3025);
+			AddEvent (newProject, 7, 3000, 3050, 3025);
+			AddEvent (newProject, 8, 3000, 3050, 3025);
+			AddEvent (newProject, 5, 3000, 3050, 3025);
+			App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (newProject);
 
 			// Reopen the old project
-			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
-			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = savedP.ID,
-					Project = savedP
-				}
-			);
+			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().FirstOrDefault (pr => pr.ID == projectID);
+			viewModel.Project.Model = savedP;
+
 			App.Current.EventsBroker.Publish<SaveProjectEvent> (
 				new SaveProjectEvent {
 					Project = savedP,
@@ -208,7 +210,7 @@ namespace Tests.Integration
 			);
 
 			// Export this project to a new file
-			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (projectID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
 			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
@@ -217,7 +219,7 @@ namespace Tests.Integration
 				It.IsAny<string> (), It.IsAny<string []> ())).Returns (tmpFile);
 			App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
 			Assert.IsTrue (File.Exists (tmpFile));
-			savedP = Project.Import (tmpFile) as ProjectLongoMatch;
+			savedP = Project.Import (tmpFile) as LMProject;
 			Assert.IsNotNull (savedP);
 
 			// Import a new project
@@ -239,22 +241,26 @@ namespace Tests.Integration
 			);
 			mockDialogs.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string []> ())).Returns (projectPath);
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
-				p = e.Project as ProjectLongoMatch;
+			App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((e) => {
+				p = e.Project as LMProject;
+				viewModel.Project.Model = p;
 			});
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			Assert.IsNotNull (p);
-			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			int eventsCount = p.Timeline.Count;
+
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
 			App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
-			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
-			CoreServices.Stop ();
+
+			eventsController.Stop ();
+			toolsManager.Stop ();
 		}
 
-		void AddEvent (ProjectLongoMatch p, int idx, int start, int stop, int eventTime)
+		void AddEvent (LMProject p, int idx, int start, int stop, int eventTime)
 		{
 			App.Current.EventsBroker.Publish<NewEventEvent> (
 				new NewEventEvent {
@@ -269,14 +275,14 @@ namespace Tests.Integration
 			);
 		}
 
-		ProjectLongoMatch CreateProject ()
+		LMProject CreateProject ()
 		{
-			var project = new ProjectLongoMatch { Description = new ProjectDescription () };
-			project.LocalTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			var project = new LMProject { Description = new ProjectDescription () };
+			project.LocalTeamTemplate = (LMTeam)App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
 			Assert.IsNotNull (project.LocalTeamTemplate);
-			project.VisitorTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			project.VisitorTeamTemplate = (LMTeam)App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
 			Assert.IsNotNull (project.VisitorTeamTemplate);
-			project.Dashboard = App.Current.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket") as DashboardLongoMatch;
+			project.Dashboard = App.Current.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket") as LMDashboard;
 			Assert.IsNotNull (project.Dashboard);
 			project.Description.Competition = "Liga";
 			project.Description.MatchDate = DateTime.UtcNow;

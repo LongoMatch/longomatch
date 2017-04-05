@@ -5,21 +5,21 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EndCaptureDialog
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.HBox hbox2;
-		
+
 		private global::Gtk.Image image439;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.HBox hbox3;
-		
+
 		private global::Gtk.Button returnbutton;
-		
+
 		private global::Gtk.Button quitbutton;
-		
+
 		private global::Gtk.Button savebutton;
-		
+
 		private global::Gtk.Button buttonCancel;
 
 		protected virtual void Build ()

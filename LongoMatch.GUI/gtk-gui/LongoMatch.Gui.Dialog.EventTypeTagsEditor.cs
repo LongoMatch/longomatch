@@ -5,11 +5,11 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EventTypeTagsEditor
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.VBox mainvbox;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

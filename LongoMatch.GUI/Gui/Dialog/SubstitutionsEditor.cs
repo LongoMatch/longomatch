@@ -16,7 +16,6 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -36,9 +35,9 @@ namespace LongoMatch.Gui.Dialog
 	{
 		TeamTagger tagger;
 		SelectionCanvas incanvas, outcanvas;
-		SportsPlayerObject inpo, outpo;
-		PlayerLongoMatch inPlayer, outPlayer, selectedPlayer;
-		SportsTeam homeTeam, awayTeam;
+		LMPlayerView inpo, outpo;
+		LMPlayer inPlayer, outPlayer, selectedPlayer;
+		LMTeam homeTeam, awayTeam;
 		LineupEvent lineup;
 		SubstitutionEvent substitution;
 		const int PLAYER_SIZE = 100;
@@ -52,8 +51,8 @@ namespace LongoMatch.Gui.Dialog
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			incanvas = new SelectionCanvas (new WidgetWrapper (drawingarea2));
 			outcanvas = new SelectionCanvas (new WidgetWrapper (drawingarea3));
-			inpo = new SportsPlayerObject ();
-			outpo = new SportsPlayerObject ();
+			inpo = new LMPlayerView ();
+			outpo = new LMPlayerView ();
 			inpo.ClickedEvent += HandleClickedEvent;
 			outpo.ClickedEvent += HandleClickedEvent;
 			inpo.Size = PLAYER_SIZE;
@@ -79,7 +78,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public void Load (ProjectLongoMatch project, StatEvent evt)
+		public void Load (LMProject project, StatEvent evt)
 		{
 			if (evt is LineupEvent) {
 				LoadLineup (project, evt as LineupEvent);
@@ -88,7 +87,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public void LoadLineup (ProjectLongoMatch project, LineupEvent lineup)
+		public void LoadLineup (LMProject project, LineupEvent lineup)
 		{
 			this.lineup = lineup;
 			playershbox.Visible = false;
@@ -98,9 +97,9 @@ namespace LongoMatch.Gui.Dialog
 				lineup.AwayStartingPlayers, lineup.AwayBenchPlayers);
 		}
 
-		public void LoadSubstitution (ProjectLongoMatch project, SubstitutionEvent substitution)
+		public void LoadSubstitution (LMProject project, SubstitutionEvent substitution)
 		{
-			List<PlayerLongoMatch> hfp, hbp, afp, abp;
+			List<LMPlayer> hfp, hbp, afp, abp;
 
 			this.substitution = substitution;
 			project.CurrentLineup (substitution.EventTime, out hfp, out hbp, out afp, out abp);
@@ -116,41 +115,41 @@ namespace LongoMatch.Gui.Dialog
 			SwitchPlayer (substitution.In, substitution.Out);
 		}
 
-		void LoadTeams (ProjectLongoMatch project, List<PlayerLongoMatch> homeFieldPlayers, List<PlayerLongoMatch> homeBenchPlayers,
-		                List<PlayerLongoMatch> awayFieldPlayers, List<PlayerLongoMatch> awayBenchPlayers)
+		void LoadTeams (LMProject project, List<LMPlayer> homeFieldPlayers, List<LMPlayer> homeBenchPlayers,
+						List<LMPlayer> awayFieldPlayers, List<LMPlayer> awayBenchPlayers)
 		{
-			List<PlayerLongoMatch> homeTeamPlayers, awayTeamPlayers;
+			List<LMPlayer> homeTeamPlayers, awayTeamPlayers;
 
 			if (homeFieldPlayers != null) {
 				homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
-				homeTeam = new SportsTeam {
+				homeTeam = new LMTeam {
 					Colors = project.LocalTeamTemplate.Colors,
 					ActiveColor = project.LocalTeamTemplate.ActiveColor,
 					ID = project.LocalTeamTemplate.ID,
 					Formation = project.LocalTeamTemplate.Formation,
-					List = new ObservableCollection<Player> (homeTeamPlayers)
 				};
+				homeTeam.List.Replace (homeTeamPlayers);
 			}
 
 			if (awayFieldPlayers != null) {
 				awayTeamPlayers = awayFieldPlayers.Concat (awayBenchPlayers).ToList ();
-				awayTeam = new SportsTeam {
+				awayTeam = new LMTeam {
 					Colors = project.VisitorTeamTemplate.Colors,
 					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
 					Formation = project.VisitorTeamTemplate.Formation,
-					List = new ObservableCollection<Player> (awayTeamPlayers)
 				};
+				awayTeam.List.Replace (awayTeamPlayers);
 			}
 
 			tagger.LoadTeams (homeTeam, awayTeam, project.Dashboard.FieldBackground);
 		}
 
-		void SwitchPlayer (PlayerLongoMatch inPlayer, PlayerLongoMatch outPlayer)
+		void SwitchPlayer (LMPlayer inPlayer, LMPlayer outPlayer)
 		{
 			if (inPlayer != null) {
 				this.inPlayer = inPlayer;
-				inpo.Player = inPlayer;
+				inpo.Model = inPlayer;
 				inpo.Active = false;
 				drawingarea2.QueueDraw ();
 				tagger.ResetSelection ();
@@ -159,7 +158,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 			if (outPlayer != null) {
 				this.outPlayer = outPlayer;
-				outpo.Player = outPlayer;
+				outpo.Model = outPlayer;
 				outpo.Active = false;
 				drawingarea3.QueueDraw ();
 				tagger.ResetSelection ();
@@ -169,7 +168,7 @@ namespace LongoMatch.Gui.Dialog
 			selectedPlayer = null;
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			if (players.Count == 1) {
 				selectedPlayer = players [0];
@@ -183,7 +182,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2, SubstitutionReason reason, Time time)
 		{
 			tagger.Substitute (p1, p2, team);
 			if (team.ID == homeTeam.ID) {
@@ -195,7 +194,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleClickedEvent (ICanvasObject co)
 		{
-			SportsPlayerObject po = co as SportsPlayerObject;
+			LMPlayerView po = co as LMPlayerView;
 
 			if (po == inpo) {
 				if (outpo.Active) {

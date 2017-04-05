@@ -41,12 +41,14 @@ namespace LongoMatch.Gui.Component
 	{
 		public event EventHandler TemplateSaved;
 
-		PlayerLongoMatch loadedPlayer;
-		SportsTeam template;
-		bool edited, ignoreChanges;
-		List<PlayerLongoMatch> selectedPlayers;
-		TeamTagger teamtagger;
 		const int SHIELD_SIZE = 70;
+		const int PLAYER_SIZE = 70;
+
+		LMPlayer loadedPlayer;
+		LMTeam template;
+		bool edited, ignoreChanges;
+		List<LMPlayer> selectedPlayers;
+		TeamTagger teamtagger;
 
 		public TeamTemplateEditor ()
 		{
@@ -83,7 +85,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public SportsTeam Team {
+		public LMTeam Team {
 			set {
 				template = value;
 				ignoreChanges = true;
@@ -112,7 +114,7 @@ namespace LongoMatch.Gui.Component
 
 		public void AddPlayer ()
 		{
-			PlayerLongoMatch p = template.AddDefaultItem (template.List.Count) as PlayerLongoMatch;
+			LMPlayer p = template.AddDefaultItem (template.List.Count) as LMPlayer;
 			teamtagger.Reload ();
 			teamtagger.Select (p);
 			Edited = true;
@@ -144,7 +146,7 @@ namespace LongoMatch.Gui.Component
 			newplayerbutton.Clicked += HandleNewPlayerClicked;
 			savebutton.Clicked += HandleSaveTemplateClicked;
 			deletebutton.Clicked += HandleDeletePlayerClicked;
-			
+
 			shieldeventbox.ButtonPressEvent += HandleShieldButtonPressEvent;
 			playereventbox.ButtonPressEvent += HandlePlayerButtonPressEvent;
 
@@ -159,10 +161,10 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Changed += HandleEntryChanged;
 			mailentry.Changed += HandleEntryChanged;
 			bdaydatepicker.ValueChanged += HandleEntryChanged;
-			
+
 			applybutton.Clicked += (s, e) => {
 				ParseTactics ();
-			}; 
+			};
 
 			Edited = false;
 		}
@@ -205,7 +207,7 @@ namespace LongoMatch.Gui.Component
 			tacticsentry.Text = template.FormationStr;
 		}
 
-		void LoadPlayer (PlayerLongoMatch p)
+		void LoadPlayer (LMPlayer p)
 		{
 			ignoreChanges = true;
 
@@ -246,7 +248,7 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Text = "";
 			bdaydatepicker.Date = new DateTime ();
 			mailentry.Text = "";
-			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
 
 			ignoreChanges = false;
 		}
@@ -264,19 +266,19 @@ namespace LongoMatch.Gui.Component
 			FillFormation ();
 		}
 
-		Pixbuf PlayerPhoto (PlayerLongoMatch p)
+		Pixbuf PlayerPhoto (LMPlayer p)
 		{
 			Pixbuf playerImage;
-				
+
 			if (p.Photo != null) {
-				playerImage = p.Photo.Value;
+				playerImage = p.Photo.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 			} else {
-				playerImage = Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+				playerImage = Misc.LoadIcon ("longomatch-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
 		}
 
-		void PlayersSelected (List<PlayerLongoMatch> players)
+		void PlayersSelected (List<LMPlayer> players)
 		{
 			ignoreChanges = true;
 
@@ -291,7 +293,7 @@ namespace LongoMatch.Gui.Component
 			ignoreChanges = false;
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			PlayersSelected (players);
 		}
@@ -332,16 +334,16 @@ namespace LongoMatch.Gui.Component
 		{
 			Image player;
 			Pixbuf pix = Helpers.Misc.OpenImage (this);
-			
+
 			if (pix == null) {
 				return;
 			}
-			
+
 			player = new Image (pix);
 			player.ScaleInplace (Constants.MAX_PLAYER_ICON_SIZE,
-				Constants.MAX_PLAYER_ICON_SIZE); 
+				Constants.MAX_PLAYER_ICON_SIZE);
 			if (player != null && loadedPlayer != null) {
-				playerimage.Pixbuf = player.Value;
+				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 				loadedPlayer.Photo = player;
 				teamtagger.Reload ();
 				Edited = true;
@@ -352,23 +354,23 @@ namespace LongoMatch.Gui.Component
 		{
 			Image shield;
 			Pixbuf pix = Helpers.Misc.OpenImage (this);
-			
+
 			if (pix == null) {
 				return;
 			}
-			
+
 			shield = new Image (pix);
 			if (shield != null) {
 				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
-					Constants.MAX_SHIELD_ICON_SIZE); 
+					Constants.MAX_SHIELD_ICON_SIZE);
 				template.Shield = shield;
 				shieldimage.Pixbuf = shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				Edited = true;
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
-		                                     SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
+											 SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);

@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 
 		void ShowPlayerMenu (TreePath [] paths)
 		{
-			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			List<LMTimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
 			playerMenu.ShowMenu (Project, events);
 		}
 
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Component
 			}
 
 			if (oa is Player)
-				return (oa as PlayerLongoMatch).Number.CompareTo ((ob as PlayerLongoMatch).Number);
+				return (oa as LMPlayer).Number.CompareTo ((ob as LMPlayer).Number);
 			else
 				return (oa as TimeNode).Start.CompareTo ((ob as TimeNode).Start);
 		}

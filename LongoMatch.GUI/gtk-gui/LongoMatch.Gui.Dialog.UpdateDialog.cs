@@ -5,15 +5,15 @@ namespace LongoMatch.Gui.Dialog
 	public partial class UpdateDialog
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::Gtk.Label label6;
-		
+
 		private global::Gtk.Label label7;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

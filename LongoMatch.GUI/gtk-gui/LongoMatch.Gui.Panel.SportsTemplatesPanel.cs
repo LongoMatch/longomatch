@@ -5,90 +5,90 @@ namespace LongoMatch.Gui.Panel
 	public partial class SportsTemplatesPanel
 	{
 		private global::Gtk.VBox dashboardeditorvbox;
-		
+
 		private global::Gtk.EventBox headereventbox;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.Alignment contentalignment;
-		
+
 		private global::Gtk.VBox contentvbox;
-		
+
 		private global::Gtk.HBox dashboardeditorbuttonbar;
-		
+
 		private global::Gtk.Alignment templateimagealignment;
-		
+
 		private global::Gtk.Image templateimage;
-		
+
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.Label editdashboardslabel;
-		
+
 		private global::Gtk.HBox hbox3;
-		
+
 		private global::Gtk.Button newtemplatebutton;
-		
+
 		private global::Gtk.Image newtemplateimage;
-		
+
 		private global::Gtk.Button importtemplatebutton;
-		
+
 		private global::Gtk.Image importtemplateimage;
-		
+
 		private global::Gtk.Button savetemplatebutton;
-		
+
 		private global::Gtk.Image savetemplateimage;
-		
+
 		private global::Gtk.Button exporttemplatebutton;
-		
+
 		private global::Gtk.Image exporttemplateimage;
-		
+
 		private global::Gtk.Button deletetemplatebutton;
-		
+
 		private global::Gtk.Image deletetemplateimage;
-		
+
 		private global::Gtk.Image vseparatorimage;
-		
+
 		private global::Gtk.VBox vbox17;
-		
+
 		private global::Gtk.Label editbuttonslabel;
-		
+
 		private global::Gtk.HBox hbox4;
-		
+
 		private global::Gtk.Button addcategorybutton;
-		
+
 		private global::Gtk.Image addcategoryimage;
-		
+
 		private global::Gtk.Button addtagbutton1;
-		
+
 		private global::Gtk.Image addtagimage;
-		
+
 		private global::Gtk.Button scorebutton;
-		
+
 		private global::Gtk.Image scoreimage;
-		
+
 		private global::Gtk.Button cardbutton;
-		
+
 		private global::Gtk.Image cardimage;
-		
+
 		private global::Gtk.Button timerbutton;
-		
+
 		private global::Gtk.Image timerimage;
-		
+
 		private global::Gtk.Alignment categoryheaderimagealignment;
-		
+
 		private global::Gtk.Image categoryheaderimage;
-		
+
 		private global::Gtk.HBox hbox1;
-		
+
 		private global::Gtk.VBox templatesvbox;
-		
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		
+
 		private global::Gtk.TreeView dashboardseditortreeview;
-		
+
 		private global::Gtk.VBox vbox4;
-		
-		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
+
+		private global::LongoMatch.Gui.Component.DashboardWidget dashboardwidget;
 
 		protected virtual void Build ()
 		{
@@ -405,12 +405,11 @@ namespace LongoMatch.Gui.Panel
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
-			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
-			this.buttonswidget.Name = "buttonswidget";
-			this.buttonswidget.Edited = false;
-			this.vbox4.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
+			this.dashboardwidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
+			this.dashboardwidget.Events = ((global::Gdk.EventMask)(256));
+			this.dashboardwidget.Name = "dashboardwidget";
+			this.vbox4.Add (this.dashboardwidget);
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.dashboardwidget]));
 			w38.Position = 0;
 			this.hbox1.Add (this.vbox4);
 			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));

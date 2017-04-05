@@ -24,12 +24,15 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Core.ViewModel;
+using VAS.Drawing.CanvasObjects.Teams;
+using LongoMatch.Core.ViewModel;
 
 namespace LongoMatch.Drawing
 {
 	public class PlayslistCellRenderer
 	{
-	
+
 		public static ISurface EyeSurface = null;
 		public static ISurface ArrowRight = null;
 		public static ISurface ArrowDown = null;
@@ -37,20 +40,22 @@ namespace LongoMatch.Drawing
 
 		public static void RenderSeparationLine (IDrawingToolkit tk, IContext context, Area backgroundArea)
 		{
-			
+
 			double x1, x2, y;
-			
+
 			x1 = backgroundArea.Start.X;
 			x2 = x1 + backgroundArea.Width;
-			y = backgroundArea.Start.Y + backgroundArea.Height; 
+			y = backgroundArea.Start.Y + backgroundArea.Height;
 			tk.LineWidth = 1;
 			tk.StrokeColor = App.Current.Style.PaletteBackgroundLight;
 			tk.DrawLine (new Point (x1, y), new Point (x2, y));
 		}
 
-		static void RenderPlayer (IDrawingToolkit tk, PlayerLongoMatch p, Point imagePoint)
+		static void RenderPlayer (IDrawingToolkit tk, LMPlayer p, Point imagePoint)
 		{
-			SportsPlayerObject po = new SportsPlayerObject (p);
+			PlayerView po = App.Current.ViewLocator.Retrieve ("PlayerView") as PlayerView;
+			// FIXME: Remove it with everything is ported to MVVM
+			po.Player = new LMPlayerVM { Model = p };
 			po.Position = imagePoint;
 			po.Size = StyleConf.ListImageWidth - 2;
 			po.Draw (tk, null);
@@ -68,7 +73,7 @@ namespace LongoMatch.Drawing
 			double countX1, countX2, countY, countYC;
 			Point arrowY;
 			ISurface arrow;
-			
+
 			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator * 2 + StyleConf.ListCountRadio;
 			countX2 = countX1 + StyleConf.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
@@ -126,8 +131,8 @@ namespace LongoMatch.Drawing
 			tk.DrawText (textP, textW, backgroundArea.Height, text);
 		}
 
-		public static void RenderPlayer (PlayerLongoMatch player, int count, bool isExpanded, IDrawingToolkit tk,
-		                                 IContext context, Area backgroundArea, Area cellArea)
+		public static void RenderPlayer (LMPlayer player, int count, bool isExpanded, IDrawingToolkit tk,
+										 IContext context, Area backgroundArea, Area cellArea)
 		{
 			Point image, text;
 			double textWidth;
@@ -148,7 +153,7 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderPlaylist (Playlist playlist, int count, bool isExpanded, IDrawingToolkit tk,
-		                                   IContext context, Area backgroundArea, Area cellArea)
+										   IContext context, Area backgroundArea, Area cellArea)
 		{
 			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
@@ -160,7 +165,7 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
-		                                           IContext context, Area backgroundArea, Area cellArea)
+												   IContext context, Area backgroundArea, Area cellArea)
 		{
 			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
@@ -172,16 +177,16 @@ namespace LongoMatch.Drawing
 		}
 
 		static void RenderTimelineEventBase (Color color, Image ss, bool selected, string desc, IDrawingToolkit tk,
-		                                     IContext context, Area backgroundArea, Area cellArea, CellState state,
-		                                     out Point selectPoint, out Point textPoint, out Point imagePoint,
-		                                     out Point circlePoint, out double textWidth)
+											 IContext context, Area backgroundArea, Area cellArea, CellState state,
+											 out Point selectPoint, out Point textPoint, out Point imagePoint,
+											 out Point circlePoint, out double textWidth)
 		{
 			selectPoint = new Point (backgroundArea.Start.X, backgroundArea.Start.Y);
 			textPoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator, selectPoint.Y);
 			imagePoint = new Point (textPoint.X + StyleConf.ListTextWidth + StyleConf.ListRowSeparator, selectPoint.Y);
 			textWidth = StyleConf.ListTextWidth;
 			circlePoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth / 2, selectPoint.Y + backgroundArea.Height / 2);
-			
+
 			tk.LineWidth = 0;
 			if (state.HasFlag (CellState.Prelit)) {
 				tk.FillColor = App.Current.Style.PaletteBackgroundDarkBright;
@@ -200,7 +205,7 @@ namespace LongoMatch.Drawing
 				tk.FillColor = App.Current.Style.PaletteActive;
 				tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 2);
 			}
-			
+
 			if (desc != null) {
 				tk.FontSize = 10;
 				tk.FontWeight = FontWeight.Normal;
@@ -220,14 +225,14 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		public static void RenderSubstitution (Color color, Time evt, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut, bool selected,
-		                                       bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
-		                                       Area cellArea, CellState state)
+		public static void RenderSubstitution (Color color, Time evt, LMPlayer playerIn, LMPlayer playerOut, bool selected,
+											   bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
+											   Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
 			Point inPoint, imgPoint, outPoint, timePoint;
 			double textWidth;
-			
+
 			if (subsImage == null) {
 				subsImage = Resources.LoadImage (StyleConf.SubsIcon);
 			}
@@ -242,8 +247,8 @@ namespace LongoMatch.Drawing
 			RenderPlayer (tk, playerIn, inPoint);
 			tk.DrawImage (imgPoint, 20, cellArea.Height, subsImage, ScaleMode.AspectFit);
 			RenderPlayer (tk, playerOut, outPoint);
-			
-			timePoint = new Point (outPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y); 
+
+			timePoint = new Point (outPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y);
 			tk.FontSize = 10;
 			tk.FontWeight = FontWeight.Normal;
 			tk.StrokeColor = App.Current.Style.PaletteSelected;
@@ -254,12 +259,12 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<VAS.Core.Store.Templates.Team> teams,
-		                               bool selected, string desc, int count, bool isExpanded, IDrawingToolkit tk,
-		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
+									   bool selected, string desc, int count, bool isExpanded, IDrawingToolkit tk,
+									   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
 			double textWidth;
-			
+
 			tk.Context = context;
 			tk.Begin ();
 
@@ -268,7 +273,7 @@ namespace LongoMatch.Drawing
 
 			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 			if (players != null && players.Count > 0) {
-				foreach (PlayerLongoMatch p in players) {
+				foreach (LMPlayer p in players) {
 					RenderPlayer (tk, p, imagePoint);
 					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
@@ -283,9 +288,24 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void Render (object item, ProjectLongoMatch project, int count, bool isExpanded, IDrawingToolkit tk,
-		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
+		public static void Render (object item, LMProject project, int count, bool isExpanded, IDrawingToolkit tk,
+								   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
+			// HACK: to be remove when all treeviews are migrated to user VM's
+			if (item is TimelineEventVM) {
+				item = ((TimelineEventVM)item).Model;
+			} else if (item is EventTypeTimelineVM) {
+				item = ((EventTypeTimelineVM)item).Model;
+			} else if (item is PlaylistElementVM) {
+				item = ((PlaylistElementVM)item).Model;
+			} else if (item is PlaylistVM) {
+				item = ((PlaylistVM)item).Model;
+			} else if (item is PlayerVM) {
+				item = ((PlayerVM)item).Model;
+			} else if (item is PlayerTimelineVM) {
+				item = ((PlayerTimelineVM)item).Model;
+			}
+
 			if (item is EventType) {
 				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
 					context, backgroundArea, cellArea);
@@ -294,12 +314,12 @@ namespace LongoMatch.Drawing
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
-				TimelineEventLongoMatch p = item as TimelineEventLongoMatch;
+				LMTimelineEvent p = item as LMTimelineEvent;
 				// always add local first.
 				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
-				RenderPlayer (item as PlayerLongoMatch, count, isExpanded, tk, context, backgroundArea, cellArea);
+				RenderPlayer (item as LMPlayer, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is Playlist) {
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {

@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Interfaces;
@@ -25,12 +24,14 @@ using LongoMatch.DB;
 using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
+using VAS.Services.AppUpdater;
 using VAS.Services.ViewModel;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -46,10 +47,7 @@ namespace LongoMatch.Services
 	public class CoreServices
 	{
 		static DataBaseManager dbManager;
-		static EventsManager eManager;
 		static HotKeysManager hkManager;
-		static ProjectsManager projectsManager;
-		static PlaylistManager plManager;
 		static JobsManagerVM jobsManagerVM;
 		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
@@ -155,27 +153,23 @@ namespace LongoMatch.Services
 			RenderingJobsController jobsController = new RenderingJobsController (jobsManagerVM);
 			RegisterService (jobsController);
 
-			projectsManager = new ProjectsManager ();
-			RegisterService (projectsManager);
-
 			/* State the tools manager */
 			toolsManager = new ToolsManager ();
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
-			/* Start the events manager */
-			eManager = new EventsManager ();
-			RegisterService (eManager);
-
-			RegisterService (new CoreEventsManager ());
-
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
+			App.Current.HotkeysService = new HotkeysService ();
+			RegisterService (App.Current.HotkeysService);
 
-			/* Start playlists hotkeys manager */
-			plManager = new PlaylistManager ();
-			RegisterService (plManager);
+			GeneralUIHotkeys.RegisterDefaultHotkeys ();
+			PlaybackHotkeys.RegisterDefaultHotkeys ();
+			DrawingToolHotkeys.RegisterDefaultHotkeys ();
+
+			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
+			RegisterService (notifier);
 		}
 
 		public static void StartServices ()

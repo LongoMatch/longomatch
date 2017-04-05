@@ -115,13 +115,13 @@ namespace Tests
 		}
 
 		//Specific LongoMatch objects
-		public static ProjectLongoMatch CreateProject (bool withEvents = true)
+		public static LMProject CreateProject (bool withEvents = true)
 		{
-			TimelineEventLongoMatch pl;
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
-			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (5);
-			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (5);
+			LMTimelineEvent pl;
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (10);
+			p.LocalTeamTemplate = LMTeam.DefaultTemplate (5);
+			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (5);
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",
@@ -135,7 +135,7 @@ namespace Tests
 				AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
 
 				/* No tags, no players */
-				pl = new TimelineEventLongoMatch {
+				pl = new LMTimelineEvent {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -144,7 +144,7 @@ namespace Tests
 				p.Timeline.Add (pl);
 				/* tags, but no players */
 				b = p.Dashboard.List [1] as AnalysisEventButton;
-				pl = new TimelineEventLongoMatch {
+				pl = new LMTimelineEvent {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -154,7 +154,7 @@ namespace Tests
 				p.Timeline.Add (pl);
 				/* tags and players */
 				b = p.Dashboard.List [2] as AnalysisEventButton;
-				pl = new TimelineEventLongoMatch {
+				pl = new LMTimelineEvent {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -169,7 +169,7 @@ namespace Tests
 		}
 
 		//Specific LongoMatch objects
-		public static void DeleteProject (ProjectLongoMatch p)
+		public static void DeleteProject (LMProject p)
 		{
 			foreach (MediaFile mf in p.Description.FileSet) {
 				if (File.Exists (mf.FilePath)) {

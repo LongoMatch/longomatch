@@ -15,12 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.MVVMC;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
@@ -29,7 +29,7 @@ namespace LongoMatch.Services.Controller
 	/// Controller for teams.
 	/// </summary>
 	[ControllerAttribute ("TeamsManager")]
-	public class TeamsController : TemplatesController<SportsTeam, TeamVM>
+	public class TeamsController : TemplatesController<Team, TeamVM, Player, PlayerVM>
 	{
 		public TeamsController ()
 		{
@@ -44,7 +44,7 @@ namespace LongoMatch.Services.Controller
 			NewText = Catalog.GetString ("New team");
 			OverwriteText = Catalog.GetString ("Do you want to overwrite it?");
 			ErrorSavingText = Catalog.GetString ("Error saving team");
-			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the team: ");
+			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the team: {0}?");
 			CouldNotLoadText = Catalog.GetString ("Could not load team");
 			AlreadyExistsText = Catalog.GetString ("A team with the same name already exists");
 			ConfirmSaveText = Catalog.GetString ("Do you want to save the current team");
@@ -52,7 +52,7 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Team name:");
 		}
 
-		protected override bool SaveValidations (SportsTeam model)
+		protected override bool SaveValidations (Team model)
 		{
 			return true;
 		}

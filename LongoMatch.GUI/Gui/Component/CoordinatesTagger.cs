@@ -15,21 +15,29 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using System.Collections.Generic;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Drawing.Widgets;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class CoordinatesTagger : Gtk.Bin
+	public partial class CoordinatesTagger : Gtk.Bin, IView<ProjectVM>
 	{
+		public event ShowTaggerMenuHandler ShowMenuEvent;
+
+		ProjectVM viewModel;
+
 		public CoordinatesTagger ()
 		{
 			this.Build ();
-			Tagger = new PositionTagger (new WidgetWrapper (drawingarea));
+			Tagger = new ProjectLocationsTaggerView (new WidgetWrapper (drawingarea));
+			Tagger.ShowMenuEvent += HandleShowMenuEvent;
 		}
 
 		protected override void OnDestroyed ()
@@ -38,9 +46,43 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public PositionTagger Tagger {
+		public FieldPositionType FieldPosition {
+			get {
+				return Tagger.FieldPosition;
+			}
+			set {
+				Tagger.FieldPosition = value;
+			}
+		}
+
+		public ProjectVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				if (viewModel != null) {
+					Tagger.Background = ViewModel.Model.GetBackground (FieldPosition);
+				}
+				Tagger.SetViewModel (ViewModel);
+			}
+		}
+
+		public ProjectLocationsTaggerView Tagger {
 			get;
 			set;
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (ProjectVM)viewModel;
+		}
+
+		void HandleShowMenuEvent (IEnumerable<TimelineEvent> plays)
+		{
+			if (ShowMenuEvent != null) {
+				ShowMenuEvent (plays);
+			}
 		}
 	}
 }

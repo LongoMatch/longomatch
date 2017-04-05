@@ -15,15 +15,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
 	[ViewAttribute ("ProjectsManager")]
-	public class SportsProjectsManagerVM : ProjectsManagerVM<ProjectLongoMatch, SportsProjectVM>
+	public class SportsProjectsManagerVM : ProjectsManagerVM<LMProject, LMProjectVM>
 	{
 	}
 }

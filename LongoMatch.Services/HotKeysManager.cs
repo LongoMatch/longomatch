@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
@@ -37,15 +36,14 @@ using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
-	public class HotKeysManager: IService
+	public class HotKeysManager : IService
 	{
 		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
-		IAnalysisWindow analysisWindow;
 		ProjectType projectType;
 		ICapturerBin capturer;
-		IPlayerController player;
+		IVideoPlayerController player;
 		Dashboard dashboard;
-		ProjectLongoMatch openedProject;
+		LMProject openedProject;
 		AnalysisEventButton pendingButton;
 		bool inPlayerTagging;
 		string playerNumber;
@@ -55,19 +53,19 @@ namespace LongoMatch.Services
 
 		public HotKeysManager ()
 		{
-			dashboardHotkeys = new Dictionary<HotKey,DashboardButton> ();
+			dashboardHotkeys = new Dictionary<HotKey, DashboardButton> ();
 		}
 
 		void TagPlayer ()
 		{
 			int playerNumber;
-			
+
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				SportsTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
+				LMTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				PlayerLongoMatch player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
+				LMPlayer player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
-					analysisWindow.TagPlayer (player);
+					//analysisWindow.TagPlayer (player);
 				}
 			}
 			inPlayerTagging = false;
@@ -90,7 +88,7 @@ namespace LongoMatch.Services
 		{
 			App.Current.DrawingToolkit.Invoke (delegate {
 				if (pendingButton != null) {
-					analysisWindow.ClickButton (pendingButton);
+					//analysisWindow.ClickButton (pendingButton);
 					pendingButton = null;
 				} else if (inPlayerTagging) {
 					TagPlayer ();
@@ -105,10 +103,10 @@ namespace LongoMatch.Services
 
 		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
-			this.analysisWindow = e.AnalysisWindow as IAnalysisWindow;
+			/*this.analysisWindow = e.AnalysisWindow as IAnalysisWindow;
 			capturer = e.AnalysisWindow.Capturer;
 			player = e.AnalysisWindow.Player;
-			openedProject = e.Project as ProjectLongoMatch;
+			openedProject = e.Project as LMProject;*/
 			this.projectType = e.ProjectType;
 			if (e.Project == null) {
 				dashboard = null;
@@ -125,7 +123,6 @@ namespace LongoMatch.Services
 			this.player = e.Player;
 
 			projectType = ProjectType.None;
-			analysisWindow = null;
 		}
 
 		public void UIKeyListener (KeyPressedEvent e)
@@ -139,35 +136,35 @@ namespace LongoMatch.Services
 				Log.Exception (ex);
 				return;
 			}
-			
+
 			if (action != KeyAction.None) {
-				
-				if (analysisWindow != null) {
-					switch (action) {
-					case KeyAction.ZoomIn:
-						analysisWindow.ZoomIn ();
-						return;
-					case KeyAction.ZoomOut:
-						analysisWindow.ZoomOut ();
-						return;
-					case KeyAction.ShowDashboard:
-						analysisWindow.ShowDashboard ();
-						return;
-					case KeyAction.ShowTimeline:
-						analysisWindow.ShowTimeline ();
-						return;
-					case KeyAction.ShowPositions:
-						analysisWindow.ShowZonalTags ();
-						return;
-					case KeyAction.FitTimeline:
-						analysisWindow.FitTimeline ();
-						return;
-					}
-				}
-				
+
+				/*	if (analysisWindow != null) {
+						switch (action) {
+						case KeyAction.ZoomIn:
+							analysisWindow.ZoomIn ();
+							return;
+						case KeyAction.ZoomOut:
+							analysisWindow.ZoomOut ();
+							return;
+						case KeyAction.ShowDashboard:
+							analysisWindow.ShowDashboard ();
+							return;
+						case KeyAction.ShowTimeline:
+							analysisWindow.ShowTimeline ();
+							return;
+						case KeyAction.ShowPositions:
+							analysisWindow.ShowZonalTags ();
+							return;
+						case KeyAction.FitTimeline:
+							analysisWindow.FitTimeline ();
+							return;
+						}
+					}*/
+
 				if (projectType == ProjectType.CaptureProject ||
-				    projectType == ProjectType.FakeCaptureProject ||
-				    projectType == ProjectType.URICaptureProject) {
+					projectType == ProjectType.FakeCaptureProject ||
+					projectType == ProjectType.URICaptureProject) {
 					switch (action) {
 					case KeyAction.PauseClock:
 						if (capturer.Capturing) {
@@ -253,58 +250,58 @@ namespace LongoMatch.Services
 			} catch {
 				return;
 			}
-			
-			if (action == KeyAction.LocalPlayer || action == KeyAction.VisitorPlayer) {
-				if (inPlayerTagging) {
-					TagPlayer ();
-				}
-				if (pendingButton != null) {
-					analysisWindow.ClickButton (pendingButton);
-				}
-				inPlayerTagging = true;
-				taggedTeam = action == KeyAction.LocalPlayer ? TeamType.LOCAL : TeamType.VISITOR;
-				playerNumber = "";
-				analysisWindow.TagTeam (taggedTeam);
-				timer.Change (TIMEOUT_MS, 0);
-			} else if (action == KeyAction.None) {
-				if (pendingButton != null) {
-					Tag tag = pendingButton.AnalysisEventType.Tags.FirstOrDefault (t => t.HotKey == e.Key);
-					if (tag != null) {
-						analysisWindow.ClickButton (pendingButton, tag);
-						timer.Change (TIMEOUT_MS, 0);
-					}
-				} else if (dashboardHotkeys.TryGetValue (e.Key, out button)) {
-					if (inPlayerTagging) {
-						TagPlayer ();
-					}
-					if (button is AnalysisEventButton) {
-						AnalysisEventButton evButton = button as AnalysisEventButton;
-						/* Finish tagging for the pending button */
-						if (pendingButton != null) {
-							analysisWindow.ClickButton (pendingButton);
-						}
-						if (evButton.AnalysisEventType.Tags.Count == 0) {
-							analysisWindow.ClickButton (button);
-						} else {
-							pendingButton = evButton;
-							timer.Change (TIMEOUT_MS, 0);
-						}
-					} else {
-						analysisWindow.ClickButton (button);
-					}
-				} else if (inPlayerTagging) {
-					int number;
-					string name = App.Current.Keyboard.NameFromKeyval ((uint)e.Key.Key);
-					if (name.StartsWith ("KP_")) {
-						name = name.Replace ("KP_", "");
-					}
-					if (int.TryParse (name, out number)) {
-						playerNumber += number.ToString ();
-						timer.Change (TIMEOUT_MS, 0);
-					}
-					return;
-				}
-			}
+
+			//if (action == KeyAction.LocalPlayer || action == KeyAction.VisitorPlayer) {
+			//	if (inPlayerTagging) {
+			//		TagPlayer ();
+			//	}
+			//	if (pendingButton != null) {
+			//		analysisWindow.ClickButton (pendingButton);
+			//	}
+			//	inPlayerTagging = true;
+			//	taggedTeam = action == KeyAction.LocalPlayer ? TeamType.LOCAL : TeamType.VISITOR;
+			//	playerNumber = "";
+			//	analysisWindow.TagTeam (taggedTeam);
+			//	timer.Change (TIMEOUT_MS, 0);
+			//} else if (action == KeyAction.None) {
+			//	if (pendingButton != null) {
+			//		Tag tag = pendingButton.AnalysisEventType.Tags.FirstOrDefault (t => t.HotKey == e.Key);
+			//		if (tag != null) {
+			//			analysisWindow.ClickButton (pendingButton, tag);
+			//			timer.Change (TIMEOUT_MS, 0);
+			//		}
+			//	} else if (dashboardHotkeys.TryGetValue (e.Key, out button)) {
+			//		if (inPlayerTagging) {
+			//			TagPlayer ();
+			//		}
+			//		if (button is AnalysisEventButton) {
+			//			AnalysisEventButton evButton = button as AnalysisEventButton;
+			//			/* Finish tagging for the pending button */
+			//			if (pendingButton != null) {
+			//				analysisWindow.ClickButton (pendingButton);
+			//			}
+			//			if (evButton.AnalysisEventType.Tags.Count == 0) {
+			//				analysisWindow.ClickButton (button);
+			//			} else {
+			//				pendingButton = evButton;
+			//				timer.Change (TIMEOUT_MS, 0);
+			//			}
+			//		} else {
+			//			analysisWindow.ClickButton (button);
+			//		}
+			//	} else if (inPlayerTagging) {
+			//		int number;
+			//		string name = App.Current.Keyboard.NameFromKeyval ((uint)e.Key.Key);
+			//		if (name.StartsWith ("KP_")) {
+			//			name = name.Replace ("KP_", "");
+			//		}
+			//		if (int.TryParse (name, out number)) {
+			//			playerNumber += number.ToString ();
+			//			timer.Change (TIMEOUT_MS, 0);
+			//		}
+			//		return;
+			//	}
+			//}
 		}
 
 		#region IService

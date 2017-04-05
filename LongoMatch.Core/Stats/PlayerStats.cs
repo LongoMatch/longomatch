@@ -25,10 +25,10 @@ namespace LongoMatch.Core.Stats
 {
 	public class PlayerStats
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		EventsFilter filter;
 
-		public PlayerStats (ProjectLongoMatch project, EventsFilter filter, PlayerLongoMatch player)
+		public PlayerStats (LMProject project, EventsFilter filter, LMPlayer player)
 		{
 			this.project = project;
 			this.filter = filter;
@@ -42,7 +42,7 @@ namespace LongoMatch.Core.Stats
 			UpdateTimePlayed ();
 		}
 
-		public PlayerLongoMatch Player {
+		public LMPlayer Player {
 			get;
 			set;
 		}

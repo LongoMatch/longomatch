@@ -35,11 +35,11 @@ namespace Tests.Core.Migration
 		[Test ()]
 		public void TestMigrateFromV0 ()
 		{
-			SportsTeam team;
-			SportsTeam origTeam;
+			LMTeam team;
+			LMTeam origTeam;
 
 			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("spain.ltt")) {
-				origTeam = Serializer.Instance.Load <SportsTeam> (resource);
+				origTeam = Serializer.Instance.Load <LMTeam> (resource);
 			}
 
 			team = origTeam.Clone ();

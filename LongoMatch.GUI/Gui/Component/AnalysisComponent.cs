@@ -17,74 +17,40 @@
 //
 using System.Collections.Generic;
 using System.Linq;
+using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
-using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Services.ViewModel;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
-using LMFilters = LongoMatch.Core.Filters;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class AnalysisComponent : Gtk.Bin, IAnalysisWindow
+	[View (ProjectAnalysisState.NAME)]
+	[View (LiveProjectAnalysisState.NAME)]
+	public partial class AnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
-		static ProjectLongoMatch openedProject;
-		ProjectType projectType;
-		LMFilters.EventsFilter filter;
 		bool detachedPlayer;
+		LMProjectAnalysisVM viewModel;
 		Gtk.Window playerWindow;
+		ProjectFileMenuLoader fileMenuLoader;
+		ProjectToolsMenuLoader toolsMenuLoader;
 
 		public AnalysisComponent ()
 		{
 			this.Build ();
-			projectType = ProjectType.None;
 			detachedPlayer = false;
-			//FIXME: Just a Temporal fix, until AnalysisComponent and codingwidget uses the playerVM.
-			playercapturer.SetViewModel (new PlayerVM ());
-			codingwidget.Player = playercapturer.ViewModel.Player;
-			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
-			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
+			fileMenuLoader = new ProjectFileMenuLoader ();
+			toolsMenuLoader = new ProjectToolsMenuLoader ();
 		}
-
-		#region IAnalysisWindow implementation
-
-		public event VAS.Core.Handlers.BackEventHandle BackEvent;
-
-		public void OnLoad ()
-		{
-		}
-
-		public void OnUnload ()
-		{
-		}
-
-		public string Title {
-			get {
-				return openedProject?.ShortDescription;
-			}
-		}
-
-		//FIXME: add IPanel KeyContext using MMVMC pattern
-		public KeyContext GetKeyContext ()
-		{
-			return new KeyContext ();
-		}
-
-		public void SetViewModel (object viewModel)
-		{
-			throw new System.NotImplementedException ();
-		}
-
-		#endregion
 
 		protected override void OnUnmapped ()
 		{
@@ -104,8 +70,6 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
-			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
-			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
@@ -118,9 +82,8 @@ namespace LongoMatch.Gui.Component
 			base.Destroy ();
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get {
-				//FIXME: Just a Temporal fix, until AnalysisComponent uses the playerVM.
 				return playercapturer.ViewModel.Player;
 			}
 		}
@@ -131,49 +94,75 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void UpdateCategories ()
-		{
-			codingwidget.UpdateCategories ();
+		public LMProjectAnalysisVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				playercapturer.ViewModel = viewModel.VideoPlayer;
+				codingwidget.ViewModel = viewModel;
+				playsSelection.ViewModel = viewModel.Project;
+				if (viewModel.Project.Model.ProjectType == ProjectType.FileProject) {
+					playercapturer.Mode = PlayerViewOperationMode.Analysis;
+				} else {
+					playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
+					Capturer.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
+					Capturer.Periods = viewModel.Project.Model.Periods.ToList ();
+				}
+			}
 		}
 
-		public void ZoomIn ()
-		{
-			codingwidget.ZoomIn ();
+		public string Title {
+			get {
+				return ViewModel?.Project.ShortDescription;
+			}
 		}
 
-		public void ZoomOut ()
+		public void SetViewModel (object viewModel)
 		{
-			codingwidget.ZoomOut ();
+			ViewModel = (LMProjectAnalysisVM)viewModel;
 		}
 
-		public void FitTimeline ()
+		public KeyContext GetKeyContext ()
 		{
-			codingwidget.FitTimeline ();
+			var keyContext = new KeyContext ();
+			/*keyContext.AddAction (
+				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
+								() => codingwidget.ZoomIn ()));
+			keyContext.AddAction (
+				new VKeyAction ("ZOOM_OUT", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomOut],
+								() => codingwidget.ZoomOut ()));
+			keyContext.AddAction (
+				new VKeyAction ("FIT_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.FitTimeline],
+								() => codingwidget.FitTimeline ()));
+			keyContext.AddAction (
+				new VKeyAction ("SHOW_DASHBOARD", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
+								() => codingwidget.ShowDashboard ()));
+			keyContext.AddAction (
+				new VKeyAction ("SHOW_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
+								() => codingwidget.ShowTimeline ()));
+			keyContext.AddAction (
+				new VKeyAction ("SHOW_ZONAL_TAGS", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
+								() => codingwidget.ShowZonalTags ()));*/
+			return keyContext;
 		}
 
-		public void ShowDashboard ()
+		public void OnLoad ()
 		{
-			codingwidget.ShowDashboard ();
+			fileMenuLoader.LoadMenu (viewModel);
+			toolsMenuLoader.LoadMenu (viewModel);
 		}
 
-		public void ShowTimeline ()
+		public void OnUnload ()
 		{
-			codingwidget.ShowTimeline ();
-		}
-
-		public void ShowZonalTags ()
-		{
-			codingwidget.ShowZonalTags ();
-		}
-
-		public void ClickButton (DashboardButton button, Tag tag = null)
-		{
-			codingwidget.ClickButton (button, tag);
+			fileMenuLoader.UnloadMenu ();
+			toolsMenuLoader.UnloadMenu ();
 		}
 
 		public void TagPlayer (Player player)
 		{
-			codingwidget.TagPlayer ((PlayerLongoMatch)player);
+			codingwidget.TagPlayer ((LMPlayer)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -183,11 +172,11 @@ namespace LongoMatch.Gui.Component
 
 		public void DetachPlayer ()
 		{
-			bool isPlaying = Player.Playing;
+			bool isPlaying = ViewModel.VideoPlayer.Playing;
 
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
-			Player.Pause ();
+			ViewModel.VideoPlayer.Pause ();
 			if (!detachedPlayer) {
 				Log.Debug ("Detaching player");
 
@@ -212,7 +201,7 @@ namespace LongoMatch.Gui.Component
 				playsSelection.ExpandTabs = false;
 			}
 			if (isPlaying) {
-				Player.Play ();
+				ViewModel.VideoPlayer.Play ();
 			}
 			detachedPlayer = !detachedPlayer;
 			playercapturer.AttachPlayer (detachedPlayer);
@@ -220,45 +209,8 @@ namespace LongoMatch.Gui.Component
 
 		public void CloseOpenedProject ()
 		{
-			openedProject = null;
-			projectType = ProjectType.None;
 			if (detachedPlayer)
 				DetachPlayer ();
-		}
-
-		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
-		{
-			openedProject = project as ProjectLongoMatch;
-			this.projectType = projectType;
-			this.filter = (LMFilters.EventsFilter)filter;
-
-			codingwidget.SetProject (project as ProjectLongoMatch, projectType, (LMFilters.EventsFilter)filter);
-			playsSelection.SetProject (project as ProjectLongoMatch, (LMFilters.EventsFilter)filter);
-			if (projectType == ProjectType.FileProject) {
-				playercapturer.Mode = PlayerViewOperationMode.Analysis;
-			} else {
-				playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-				Capturer.PeriodsNames = project.Dashboard.GamePeriods.ToList ();
-				Capturer.Periods = project.Periods.ToList ();
-			}
-		}
-
-		public void ReloadProject ()
-		{
-			codingwidget.SetProject (openedProject, projectType, filter);
-			playsSelection.SetProject (openedProject, filter);
-		}
-
-		void HandleEventCreated (EventCreatedEvent e)
-		{
-			playsSelection.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
-			codingwidget.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
-		}
-
-		void HandleEventsDeleted (EventsDeletedEvent e)
-		{
-			playsSelection.RemovePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
-			codingwidget.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 	}
 }

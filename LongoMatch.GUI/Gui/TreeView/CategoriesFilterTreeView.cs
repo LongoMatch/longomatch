@@ -29,10 +29,10 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class CategoriesFilterTreeView : FilterTreeViewBase
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		EventsFilter filter;
 
-		public void SetFilter (EventsFilter filter, ProjectLongoMatch project)
+		public void SetFilter (EventsFilter filter, LMProject project)
 		{
 			this.project = project;
 			this.filter = filter;

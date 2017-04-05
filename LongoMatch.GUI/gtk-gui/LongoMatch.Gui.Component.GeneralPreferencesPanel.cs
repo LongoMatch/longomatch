@@ -5,15 +5,15 @@ namespace LongoMatch.Gui.Component
 	public partial class GeneralPreferencesPanel
 	{
 		private global::Gtk.Table table1;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.Label label3;
-		
+
 		private global::Gtk.ComboBox langcombobox;
-		
+
 		private global::Gtk.ComboBox templatescombobox;
 
 		protected virtual void Build ()

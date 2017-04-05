@@ -71,7 +71,7 @@ namespace LongoMatch.DB
 			List<string> teamFiles = new List<string> ();
 			List<string> dashboardFiles = new List<string> ();
 			Guid id = Guid.NewGuid ();
-			ConcurrentQueue<SportsTeam> teams = new ConcurrentQueue<SportsTeam> ();
+			ConcurrentQueue<LMTeam> teams = new ConcurrentQueue<LMTeam> ();
 			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
@@ -100,7 +100,7 @@ namespace LongoMatch.DB
 			// We can't use the FileStorage here, since it will migate the Team or Dashboard
 			foreach (string teamFile in teamFiles) {
 				try {
-					SportsTeam team = Serializer.Instance.Load<SportsTeam> (teamFile);
+					LMTeam team = Serializer.Instance.Load<LMTeam> (teamFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported team " + team.Name, id);
 					teams.Enqueue (team);
@@ -120,7 +120,7 @@ namespace LongoMatch.DB
 				}
 			}
 
-			foreach (SportsTeam team in teams) {
+			foreach (LMTeam team in teams) {
 				var migrateTask = Task.Run (() => {
 					try {
 						Log.Information ("Migrating team " + team.Name);
@@ -141,7 +141,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating dashboard " + dashboard.Name);
 						DashboardMigration.Migrate0 (dashboard, scoreNameToID, penaltyNameToID);
-						App.Current.CategoriesTemplatesProvider.Save (dashboard as DashboardLongoMatch);
+						App.Current.CategoriesTemplatesProvider.Save (dashboard as LMDashboard);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + dashboard.Name, id);
 					} catch (Exception ex) {
@@ -244,10 +244,10 @@ namespace LongoMatch.DB
 
 			foreach (string projectFile in projectFiles) {
 				var importTask = Task.Run (() => {
-					ProjectLongoMatch project = null;
+					LMProject project = null;
 					try {
 						Log.Information ("Migrating project " + projectFile);
-						project = Serializer.Instance.Load<ProjectLongoMatch> (projectFile);
+						project = Serializer.Instance.Load<LMProject> (projectFile);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
@@ -281,19 +281,19 @@ namespace LongoMatch.DB
 			Task.WaitAll (tasks.ToArray ());
 
 			// Create a query and print the result to traverse the iterator
-			Log.Information ("Projects index created:" + database.RetrieveAll<ProjectLongoMatch> ().Count ());
+			Log.Information ("Projects index created:" + database.RetrieveAll<LMProject> ().Count ());
 			percent += step;
 			progress.Report (percent, "Projects index created", id);
 
-			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEventLongoMatch> ().Count ());
+			Log.Information ("Timeline events index created:" + database.RetrieveAll<LMTimelineEvent> ().Count ());
 			percent += step;
 			progress.Report (percent, "Events index created", id);
 
-			Log.Information ("Teams index created:" + database.RetrieveAll<SportsTeam> ().Count ());
+			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
 			percent += step;
 			progress.Report (percent, "Teams index created", id);
 
-			Log.Information ("DAshboards index created:" + database.RetrieveAll<DashboardLongoMatch> ().Count ());
+			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
 			percent += step;
 			progress.Report (percent, "Dashboards index created", id);
 

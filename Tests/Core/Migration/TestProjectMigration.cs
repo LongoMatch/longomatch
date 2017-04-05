@@ -36,10 +36,10 @@ namespace Tests.Core.Migration
 		[Test ()]
 		public void TestMigrateFromV0 ()
 		{
-			ProjectLongoMatch project;
+			LMProject project;
 
 			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("spain_france_test.lgm")) {
-				project = Serializer.Instance.Load <ProjectLongoMatch> (resource);
+				project = Serializer.Instance.Load <LMProject> (resource);
 			}
 
 			Assert.AreEqual (0, project.Version);
@@ -55,19 +55,19 @@ namespace Tests.Core.Migration
 			Assert.AreEqual (1, project.LocalTeamTemplate.Version);
 			Assert.AreEqual (1, project.VisitorTeamTemplate.Version);
 
-			Assert.AreEqual (3, project.Timeline.Count (e => (e as TimelineEventLongoMatch).Teams.Contains (project.LocalTeamTemplate)));
-			Assert.AreEqual (2, project.Timeline.Count (e => (e as TimelineEventLongoMatch).Teams.Contains (project.VisitorTeamTemplate)));
+			Assert.AreEqual (3, project.Timeline.Count (e => (e as LMTimelineEvent).Teams.Contains (project.LocalTeamTemplate)));
+			Assert.AreEqual (2, project.Timeline.Count (e => (e as LMTimelineEvent).Teams.Contains (project.VisitorTeamTemplate)));
 			// Check that team tags have changed from TeamType to List<Team> correctly
-			foreach (TimelineEventLongoMatch evt in project.Timeline) {
+			foreach (LMTimelineEvent evt in project.Timeline) {
 				if (evt.Team == TeamType.LOCAL) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> { project.LocalTeamTemplate });
+					Assert.AreEqual (evt.Teams, new ObservableCollection<LMTeam> { project.LocalTeamTemplate });
 				} else if (evt.Team == TeamType.VISITOR) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> { project.VisitorTeamTemplate });
+					Assert.AreEqual (evt.Teams, new ObservableCollection<LMTeam> { project.VisitorTeamTemplate });
 				} else if (evt.Team == TeamType.BOTH) {
 					Assert.AreEqual (evt.Teams,
-						new ObservableCollection<SportsTeam> { project.LocalTeamTemplate, project.VisitorTeamTemplate });
+						new ObservableCollection<LMTeam> { project.LocalTeamTemplate, project.VisitorTeamTemplate });
 				} else if (evt.Team == TeamType.NONE) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> ());
+					Assert.AreEqual (evt.Teams, new ObservableCollection<LMTeam> ());
 				}
 			}
 

@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.NewRenderingJob += OnNewRenderingJob;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set;
 			get;
 		}
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddEvent (TimelineEventLongoMatch evt)
+		public void AddEvent (LMTimelineEvent evt)
 		{
 			TreeIter piter;
 
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			}
 			team.GetIterFirst (out piter);
 			while (team.IterIsValid (piter)) {
-				PlayerLongoMatch player = team.GetValue (piter, 0) as PlayerLongoMatch;
+				LMPlayer player = team.GetValue (piter, 0) as LMPlayer;
 				if (evt.Players.Contains (player)) {
 					team.AppendValues (piter, evt);
 				}
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void RemoveEvents (List<TimelineEventLongoMatch> events)
+		public void RemoveEvents (List<LMTimelineEvent> events)
 		{
 			TreeIter piter;
 
@@ -85,7 +85,7 @@ namespace LongoMatch.Gui.Component
 
 				team.IterChildren (out evtIter, piter);
 				while (team.IterIsValid (evtIter)) {
-					TimelineEventLongoMatch evt = team.GetValue (evtIter, 0) as TimelineEventLongoMatch;
+					LMTimelineEvent evt = team.GetValue (evtIter, 0) as LMTimelineEvent;
 					if (events.Contains (evt)) {
 						team.Remove (ref evtIter);
 					}
@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam (SportsTeam template, IEnumerable<TimelineEventLongoMatch> plays)
+		public void SetTeam (LMTeam template, IEnumerable<LMTimelineEvent> plays)
 		{
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter> ();
 			
@@ -137,13 +137,13 @@ namespace LongoMatch.Gui.Component
 				PlaylistPlayElement element;
 				
 				playerstreeview.Model.GetIter (out iter, path);
-				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as TimelineEventLongoMatch);
+				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as LMTimelineEvent);
 				playlist.Elements.Add (element);
 			}
 			
 			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
 				new RenderPlaylistEvent {
-					Playlist = playlist					
+					Playlist = playlist
 				}
 			);
 		}

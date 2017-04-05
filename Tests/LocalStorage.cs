@@ -27,7 +27,7 @@ using VAS.Core.Filters;
 
 namespace Tests
 {
-	public class LocalStorage: IStorage
+	public class LocalStorage : IStorage
 	{
 		Dictionary<Guid, IStorable> projects;
 
@@ -109,11 +109,21 @@ namespace Tests
 			return true;
 		}
 
+		public void Store<T> (IEnumerable<T> storableEnumerable, bool forceUpdate = false) where T : IStorable
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int Count<T> (QueryFilter filter) where T : IStorable
+		{
+			throw new NotImplementedException ();
+		}
+
 		#endregion
 	}
 
 
-	public class LocalDatabaseManager: IStorageManager
+	public class LocalDatabaseManager : IStorageManager
 	{
 		Dictionary<string, IStorage> databases;
 

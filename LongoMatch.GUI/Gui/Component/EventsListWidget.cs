@@ -15,102 +15,92 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.Collections.Generic;
-using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Events;
-using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class EventsListWidget : Gtk.Bin
+	public partial class EventsListWidget : Gtk.Bin, IView<LMProjectVM>
 	{
-		ProjectLongoMatch project;
+		LMTimelineEventsTreeView playsList;
+		TeamTimelineEventsTreeView homeTeamTreeView, awayTeamTreeView;
+		LMProjectVM viewModel;
 		Helpers.IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
 		{
 			this.Build ();
-			localPlayersList.Team = TeamType.LOCAL;
-			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			App.Current.EventsBroker.Subscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
+
+			playsList = new LMTimelineEventsTreeView ();
+			playsList.Show ();
+			eventsScrolledWindow.Add (playsList);
+			homeTeamTreeView = new TeamTimelineEventsTreeView (TeamType.LOCAL);
+			homeTeamTreeView.Show ();
+			homescrolledwindow.Add (homeTeamTreeView);
+			awayTeamTreeView = new TeamTimelineEventsTreeView (TeamType.VISITOR);
+			awayTeamTreeView.Show ();
+			awayscrolledwindow.Add (awayTeamTreeView);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			App.Current.EventsBroker.Unsubscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
-			playsList.Project = null;
-			localPlayersList.Clear ();
-			visitorPlayersList.Clear ();
+			playsList.ViewModel = null;
+			homeTeamTreeView.ViewModel = null;
+			awayTeamTreeView.ViewModel = null;
 			playsList1.Destroy ();
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
-		{
-			this.project = project;
-			playsList.Filter = filter;
-			localPlayersList.Filter = filter;
-			visitorPlayersList.Filter = filter;
-			playsList.Project = project;
-			visitorPlayersList.Project = project;
-			localPlayersList.Project = project;
-			LoadIcons ();
-			UpdateTeamsModels (new TeamTagsChangedEvent ());
+		public LMProjectVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				playsList.ViewModel = viewModel.Timeline;
+				playsList.Project = viewModel;
+				homeTeamTreeView.ViewModel = viewModel.Timeline;
+				homeTeamTreeView.Project = viewModel;
+				awayTeamTreeView.ViewModel = viewModel.Timeline;
+				awayTeamTreeView.Project = viewModel;
+				LoadIcons ();
+			}
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void SetViewModel (object viewModel)
 		{
-			playsList.AddPlay (play);
-			localPlayersList.AddEvent (play);
-			visitorPlayersList.AddEvent (play);
-		}
-
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
-		{
-			playsList.RemovePlays (plays);
-			localPlayersList.RemoveEvents (plays);
-			visitorPlayersList.RemoveEvents (plays);
-		}
-
-		void UpdateTeamsModels (TeamTagsChangedEvent e)
-		{
-			if (project == null)
-				return;
-
-			var timeline = project.Timeline.OfType<TimelineEventLongoMatch> ();
-			localPlayersList.SetTeam (project.LocalTeamTemplate, timeline);
-			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, timeline);
+			ViewModel = viewModel as LMProjectVM;
 		}
 
 		void LoadIcons ()
 		{
+			LMProject project = ViewModel.Model;
 			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
-			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
+			notebookHelper.SetTabIcon (eventsScrolledWindow, "longomatch-category", "longomatch-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
 				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                StyleConf.NotebookTabIconSize).Value;
-				notebookHelper.SetTabIcon (localPlayersList, localIcon, localIcon, project.LocalTeamTemplate.Name);
+									StyleConf.NotebookTabIconSize).Value;
+				notebookHelper.SetTabIcon (homescrolledwindow, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (localPlayersList, "longomatch-default-shield", "longomatch-default-shield",
+				notebookHelper.SetTabIcon (homescrolledwindow, "longomatch-default-shield", "longomatch-default-shield",
 					project.LocalTeamTemplate.Name);
 			}
 
 			if (project.VisitorTeamTemplate.Shield != null) {
 				var visitorIcon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                  StyleConf.NotebookTabIconSize).Value;
-				notebookHelper.SetTabIcon (visitorPlayersList, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
+									  StyleConf.NotebookTabIconSize).Value;
+				notebookHelper.SetTabIcon (awayscrolledwindow, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (visitorPlayersList, "longomatch-default-shield", "longomatch-default-shield",
+				notebookHelper.SetTabIcon (awayscrolledwindow, "longomatch-default-shield", "longomatch-default-shield",
 					project.VisitorTeamTemplate.Name);
 			}
 

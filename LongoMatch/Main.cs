@@ -31,8 +31,6 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Plugins;
-using VAS.Core.Store;
 using VAS.DB;
 using VAS.Drawing.Cairo;
 using VAS.Multimedia.Utils;
@@ -41,9 +39,8 @@ using VAS.UI.Dialog;
 using VAS.UI.Helpers;
 using VAS.Video;
 using Constants = LongoMatch.Core.Common.Constants;
-using VASUi = VAS.UI;
-using Device = VAS.Core.Device;
 using LMDB = LongoMatch.DB;
+using VASUi = VAS.UI;
 
 namespace LongoMatch
 {
@@ -66,6 +63,7 @@ namespace LongoMatch
 			splashScreen.Show ();
 			Application.Invoke (async (s, e) => await Init (splashScreen));
 			Application.Run ();
+
 			try {
 				AddinsManager.ShutdownMultimediaBackends ();
 			} catch (Exception e) {
@@ -83,16 +81,15 @@ namespace LongoMatch
 				App.Current.MultimediaToolkit = new MultimediaToolkit ();
 				App.Current.GUIToolkit = GUIToolkit.Instance;
 				App.Current.Navigation = GUIToolkit.Instance;
-				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
+				App.Current.GUIToolkit.Register<IVideoPlayerView, VASUi.VideoPlayerView> (0);
 				App.Current.Dialogs = VASUi.Dialogs.Instance;
 
-				App.Current.KPIService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
+				Task kpiTask = App.Current.KPIService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
 				App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 				InitAddins (progress);
-				CoreServices.RegisterService (new UpdatesNotifier ());
 				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 				AddinsManager.LoadDashboards (App.Current.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
@@ -103,7 +100,7 @@ namespace LongoMatch
 
 				// Wait for Migration and the GStreamer initialization
 				try {
-					await Task.WhenAll (gstInit, dbInit);
+					await Task.WhenAll (gstInit, dbInit, kpiTask);
 				} catch (AggregateException ae) {
 					throw ae.Flatten ();
 				}
@@ -115,7 +112,7 @@ namespace LongoMatch
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
 				(GUIToolkit.Instance.MainController as MainWindow).Initialize ();
-				App.Current.StateController.SetHomeTransition ("Home", null);
+				await App.Current.StateController.SetHomeTransition ("Home", null);
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}
@@ -210,6 +207,11 @@ namespace LongoMatch
 
 		static void ProcessExecutionError (Exception ex)
 		{
+#if DEBUG
+			Log.Exception (ex);
+			Application.Quit ();
+			return;
+#else
 			if (ex is AddinRequestShutdownException) {
 				Application.Quit ();
 				return;
@@ -234,6 +236,7 @@ namespace LongoMatch
 				"<a href=\"" + logFile + "\">" + logFile + "</a>\n" +
 				Catalog.GetString ("Please, fill a bug report "));
 			Application.Quit ();
+#endif
 		}
 	}
 }

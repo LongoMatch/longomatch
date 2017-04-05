@@ -25,7 +25,7 @@ namespace LongoMatch.Addins.ExtensionPoints
 	[TypeExtensionPoint]
 	public interface IStatsUI: IPlugin
 	{
-		void ShowStats (ProjectLongoMatch project);
+		void ShowStats (LMProject project);
 
 		int Priority { get; }
 	}

@@ -21,7 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
 using Pango;
@@ -29,13 +29,12 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.Drawing.Cairo;
 using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Drawing.Widgets;
-using VAS.UI.Menus;
+using VAS.Services;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
-using VAS.Services.ViewModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -48,12 +47,12 @@ namespace LongoMatch.Gui.Component
 		CamerasTimeline camerasTimeline;
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
-		ProjectLongoMatch project;
+		LMProject project;
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
-		PlayerVM mainCamPlayerVM;
-		PlayerVM secCamPlayerVM;
+		VideoPlayerVM mainCamPlayerVM;
+		VideoPlayerVM secCamPlayerVM;
 
 		enum DidacticMessage
 		{
@@ -96,12 +95,16 @@ namespace LongoMatch.Gui.Component
 			main_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 			sec_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 			//FIXME: This Should Implement IView with a ViewModel with two PlayerVMs
-			mainCamPlayerVM = new PlayerVM ();
-			secCamPlayerVM = new PlayerVM ();
+			mainCamPlayerVM = new VideoPlayerVM ();
+			var mainController = new VideoPlayerController ();
+			mainController.SetViewModel (mainCamPlayerVM);
+			secCamPlayerVM = new VideoPlayerVM ();
+			var secController = new VideoPlayerController ();
+			secController.SetViewModel (secCamPlayerVM);
 			main_cam_playerbin.SetViewModel (mainCamPlayerVM);
 			sec_cam_playerbin.SetViewModel (secCamPlayerVM);
-			mainCamPlayerVM.Mode = PlayerViewOperationMode.Synchronization;
-			mainCamPlayerVM.Mode = PlayerViewOperationMode.Synchronization;
+			mainCamPlayerVM.ViewMode = PlayerViewOperationMode.Synchronization;
+			mainCamPlayerVM.ViewMode = PlayerViewOperationMode.Synchronization;
 
 			ConnectSignals ();
 
@@ -118,8 +121,6 @@ namespace LongoMatch.Gui.Component
 			mainCamPlayerVM.PropertyChanged += HandleMainCamPlayerVMPropertyChanged;
 
 			// Listen for seek events from the timerule
-			timerule.SeekEvent += HandleTimeruleSeek;
-			timerule.Player = mainCamPlayerVM.Player;
 			App.Current.EventsBroker.Subscribe<SeekEvent> (Seek);
 			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
@@ -153,7 +154,7 @@ namespace LongoMatch.Gui.Component
 				// Cache current time, the UI timeout will come and pick it up
 				nextCurrentTime = mainCamPlayerVM.CurrentTime;
 
-				CameraObject camera = camerasTimeline.SelectedCamera;
+				CameraView camera = camerasTimeline.SelectedCamera;
 				// Detect when secondary camera goes in and out of scope while main camera is playing.
 				if (camera != null) {
 					if (IsInScope (camera)) {
@@ -225,7 +226,7 @@ namespace LongoMatch.Gui.Component
 		{
 			/* If a new camera has been added or a camera has been removed,
 			 * make sure events have a correct camera configuration */
-			foreach (TimelineEventLongoMatch evt in project.Timeline) {
+			foreach (LMTimelineEvent evt in project.Timeline) {
 				int cc = evt.CamerasConfig.Count;
 				int fc = project.Description.FileSet.Count;
 
@@ -250,10 +251,10 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				Time start, pDuration;
-				ObservableCollection <string> gamePeriods;
+				ObservableCollection<string> gamePeriods;
 				MediaFile file;
 
 				this.project = value;
@@ -277,24 +278,24 @@ namespace LongoMatch.Gui.Component
 						periods.Add (period);
 						start += pDuration;
 					}
-					value.Periods = periods;
+					value.Periods.Replace (periods);
 				} else {
 					/* Create a copy of the project periods and keep the
 					 * project ones to resynchronize the events in SaveChanges() */
 					periods = project.Periods.Clone ();
 				}
-
+				ProjectVM viewModel = new LMProjectVM { Model = project };
 				camerasLabels.Load (fileSet);
-				camerasTimeline.Load (periods, fileSet, duration);
+				camerasTimeline.ViewModel = viewModel;
 
 				UpdateMaxSecondsPerPixel ();
 				UpdateTimeLineSize (fileSet);
 
-				timerule.Duration = duration;
+				timerule.ViewModel = mainCamPlayerVM;
 
 				// Open media file
 				main_cam_label.Text = fileSet.First ().Name;
-				mainCamPlayerVM.OpenFileSet (fileSet);
+				mainCamPlayerVM.OpenFileSet (viewModel.FileSet);
 
 				if (fileSet.Count > 1) {
 					// Start with initial didactic message
@@ -363,7 +364,7 @@ namespace LongoMatch.Gui.Component
 			// Cache current time, the UI timeout will come and pick it up
 			nextCurrentTime = currentTime;
 
-			CameraObject camera = camerasTimeline.SelectedCamera;
+			CameraView camera = camerasTimeline.SelectedCamera;
 			// Detect when secondary camera goes in and out of scope while main camera is playing.
 			if (camera != null) {
 				if (IsInScope (camera)) {
@@ -413,7 +414,7 @@ namespace LongoMatch.Gui.Component
 			switch (action) {
 			case KeyAction.FrameUp:
 			case KeyAction.FrameDown:
-				CameraObject camera = camerasTimeline.SelectedCamera;
+				CameraView camera = camerasTimeline.SelectedCamera;
 				if (camera != null) {
 					Pause ();
 					Time before = secCamPlayerVM.CurrentTime;
@@ -424,7 +425,7 @@ namespace LongoMatch.Gui.Component
 					Time diff = secCamPlayerVM.CurrentTime - before;
 
 					// Reflect change in offset
-					camera.MediaFile.Offset += diff.MSeconds;
+					camera.ViewModel.Offset += diff.MSeconds;
 					UpdateLabels ();
 					// TODO: Reflect the change in the timeline position without triggering a seek.
 				}
@@ -521,13 +522,13 @@ namespace LongoMatch.Gui.Component
 		/// </summary>
 		/// <returns><c>true</c> if this camera is in scope of the current time; otherwise, <c>false</c>.</returns>
 		/// <param name="camera">Camera.</param>
-		bool IsInScope (CameraObject camera)
+		bool IsInScope (CameraView camera)
 		{
 			if (camera == null) {
 				return false;
 			}
 			if (camera.TimeNode.Start <= timerule.CurrentTime &&
-			    timerule.CurrentTime <= camera.TimeNode.Stop) {
+				timerule.CurrentTime <= camera.TimeNode.Stop) {
 				return true;
 			} else {
 				return false;
@@ -536,17 +537,17 @@ namespace LongoMatch.Gui.Component
 
 		void UpdateLabels ()
 		{
-			CameraObject camera = camerasTimeline.SelectedCamera;
+			CameraView camera = camerasTimeline.SelectedCamera;
 
 			if (camera != null) {
 				sec_cam_label.Markup = String.Format (
 					"<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>",
-					camera.MediaFile.Name, App.Current.Style.PaletteActive.ToRGBString (false),
-					Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
+					camera.ViewModel.Name, App.Current.Style.PaletteActive.ToRGBString (false),
+					Catalog.GetString ("Offset"), camera.ViewModel.Offset.ToMSecondsString ());
 			}
 		}
 
-		void HandleCameraUpdate (CameraObject camera)
+		void HandleCameraUpdate (CameraView camera)
 		{
 			UpdateLabels ();
 			// If we are in scope, show player. Didactic message otherwise
@@ -561,15 +562,15 @@ namespace LongoMatch.Gui.Component
 
 		void HandleSelectedCameraChanged (object sender, EventArgs args)
 		{
-			CameraObject camera = camerasTimeline.SelectedCamera;
+			CameraView camera = camerasTimeline.SelectedCamera;
 			if (camera != null) {
 				// Check if we need to reopen the player
 				if (!secCamPlayerVM.Opened ||
-				    secCamPlayerVM.FileSet.FirstOrDefault () != camera.MediaFile) {
+					secCamPlayerVM.FileSet.FirstOrDefault () != camera.ViewModel) {
 					MediaFileSet fileSet = new MediaFileSet ();
-					fileSet.Add (camera.MediaFile);
+					fileSet.Add (camera.ViewModel.Model);
 
-					secCamPlayerVM.OpenFileSet (fileSet);
+					secCamPlayerVM.OpenFileSet (new MediaFileSetVM { Model = fileSet });
 
 					// Configure audio
 					HandleAudioToggled (sec_cam_audio_button, new EventArgs ());
@@ -636,7 +637,7 @@ namespace LongoMatch.Gui.Component
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
 			if (!FixedPeriods)
-				menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline, camerasTimeline);
+				menu.ShowMenu (project, timer, time, camerasTimeline);
 		}
 
 		void HandleTogglePlayEvent (TogglePlayEvent e)
@@ -646,16 +647,6 @@ namespace LongoMatch.Gui.Component
 			} else {
 				Pause ();
 			}
-		}
-
-		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
-		{
-			Seek (new SeekEvent {
-				Time = pos,
-				Accurate = accurate,
-				Synchronous = synchronous,
-				Throttled = throttled
-			});
 		}
 	}
 }

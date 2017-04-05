@@ -17,9 +17,9 @@
 //
 //
 using System.Threading.Tasks;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Store.Templates;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.States
@@ -36,14 +36,15 @@ namespace LongoMatch.Services.States
 
 		public override Task<bool> ShowState ()
 		{
-			ViewModel.Save (false);
+			ViewModel.SaveCommand.Execute (false);
 			return base.ShowState ();
 		}
 
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new DashboardsManagerVM ();
-			ViewModel.Model = new RangeObservableCollection<DashboardLongoMatch> (App.Current.CategoriesTemplatesProvider.Templates);
+			var templates = App.Current.CategoriesTemplatesProvider.Templates;
+			ViewModel.Model = new RangeObservableCollection<Dashboard> (App.Current.CategoriesTemplatesProvider.Templates);
 		}
 
 	}

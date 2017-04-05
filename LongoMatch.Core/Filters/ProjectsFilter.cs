@@ -25,7 +25,7 @@ namespace LongoMatch.Core.Filters
 {
 	public class ProjectsFilter
 	{
-		List<ProjectLongoMatch> projects;
+		List<LMProject> projects;
 
 		public ProjectsFilter ()
 		{
@@ -37,13 +37,13 @@ namespace LongoMatch.Core.Filters
 		/// <summary>
 		/// List of projects to filter
 		/// </summary>
-		public List<ProjectLongoMatch> Projects {
+		public List<LMProject> Projects {
 			get {
 				return projects;
 			}
 			set {
 				projects = value;
-				VisibleProjects = new List<ProjectLongoMatch> ();
+				VisibleProjects = new List<LMProject> ();
 				Changed = true;
 			}
 		}
@@ -51,7 +51,7 @@ namespace LongoMatch.Core.Filters
 		/// <summary>
 		/// List of visible projects after aplying the filters
 		/// </summary>
-		public List<ProjectLongoMatch> VisibleProjects {
+		public List<LMProject> VisibleProjects {
 			protected set;
 			get;
 		}
@@ -142,13 +142,13 @@ namespace LongoMatch.Core.Filters
 		/// </summary>
 		public void ApplyChanges ()
 		{
-			IEnumerable<ProjectLongoMatch> filteredProjects;
+			IEnumerable<LMProject> filteredProjects;
 			if (!Changed) {
 				return;
 			}
 
 			if (FilteredSeasons.Count == 0 && FilteredCompetitions.Count == 0 && FilteredTeams.Count == 0) {
-				VisibleProjects = new List<ProjectLongoMatch> ();
+				VisibleProjects = new List<LMProject> ();
 				return;
 			}
 

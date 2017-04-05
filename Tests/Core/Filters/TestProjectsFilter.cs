@@ -26,13 +26,13 @@ namespace Tests.Core.Filters
 	[TestFixture ()]
 	public class TestProjectsFilter
 	{
-		List<ProjectLongoMatch> projects;
+		List<LMProject> projects;
 		ProjectsFilter projectsFilter;
 
 		[TestFixtureSetUp]
 		public void FillProjects ()
 		{
-			projects = new List<ProjectLongoMatch> ();
+			projects = new List<LMProject> ();
 			AddProject (null, null, "Complu", "Club");
 			AddProject ("Liga", null, "Complu", "Club");
 			AddProject (null, "2015", "Complu", "Club");
@@ -55,7 +55,7 @@ namespace Tests.Core.Filters
 
 		void AddProject (string competition, string season, string homeTeam, string awayTeam)
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 			p.Description = new ProjectDescription {
 				Competition = competition,
 				Season = season,

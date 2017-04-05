@@ -19,14 +19,17 @@ using System;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
 {
 	[ControllerAttribute ("DashboardsManager")]
-	public class DashboardsController : TemplatesController<DashboardLongoMatch, DashboardVM>
+	public class DashboardsController : TemplatesController<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>
 	{
 		public DashboardsController ()
 		{
@@ -41,7 +44,7 @@ namespace LongoMatch.Services.Controller
 			NewText = Catalog.GetString ("New dashboard");
 			OverwriteText = Catalog.GetString ("Do you want to overwrite it?");
 			ErrorSavingText = Catalog.GetString ("Error saving dashboard");
-			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the dashboard: ");
+			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the dashboard: {0}?");
 			CouldNotLoadText = Catalog.GetString ("Could not load dashboard");
 			AlreadyExistsText = Catalog.GetString ("A dashboard with the same name already exists");
 			NotEditableText = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
@@ -50,7 +53,7 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Dashboard name:");
 		}
 
-		protected override bool SaveValidations (DashboardLongoMatch model)
+		protected override bool SaveValidations (Dashboard model)
 		{
 			return true;
 		}

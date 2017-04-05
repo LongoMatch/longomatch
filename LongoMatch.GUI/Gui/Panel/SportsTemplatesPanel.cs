@@ -19,6 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
 using Pango;
@@ -27,6 +28,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.UI.Helpers.Bindings;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -40,10 +42,13 @@ namespace LongoMatch.Gui.Panel
 
 		ListStore dashboardsStore;
 		DashboardsManagerVM viewModel;
+		BindingContext ctx;
 
 		public SportsTemplatesPanel ()
 		{
 			this.Build ();
+
+			Bind ();
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
@@ -52,16 +57,6 @@ namespace LongoMatch.Gui.Panel
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", StyleConf.TemplatesHeaderIconSize);
-			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
-			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
-			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
-			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
-			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize);
-			addtagimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize);
-			scoreimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize);
-			cardimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", StyleConf.TemplatesIconSize);
-			timerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize);
 			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			// Connect buttons from the bar
@@ -78,26 +73,16 @@ namespace LongoMatch.Gui.Panel
 
 			addcategorybutton.Entered += HandleEnterTagButton;
 			addcategorybutton.Left += HandleLeftTagButton;
-			addcategorybutton.Clicked += (object sender, EventArgs e) =>
-				buttonswidget.AddButton ("Category");
 			addtagbutton1.Entered += HandleEnterTagButton;
 			addtagbutton1.Left += HandleLeftTagButton;
-			addtagbutton1.Clicked += (object sender, EventArgs e) =>
-				buttonswidget.AddButton ("Tag");
 			scorebutton.Entered += HandleEnterTagButton;
 			scorebutton.Left += HandleLeftTagButton;
-			scorebutton.Clicked += (object sender, EventArgs e) =>
-				buttonswidget.AddButton ("Score");
 			cardbutton.Entered += HandleEnterTagButton;
 			cardbutton.Left += HandleLeftTagButton;
-			cardbutton.Clicked += (object sender, EventArgs e) =>
-				buttonswidget.AddButton ("Card");
 			timerbutton.Entered += HandleEnterTagButton;
 			timerbutton.Left += HandleLeftTagButton;
-			timerbutton.Clicked += (object sender, EventArgs e) =>
-				buttonswidget.AddButton ("Timer");
 
-			dashboardsStore = new ListStore (typeof (DashboardVM), typeof (bool));
+			dashboardsStore = new ListStore (typeof (LMDashboardVM), typeof (bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = dashboardsStore;
@@ -113,20 +98,12 @@ namespace LongoMatch.Gui.Panel
 
 			templatesvbox.WidthRequest = 160;
 
-			buttonswidget.Sensitive = false;
-			buttonswidget.ButtonsVisible = false;
-			buttonswidget.Mode = DashboardMode.Edit;
+			dashboardwidget.Sensitive = false;
+			dashboardwidget.CodingDashboardMode = false;
 			newtemplatebutton.Visible = true;
 			savetemplatebutton.Sensitive = false;
 			deletetemplatebutton.Sensitive = false;
 			exporttemplatebutton.Sensitive = false;
-
-			newtemplatebutton.Clicked += HandleNewTemplateClicked;
-			importtemplatebutton.Clicked += HandleImportTemplateClicked;
-			exporttemplatebutton.Clicked += HandleExportTemplateClicked;
-			deletetemplatebutton.Clicked += HandleDeleteTemplateClicked;
-			savetemplatebutton.Clicked += (sender, e) => ViewModel.Save (true);
-
 
 			editdashboardslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 			editbuttonslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
@@ -134,8 +111,9 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
+			ctx.Dispose ();
 			OnUnload ();
-			buttonswidget.Destroy ();
+			dashboardwidget.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -156,16 +134,22 @@ namespace LongoMatch.Gui.Panel
 				return viewModel;
 			}
 			set {
-				viewModel = value;
-				foreach (DashboardVM dashboard in viewModel.ViewModels) {
-					Add (dashboard);
+				if (viewModel != null) {
+					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
+					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
 				}
-				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
-				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-				viewModel.PropertyChanged += HandleViewModelChanged;
-				deletetemplatebutton.Sensitive = viewModel.DeleteSensitive;
-				savetemplatebutton.Sensitive = viewModel.SaveSensitive;
-				exporttemplatebutton.Sensitive = viewModel.ExportSensitive;
+				viewModel = value;
+				ctx.UpdateViewModel (viewModel);
+				if (viewModel != null) {
+					foreach (LMDashboardVM dashboard in viewModel.ViewModels) {
+						Add (dashboard);
+					}
+					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
+					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+					viewModel.LoadedTemplate.Mode = DashboardMode.Edit;
+					dashboardwidget.ViewModel = viewModel.LoadedTemplate;
+					UpdateLoadedTemplate ();
+				}
 			}
 		}
 
@@ -189,11 +173,37 @@ namespace LongoMatch.Gui.Panel
 			ViewModel = (DashboardsManagerVM)viewModel;
 		}
 
+		void Bind ()
+		{
+			ctx = this.GetBindingContext ();
+			ctx.Add (addcategorybutton.BindWithIcon (
+				Resources.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize),
+				vm => ((DashboardsManagerVM)vm).AddButton, "Category"));
+			ctx.Add (scorebutton.BindWithIcon (
+				Resources.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize),
+				vm => ((DashboardsManagerVM)vm).AddButton, "Score"));
+			ctx.Add (timerbutton.BindWithIcon (
+				Resources.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize),
+				vm => ((DashboardsManagerVM)vm).AddButton, "Timer"));
+			ctx.Add (addtagbutton1.BindWithIcon (
+				Resources.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				vm => ((DashboardsManagerVM)vm).AddButton, "Tag"));
+			ctx.Add (cardbutton.BindWithIcon (
+				Resources.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				vm => ((DashboardsManagerVM)vm).AddButton, "Card"));
+
+			ctx.Add (deletetemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).DeleteCommand));
+			ctx.Add (newtemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).NewCommand));
+			ctx.Add (importtemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).ImportCommand));
+			ctx.Add (exporttemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).ExportCommand));
+			ctx.Add (savetemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).SaveCommand, true));
+		}
+
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
 			string name;
 
-			DashboardVM dashboardVM = (DashboardVM)model.GetValue (iter, COL_DASHBOARD);
+			LMDashboardVM dashboardVM = (LMDashboardVM)model.GetValue (iter, COL_DASHBOARD);
 			name = dashboardVM.Name;
 			if (!dashboardVM.Editable) {
 				name += " (" + Catalog.GetString ("System") + ")";
@@ -201,12 +211,12 @@ namespace LongoMatch.Gui.Panel
 			(cell as CellRendererText).Text = name;
 		}
 
-		void Add (DashboardVM dashboardVM)
+		void Add (LMDashboardVM dashboardVM)
 		{
 			dashboardsStore.AppendValues (dashboardVM, dashboardVM.Editable);
 		}
 
-		void Remove (DashboardVM dashboardVM)
+		void Remove (LMDashboardVM dashboardVM)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIterFirst (out iter);
@@ -219,17 +229,23 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void Select (DashboardVM dashboardVM)
+		void Select (LMDashboardVM dashboardVM)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIterFirst (out iter);
 			while (dashboardsStore.IterIsValid (iter)) {
-				if ((dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM).Model.Equals (dashboardVM.Model)) {
+				if ((dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM).Model.Equals (dashboardVM.Model)) {
 					dashboardseditortreeview.Selection.SelectIter (iter);
 					break;
 				}
 				dashboardsStore.IterNext (ref iter);
 			}
+		}
+
+		void UpdateLoadedTemplate ()
+		{
+			dashboardwidget.Sensitive = true;
+			Select (ViewModel.LoadedTemplate);
 		}
 
 		void HandleEnterTemplateButton (object sender, EventArgs e)
@@ -271,12 +287,12 @@ namespace LongoMatch.Gui.Panel
 		{
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
-				foreach (DashboardVM dashboardVM in e.NewItems) {
+				foreach (LMDashboardVM dashboardVM in e.NewItems) {
 					Add (dashboardVM);
 				}
 				break;
 			case NotifyCollectionChangedAction.Remove:
-				foreach (DashboardVM dashboardVM in e.OldItems) {
+				foreach (LMDashboardVM dashboardVM in e.OldItems) {
 					Remove (dashboardVM);
 				}
 				break;
@@ -295,55 +311,21 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			dashboardseditortreeview.Selection.GetSelected (out iter);
-			ViewModel.Select (dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM);
+			ViewModel.Select (dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM);
 		}
 
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Model") {
-				// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
-				buttonswidget.Template = ViewModel.LoadedTemplate.Model;
-				buttonswidget.Sensitive = true;
-				Select (ViewModel.LoadedTemplate);
+				UpdateLoadedTemplate ();
 			}
-		}
-
-		void HandleViewModelChanged (object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "SaveSensitive") {
-				savetemplatebutton.Sensitive = ViewModel.SaveSensitive;
-			} else if (e.PropertyName == "ExportSensitive") {
-				exporttemplatebutton.Sensitive = ViewModel.ExportSensitive;
-			} else if (e.PropertyName == "DeleteSensitive") {
-				deletetemplatebutton.Sensitive = ViewModel.DeleteSensitive;
-			}
-		}
-
-		void HandleDeleteTemplateClicked (object sender, EventArgs e)
-		{
-			ViewModel.Delete ();
-		}
-
-		void HandleImportTemplateClicked (object sender, EventArgs e)
-		{
-			ViewModel.Import ();
-		}
-
-		void HandleExportTemplateClicked (object sender, EventArgs e)
-		{
-			ViewModel.Export ();
-		}
-
-		void HandleNewTemplateClicked (object sender, EventArgs e)
-		{
-			ViewModel.New ();
 		}
 
 		void HandleEdited (object o, EditedArgs args)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIter (out iter, new TreePath (args.Path));
-			var dashboardVM = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM;
+			var dashboardVM = dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM;
 			ViewModel.ChangeName (dashboardVM, args.NewText);
 			QueueDraw ();
 		}

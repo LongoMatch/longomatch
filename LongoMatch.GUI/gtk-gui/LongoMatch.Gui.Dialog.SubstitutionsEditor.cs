@@ -5,29 +5,29 @@ namespace LongoMatch.Gui.Dialog
 	public partial class SubstitutionsEditor
 	{
 		private global::Gtk.VBox vbox2;
-		
+
 		private global::Gtk.HBox playershbox;
-		
+
 		private global::Gtk.Frame inframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment2;
-		
+
 		private global::Gtk.DrawingArea drawingarea2;
-		
+
 		private global::Gtk.Label GtkLabel2;
-		
+
 		private global::Gtk.Frame outframe;
-		
+
 		private global::Gtk.Alignment GtkAlignment3;
-		
+
 		private global::Gtk.DrawingArea drawingarea3;
-		
+
 		private global::Gtk.Label GtkLabel3;
-		
+
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		private global::Gtk.Button buttonCancel;
-		
+
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

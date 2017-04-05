@@ -16,42 +16,49 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.UI.Helpers;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class PlaysSelectionWidget : Gtk.Bin
+	public partial class PlaysSelectionWidget : Gtk.Bin, IView<LMProjectVM>
 	{
 		const int PAGE_CATEGORIES = 0;
 		const int PAGE_PLAYERS = 1;
 		const int PAGE_PLAYLISTS = 1;
 		const int PAGE_FILTERS = 2;
 
-		PlayersFilterTreeView playersfilter;
-		CategoriesFilterTreeView categoriesfilter;
-		Helpers.IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
+		EventsFilterTreeView categoriesfilter;
+		EventsFilterTreeView playersfilter;
+		LMProjectVM viewModel;
+		IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
 
 		public PlaysSelectionWidget ()
 		{
 			this.Build ();
-			
+
 			LoadIcons ();
 			AddFilters ();
-			Helpers.Misc.SetFocus (this, false, typeof(TreeView));
+			Helpers.Misc.SetFocus (this, false, typeof (TreeView));
 			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground));
 			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackgroundLight));
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			clearButton.Clicked += HandleClearClicked;
 			hbox3.NoShowAll = true;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			eventslistwidget.Destroy ();
+			playlistwidget.Destroy ();
+			base.OnDestroyed ();
 		}
 
 		public bool ExpandTabs {
@@ -73,31 +80,24 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected override void OnDestroyed ()
-		{
-			eventslistwidget.Destroy ();
-			playlistwidget.Destroy ();
-			base.OnDestroyed ();
+		public LMProjectVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				eventslistwidget.ViewModel = value;
+				playlistwidget.ViewModel = value?.Playlists;
+				categoriesfilter.Predicate = (value?.Timeline as LMTimelineVM)?.CategoriesPredicate;
+				playersfilter.Predicate = (value?.Timeline as LMTimelineVM)?.TeamsPredicate;
+			}
 		}
 
 		#region Plubic Methods
 
-		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
+		public void SetViewModel (object viewModel)
 		{
-			eventslistwidget.SetProject (project, filter);
-			playersfilter.SetFilter (filter, project);
-			categoriesfilter.SetFilter (filter, project);
-			playlistwidget.Project = project;
-		}
-
-		public void AddPlay (TimelineEventLongoMatch play)
-		{
-			eventslistwidget.AddPlay (play);
-		}
-
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
-		{
-			eventslistwidget.RemovePlays (plays);
+			ViewModel = viewModel as LMProjectVM;
 		}
 
 		#endregion
@@ -126,12 +126,12 @@ namespace LongoMatch.Gui.Component
 			Label l;
 			ScrolledWindow s1 = new ScrolledWindow ();
 			ScrolledWindow s2 = new ScrolledWindow ();
-			
-			playersfilter = new PlayersFilterTreeView ();
+
+			playersfilter = new EventsFilterTreeView ();
 			playersfilter.Name = "backgroundtreeviewplayers";
-			categoriesfilter = new CategoriesFilterTreeView ();
+			categoriesfilter = new EventsFilterTreeView ();
 			categoriesfilter.Name = "backgroundtreeviewcategories";
-			
+
 			s1.Add (categoriesfilter);
 			s2.Add (playersfilter);
 			l = new Gtk.Label (Catalog.GetString ("Categories filter"));
