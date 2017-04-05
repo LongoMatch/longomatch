@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Threading.Tasks;
 using VAS.Core.Interfaces.GUI;
 
 namespace Tests
@@ -43,6 +44,11 @@ namespace Tests
 		public void ShowSync (Action action, uint pulseIntervalMS = 0u)
 		{
 			action.Invoke ();
+		}
+
+		public void ShowSync (Func<Task> asyncAction, uint pulseIntervalMS = 0)
+		{
+			asyncAction.Invoke ();
 		}
 
 		#endregion

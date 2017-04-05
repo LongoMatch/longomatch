@@ -284,7 +284,7 @@ namespace LongoMatch.Core.Store
 				Sum (e => (e.EventType as ScoreEventType).Score.Points);
 		}
 
-		public override TimelineEvent CreateEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
+		public override TimelineEvent CreateEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature, int index = 0)
 		{
 			LMTimelineEvent evt;
 			string count;
