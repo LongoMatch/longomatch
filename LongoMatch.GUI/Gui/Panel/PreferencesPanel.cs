@@ -94,24 +94,24 @@ namespace LongoMatch.Gui.Panel
 
 		void AddPanels ()
 		{
-			AddPane (Catalog.GetString ("General"),
+			AddPanel (Catalog.GetString ("General"),
 				Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
 				new GeneralPreferencesPanel ());
-			AddPane (Catalog.GetString ("Keyboard shortcuts"),
+			AddPanel (Catalog.GetString ("Keyboard shortcuts"),
 				Helpers.Misc.LoadIcon ("longomatch-shortcut", IconSize.Dialog, 0),
 				new HotkeysConfiguration ());
-			AddPane (Catalog.GetString ("Video"),
+			AddPanel (Catalog.GetString ("Video"),
 				Helpers.Misc.LoadIcon ("longomatch-record", IconSize.Dialog, 0),
 				new VideoPreferencesPanel ());
-			AddPane (Catalog.GetString ("Live analysis"),
+			AddPanel (Catalog.GetString ("Live analysis"),
 				Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
 				new LiveAnalysisPreferences ());
-			AddPane (Catalog.GetString ("Plugins"),
+			AddPanel (Catalog.GetString ("Plugins"),
 				Helpers.Misc.LoadIcon ("longomatch-plugin", IconSize.Dialog, 0),
 				new PluginsPreferences ());
 		}
 
-		void AddPane (string desc, Pixbuf icon, Widget pane)
+		void AddPanel (string desc, Pixbuf icon, Widget pane)
 		{
 			prefsStore.AppendValues (icon, desc, pane);
 		}

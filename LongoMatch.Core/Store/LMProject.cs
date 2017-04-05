@@ -285,7 +285,6 @@ namespace LongoMatch.Core.Store
 		}
 
 		public override TimelineEvent CreateEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-												int index)
 		{
 			LMTimelineEvent evt;
 			string count;
