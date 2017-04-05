@@ -44,7 +44,7 @@ namespace LongoMatch.Services.Controller
 			NewText = Catalog.GetString ("New dashboard");
 			OverwriteText = Catalog.GetString ("Do you want to overwrite it?");
 			ErrorSavingText = Catalog.GetString ("Error saving dashboard");
-			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the dashboard: ");
+			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the dashboard: {0}?");
 			CouldNotLoadText = Catalog.GetString ("Could not load dashboard");
 			AlreadyExistsText = Catalog.GetString ("A dashboard with the same name already exists");
 			NotEditableText = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");

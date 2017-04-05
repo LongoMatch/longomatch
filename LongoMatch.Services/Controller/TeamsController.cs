@@ -44,7 +44,7 @@ namespace LongoMatch.Services.Controller
 			NewText = Catalog.GetString ("New team");
 			OverwriteText = Catalog.GetString ("Do you want to overwrite it?");
 			ErrorSavingText = Catalog.GetString ("Error saving team");
-			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the team: ");
+			ConfirmDeleteText = Catalog.GetString ("Do you really want to delete the team: {0}?");
 			CouldNotLoadText = Catalog.GetString ("Could not load team");
 			AlreadyExistsText = Catalog.GetString ("A team with the same name already exists");
 			ConfirmSaveText = Catalog.GetString ("Do you want to save the current team");
