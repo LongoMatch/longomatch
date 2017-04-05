@@ -22,19 +22,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
-using VAS.Services;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.ViewModel;
-using VAS.Core;
+using VAS.Services;
 
 namespace Tests.Controller
 {

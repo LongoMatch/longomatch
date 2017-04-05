@@ -70,13 +70,6 @@ namespace Tests.Integration
 			toolsManager = new ToolsManager ();
 		}
 
-		[TestFixtureTearDown ()]
-		public void FixtureTearDown ()
-		{
-			eventsController.Stop ();
-			toolsManager.Stop ();
-		}
-
 		[SetUp]
 		public void Init ()
 		{
@@ -262,6 +255,9 @@ namespace Tests.Integration
 			App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
+
+			eventsController.Stop ();
+			toolsManager.Stop ();
 		}
 
 		void AddEvent (LMProject p, int idx, int start, int stop, int eventTime)
