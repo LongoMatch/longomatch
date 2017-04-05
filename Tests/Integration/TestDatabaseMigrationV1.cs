@@ -25,6 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
 using NUnit.Framework;
+using VAS.Core.Store.Templates;
 
 namespace Tests.Integration
 {
@@ -53,14 +54,14 @@ namespace Tests.Integration
 			}
 
 			CouchbaseStorageLongoMatch storage = new CouchbaseStorageLongoMatch (dir, "longomatch");
-			Assert.AreEqual (2, storage.RetrieveAll<LMTeam> ().Count ());
-			Assert.AreEqual (1, storage.RetrieveAll<LMDashboard> ().Count ());
+			Assert.AreEqual (2, storage.RetrieveAll<Team> ().Count ());
+			Assert.AreEqual (1, storage.RetrieveAll<Dashboard> ().Count ());
 			Assert.AreEqual (1, storage.RetrieveAll<LMProject> ().Count ());
 
-			LMTeam team = storage.RetrieveAll<LMTeam> ().First ();
+			Team team = storage.RetrieveAll<Team> ().First ();
 			Assert.DoesNotThrow (team.Load);
 
-			LMDashboard dashboard = storage.RetrieveAll<LMDashboard> ().First ();
+			Dashboard dashboard = storage.RetrieveAll<Dashboard> ().First ();
 			Assert.DoesNotThrow (dashboard.Load);
 
 			LMProject project = storage.RetrieveAll<LMProject> ().First ();

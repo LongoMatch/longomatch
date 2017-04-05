@@ -177,6 +177,12 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether close  has been already handled or if the step want to be avoided
+		/// </summary>
+		/// <value><c>true</c> if close has been handled; otherwise, <c>false</c>.</value>
+		public bool CloseHandled { get; set; }
+
 		protected override void SyncLoadedModel ()
 		{
 			HomeTeam.Model = Model.LocalTeamTemplate;

@@ -110,7 +110,15 @@ namespace LongoMatch.Services
 		protected async Task HandleClose (CloseEvent<LMProjectVM> e)
 		{
 			if (e.Object == Project) {
-				e.ReturnValue = await PromptCloseProject ();
+				if (!Project.CloseHandled) {
+					Project.CloseHandled = true;
+					e.ReturnValue = await PromptCloseProject ();
+					if (!e.ReturnValue) {
+						Project.CloseHandled = false;	
+					}
+				} else {
+					e.ReturnValue = true;
+				}
 			}
 		}
 
@@ -200,6 +208,7 @@ namespace LongoMatch.Services
 			Project = analysisVM.Project;
 			VideoPlayer = analysisVM.VideoPlayer;
 			Capturer = analysisVM.Capturer;
+			Project.CloseHandled = false;
 
 			Log.Debug ("Loading project " + analysisVM.Project + " " + analysisVM.Project.ProjectType);
 
@@ -265,7 +274,8 @@ namespace LongoMatch.Services
 					await CaptureFinished (true, true, false);
 					return true;
 				} else if (res == EndCaptureResponse.Save) {
-					await CaptureFinished (false, false, true);
+					bool reopen = (Project.ProjectType == ProjectType.FakeCaptureProject) ? false : true;
+					await CaptureFinished (false, false, reopen);
 					return true;
 				} else {
 					/* Continue with the current project */
@@ -274,7 +284,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		async Task<bool> CloseOpenedProject (bool save)
+		async Task<bool> CloseOpenedProject (bool save, bool goHome = true)
 		{
 			if (Project == null)
 				return false;
@@ -285,11 +295,16 @@ namespace LongoMatch.Services
 				Capturer.Close ();
 			}
 
+			bool saveOk = true;
 			if (save) {
-				return SaveProject ();
+				saveOk = SaveProject ();
 			}
 
-			return false;
+			if (saveOk && goHome) {
+				return await App.Current.StateController.MoveToHome ();
+			}
+
+			return saveOk;
 		}
 
 		bool UpdateProject (LMProject project)
@@ -350,13 +365,13 @@ namespace LongoMatch.Services
 					App.Current.Dialogs.ErrorMessage (ex.Message);
 				}
 			}
-			bool closeOk = await CloseOpenedProject (!cancel);
+
+			// if it comes from a cancel operation the close have been handled
+			bool closeOk = await CloseOpenedProject (!cancel, !reopen);
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				Project.ProjectType = ProjectType.FileProject;
+				Project.CloseHandled = true; // the reopen comes from a close operation avoid asking again
 				LMStateHelper.OpenProject (Project);
-			} 
-			else {
-				await App.Current.StateController.MoveToHome ();
 			}
 
 			return false;
@@ -371,7 +386,9 @@ namespace LongoMatch.Services
 
 		async void HandleCaptureFinished (CaptureFinishedEvent e)
 		{
-			await CaptureFinished (e.Cancel, e.Cancel, e.Reopen);
+			Project.CloseHandled = true;
+			bool reopen = Project.ProjectType == ProjectType.FakeCaptureProject ? false : e.Reopen;	
+			await CaptureFinished (e.Cancel, e.Cancel, reopen);
 		}
 
 		async void HandleCaptureError (CaptureErrorEvent e)

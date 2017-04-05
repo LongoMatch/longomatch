@@ -35,11 +35,15 @@ namespace LongoMatch.Gui.Component
 	public partial class FakeAnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
 		LMProjectAnalysisVM viewModel;
+		ProjectFileMenuLoader fileMenuLoader;
+		ProjectToolsMenuLoader toolMenuLoader;
 
 		public FakeAnalysisComponent ()
 		{
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
+			fileMenuLoader = new ProjectFileMenuLoader ();
+			toolMenuLoader = new ProjectToolsMenuLoader ();
 		}
 
 		public void Dispose ()
@@ -84,10 +88,14 @@ namespace LongoMatch.Gui.Component
 
 		public void OnLoad ()
 		{
+			fileMenuLoader.LoadMenu (viewModel);
+			toolMenuLoader.LoadMenu (viewModel);
 		}
 
 		public void OnUnload ()
 		{
+			fileMenuLoader.UnloadMenu ();
+			toolMenuLoader.UnloadMenu ();
 		}
 
 		public KeyContext GetKeyContext ()

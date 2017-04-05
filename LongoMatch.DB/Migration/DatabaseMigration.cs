@@ -289,11 +289,11 @@ namespace LongoMatch.DB
 			percent += step;
 			progress.Report (percent, "Events index created", id);
 
-			Log.Information ("Teams index created:" + database.RetrieveAll<LMTeam> ().Count ());
+			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
 			percent += step;
 			progress.Report (percent, "Teams index created", id);
 
-			Log.Information ("DAshboards index created:" + database.RetrieveAll<LMDashboard> ().Count ());
+			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
 			percent += step;
 			progress.Report (percent, "Dashboards index created", id);
 

@@ -41,6 +41,7 @@ namespace LongoMatch.Core.Migration
 			{ "LongoMatch.Core.Store.Templates.TeamTemplate", typeof(LongoMatch.Core.Store.Templates.LMTeam) },
 			{ "LongoMatch.Core.Store.Templates.Team", typeof(LongoMatch.Core.Store.Templates.LMTeam) },
 			{ "LongoMatch.Core.Store.Templates.Dashboard", typeof(LongoMatch.Core.Store.Templates.LMDashboard) },
+			{ "LongoMatch.Core.Store.Templates.DashboardLongoMatch", typeof(LongoMatch.Core.Store.Templates.LMDashboard) },
 			{ "LongoMatch.Core.Store.Player", typeof(LongoMatch.Core.Store.LMPlayer) },
 			{ "LongoMatch.Core.Store.Project", typeof(LongoMatch.Core.Store.LMProject) },
 			{ "LongoMatch.Core.Store.TimelineEvent", typeof(LongoMatch.Core.Store.LMTimelineEvent) },

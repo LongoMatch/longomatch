@@ -27,7 +27,7 @@ namespace LongoMatch.Services.State
 	/// <summary>
 	/// A state for live analysis of projects.
 	/// </summary>
-	public class LiveProjectAnalysisState : ScreenState<LMProjectAnalysisVM>
+	public class LiveProjectAnalysisState : AnalysisStateBase
 	{
 		public const string NAME = "LiveProjectAnalysis";
 

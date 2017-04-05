@@ -54,7 +54,6 @@ namespace Tests.Integration
 		[TearDown]
 		public void Delete ()
 		{
-			CoreServices.Stop ();
 			try {
 				foreach (var db in App.Current.DatabaseManager.Databases) {
 					db.Reset ();
@@ -62,6 +61,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
+			CoreServices.Stop ();
 			SetupClass.Initialize ();
 		}
 
@@ -69,6 +69,7 @@ namespace Tests.Integration
 		public void TestInitializationFromScratch ()
 		{
 			CoreServices.Init ();
+			App.Init ();
 			Assert.AreEqual (homePath, App.Current.HomeDir);
 			Assert.AreEqual (homePath, App.Current.ConfigDir);
 			Assert.AreEqual (homePath, Directory.GetParent (App.Current.DBDir).ToString ());
@@ -89,7 +90,6 @@ namespace Tests.Integration
 			AddinsManager.LoadServicesAddins ();
 
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
-			//CoreServices.Start (null, null);
 
 			// Check database dirs
 			Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.TeamsDir).ToString ());
@@ -112,7 +112,6 @@ namespace Tests.Integration
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			CoreServices.Stop ();
 		}
 	}
 }

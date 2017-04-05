@@ -77,8 +77,11 @@ namespace Tests.Drawing.Objects
 			view.SetViewModel (timelineEventVM);
 			view.RedrawEvent += (co, area) => redrawCount++;
 
-			timelineEvent.AddDefaultPositions ();
 			timelineEvent.EventType.TagFieldPosition = true;
+			timelineEvent.AddDefaultPositions ();
+
+			view.Points = timelineEvent.FieldPosition.Points;
+			view.Draw (tkMock.Object, null);
 
 			Assert.Greater (redrawCount, 1);
 			tkMock.Verify (tk => tk.DrawCircle (It.IsAny<Point> (), It.IsAny<double> ()), Times.Once ());

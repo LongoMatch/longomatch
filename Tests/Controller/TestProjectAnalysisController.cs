@@ -22,18 +22,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
-using VAS.Services;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.ViewModel;
+using VAS.Services;
 
 namespace Tests.Controller
 {
@@ -172,6 +173,7 @@ namespace Tests.Controller
 				}
 			);
 
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.Project.Model); // SP-Remark: check that project is null has no sense here 
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
@@ -220,7 +222,7 @@ namespace Tests.Controller
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
-			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project});
+			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
 			Assert.AreEqual (project, projectsManager.Project.Model);
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
@@ -232,6 +234,7 @@ namespace Tests.Controller
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
+			projectsManager.ViewModel.Project.CloseHandled = false;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
@@ -240,27 +243,52 @@ namespace Tests.Controller
 		}
 
 		[Test ()]
-		public void TestOpenBadProject ()
+		public async Task HandleClose_PromtAlreadyDisplayed_ReturnTrue ()
 		{
-			// Test to try opening a project with duration = null
-			Assert.Greater (project.Description.FileSet.Count, 0);
-			foreach (var file in project.Description.FileSet) {
-				file.Duration = null;
-			}
-
-			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
+			// Arrange
+			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
 
 			projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
-			// projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
-			/*App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new OpenProjectIDEvent {
-					ProjectID = project.ID,
-					Project = project
-				}
-			);*/
+			projectsManager.ViewModel.CaptureSettings = settings;
+			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;
+			projectsManager.ViewModel.Project.CloseHandled = true;
 
-			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
+			// Act
+			bool result = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Assert
+			Assert.IsTrue (result);
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Verify (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Never);
+		}
+
+		[Test ()]
+		public async Task HandleClose_CloseRejected_AllowAskAgainForClosing ()
+		{
+			// Arrange
+			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
+
+			projectsManager.Capturer = capturerBinMock.Object;
+			projectsManager.ViewModel.Project.Model = project;
+			projectsManager.ViewModel.CaptureSettings = settings;
+			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;
+			projectsManager.ViewModel.Project.CloseHandled = false;
+
+			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (AsyncHelpers.Return (false));
+			await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Act
+			Assert.IsFalse (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
+			bool result = await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = projectsManager.ViewModel.Project });
+
+			// Assert
+			Assert.IsTrue (result);
+			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
+			mockDialogs.Verify (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (2));
 		}
 	}
 }

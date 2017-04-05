@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
@@ -45,7 +46,7 @@ namespace LongoMatch.Services.ViewModel
 
 		async Task Close ()
 		{
-			await App.Current.StateController.MoveToHome ();
+			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = Project });
 		}
 	}
 }

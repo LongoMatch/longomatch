@@ -87,9 +87,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			// FIXME: Add positions to the VM
-			if (FieldPosition == FieldPositionType.Field ||
+			if ( (FieldPosition == FieldPositionType.Field ||
 				FieldPosition == FieldPositionType.HalfField ||
-				FieldPosition == FieldPositionType.Goal) {
+			      FieldPosition == FieldPositionType.Goal) &&
+			   		ViewModel.FieldPosition?.Points.Count > 0) {
 				UpdatePoints ();
 				ReDraw ();
 			}
