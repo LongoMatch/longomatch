@@ -150,14 +150,14 @@ namespace LongoMatch.Gui.Component
 
 		public void OnLoad ()
 		{
-			this.fileMenuLoader.LoadMenu (viewModel);
-			this.toolsMenuLoader.LoadMenu (viewModel);
+			fileMenuLoader.LoadMenu (viewModel);
+			toolsMenuLoader.LoadMenu (viewModel);
 		}
 
 		public void OnUnload ()
 		{
-			this.fileMenuLoader.UnloadMenu ();
-			this.toolsMenuLoader.UnloadMenu ();
+			fileMenuLoader.UnloadMenu ();
+			toolsMenuLoader.UnloadMenu ();
 		}
 
 		public void TagPlayer (Player player)
