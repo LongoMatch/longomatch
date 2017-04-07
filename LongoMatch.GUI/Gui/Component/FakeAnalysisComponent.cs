@@ -25,7 +25,6 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using LKeyAction = LongoMatch.Core.Common.KeyAction;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Gui.Component
@@ -101,24 +100,25 @@ namespace LongoMatch.Gui.Component
 		public KeyContext GetKeyContext ()
 		{
 			var keyContext = new KeyContext ();
-			/*keyContext.AddAction (
-				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
-								() => codingwidget1.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction ("ZOOM_OUT", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomOut],
-								() => codingwidget1.ZoomOut ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_IN"),
+							   () => codingwidget1.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction ("FIT_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.FitTimeline],
-								() => codingwidget1.FitTimeline ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_OUT"),
+							   () => codingwidget1.ZoomOut ()));
+
 			keyContext.AddAction (
-				new VKeyAction ("SHOW_DASHBOARD", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget1.ShowDashboard ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("FIT_TIMELINE"),
+							   () => codingwidget1.FitTimeline ()));
 			keyContext.AddAction (
-				new VKeyAction ("SHOW_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget1.ShowTimeline ()));*/
+				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_DASHBOARD"),
+							   () => codingwidget1.ShowDashboard ()));
+			keyContext.AddAction (
+				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_TIMELINE"),
+							   () => codingwidget1.ShowTimeline ()));
+
 			return keyContext;
 		}
-
 
 		public void SetViewModel (object viewModel)
 		{
@@ -149,6 +149,5 @@ namespace LongoMatch.Gui.Component
 		{
 			codingwidget1.TagTeam (team);
 		}
-
 	}
 }
