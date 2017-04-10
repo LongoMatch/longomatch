@@ -47,6 +47,9 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (LiveProjectAnalysisState.NAME, () => new LiveProjectAnalysisState ());
 			uiFlow.Add (FakeLiveProjectAnalysisState.NAME, () => new FakeLiveProjectAnalysisState ());
 			uiFlow.Add (DatabasesManagerState.NAME, () => new DatabasesManagerState ());
+			uiFlow.Add (EditPlaylistState.NAME, () => new EditPlaylistState ());
+			uiFlow.Add (PlayEditorState.NAME, () => new PlayEditorState ());
+			uiFlow.Add (SubstitutionsEditorState.NAME, () => new SubstitutionsEditorState ());
 		}
 
 		#region ITool implementation

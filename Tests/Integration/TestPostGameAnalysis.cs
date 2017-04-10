@@ -59,14 +59,14 @@ namespace Tests.Integration
 		Mock<IVideoPlayer> playerMock;
 		Mock<IDialogs> mockDialogs;
 		string tmpPath, homePath;
-		CoreEventsController eventsController;
+		EventsController eventsController;
 		ToolsManager toolsManager;
 
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
 		{
 			// Register the events manager
-			eventsController = new CoreEventsController ();
+			eventsController = new EventsController ();
 			toolsManager = new ToolsManager ();
 		}
 

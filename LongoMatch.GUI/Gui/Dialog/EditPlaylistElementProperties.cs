@@ -17,13 +17,19 @@
 //
 using System;
 using Gtk;
+using LongoMatch.Services.State;
 using Pango;
-using VAS.Core.Store.Playlists;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public partial class EditPlaylistElementProperties : Gtk.Dialog
+	// FIXME: Change the view to not use the model, create a VM and use it
+	[ViewAttribute (EditPlaylistState.NAME)]
+	public partial class EditPlaylistElementProperties : Gtk.Dialog, IPanel
 	{
 		SizeGroup sizegroupLeft, sizegroupRight;
 		IPlaylistElement plElement;
@@ -90,6 +96,24 @@ namespace LongoMatch.Gui.Dialog
 		void HandleNameChanged (object sender, EventArgs e)
 		{
 			(plElement as PlaylistPlayElement).Title = nameentry.Text;
+		}
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			throw new NotImplementedException ();
 		}
 	}
 }

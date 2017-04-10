@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
@@ -30,6 +29,7 @@ using VAS.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {
+	// FIXME: Change the view to not use the model, use the VM provided
 	public class LMTimelineEventsTreeView : TimelineEventsTreeView<EventTypeTimelineVM, EventType>
 	{
 		SportsPlaysMenu menu;
@@ -37,6 +37,9 @@ namespace LongoMatch.Gui.Component
 		public LMTimelineEventsTreeView ()
 		{
 			menu = new SportsPlaysMenu ();
+			// FIXME: Fix the behaviour in the tree view 
+			menu.EditPlayEvent += (sender, e) =>
+				ViewModel.EditionCommand.Execute (ViewModel.FullTimeline.Selection.First ().Model);
 			ShowExpanders = false;
 		}
 
