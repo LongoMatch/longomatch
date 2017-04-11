@@ -47,6 +47,7 @@
       <Variable name="LGM_UNINSTALLED" value="1" />
       <Variable name="LGM_DEBUG" value="3" />
       <Variable name="GTK2_RC_FILES" value="" />
+      <Variable name="LGM_DEBUG_VERBOSE" value="" />
     </EnvironmentVariables>
     <TargetRuntimeId>Mono 4.6.0 (Stable)</TargetRuntimeId>
   </PropertyGroup>

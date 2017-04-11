@@ -61,6 +61,7 @@ namespace LongoMatch.Services
 		public static void Init ()
 		{
 			Log.Debugging = Debugging;
+			Log.VerboseDebugging = VerboseDebugging;
 
 			/* Check default folders */
 			CheckDirs ();
@@ -211,6 +212,7 @@ namespace LongoMatch.Services
 		}
 
 		static bool? debugging = null;
+		static bool? verboseDebugging = null;
 
 		public static bool Debugging {
 			get {
@@ -229,6 +231,22 @@ namespace LongoMatch.Services
 			}
 		}
 
+		public static bool VerboseDebugging {
+			get {
+#if DEBUG
+				if (verboseDebugging == null) {
+					verboseDebugging = EnvironmentIsSet ("LGM_DEBUG_VERBOSE");
+				}
+				return verboseDebugging.Value;
+#else
+				return false;
+#endif
+			}
+			set {
+				verboseDebugging = value;
+				Log.VerboseDebugging = VerboseDebugging;
+			}
+		}
 		public static bool EnvironmentIsSet (string env)
 		{
 			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
