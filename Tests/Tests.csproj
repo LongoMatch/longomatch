@@ -132,6 +132,7 @@
     <Compile Include="Services\TestLMStateHelper.cs" />
     <Compile Include="State\TestProjectAnalysisState.cs" />
     <Compile Include="Services\TestEventEditorService.cs" />
+    <Compile Include="Core\ViewModel\TestForwarderPlaylistElementsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
@@ -220,6 +221,7 @@
     <Folder Include="Drawing\Objects\" />
     <Folder Include="Controller\" />
     <Folder Include="State\" />
+    <Folder Include="Core\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

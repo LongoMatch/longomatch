@@ -141,6 +141,9 @@ namespace LongoMatch.Gui.Panel
 				if (viewModel != null) {
 					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
+					foreach (LMTeamVM team in viewModel.ViewModels) {
+						Remove (team);
+					}
 				}
 				viewModel = value;
 				ctx.UpdateViewModel (viewModel);
@@ -196,31 +199,23 @@ namespace LongoMatch.Gui.Panel
 		void Add (TeamVM teamVM)
 		{
 			teamsStore.AppendValues (teamVM, teamVM.Editable);
+			teamVM.PropertyChanged += HandleTeamPropertyChanged;
 		}
 
 		void Remove (TeamVM teamVM)
 		{
 			TreeIter iter;
-			teamsStore.GetIterFirst (out iter);
-			while (teamsStore.IterIsValid (iter)) {
-				if (teamsStore.GetValue (iter, COL_TEAM) == teamVM) {
-					teamsStore.Remove (ref iter);
-					break;
-				}
-				teamsStore.IterNext (ref iter);
+			if (GetIterFromTeam (teamVM, out iter)) {
+				teamsStore.Remove (ref iter);
+				teamVM.PropertyChanged -= HandleTeamPropertyChanged;
 			}
 		}
 
 		void Select (TeamVM teamVM)
 		{
 			TreeIter iter;
-			teamsStore.GetIterFirst (out iter);
-			while (teamsStore.IterIsValid (iter)) {
-				if ((teamsStore.GetValue (iter, COL_TEAM) as TeamVM).Model.Equals (teamVM.Model)) {
-					teamseditortreeview.Selection.SelectIter (iter);
-					break;
-				}
-				teamsStore.IterNext (ref iter);
+			if (GetIterFromTeam (teamVM, out iter)) {
+				teamseditortreeview.Selection.SelectIter (iter);
 			}
 		}
 
@@ -230,6 +225,18 @@ namespace LongoMatch.Gui.Panel
 			teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model as LMTeam;
 			teamtemplateeditor1.Sensitive = true;
 			Select (ViewModel.LoadedTemplate);
+		}
+
+		bool GetIterFromTeam (TeamVM team, out TreeIter iter)
+		{
+			teamsStore.GetIterFirst (out iter);
+			while (teamsStore.IterIsValid (iter)) {
+				if ((teamsStore.GetValue (iter, COL_TEAM) as TeamVM).Model.Equals (team.Model)) {
+					return true;
+				}
+				teamsStore.IterNext (ref iter);
+			}
+			return false;
 		}
 
 		void HandleEnterTeamButton (object sender, EventArgs e)
@@ -306,6 +313,17 @@ namespace LongoMatch.Gui.Panel
 			var teamVM = teamsStore.GetValue (iter, COL_TEAM) as LMTeamVM;
 			ViewModel.ChangeName (teamVM, args.NewText);
 			QueueDraw ();
+		}
+
+		void HandleTeamPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			var teamVM = sender as TeamVM;
+			if (teamVM != null && teamVM.NeedsSync (e.PropertyName, "Model")) {
+				TreeIter iter;
+				if (GetIterFromTeam (teamVM, out iter)) {
+					teamsStore.EmitRowChanged (teamsStore.GetPath (iter), iter);
+				}
+			}
 		}
 	}
 }
