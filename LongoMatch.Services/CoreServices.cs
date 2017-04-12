@@ -133,6 +133,7 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
+			App.Current.DependencyRegistry.Register<ITimer, Timer> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
 			App.Current.MultimediaToolkit = multimediaToolkit;

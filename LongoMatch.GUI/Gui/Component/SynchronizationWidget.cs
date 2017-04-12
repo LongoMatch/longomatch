@@ -35,6 +35,7 @@ using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Drawing.Widgets;
 using VAS.Services;
 using Helpers = VAS.UI.Helpers;
+using Timer = VAS.Core.Store.Timer;
 
 namespace LongoMatch.Gui.Component
 {

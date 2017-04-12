@@ -27,6 +27,7 @@ using VAS.Core.Store.Drawables;
 using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
+using Timer = VAS.Core.Store.Timer;
 
 namespace LongoMatch.Drawing.Widgets
 {

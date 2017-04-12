@@ -66,7 +66,6 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.Next] = Catalog.GetString ("Jump to next event");
 			ActionsDescriptions [KeyAction.Prev] = Catalog.GetString ("Jump to prev event");
-			ActionsDescriptions [KeyAction.LocalPlayer] = Catalog.GetString ("Start tagging home player");
 			ActionsDescriptions [KeyAction.SpeedDown] = Catalog.GetString ("Increase playback speed");
 			ActionsDescriptions [KeyAction.SpeedUp] = Catalog.GetString ("Decrease playback speed");
 			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause/Resume capture clock");
@@ -88,8 +87,6 @@ namespace LongoMatch.Core.Common
 			UpdateMapping (KeyAction.JumpUp, "<Shift_L>+Right");
 			UpdateMapping (KeyAction.JumpDown, "<Shift_L>+Left");
 			UpdateMapping (KeyAction.CloseEvent, "<Shift_L>+a");
-			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+q");
-			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+w");
 			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+n");
 			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+b");
 			UpdateMapping (KeyAction.PauseClock, "<Shift_L>+p");
