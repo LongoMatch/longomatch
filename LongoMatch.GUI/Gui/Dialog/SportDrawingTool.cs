@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Dialog
 				d.HeightRequest = 400;
 
 				DrawingArea da = new DrawingArea ();
-				TeamTagger tagger = new TeamTagger (new WidgetWrapper (da));
+				LMTeamTaggerView tagger = new LMTeamTaggerView (new WidgetWrapper (da));
 				tagger.ShowSubstitutionButtons = false;
 				tagger.LoadTeams ((ViewModel.Project as LMProject).LocalTeamTemplate, (ViewModel.Project as LMProject).VisitorTeamTemplate,
 								  (ViewModel.Project as LMProject).Dashboard.FieldBackground);

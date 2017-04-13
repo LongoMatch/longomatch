@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Dialog
 	[ViewAttribute (SubstitutionsEditorState.NAME)]
 	public partial class SubstitutionsEditor : Gtk.Dialog, IPanel
 	{
-		TeamTagger tagger;
+		LMTeamTaggerView tagger;
 		SelectionCanvas incanvas, outcanvas;
 		LMPlayerView inpo, outpo;
 		LMPlayer inPlayer, outPlayer, selectedPlayer;
@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Dialog
 		public SubstitutionsEditor ()
 		{
 			this.Build ();
-			tagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			tagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			incanvas = new SelectionCanvas (new WidgetWrapper (drawingarea2));

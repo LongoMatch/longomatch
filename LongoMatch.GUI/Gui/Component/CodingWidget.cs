@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class CodingWidget : Gtk.Bin, IView<LMProjectAnalysisVM>
 	{
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 		List<LMPlayer> selectedPlayers;
 		List<Window> activeWindows;
 		Helpers.IconNotebookHelper notebookHelper;
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 
 			notebook.Page = 0;
 
-			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;

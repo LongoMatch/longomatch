@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Panel
 		Gdk.Color red;
 		LMTeam hometemplate, awaytemplate;
 		LMDashboard analysisTemplate;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 		SizeGroup sg;
 		LMProjectVM viewModel;
 		CameraSynchronizationEditorState cameraSynchronizationState;
@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Panel
 			bool hasAwayTeam = false;
 
 			drawingarea.HeightRequest = 200;
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
 			teamtagger.SubstitutionMode = true;
 			teamtagger.ShowSubstitutionButtons = false;

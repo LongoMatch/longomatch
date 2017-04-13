@@ -31,7 +31,7 @@ using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class TeamTagger : SelectionCanvas
+	public class LMTeamTaggerView : SelectionCanvas
 	{
 
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
@@ -41,7 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		PlayersTaggerView tagger;
 
-		public TeamTagger (IWidget widget) : base (widget)
+		public LMTeamTaggerView (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
 			tagger = new PlayersTaggerView {
@@ -56,7 +56,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddObject (tagger);
 		}
 
-		public TeamTagger () : this (null)
+		public LMTeamTaggerView () : this (null)
 		{
 		}
 

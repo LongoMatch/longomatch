@@ -48,13 +48,13 @@ namespace LongoMatch.Gui.Component
 		LMTeam template;
 		bool edited, ignoreChanges;
 		List<LMPlayer> selectedPlayers;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 
 		public TeamTemplateEditor ()
 		{
 			this.Build ();
 
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;

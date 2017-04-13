@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayEditor : Gtk.Dialog, IPanel
 	{
 		const int TAGS_PER_ROW = 5;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 		TimelineEventLocationTaggerView field, hfield, goal;
 		PlayEditorVM editorVM;
 
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Dialog
 				FieldPosition = FieldPositionType.Goal
 			};
 
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea3));
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea3));
 			teamtagger.Compact = true;
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
