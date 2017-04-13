@@ -134,6 +134,8 @@
     <Compile Include="Services\TestEventEditorService.cs" />
     <Compile Include="Core\ViewModel\TestForwarderPlaylistElementsVM.cs" />
     <Compile Include="Controller\TestLMTaggingController.cs" />
+    <Compile Include="State\TestFakeLiveProjectAnalysisState.cs" />
+    <Compile Include="State\TestLiveProjectAnalysisState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">

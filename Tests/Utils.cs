@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -46,7 +47,7 @@ namespace Tests
 				Console.WriteLine (jsonString);
 			}
 			stream.Seek (0, SeekOrigin.Begin);
-			
+
 			return Serializer.Instance.Load<T> (stream, SerializationType.Json);
 		}
 
@@ -66,7 +67,7 @@ namespace Tests
 				Console.WriteLine (jsonString);
 			}
 			stream.Seek (0, SeekOrigin.Begin);
-			
+
 			var newobj = Serializer.Instance.Load<T> (stream, SerializationType.Json);
 			if (!ignoreIsChanged) {
 				ObjectChangedParser parser = new ObjectChangedParser ();
@@ -214,6 +215,11 @@ namespace Tests
 		public class PlayerDummy : Player
 		{
 			//dummy class for abstract validation. Copied from LongoMatch and adapted to VAS.
+		}
+
+		public interface IDummyCapturerPanel : IPanel
+		{
+			ICapturerBin Capturer { get; set; }
 		}
 	}
 }

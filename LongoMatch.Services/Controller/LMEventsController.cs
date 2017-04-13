@@ -39,6 +39,8 @@ using LMKeyAction = LongoMatch.Core.Common.KeyAction;
 namespace LongoMatch.Services
 {
 	[Controller (ProjectAnalysisState.NAME)]
+	[Controller (FakeLiveProjectAnalysisState.NAME)]
+	[Controller (LiveProjectAnalysisState.NAME)]
 	public class LMEventsController : EventsController
 	{
 		TimelineEvent loadedPlay;

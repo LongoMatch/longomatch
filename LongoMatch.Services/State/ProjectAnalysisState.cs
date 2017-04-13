@@ -74,7 +74,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new LMProjectAnalysisVM ();
-			ViewModel.Project = data.Project;
+			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 		}
 

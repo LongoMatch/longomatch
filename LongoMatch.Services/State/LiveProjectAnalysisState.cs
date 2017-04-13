@@ -16,8 +16,11 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using System.Threading.Tasks;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services;
 using VAS.Services.State;
@@ -40,7 +43,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new LMProjectAnalysisVM ();
-			ViewModel.Project = data.Project;
+			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.CaptureSettings = data.CaptureSettings;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			// FIXME: use this hack until the capturer uses a controller
