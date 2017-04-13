@@ -26,6 +26,7 @@ using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using Constants = LongoMatch.Core.Common.Constants;
+using Timer = VAS.Core.Store.Timer;
 
 namespace Tests.Core.Store
 {

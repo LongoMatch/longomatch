@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Services.State;
@@ -30,6 +31,7 @@ using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
+using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Gui.Component
 {
@@ -127,24 +129,25 @@ namespace LongoMatch.Gui.Component
 		public KeyContext GetKeyContext ()
 		{
 			var keyContext = new KeyContext ();
-			/*keyContext.AddAction (
-				new VKeyAction ("ZOOM_IN", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomIn],
-								() => codingwidget.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction ("ZOOM_OUT", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ZoomOut],
-								() => codingwidget.ZoomOut ()));
+				new VKeyAction ( App.Current.HotkeysService.GetByName ("ZOOM_IN"),
+				               () => codingwidget.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction ("FIT_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.FitTimeline],
-								() => codingwidget.FitTimeline ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_OUT"),
+							   () => codingwidget.ZoomOut ()));
 			keyContext.AddAction (
-				new VKeyAction ("SHOW_DASHBOARD", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget.ShowDashboard ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_ZONAL_TAGS"),
+							   () => codingwidget.ShowZonalTags ()));
 			keyContext.AddAction (
-				new VKeyAction ("SHOW_TIMELINE", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget.ShowTimeline ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("FIT_TIMELINE"),
+							   () => codingwidget.FitTimeline ()));
 			keyContext.AddAction (
-				new VKeyAction ("SHOW_ZONAL_TAGS", App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.ShowDashboard],
-								() => codingwidget.ShowZonalTags ()));*/
+				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_DASHBOARD"),
+							   () => codingwidget.ShowDashboard ()));
+			keyContext.AddAction (
+				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_TIMELINE"),
+							   () => codingwidget.ShowTimeline ()));
+
 			return keyContext;
 		}
 

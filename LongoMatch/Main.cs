@@ -66,6 +66,7 @@ namespace LongoMatch
 
 			try {
 				AddinsManager.ShutdownMultimediaBackends ();
+				App.Current.KeyContextManager.Dispose ();
 			} catch (Exception e) {
 				Log.Exception (e);
 			}

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Timers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
@@ -208,6 +209,11 @@ namespace Tests
 				}
 			}
 			return filePath;
+		}
+
+		public class PlayerDummy : Player
+		{
+			//dummy class for abstract validation. Copied from LongoMatch and adapted to VAS.
 		}
 	}
 }

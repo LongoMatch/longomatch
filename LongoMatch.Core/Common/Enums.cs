@@ -51,8 +51,6 @@ namespace LongoMatch.Core.Common
 		ShowDashboard,
 		ShowTimeline,
 		ShowPositions,
-		ZoomIn,
-		ZoomOut,
 		FitTimeline,
 		VideoZoomOriginal,
 		VideoZoomIn,

@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.DB;
 using LongoMatch.Services.States;
 using VAS.Core.Common;
@@ -132,6 +133,7 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
+			App.Current.DependencyRegistry.Register<ITimer, Timer> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
 			App.Current.MultimediaToolkit = multimediaToolkit;
@@ -168,6 +170,7 @@ namespace LongoMatch.Services
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 			PlaybackHotkeys.RegisterDefaultHotkeys ();
 			DrawingToolHotkeys.RegisterDefaultHotkeys ();
+			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
 
 			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
 			RegisterService (notifier);

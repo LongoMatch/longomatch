@@ -57,7 +57,6 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.DeleteEvent] = Catalog.GetString ("Delete selected event");
 			ActionsDescriptions [KeyAction.DrawFrame] = Catalog.GetString ("Draw frame");
 			ActionsDescriptions [KeyAction.EditEvent] = Catalog.GetString ("Edit selected event");
-			ActionsDescriptions [KeyAction.FitTimeline] = Catalog.GetString ("Adjust timeline to current position");
 			ActionsDescriptions [KeyAction.FrameDown] = Catalog.GetString ("Frame step backward");
 			ActionsDescriptions [KeyAction.FrameUp] = Catalog.GetString ("Frame step forward");
 			ActionsDescriptions [KeyAction.JumpDown] = Catalog.GetString ("Jump backward");
@@ -67,11 +66,6 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.Next] = Catalog.GetString ("Jump to next event");
 			ActionsDescriptions [KeyAction.Prev] = Catalog.GetString ("Jump to prev event");
-			ActionsDescriptions [KeyAction.ShowDashboard] = Catalog.GetString ("Show dashboard");
-			ActionsDescriptions [KeyAction.ShowPositions] = Catalog.GetString ("Show zonal tags");
-			ActionsDescriptions [KeyAction.ShowTimeline] = Catalog.GetString ("Show timeline");
-			ActionsDescriptions [KeyAction.LocalPlayer] = Catalog.GetString ("Start tagging home player");
-			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.SpeedDown] = Catalog.GetString ("Increase playback speed");
 			ActionsDescriptions [KeyAction.SpeedUp] = Catalog.GetString ("Decrease playback speed");
 			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause/Resume capture clock");
@@ -79,8 +73,6 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.StopPeriod] = Catalog.GetString ("Stop recording period");
 			ActionsDescriptions [KeyAction.Substitution] = Catalog.GetString ("Toggle substitutions mode");
 			ActionsDescriptions [KeyAction.TogglePlay] = Catalog.GetString ("Toggle playback");
-			ActionsDescriptions [KeyAction.ZoomIn] = Catalog.GetString ("Zoom timeline in");
-			ActionsDescriptions [KeyAction.ZoomOut] = Catalog.GetString ("Zoom timeline out");
 			ActionsDescriptions [KeyAction.SpeedUpper] = Catalog.GetString ("Maximum playback speed");
 			ActionsDescriptions [KeyAction.SpeedLower] = Catalog.GetString ("Default playback speed");
 		}
@@ -90,28 +82,20 @@ namespace LongoMatch.Core.Common
 			UpdateMapping (KeyAction.DeleteEvent, "<Shift_L>+d");
 			UpdateMapping (KeyAction.DrawFrame, "<Shift_L>+f");
 			UpdateMapping (KeyAction.EditEvent, "<Shift_L>+e");
-			UpdateMapping (KeyAction.FitTimeline, "<Shift_L>+t");
 			UpdateMapping (KeyAction.FrameDown, "Left");
 			UpdateMapping (KeyAction.FrameUp, "Right");
 			UpdateMapping (KeyAction.JumpUp, "<Shift_L>+Right");
 			UpdateMapping (KeyAction.JumpDown, "<Shift_L>+Left");
 			UpdateMapping (KeyAction.CloseEvent, "<Shift_L>+a");
-			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+q");
-			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+w");
 			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+n");
 			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+b");
 			UpdateMapping (KeyAction.PauseClock, "<Shift_L>+p");
-			UpdateMapping (KeyAction.ShowDashboard, "<Shift_L>+z");
-			UpdateMapping (KeyAction.ShowTimeline, "<Shift_L>+x");
-			UpdateMapping (KeyAction.ShowPositions, "<Shift_L>+c");
 			UpdateMapping (KeyAction.SpeedDown, "Down");
 			UpdateMapping (KeyAction.SpeedUp, "Up");
 			UpdateMapping (KeyAction.StartPeriod, "<Shift_L>+i");
 			UpdateMapping (KeyAction.StopPeriod, "<Shift_L>+o");
 			UpdateMapping (KeyAction.Substitution, "<Shift_L>+s");
 			UpdateMapping (KeyAction.TogglePlay, "space");
-			UpdateMapping (KeyAction.ZoomIn, "plus");
-			UpdateMapping (KeyAction.ZoomOut, "minus");
 			UpdateMapping (KeyAction.Next, "<Alt_L>+Right");
 			UpdateMapping (KeyAction.Prev, "<Alt_L>+Left");
 			UpdateMapping (KeyAction.SpeedUpper, "<Shift_L>+<Alt_L>+Up");
