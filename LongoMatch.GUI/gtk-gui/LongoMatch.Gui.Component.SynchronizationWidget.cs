@@ -92,7 +92,6 @@ namespace LongoMatch.Gui.Component
 			this.main_cam_playerbin = new global::VAS.UI.VideoPlayerView ();
 			this.main_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.main_cam_playerbin.Name = "main_cam_playerbin";
-			this.main_cam_playerbin.TogglePlayOnClick = true;
 			this.main_cam_vbox.Add (this.main_cam_playerbin);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.main_cam_vbox [this.main_cam_playerbin]));
 			w1.Position = 0;
@@ -142,7 +141,6 @@ namespace LongoMatch.Gui.Component
 			this.sec_cam_playerbin = new global::VAS.UI.VideoPlayerView ();
 			this.sec_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.sec_cam_playerbin.Name = "sec_cam_playerbin";
-			this.sec_cam_playerbin.TogglePlayOnClick = false;
 			this.sec_cam_vbox.Add (this.sec_cam_playerbin);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.sec_cam_vbox [this.sec_cam_playerbin]));
 			w8.Position = 0;
