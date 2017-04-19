@@ -50,6 +50,7 @@ namespace LongoMatch.Services.Controller
 			ConfirmSaveText = Catalog.GetString ("Do you want to save the current team");
 			ImportText = Catalog.GetString ("Import team");
 			NameText = Catalog.GetString ("Team name:");
+			NotEditableText = Catalog.GetString ("System teams can’t be edited, do you want to create a copy?");
 		}
 
 		protected override bool SaveValidations (Team model)
