@@ -34,10 +34,10 @@ namespace LongoMatch.Services.States
 			}
 		}
 
-		public override Task<bool> ShowState ()
+		public override Task<bool> HideState ()
 		{
 			ViewModel.SaveCommand.Execute (false);
-			return base.ShowState ();
+			return base.HideState ();
 		}
 
 		protected override void CreateViewModel (dynamic data)
