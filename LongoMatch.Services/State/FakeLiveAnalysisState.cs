@@ -53,7 +53,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new LMProjectAnalysisVM ();
-			ViewModel.Project = data.Project;
+			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.CaptureSettings = data.CaptureSettings;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			// FIXME: use this hack until the capturer uses a controller

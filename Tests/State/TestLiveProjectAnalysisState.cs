@@ -1,5 +1,10 @@
 ﻿//
-//  Copyright (C) 2017 FLUENDO.S.A.
+//  Copyright (C) 2017 FLUENDO S.A.
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
 //
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -9,6 +14,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
 using System;
 using LongoMatch;
 using LongoMatch.Core.Store;
@@ -23,7 +29,7 @@ using VAS.Core.Interfaces.Multimedia;
 
 namespace Tests.State
 {
-	public class TestProjectAnalysisState
+	public class TestLiveProjectAnalysisState
 	{
 		Mock<IMultimediaToolkit> mtkMock;
 
@@ -41,38 +47,17 @@ namespace Tests.State
 		}
 
 		[Test]
-		public void LoadState_ProjectFileWithNullDuration_DiscoverFileOk ()
-		{
-			// Arrange
-			ProjectAnalysisState state = new ProjectAnalysisState ();
-			LMProject project = Utils.CreateProject ();
-			LMProjectVM projectVM = new LMProjectVM { Model = project };
-			LMProjectAnalysisVM analysisVM = new LMProjectAnalysisVM { Project = projectVM };
-
-			Assert.Greater (project.Description.FileSet.Count, 0);
-			foreach (var file in project.Description.FileSet) {
-				file.Duration = null;
-			}
-
-			state.Panel = new Mock<IPanel> ().Object;
-
-			// Act
-			state.LoadState (analysisVM);
-
-			// Assert
-			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
-		}
-
-		[Test]
 		public void LoadState_ViewModelFromPropDisposed_AssignOnlyModel ()
 		{
 			// Arrange
-			ProjectAnalysisState state = new ProjectAnalysisState ();
+			LiveProjectAnalysisState state = new LiveProjectAnalysisState ();
 			LMProject project = Utils.CreateProject ();
 			LMProjectVM projectVM = new LMProjectVM { Model = project };
 			LMProjectAnalysisVM analysisVM = new LMProjectAnalysisVM { Project = projectVM };
 
-			state.Panel = new Mock<IPanel> ().Object;
+			var panel = new Mock<Utils.IDummyCapturerPanel> ();
+			panel.Setup (p => p.Capturer).Returns (new Mock<ICapturerBin> ().Object);
+			state.Panel = panel.Object;
 
 			// Act
 			state.LoadState (analysisVM);
