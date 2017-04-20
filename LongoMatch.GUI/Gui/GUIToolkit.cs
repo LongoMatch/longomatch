@@ -32,6 +32,7 @@ using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing;
 using VAS.UI;
+using VAS.UI.Multimedia;
 using VAS.Video.Utils;
 
 namespace LongoMatch.Gui
@@ -62,6 +63,7 @@ namespace LongoMatch.Gui
 			Scanner.ScanViews (App.Current.ViewLocator);
 			DrawingInit.ScanViews ();
 			LMDrawingInit.ScanViews ();
+			VASUIMultimediaInit.ScanViews ();
 		}
 
 		public override IMainController MainController {

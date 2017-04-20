@@ -76,6 +76,7 @@ namespace LongoMatch.Services.State
 			ViewModel = new LMProjectAnalysisVM ();
 			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
+			ViewModel.VideoPlayer.ViewMode = PlayerViewOperationMode.Analysis;
 		}
 
 		protected override void CreateControllers (dynamic data)
