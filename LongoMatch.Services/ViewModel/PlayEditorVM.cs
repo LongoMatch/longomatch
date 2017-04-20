@@ -26,7 +26,23 @@ namespace LongoMatch.Services.ViewModel
 	/// </summary>
 	public class PlayEditorVM : ViewModelBase<LMProject>
 	{
-		
+
+		public PlayEditorVM ()
+		{
+			TeamTagger = new LMTeamTaggerVM ();
+		}
+
+		public override LMProject Model {
+			get {
+				return base.Model;
+			}
+			set {
+				base.Model = value;
+				if (value != null) {
+					ResetTeamTagger (value);
+				}
+			}
+		}
 		/// <summary>
 		/// Gets or sets the timeline event.
 		/// </summary>
@@ -38,5 +54,20 @@ namespace LongoMatch.Services.ViewModel
 		/// </summary>
 		/// <value>The edition settings.</value>
 		public PlayEventEditionSettings EditionSettings { get; set; }
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
+			get;
+		}
+
+		void ResetTeamTagger (LMProject project)
+		{
+			TeamTagger.AwayTeam.Model = project.VisitorTeamTemplate;
+			TeamTagger.HomeTeam.Model = project.LocalTeamTemplate;
+			TeamTagger.Background = project.Dashboard?.FieldBackground;
+		}
 	}
 }

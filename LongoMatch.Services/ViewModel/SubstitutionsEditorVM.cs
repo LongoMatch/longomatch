@@ -20,12 +20,44 @@ using VAS.Core.MVVMC;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class SubstitutionsEditorVM : ViewModelBase<LMProject> 
+	public class SubstitutionsEditorVM : ViewModelBase<LMProject>
 	{
+		public SubstitutionsEditorVM ()
+		{
+			TeamTagger = new LMTeamTaggerVM ();
+		}
+
+		public override LMProject Model {
+			get {
+				return base.Model;
+			}
+			set {
+				base.Model = value;
+				if (value != null) {
+					ResetTeamTagger (value);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Gets or sets the timeline event.
 		/// </summary>
 		/// <value>The timeline event.</value>
 		public LMTimelineEvent Play { get; set; }
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
+			get;
+		}
+
+		void ResetTeamTagger (LMProject project)
+		{
+			TeamTagger.AwayTeam.Model = project.VisitorTeamTemplate;
+			TeamTagger.HomeTeam.Model = project.LocalTeamTemplate;
+			TeamTagger.Background = project.Dashboard?.FieldBackground;
+		}
 	}
 }

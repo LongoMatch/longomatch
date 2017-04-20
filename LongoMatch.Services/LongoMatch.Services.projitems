@@ -53,6 +53,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\EventEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMCameraSynchronizationController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewProjectPanelVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

@@ -38,6 +38,17 @@ namespace LongoMatch.Services.ViewModel
 			DeleteCommand.Icon = Resources.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
+			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.Background = App.Current.HHalfFieldBackground;
+			TeamTagger.HomeTeam = LoadedTemplate as LMTeamVM;
+		}
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
+			get;
 		}
 
 		protected override TeamVM CreateInstance (Team model)
