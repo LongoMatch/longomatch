@@ -69,12 +69,6 @@ namespace LongoMatch.Drawing.Widgets
 			base.DisposeManagedResources ();
 		}
 
-		public void LoadTeams (LMTeam homeTeam, LMTeam awayTeam, Image background)
-		{
-			tagger.LoadTeams (homeTeam, awayTeam, background);
-			widget?.ReDraw ();
-		}
-
 		public void Reload ()
 		{
 			tagger.Reload ();

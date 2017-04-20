@@ -99,7 +99,6 @@ namespace LongoMatch.Gui.Component
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
-				teamtagger.LoadTeams (template, null, App.Current.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
 				colorbutton1.Color = Misc.ToGdkColor (value.Colors [0]);
@@ -120,10 +119,14 @@ namespace LongoMatch.Gui.Component
 				return viewModel;
 			}
 			set {
+				if (viewModel != null) {
+					viewModel.HomeTeam.PropertyChanged -= HandleTeamPropertyChanged;
+				}
 				viewModel = value;
 				if (viewModel != null) {
 					//FIXME: vmartos
 					teamtagger.ViewModel = viewModel;
+					viewModel.HomeTeam.PropertyChanged += HandleTeamPropertyChanged;
 				}
 			}
 		}
@@ -410,6 +413,14 @@ namespace LongoMatch.Gui.Component
 				template.Colors [1] = Misc.ToLgmColor (colorbutton2.Color);
 			}
 			Edited = true;
+		}
+
+		void HandleTeamPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Model),
+											  sender, ViewModel.HomeTeam)) {
+				Team = ViewModel.HomeTeam.Model as LMTeam;
+			}
 		}
 	}
 }

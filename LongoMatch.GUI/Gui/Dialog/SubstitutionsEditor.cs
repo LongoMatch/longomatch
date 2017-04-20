@@ -199,6 +199,7 @@ namespace LongoMatch.Gui.Dialog
 					Formation = project.LocalTeamTemplate.Formation,
 				};
 				homeTeam.List.Replace (homeTeamPlayers);
+				ViewModel.TeamTagger.HomeTeam.Model = awayTeam;
 			}
 
 			if (awayFieldPlayers != null) {
@@ -210,9 +211,8 @@ namespace LongoMatch.Gui.Dialog
 					Formation = project.VisitorTeamTemplate.Formation,
 				};
 				awayTeam.List.Replace (awayTeamPlayers);
+				ViewModel.TeamTagger.AwayTeam.Model = awayTeam;
 			}
-
-			tagger.LoadTeams (homeTeam, awayTeam, project.Dashboard.FieldBackground);
 		}
 
 		void SwitchPlayer (LMPlayer inPlayer, LMPlayer outPlayer)

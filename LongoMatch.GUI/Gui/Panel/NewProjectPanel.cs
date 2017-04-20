@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Hotkeys;
@@ -45,7 +46,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (NewProjectState.NAME)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel<LMProjectVM>
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<NewProjectPanelVM>
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
@@ -63,8 +64,8 @@ namespace LongoMatch.Gui.Panel
 		LMDashboard analysisTemplate;
 		LMTeamTaggerView teamtagger;
 		SizeGroup sg;
-		LMProjectVM viewModel;
 		CameraSynchronizationEditorState cameraSynchronizationState;
+		NewProjectPanelVM viewModel;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -109,7 +110,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public LMProjectVM ViewModel {
+		public NewProjectPanelVM ViewModel {
 			set {
 				viewModel = value;
 				project = viewModel.Model;
@@ -126,6 +127,8 @@ namespace LongoMatch.Gui.Panel
 					FillProjectDetails ();
 				}
 				UpdateTitle ();
+				//FIXME: vmartos
+				teamtagger.ViewModel = viewModel.TeamTagger;
 			}
 			get {
 				return viewModel;
@@ -149,7 +152,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (LMProjectVM)viewModel;
+			ViewModel = (NewProjectPanelVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -398,6 +401,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					homecolor1button.Click ();
 				}
+				viewModel.TeamTagger.HomeTeam.Model = hometemplate;
 			} else {
 				awaytemplate = template;
 				awaytacticsentry.Text = awaytemplate.FormationStr;
@@ -410,9 +414,8 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					awaycolor1button.Click ();
 				}
+				viewModel.TeamTagger.AwayTeam.Model = awaytemplate;
 			}
-			teamtagger.LoadTeams (hometemplate, awaytemplate,
-				analysisTemplate.FieldBackground);
 		}
 
 		void UpdateTitle ()
@@ -567,8 +570,8 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 			tagscombobox.GetActiveIter (out iter);
 			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as LMDashboard;
-			if (teamtagger != null) {
-				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
+			if (ViewModel != null) {
+				ViewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 			}
 		}
 

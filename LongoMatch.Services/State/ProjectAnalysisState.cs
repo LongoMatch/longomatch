@@ -56,7 +56,7 @@ namespace LongoMatch.Services.State
 				/* If it's a fake live project prompt for a video file and
 			 	* create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				await App.Current.StateController.MoveTo (NewProjectState.NAME, projectVM);
+				await App.Current.StateController.MoveTo (NewProjectState.NAME, projectVM.Model);
 				return false;
 			}
 

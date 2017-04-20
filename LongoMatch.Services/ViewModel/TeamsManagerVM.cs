@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using VAS.Core;
@@ -40,7 +41,7 @@ namespace LongoMatch.Services.ViewModel
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
 			TeamTagger.Background = App.Current.HHalfFieldBackground;
-			TeamTagger.HomeTeam = LoadedTemplate as LMTeamVM;
+			LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
 		}
 
 		/// <summary>
@@ -54,6 +55,13 @@ namespace LongoMatch.Services.ViewModel
 		protected override TeamVM CreateInstance (Team model)
 		{
 			return new LMTeamVM { Model = (LMTeam)model };
+		}
+
+		void HandleLoadedTemplateChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (LoadedTemplate.NeedsSync (e.PropertyName, nameof (LoadedTemplate.Model), sender, LoadedTemplate)) {
+				TeamTagger.HomeTeam.Model = LoadedTemplate.Model;
+			}
 		}
 	}
 }

@@ -153,7 +153,7 @@ namespace LongoMatch.Gui.Panel
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					UpdateLoadedTemplate ();
+					Select (ViewModel.LoadedTemplate);
 					//FIXME: vmartos
 					teamtemplateeditor1.ViewModel = viewModel.TeamTagger;
 				}
@@ -219,14 +219,6 @@ namespace LongoMatch.Gui.Panel
 			if (GetIterFromTeam (teamVM, out iter)) {
 				teamseditortreeview.Selection.SelectIter (iter);
 			}
-		}
-
-		void UpdateLoadedTemplate ()
-		{
-			// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
-			teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model as LMTeam;
-			teamtemplateeditor1.Sensitive = true;
-			Select (ViewModel.LoadedTemplate);
 		}
 
 		bool GetIterFromTeam (TeamVM team, out TreeIter iter)
@@ -304,7 +296,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Model") {
-				UpdateLoadedTemplate ();
+				Select (ViewModel.LoadedTemplate);
 			}
 		}
 

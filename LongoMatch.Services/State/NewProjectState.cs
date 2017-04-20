@@ -16,14 +16,15 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Threading.Tasks;
-using LongoMatch.Core.ViewModel;
+using LongoMatch.Core.Store;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
-	public class NewProjectState : ScreenState<IViewModel>
+	public class NewProjectState : ScreenState<NewProjectPanelVM>
 	{
 		public const string NAME = "NewProject";
 
@@ -35,10 +36,10 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			if (data == null) {
-				data = new LMProjectVM ();
+			ViewModel = new NewProjectPanelVM ();
+			if (data != null) {
+				ViewModel.Model = data;
 			}
-			ViewModel = data;
 		}
 
 		public override async Task<bool> LoadState (dynamic data)

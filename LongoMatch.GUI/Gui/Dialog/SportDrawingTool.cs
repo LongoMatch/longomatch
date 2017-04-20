@@ -47,8 +47,6 @@ namespace LongoMatch.Gui.Dialog
 				LMTeamTaggerView tagger = new LMTeamTaggerView (new WidgetWrapper (da));
 				tagger.ViewModel = GetTeamTaggerVM ();
 				tagger.ShowSubstitutionButtons = false;
-				tagger.LoadTeams ((ViewModel.Project as LMProject).LocalTeamTemplate, (ViewModel.Project as LMProject).VisitorTeamTemplate,
-								  (ViewModel.Project as LMProject).Dashboard.FieldBackground);
 				tagger.PlayersSelectionChangedEvent += players => {
 					if (players.Count == 1) {
 						Player p = players [0];

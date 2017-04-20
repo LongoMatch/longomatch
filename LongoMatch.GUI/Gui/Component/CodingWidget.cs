@@ -197,9 +197,6 @@ namespace LongoMatch.Gui.Component
 			teamtagger.ViewModel = ViewModel.TeamTagger;
 			// FIXME: team tagger is not ported yet to MVVM
 			teamtagger.Project = ViewModel.Project.Model;
-			teamtagger.LoadTeams (ViewModel.Project.Model.LocalTeamTemplate,
-								  ViewModel.Project.Model.VisitorTeamTemplate,
-								  ViewModel.Project.Model.Dashboard.FieldBackground);
 			teamtagger.CurrentTime = new Time (0);
 
 			eventslistwidget.Visible = ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject;

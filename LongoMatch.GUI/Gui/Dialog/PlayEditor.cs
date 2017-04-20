@@ -91,10 +91,6 @@ namespace LongoMatch.Gui.Dialog
 			}
 			set {
 				editorVM = value;
-				if (editorVM != null) {
-					//FIXME: vmartos
-					teamtagger.ViewModel = editorVM.TeamTagger;
-				}
 			}
 		}
 
@@ -125,8 +121,8 @@ namespace LongoMatch.Gui.Dialog
 			}
 			if (editorVM.EditionSettings.EditPlayers) {
 				teamtagger.Project = editorVM.Model;
-				teamtagger.LoadTeams (editorVM.Model.LocalTeamTemplate, editorVM.Model.VisitorTeamTemplate,
-					editorVM.Model.Dashboard.FieldBackground);
+				//FIXME: vmartos
+				teamtagger.ViewModel = editorVM.TeamTagger;
 				/* Force lineup update */
 				teamtagger.CurrentTime = editorVM.Play.EventTime;
 				teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),

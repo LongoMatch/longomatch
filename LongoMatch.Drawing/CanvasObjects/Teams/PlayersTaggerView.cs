@@ -219,7 +219,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return viewModel;
 			}
 			set {
+				if (viewModel != null) {
+					viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
+				}
 				viewModel = value;
+				if (viewModel != null) {
+					LoadTeams (viewModel.HomeTeam.Model as LMTeam, viewModel.AwayTeam?.Model as LMTeam, viewModel.Background);
+					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+				}
 			}
 		}
 
@@ -832,6 +839,24 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public void Move (Selection s, Point p, Point start)
 		{
 			throw new NotImplementedException ("Unsupported move for PlayersTaggerObject:  " + s.Position);
+		}
+
+		void HandleViewModelPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
+				ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
+				ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Background), sender, ViewModel)) {
+				LoadTeams (ViewModel.HomeTeam.Model as LMTeam, ViewModel.AwayTeam.Model as LMTeam, ViewModel.Background);
+			}
+			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Model),
+											  sender, ViewModel.HomeTeam)) {
+				LoadTeams (ViewModel.HomeTeam.Model as LMTeam, ViewModel.AwayTeam.Model as LMTeam, ViewModel.Background);
+			}
+			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Model),
+											  sender, ViewModel.AwayTeam)) {
+				LoadTeams (ViewModel.HomeTeam.Model as LMTeam, ViewModel.AwayTeam.Model as LMTeam, ViewModel.Background);
+			}
+			ReDraw ();
 		}
 	}
 }
