@@ -2,7 +2,7 @@
 LongoMatch.Core/Catalog.cs
 LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Hotkeys.cs
-LongoMatch.Core/Store/EventTypeLongoMatch.cs
+LongoMatch.Core/Store/SubstitutionEventType.cs
 LongoMatch.Core/Store/ProjectLongoMatch.cs
 LongoMatch.Core/Store/Templates/DashboardLongoMatch.cs
 LongoMatch.Core/Store/Templates/SportsTeam.cs
