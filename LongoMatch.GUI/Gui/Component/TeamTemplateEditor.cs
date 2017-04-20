@@ -23,8 +23,10 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using VAS.UI.UI.Component;
@@ -37,13 +39,14 @@ using Misc = VAS.UI.Helpers.Misc;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class TeamTemplateEditor : Gtk.Bin
+	public partial class TeamTemplateEditor : Gtk.Bin, IView<LMTeamTaggerVM>
 	{
 		public event EventHandler TemplateSaved;
 
 		const int SHIELD_SIZE = 70;
 		const int PLAYER_SIZE = 70;
 
+		LMTeamTaggerVM viewModel;
 		LMPlayer loadedPlayer;
 		LMTeam template;
 		bool edited, ignoreChanges;
@@ -110,6 +113,24 @@ namespace LongoMatch.Gui.Component
 			set {
 				hbuttonbox2.Visible = value;
 			}
+		}
+
+		public LMTeamTaggerVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				if (viewModel != null) {
+					//FIXME: vmartos
+					teamtagger.ViewModel = viewModel;
+				}
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
 		public void AddPlayer ()
@@ -390,6 +411,5 @@ namespace LongoMatch.Gui.Component
 			}
 			Edited = true;
 		}
-
 	}
 }

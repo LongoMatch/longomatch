@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (TeamsManagerState.NAME)]
-	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel
+	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel<TeamsManagerVM>
 	{
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
@@ -154,6 +154,8 @@ namespace LongoMatch.Gui.Panel
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
 					UpdateLoadedTemplate ();
+					//FIXME: vmartos
+					teamtemplateeditor1.ViewModel = viewModel.TeamTagger;
 				}
 			}
 		}

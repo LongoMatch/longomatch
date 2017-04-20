@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	// Fixme: Change the view to not use the model, use the VM provided
 	[ViewAttribute (PlayEditorState.NAME)]
-	public partial class PlayEditor : Gtk.Dialog, IPanel
+	public partial class PlayEditor : Gtk.Dialog, IPanel<PlayEditorVM>
 	{
 		const int TAGS_PER_ROW = 5;
 		LMTeamTaggerView teamtagger;
@@ -83,6 +83,19 @@ namespace LongoMatch.Gui.Dialog
 				Destroy ();
 			}
 			Disposed = true;
+		}
+
+		public PlayEditorVM ViewModel {
+			get {
+				return editorVM;
+			}
+			set {
+				editorVM = value;
+				if (editorVM != null) {
+					//FIXME: vmartos
+					teamtagger.ViewModel = editorVM.TeamTagger;
+				}
+			}
 		}
 
 		protected bool Disposed { get; private set; } = false;
@@ -131,7 +144,7 @@ namespace LongoMatch.Gui.Dialog
 
 		public void SetViewModel (object viewModel)
 		{
-			editorVM = ((PlayEditorVM)viewModel as dynamic);
+			ViewModel = ((PlayEditorVM)viewModel as dynamic);
 		}
 
 		public KeyContext GetKeyContext ()

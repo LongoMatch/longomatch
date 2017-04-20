@@ -20,6 +20,7 @@ using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
@@ -44,6 +45,7 @@ namespace LongoMatch.Gui.Dialog
 
 				DrawingArea da = new DrawingArea ();
 				LMTeamTaggerView tagger = new LMTeamTaggerView (new WidgetWrapper (da));
+				tagger.ViewModel = GetTeamTaggerVM ();
 				tagger.ShowSubstitutionButtons = false;
 				tagger.LoadTeams ((ViewModel.Project as LMProject).LocalTeamTemplate, (ViewModel.Project as LMProject).VisitorTeamTemplate,
 								  (ViewModel.Project as LMProject).Dashboard.FieldBackground);
@@ -63,6 +65,20 @@ namespace LongoMatch.Gui.Dialog
 				text.Value = null;
 			}
 			playerDialog.Hide ();
+		}
+
+		LMTeamTaggerVM GetTeamTaggerVM ()
+		{
+			//FIXME: vmartos
+			var lmProject = ViewModel.Project as LMProject;
+			if (lmProject != null) {
+				LMTeamTaggerVM teamTagger;
+				teamTagger = new LMTeamTaggerVM ();
+				teamTagger.AwayTeam.Model = lmProject.VisitorTeamTemplate;
+				teamTagger.HomeTeam.Model = lmProject.LocalTeamTemplate;
+				teamTagger.Background = lmProject.Dashboard?.FieldBackground;
+			}
+			return null;
 		}
 	}
 }

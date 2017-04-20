@@ -193,6 +193,8 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Visible = true;
 			ViewModel.Project.Dashboard.Mode = DashboardMode.Code;
 			buttonswidget.ViewModel = ViewModel.Project.Dashboard;
+			//FIXME: vmartos
+			teamtagger.ViewModel = ViewModel.TeamTagger;
 			// FIXME: team tagger is not ported yet to MVVM
 			teamtagger.Project = ViewModel.Project.Model;
 			teamtagger.LoadTeams (ViewModel.Project.Model.LocalTeamTemplate,

@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
@@ -38,7 +39,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	// FIXME: Change the view to not use the model, use the VM provided
 	[ViewAttribute (SubstitutionsEditorState.NAME)]
-	public partial class SubstitutionsEditor : Gtk.Dialog, IPanel
+	public partial class SubstitutionsEditor : Gtk.Dialog, IPanel<SubstitutionsEditorVM>
 	{
 		LMTeamTaggerView tagger;
 		SelectionCanvas incanvas, outcanvas;
@@ -91,6 +92,19 @@ namespace LongoMatch.Gui.Dialog
 
 		protected bool Disposed { get; private set; } = false;
 
+		public SubstitutionsEditorVM ViewModel {
+			get {
+				return editorVM;
+			}
+			set {
+				editorVM = value;
+				if (editorVM != null) {
+					//FIXME: vmartos
+					tagger.ViewModel = editorVM.TeamTagger;
+				}
+			}
+		}
+
 		public void OnLoad ()
 		{
 			if (editorVM.Play is LineupEvent) {
@@ -106,7 +120,7 @@ namespace LongoMatch.Gui.Dialog
 
 		public void SetViewModel (object viewModel)
 		{
-			editorVM = ((SubstitutionsEditorVM)viewModel as dynamic);
+			ViewModel = ((SubstitutionsEditorVM)viewModel as dynamic);
 		}
 
 		public KeyContext GetKeyContext ()
