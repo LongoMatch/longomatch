@@ -11,3 +11,9 @@ LM_DEPS = \
 	$(top_builddir)/bin/OxyPlot.dll \
 	$(top_builddir)/bin/OxyPlot.GtkSharp.dll \
 	$(top_builddir)/bin/Mono.Addins.dll
+
+if OSTYPE_OS_X
+LM_DEPS += \
+	$(top_builddir)/bin/Sparkle.dll \
+	$(top_builddir)/bin/Xamarin.Mac.dll
+endif
