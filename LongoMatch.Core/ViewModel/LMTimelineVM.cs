@@ -27,8 +27,13 @@ namespace LongoMatch.Core.ViewModel
 			};
 
 			EventTypesTimeline.ViewModels.CollectionChanged += (sender, e) => UpdateEventTypesPredicates ();
-			Filters.Add (CategoriesPredicate);
-			Filters.Add (TeamsPredicate);
+
+			// FIXME: Filters are not working, keep this until user story LON-993 is done
+			// otherwise openning a project hide incorrectly some events
+			Filters.Add (new Predicate { Name = "EnableAll", Expression = ev => true });
+			//Filters.Add (CategoriesPredicate);
+			//Filters.Add (TeamsPredicate);
+
 			Filters.IgnoreEvents = false;
 		}
 
@@ -114,10 +119,6 @@ namespace LongoMatch.Core.ViewModel
 			}
 			Filters.IgnoreEvents = false;
 			RaisePropertyChanged ("Collection", this);
-		}
-
-		void UpdatePeriodsPredicates ()
-		{
 		}
 	}
 }
