@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
@@ -23,6 +24,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
@@ -31,7 +33,7 @@ using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class LMTeamTaggerView : SelectionCanvas
+	public class LMTeamTaggerView : SelectionCanvas, ICanvasView<LMTeamTaggerVM>
 	{
 
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
@@ -39,6 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
+		LMTeamTaggerVM viewModel;
 		PlayersTaggerView tagger;
 
 		public LMTeamTaggerView (IWidget widget) : base (widget)
@@ -133,6 +136,22 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				tagger.BackgroundColor = value;
 			}
+		}
+
+		public LMTeamTaggerVM ViewModel {
+			get {
+				return viewModel;
+			}
+
+			set {
+				viewModel = value;
+				tagger.ViewModel = value;
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
 		public void ResetSelection ()

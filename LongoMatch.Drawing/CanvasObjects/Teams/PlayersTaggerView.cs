@@ -23,6 +23,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -33,7 +34,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject
+	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
 	{
 
 		/* This object can be used like single object filling a canvas or embedded
@@ -44,6 +45,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
+
+		LMTeamTaggerVM viewModel;
 
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
@@ -209,6 +212,20 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 				return teams;
 			}
+		}
+
+		public LMTeamTaggerVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
 		public void Reload ()
