@@ -47,14 +47,11 @@ namespace LongoMatch.Drawing.Widgets
 		public LMTeamTaggerView (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
-			tagger = new PlayersTaggerView {
-				SelectionMode = MultiSelectionMode.Single,
-			};
+			tagger = new PlayersTaggerView ();
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
 			BackgroundColor = App.Current.Style.PaletteBackground;
-			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
 		}
@@ -81,39 +78,9 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public bool Compact {
-			set {
-				tagger.Compact = value;
-			}
-		}
-
 		public Time CurrentTime {
 			set {
 				tagger.CurrentTime = value;
-			}
-		}
-
-		public bool SubstitutionMode {
-			set {
-				tagger.SubstitutionMode = value;
-			}
-		}
-
-		public bool ShowSubstitutionButtons {
-			set {
-				tagger.ShowSubsitutionButtons = value;
-			}
-		}
-
-		public bool ShowTeamsButtons {
-			set {
-				tagger.ShowTeamsButtons = value;
-			}
-		}
-
-		public new MultiSelectionMode SelectionMode {
-			set {
-				tagger.SelectionMode = value;
 			}
 		}
 
@@ -148,25 +115,25 @@ namespace LongoMatch.Drawing.Widgets
 			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
-		public void ResetSelection ()
-		{
-			tagger.ResetSelection ();
-		}
+		//public void ResetSelection ()
+		//{
+		//	tagger.ResetSelection ();
+		//}
 
-		public void Select (TeamType team)
-		{
-			tagger.Select (team);
-		}
+		//public void Select (TeamType team)
+		//{
+		//	tagger.Select (team);
+		//}
 
-		public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
-		{
-			tagger.Select (players, teams);
-		}
+		//public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
+		//{
+		//	tagger.Select (players, teams);
+		//}
 
-		public void Select (LMPlayer p)
-		{
-			tagger.Select (p);
-		}
+		//public void Select (LMPlayer p)
+		//{
+		//	tagger.Select (p);
+		//}
 
 		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
 		{
@@ -180,7 +147,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.Player };
+					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.Model };
 				}
 			} else {
 				players = tagger.SelectedPlayers;

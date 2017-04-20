@@ -15,6 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
 
@@ -26,10 +30,18 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMTeamVM : TeamVM
 	{
-
 		public LMTeamVM ()
 		{
 			SubViewModel = new LMPlayersCollectionVM ();
+		}
+
+		public new LMTeam Model {
+			get {
+				return base.Model as LMTeam;
+			}
+			set {
+				base.Model = value;
+			}
 		}
 
 		/// <summary>
@@ -43,6 +55,90 @@ namespace LongoMatch.Core.ViewModel
 			set {
 				Model.Shield = value;
 			}
+		}
+
+		/// <summary>
+		/// Gets or sets the formation.
+		/// </summary>
+		/// <value>The formation.</value>
+		public int [] Formation {
+			get {
+				return Model.Formation;
+			}
+			set {
+				Model.Formation = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Core.ViewModel.LMTeamVM"/> template is in editor mode.
+		/// </summary>
+		/// <value><c>true</c> if template editor mode; otherwise, <c>false</c>.</value>
+		public bool TemplateEditorMode {
+			set;
+			get;
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Core.ViewModel.LMTeamVM"/> is tagged.
+		/// </summary>
+		/// <value><c>true</c> if tagged; otherwise, <c>false</c>.</value>
+		public bool Tagged {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets the playing players list.
+		/// </summary>
+		/// <value>The playing players list.</value>
+		public IEnumerable<LMPlayerVM> PlayingPlayersList {
+			//get {
+			//	if (TemplateEditorMode) {
+			//		return SubViewModel.ViewModels.OfType<LMPlayerVM> ();
+			//	} else {
+			//		return SubViewModel.ViewModels.OfType<LMPlayerVM> ().Where (p => p.Playing);
+			//	}
+			//}
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets the starting players list.
+		/// </summary>
+		/// <value>The starting players list.</value>
+		public IEnumerable<LMPlayerVM> StartingPlayersList {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets the bench players list.
+		/// </summary>
+		/// <value>The bench players list.</value>
+		public IEnumerable<LMPlayerVM> BenchPlayersList {
+			get;
+			set;
+		}
+
+		protected override void SyncLoadedModel ()
+		{
+			base.SyncLoadedModel ();
+			UpdatePlayerList ();
+		}
+
+		void UpdatePlayerList ()
+		{
+			var playersList = SubViewModel.ViewModels.OfType<LMPlayerVM> ();
+
+			int count = Math.Min (Model.StartingPlayers, playersList.Count ());
+			StartingPlayersList = playersList.Take (count);
+			PlayingPlayersList = StartingPlayersList;
+			foreach (var player in PlayingPlayersList) {
+				player.Playing = true;
+			}
+			BenchPlayersList = playersList.Except (PlayingPlayersList);
 		}
 	}
 }

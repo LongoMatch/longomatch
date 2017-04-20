@@ -59,12 +59,8 @@ namespace LongoMatch.Gui.Dialog
 			};
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea3));
-			teamtagger.Compact = true;
-			teamtagger.ShowSubstitutionButtons = false;
-			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
-			teamtagger.ShowTeamsButtons = true;
 			nameentry.Changed += HandleChanged;
 		}
 
@@ -125,8 +121,9 @@ namespace LongoMatch.Gui.Dialog
 				teamtagger.ViewModel = editorVM.TeamTagger;
 				/* Force lineup update */
 				teamtagger.CurrentTime = editorVM.Play.EventTime;
-				teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
-					editorVM.Play.Teams.Cast<LMTeam> ().ToList ());
+				//FIXME: we should select through the VM
+				//teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
+				//editorVM.Play.Teams.Cast<LMTeam> ().ToList ());
 			}
 
 			if (editorVM.EditionSettings.EditTags) {

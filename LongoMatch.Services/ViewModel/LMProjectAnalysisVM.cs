@@ -1,8 +1,10 @@
 ﻿//
 //  Copyright (C) 2016 Fluendo S.A.
+using System.ComponentModel;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.Interfaces;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
@@ -12,11 +14,14 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer
+	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer, ILMTeamTaggerVM
 	{
 		public LMProjectAnalysisVM ()
 		{
 			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.Compact = true;
+			TeamTagger.SelectionMode = MultiSelectionMode.Multiple;
+			TeamTagger.ShowTeamsButtons = true;
 			Project = new LMProjectVM ();
 			SaveCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = Project }),
@@ -26,14 +31,24 @@ namespace LongoMatch.Services.ViewModel
 			CloseCommand = new Command (Close);
 		}
 
+		protected override void DisposeManagedResources ()
+		{
+			base.DisposeManagedResources ();
+			Project.PropertyChanged -= HandleProjectPropertyChanged;
+		}
+
 		public new LMProjectVM Project {
 			get {
 				return base.Project;
 			}
 			set {
+				if (base.Project != null) {
+					base.Project.PropertyChanged -= HandleProjectPropertyChanged;
+				}
 				base.Project = value;
-				if (value != null) {
-					ResetTeamTagger (base.Project);
+				if (base.Project != null) {
+					base.Project.PropertyChanged += HandleProjectPropertyChanged;
+					ResetTeamTagger ();
 				}
 			}
 		}
@@ -70,11 +85,18 @@ namespace LongoMatch.Services.ViewModel
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = Project });
 		}
 
-		void ResetTeamTagger (LMProjectVM project)
+		void ResetTeamTagger ()
 		{
-			TeamTagger.AwayTeam = project.AwayTeam;
-			TeamTagger.HomeTeam = project.HomeTeam;
-			TeamTagger.Background = project.Dashboard.Model != null ? project.Dashboard.FieldBackground : null;
+			TeamTagger.AwayTeam = Project.AwayTeam;
+			TeamTagger.HomeTeam = Project.HomeTeam;
+			TeamTagger.Background = Project.Dashboard.Model != null ? Project.Dashboard.FieldBackground : null;
+		}
+
+		void HandleProjectPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (Project.NeedsSync (e, nameof (Project.Model))) {
+				ResetTeamTagger ();
+			}
 		}
 	}
 }

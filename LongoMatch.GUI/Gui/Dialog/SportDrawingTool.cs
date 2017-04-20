@@ -46,14 +46,13 @@ namespace LongoMatch.Gui.Dialog
 				DrawingArea da = new DrawingArea ();
 				LMTeamTaggerView tagger = new LMTeamTaggerView (new WidgetWrapper (da));
 				tagger.ViewModel = GetTeamTaggerVM ();
-				tagger.ShowSubstitutionButtons = false;
 				tagger.PlayersSelectionChangedEvent += players => {
 					if (players.Count == 1) {
 						Player p = players [0];
 						playerText.Value = p.ToString ();
 						d.Respond (ResponseType.Ok);
 					}
-					tagger.ResetSelection ();
+					//tagger.ResetSelection ();
 				};
 				d.VBox.PackStart (da, true, true, 0);
 				d.ShowAll ();
@@ -70,11 +69,12 @@ namespace LongoMatch.Gui.Dialog
 			//FIXME: vmartos
 			var lmProject = ViewModel.Project as LMProject;
 			if (lmProject != null) {
-				LMTeamTaggerVM teamTagger;
-				teamTagger = new LMTeamTaggerVM ();
+				LMTeamTaggerVM teamTagger = new LMTeamTaggerVM ();
 				teamTagger.AwayTeam.Model = lmProject.VisitorTeamTemplate;
 				teamTagger.HomeTeam.Model = lmProject.LocalTeamTemplate;
 				teamTagger.Background = lmProject.Dashboard?.FieldBackground;
+				teamTagger.ShowSubstitutionButtons = false;
+				return teamTagger;
 			}
 			return null;
 		}

@@ -1,8 +1,8 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 
@@ -14,6 +14,9 @@ namespace LongoMatch.Services.ViewModel
 		{
 			HomeTeam = new LMTeamVM ();
 			AwayTeam = new LMTeamVM ();
+			ShowSubstitutionButtons = true;
+			SelectionMode = MultiSelectionMode.Single;
+			CurrentTime = new Time (0);
 		}
 		/// <summary>
 		/// Gets or sets the home team.
@@ -71,6 +74,15 @@ namespace LongoMatch.Services.ViewModel
 		}
 
 		/// <summary>
+		/// Gets or sets the selection mode.
+		/// </summary>
+		/// <value>The selection mode.</value>
+		public MultiSelectionMode SelectionMode {
+			set;
+			get;
+		}
+
+		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Services.ViewModel.LMTeamTaggerVM"/> show
 		/// substitution buttons.
 		/// </summary>
@@ -88,6 +100,27 @@ namespace LongoMatch.Services.ViewModel
 		public bool ShowTeamsButtons {
 			get;
 			set;
+		}
+
+		public void PlayerClick (LMPlayerVM player, bool clickWithModif)
+		{
+			App.Current.EventsBroker.Publish (new TagPlayerEvent {
+				Player = player,
+				Team = GetTeam (player),
+				HasModifier = clickWithModif,
+				Sender = player
+			});
+		}
+
+		LMTeamVM GetTeam (LMPlayerVM player)
+		{
+			if (HomeTeam.ViewModels.Contains (player)) {
+				return HomeTeam;
+			}
+			if (AwayTeam.ViewModels.Contains (player)) {
+				return AwayTeam;
+			}
+			return null;
 		}
 	}
 }

@@ -18,6 +18,7 @@
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
@@ -30,7 +31,7 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for the teams manager.
 	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerVM
 	{
 		public TeamsManagerVM ()
 		{
@@ -40,6 +41,7 @@ namespace LongoMatch.Services.ViewModel
 			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.AwayTeam = null;
 			TeamTagger.Background = App.Current.HHalfFieldBackground;
 			LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
 		}
@@ -60,7 +62,7 @@ namespace LongoMatch.Services.ViewModel
 		void HandleLoadedTemplateChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			if (LoadedTemplate.NeedsSync (e.PropertyName, nameof (LoadedTemplate.Model), sender, LoadedTemplate)) {
-				TeamTagger.HomeTeam.Model = LoadedTemplate.Model;
+				TeamTagger.HomeTeam.Model = LoadedTemplate.Model as LMTeam;
 			}
 		}
 	}

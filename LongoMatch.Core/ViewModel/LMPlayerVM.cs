@@ -16,10 +16,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The number.</value>
 		public int Number {
 			get {
-				return Player.Number;
+				return Model.Number;
 			}
 			set {
-				Player.Number = value;
+				Model.Number = value;
 			}
 		}
 
@@ -27,9 +27,21 @@ namespace LongoMatch.Core.ViewModel
 		/// Gets the player.
 		/// </summary>
 		/// <value>The player.</value>
-		public LMPlayer Player {
+		public new LMPlayer Model {
 			get {
-				return Model as LMPlayer;
+				return (LMPlayer)base.Model;
+			}
+			set {
+				base.Model = value;
+			}
+		}
+
+		public bool Playing {
+			get {
+				return Model.Playing;
+			}
+			set {
+				Model.Playing = value;
 			}
 		}
 	}

@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -58,7 +59,6 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
-			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			shieldimage.HeightRequest = shieldvbox.WidthRequest = SHIELD_SIZE;
@@ -125,6 +125,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				if (viewModel != null) {
 					//FIXME: vmartos
+					viewModel.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 					teamtagger.ViewModel = viewModel;
 					viewModel.HomeTeam.PropertyChanged += HandleTeamPropertyChanged;
 				}
@@ -139,8 +140,8 @@ namespace LongoMatch.Gui.Component
 		public void AddPlayer ()
 		{
 			LMPlayer p = template.AddDefaultItem (template.List.Count) as LMPlayer;
-			teamtagger.Reload ();
-			teamtagger.Select (p);
+			//FIXME: vmartos Add Selection here?
+			//teamtagger.Select (p);
 			Edited = true;
 		}
 
@@ -420,6 +421,10 @@ namespace LongoMatch.Gui.Component
 			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Model),
 											  sender, ViewModel.HomeTeam)) {
 				Team = ViewModel.HomeTeam.Model as LMTeam;
+			}
+			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, "Selection",
+											  sender, ViewModel.HomeTeam)) {
+				PlayersSelected (ViewModel.HomeTeam.Selection.Select (p => p.Model as LMPlayer).ToList ());
 			}
 		}
 	}

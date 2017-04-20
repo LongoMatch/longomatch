@@ -62,11 +62,8 @@ namespace LongoMatch.Gui.Component
 			notebook.Page = 0;
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (teamsdrawingarea));
-			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
-			teamtagger.Compact = true;
-			teamtagger.ShowTeamsButtons = true;
 
 			teamsdrawingarea.HeightRequest = 200;
 			teamsdrawingarea.WidthRequest = 300;
@@ -140,16 +137,6 @@ namespace LongoMatch.Gui.Component
 		public void ShowZonalTags ()
 		{
 			SelectPage (playspositionviewer1);
-		}
-
-		public void TagPlayer (LMPlayer player)
-		{
-			teamtagger.Select (player);
-		}
-
-		public void TagTeam (TeamType team)
-		{
-			teamtagger.Select (team);
 		}
 
 		public LMProjectAnalysisVM ViewModel {
@@ -305,7 +292,8 @@ namespace LongoMatch.Gui.Component
 			play.Teams.Replace (teamtagger.SelectedTeams);
 			play.Players.Replace (selectedPlayers);
 			play.Tags.Replace (tags);
-			teamtagger.ResetSelection ();
+			//FIXME: vmartos
+			//teamtagger.ResetSelection ();
 			selectedPlayers = null;
 			App.Current.EventsBroker.Publish<NewDashboardEvent> (
 				new NewDashboardEvent {

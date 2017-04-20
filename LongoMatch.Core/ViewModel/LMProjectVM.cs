@@ -187,6 +187,7 @@ namespace LongoMatch.Core.ViewModel
 		{
 			HomeTeam.Model = Model.LocalTeamTemplate;
 			AwayTeam.Model = Model.VisitorTeamTemplate;
+			//Set StartingPlayers
 			base.SyncLoadedModel ();
 			(Timeline as LMTimelineVM).UpdatePredicates ();
 		}

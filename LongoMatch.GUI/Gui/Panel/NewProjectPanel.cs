@@ -129,6 +129,7 @@ namespace LongoMatch.Gui.Panel
 				UpdateTitle ();
 				//FIXME: vmartos
 				teamtagger.ViewModel = viewModel.TeamTagger;
+				teamtagger.ViewModel.Background = analysisTemplate.FieldBackground;
 			}
 			get {
 				return viewModel;
@@ -235,8 +236,6 @@ namespace LongoMatch.Gui.Panel
 			drawingarea.HeightRequest = 200;
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
-			teamtagger.SubstitutionMode = true;
-			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = App.Current.TeamTemplatesProvider.Templates;
 
@@ -305,6 +304,8 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				project.Dashboard = analysisTemplate;
 			}
+
+			ViewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 
 			// In case the project does have a team, do not allow a modification
 			// otherwise set the loaded template
@@ -401,7 +402,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					homecolor1button.Click ();
 				}
-				viewModel.TeamTagger.HomeTeam.Model = hometemplate;
+				ViewModel.TeamTagger.HomeTeam.Model = hometemplate;
 			} else {
 				awaytemplate = template;
 				awaytacticsentry.Text = awaytemplate.FormationStr;
@@ -414,7 +415,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					awaycolor1button.Click ();
 				}
-				viewModel.TeamTagger.AwayTeam.Model = awaytemplate;
+				ViewModel.TeamTagger.AwayTeam.Model = awaytemplate;
 			}
 		}
 

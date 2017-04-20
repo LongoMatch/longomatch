@@ -163,16 +163,6 @@ namespace LongoMatch.Gui.Component
 			toolsMenuLoader.UnloadMenu ();
 		}
 
-		public void TagPlayer (Player player)
-		{
-			codingwidget.TagPlayer ((LMPlayer)player);
-		}
-
-		public void TagTeam (TeamType team)
-		{
-			codingwidget.TagTeam (team);
-		}
-
 		public void DetachPlayer ()
 		{
 			bool isPlaying = ViewModel.VideoPlayer.Playing;

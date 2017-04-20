@@ -3,14 +3,17 @@
 using System;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.Interfaces;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class NewProjectPanelVM : LMProjectVM
+	public class NewProjectPanelVM : LMProjectVM, ILMTeamTaggerVM
 	{
 		public NewProjectPanelVM ()
 		{
 			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.ShowSubstitutionButtons = false;
+			TeamTagger.SubstitutionMode = true;
 		}
 
 		public new LMProject Model {

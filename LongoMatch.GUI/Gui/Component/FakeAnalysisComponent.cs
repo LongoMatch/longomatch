@@ -139,15 +139,5 @@ namespace LongoMatch.Gui.Component
 		{
 			codingwidget1.ShowZonalTags ();
 		}
-
-		public void TagPlayer (Player player)
-		{
-			codingwidget1.TagPlayer ((LMPlayer)player);
-		}
-
-		public void TagTeam (TeamType team)
-		{
-			codingwidget1.TagTeam (team);
-		}
 	}
 }

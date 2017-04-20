@@ -54,10 +54,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMCameraSynchronizationController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewProjectPanelVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamTaggerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)State\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\" />
   </ItemGroup>
 </Project>

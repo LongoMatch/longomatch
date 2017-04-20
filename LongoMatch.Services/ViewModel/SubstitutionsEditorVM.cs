@@ -16,15 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Store;
+using LongoMatch.Services.Interfaces;
 using VAS.Core.MVVMC;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class SubstitutionsEditorVM : ViewModelBase<LMProject>
+	public class SubstitutionsEditorVM : ViewModelBase<LMProject>, ILMTeamTaggerVM
 	{
 		public SubstitutionsEditorVM ()
 		{
 			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.ShowSubstitutionButtons = false;
 		}
 
 		public override LMProject Model {

@@ -145,8 +145,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.lineup = lineup;
 			playershbox.Visible = false;
-			tagger.SubstitutionMode = true;
-			tagger.ShowSubstitutionButtons = false;
+			ViewModel.TeamTagger.SubstitutionMode = true;
 			LoadTeams (project, lineup.HomeStartingPlayers, lineup.HomeBenchPlayers,
 				lineup.AwayStartingPlayers, lineup.AwayBenchPlayers);
 		}
@@ -156,15 +155,14 @@ namespace LongoMatch.Gui.Dialog
 			List<LMPlayer> hfp, hbp, afp, abp;
 
 			this.substitution = substitution;
-			project.CurrentLineup (substitution.EventTime, out hfp, out hbp, out afp, out abp);
+			//project.CurrentLineup (substitution.EventTime, out hfp, out hbp, out afp, out abp);
 			playershbox.Visible = true;
-			tagger.SubstitutionMode = false;
-			tagger.ShowSubstitutionButtons = false;
-			tagger.SelectionMode = MultiSelectionMode.Single;
+			ViewModel.TeamTagger.CurrentTime = substitution.EventTime;
+			ViewModel.TeamTagger.SubstitutionMode = false;
 			if (substitution.Teams.Contains (project.LocalTeamTemplate)) {
-				LoadTeams (project, hfp, hbp, null, null);
+				//LoadTeams (project, hfp, hbp, null, null);
 			} else {
-				LoadTeams (project, null, null, afp, abp);
+				//LoadTeams (project, null, null, afp, abp);
 			}
 			SwitchPlayer (substitution.In, substitution.Out);
 		}
@@ -219,19 +217,21 @@ namespace LongoMatch.Gui.Dialog
 		{
 			if (inPlayer != null) {
 				this.inPlayer = inPlayer;
-				inpo.Model = inPlayer;
+				//FIXME: vmartos
+				inpo.ViewModel.Model = inPlayer;
 				inpo.Active = false;
 				drawingarea2.QueueDraw ();
-				tagger.ResetSelection ();
+				//tagger.ResetSelection ();
 			} else {
 				inframe.Visible = false;
 			}
 			if (outPlayer != null) {
 				this.outPlayer = outPlayer;
-				outpo.Model = outPlayer;
+				//FIXME: vmartos
+				outpo.ViewModel.Model = outPlayer;
 				outpo.Active = false;
 				drawingarea3.QueueDraw ();
-				tagger.ResetSelection ();
+				//tagger.ResetSelection ();
 			} else {
 				outframe.Visible = false;
 			}
