@@ -26,6 +26,11 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class PenaltyCardEventType : EventType
 	{
+		public PenaltyCardEventType ()
+		{
+			PenaltyCard = new PenaltyCard ();
+		}
+
 		public override Color Color {
 			get {
 				return PenaltyCard != null ? PenaltyCard.Color : null;

@@ -26,6 +26,11 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class ScoreEventType : EventType
 	{
+		public ScoreEventType ()
+		{
+			Score = new Score ();
+		}
+
 		public override string Name {
 			get {
 				return Score != null ? Score.Name : null;
