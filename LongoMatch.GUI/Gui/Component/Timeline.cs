@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Store;
 
@@ -29,6 +30,7 @@ namespace LongoMatch.Gui.Component
 		{
 			periodsmenu = new PeriodsMenu ();
 			menu = new SportsPlaysMenu ();
+			((LMPlaysTimeline)timeline).ShowPeriodsMenuEvent += HandleShowTimerMenuEvent;
 		}
 
 		protected void HandleShowTimerMenuEvent (Timer timer, Time time)

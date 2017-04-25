@@ -129,7 +129,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		void RemovePeriod (PeriodVM timer)
 		{
-			foreach (TimerTimeNodeView view in nodes.OfType<TimerTimeNodeView> ()) {
+			foreach (TimerTimeNodeView view in nodes.OfType<TimerTimeNodeView> ().ToList()) {
 				if (view.Timer == timer) {
 					RemoveObject (view, true);
 				}

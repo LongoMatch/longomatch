@@ -15,10 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
@@ -33,14 +36,19 @@ namespace LongoMatch.Gui.Component
 	public class LMTimelineEventsTreeView : TimelineEventsTreeView<EventTypeTimelineVM, EventType>
 	{
 		SportsPlaysMenu menu;
+		EventTypeMenu eventTypeMenu;
 
 		public LMTimelineEventsTreeView ()
 		{
 			menu = new SportsPlaysMenu ();
+			eventTypeMenu = new EventTypeMenu ();
+
 			// FIXME: Fix the behaviour in the tree view 
 			menu.EditPlayEvent += (sender, e) =>
 				ViewModel.EditionCommand.Execute (ViewModel.FullTimeline.Selection.First ().Model);
+			eventTypeMenu.EditProperties += (cat) => OnEditProperties (cat);
 			ShowExpanders = false;
+			eventTypeMenu.SortEvent += (sender, e) => sort.SetSortFunc (0, HandleSort);
 		}
 
 		public LMProjectVM Project {
@@ -81,9 +89,70 @@ namespace LongoMatch.Gui.Component
 			renderer.Count = Model.IterNChildren (iter);
 		}
 
-		protected override void ShowMenu (IEnumerable<TimelineEventVM> events)
+		protected override void ShowMenu ()
 		{
-			menu.ShowMenu (Project.Model, events.Select (vm => vm.Model).ToList ());
+			IEnumerable<IViewModel> viewModels = GetSelectedViewModels ();
+			IEnumerable<TimelineEventVM> events = viewModels.OfType<TimelineEventVM> ();
+
+			EventTypeTimelineVM categoryVM = viewModels.OfType<EventTypeTimelineVM> ().FirstOrDefault ();
+			if (!events.Any() && categoryVM != null) {
+				events = categoryVM.ViewModels.Where (vm => vm.Visible);
+				eventTypeMenu.ShowMenu (Project.Model, categoryVM.Model, events.Select (vm => vm.Model as LMTimelineEvent).ToList ());
+			} else {
+				menu.ShowMenu (Project.Model, events.Select (vm => vm.Model).ToList ());
+			}
+		}
+
+		protected override int HandleSort (TreeModel model, TreeIter a, TreeIter b)
+		{
+			object objecta, objectb;
+			LMTimelineEventVM tna, tnb;
+
+			if (model == null)
+				return 0;
+
+			objecta = model.GetValue (a, 0);
+			objectb = model.GetValue (b, 0);
+
+			if (objecta == null && objectb == null) {
+				return 0;
+			} else if (objecta == null) {
+				return -1;
+			} else if (objectb == null) {
+				return 1;
+			}
+
+			// Dont't store categories
+			if (objecta is EventTypeTimelineVM && objectb is EventTypeTimelineVM) {
+				return int.Parse (model.GetPath (a).ToString ())
+				- int.Parse (model.GetPath (b).ToString ());
+			} else if (objecta is LMTimelineEventVM && objectb is LMTimelineEventVM) {
+				tna = objecta as LMTimelineEventVM;
+				tnb = objectb as LMTimelineEventVM;
+				switch (tna.Model.EventType.SortMethod) {
+				case (SortMethodType.SortByName):
+					return String.Compare (tna.Name, tnb.Name);
+				case (SortMethodType.SortByStartTime):
+					return (tna.Start - tnb.Start).MSeconds;
+				case (SortMethodType.SortByStopTime):
+					return (tna.Stop - tnb.Stop).MSeconds;
+				case (SortMethodType.SortByDuration):
+					return (tna.Duration - tnb.Duration).MSeconds;
+				default:
+					return 0;
+				}
+			} else {
+				return 0;
+			}
+		}
+
+		// FIXME: Edit and sort functionality should be moved to commands in a wrapper view model
+		// of the EventTypeTimelineVM since the logic could be different depending on the view
+		void OnEditProperties (EventType eventType)
+		{
+			EditCategoryDialog dialog = new EditCategoryDialog (Project.Model, eventType, this.Toplevel as Window);
+			dialog.Run ();
+			dialog.Destroy ();
 		}
 	}
 }
