@@ -55,6 +55,7 @@ namespace Tests.Core.Store
 			PenaltyCardButton pb = new PenaltyCardButton ();
 			Assert.IsNull (pb.BackgroundColor);
 			Assert.IsNull (pb.Name);
+			Assert.IsNotNull (pb.PenaltyCard);
 			pb.PenaltyCard = new PenaltyCard ("test", Color.Red, CardShape.Circle);
 			Assert.AreEqual (pb.Name, "test");
 			Assert.AreEqual (pb.BackgroundColor, Color.Red);
@@ -65,7 +66,7 @@ namespace Tests.Core.Store
 		public void TestScoreButton ()
 		{
 			ScoreButton sb = new ScoreButton ();
-			Assert.IsNull (sb.Score);
+			Assert.IsNotNull (sb.Score);
 			sb.Score = new Score ("test", 2);
 			Assert.AreEqual (sb.Name, "test");
 			Assert.AreEqual (sb.BackgroundColor, sb.EventType.Color);
