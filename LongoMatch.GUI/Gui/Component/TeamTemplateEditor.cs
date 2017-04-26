@@ -59,8 +59,6 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
-			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
-			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			shieldimage.HeightRequest = shieldvbox.WidthRequest = SHIELD_SIZE;
 			colorbutton1.Color = Misc.ToGdkColor (Color.Red1);
 			colorbutton1.ColorSet += HandleColorSet;
@@ -161,7 +159,8 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			if (edited) {
-				teamtagger.Reload ();
+				//FIXME: vmartos
+				//teamtagger.Reload ();
 				Edited = true;
 			}
 		}
@@ -282,7 +281,8 @@ namespace LongoMatch.Gui.Component
 		{
 			try {
 				template.FormationStr = tacticsentry.Text;
-				teamtagger.Reload ();
+				//FIXME:vmartos
+				//teamtagger.Reload ();
 				Edited = true;
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
@@ -370,7 +370,8 @@ namespace LongoMatch.Gui.Component
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 				loadedPlayer.Photo = player;
-				teamtagger.Reload ();
+				//FIXME: vmartos
+				//teamtagger.Reload ();
 				Edited = true;
 			}
 		}
@@ -392,14 +393,6 @@ namespace LongoMatch.Gui.Component
 				shieldimage.Pixbuf = shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				Edited = true;
 			}
-		}
-
-		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-											 SubstitutionReason reason, Time time)
-		{
-			team.List.Swap (p1, p2);
-			teamtagger.Substitute (p1, p2, team);
-			Edited = true;
 		}
 
 		void HandleColorSet (object sender, EventArgs e)

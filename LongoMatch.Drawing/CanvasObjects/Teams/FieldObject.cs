@@ -67,6 +67,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
+		public Image Background {
+			get {
+				return background;
+			}
+			set {
+				background = value;
+			}
+		}
+
 		public void LoadTeams (Image backgroundImg, int [] homeF, int [] awayF,
 							   List<LMPlayerView> homeT, List<LMPlayerView> awayT,
 							   int size, int nteams)

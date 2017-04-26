@@ -150,6 +150,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				if (viewModel != null) {
 					viewModel.PropertyChanged += HandlePropertyChanged;
+					teamtagger.ViewModel = viewModel.TeamTagger;
 				}
 				LoadProject ();
 			}
@@ -180,11 +181,6 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Visible = true;
 			ViewModel.Project.Dashboard.Mode = DashboardMode.Code;
 			buttonswidget.ViewModel = ViewModel.Project.Dashboard;
-			//FIXME: vmartos
-			teamtagger.ViewModel = ViewModel.TeamTagger;
-			// FIXME: team tagger is not ported yet to MVVM
-			teamtagger.Project = ViewModel.Project.Model;
-			teamtagger.CurrentTime = new Time (0);
 
 			eventslistwidget.Visible = ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject;
 			timeline.Visible = ViewModel.Project.ProjectType == ProjectType.FileProject;
@@ -265,7 +261,6 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ViewModel.Project.ProjectType != ProjectType.FileProject) {
 				buttonswidget.CurrentTime = e.Time;
-				teamtagger.CurrentTime = e.Time;
 			}
 		}
 
@@ -275,7 +270,6 @@ namespace LongoMatch.Gui.Component
 				&& ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 				buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-				teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 			}
 		}
 
@@ -337,14 +331,16 @@ namespace LongoMatch.Gui.Component
 		void HandleEventEdited (EventEditedEvent e)
 		{
 			if (e.TimelineEvent is SubstitutionEvent || e.TimelineEvent is LineupEvent) {
-				teamtagger.Reload ();
+				//FIXME : vmartos
+				//teamtagger.Reload ();
 			}
 		}
 
 		void HandleEventsDeletedEvent (EventsDeletedEvent e)
 		{
 			if (e.TimelineEvents.Count (s => s is SubstitutionEvent) != 0) {
-				teamtagger.Reload ();
+				//FIXME : vmartos
+				//teamtagger.Reload ();
 			}
 		}
 	}

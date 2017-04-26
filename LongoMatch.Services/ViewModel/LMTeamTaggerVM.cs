@@ -114,11 +114,15 @@ namespace LongoMatch.Services.ViewModel
 
 		LMTeamVM GetTeam (LMPlayerVM player)
 		{
-			if (HomeTeam.ViewModels.Contains (player)) {
-				return HomeTeam;
+			if (HomeTeam != null) {
+				if (HomeTeam.ViewModels.Contains (player)) {
+					return HomeTeam;
+				}
 			}
-			if (AwayTeam.ViewModels.Contains (player)) {
-				return AwayTeam;
+			if (AwayTeam != null) {
+				if (AwayTeam.ViewModels.Contains (player)) {
+					return AwayTeam;
+				}
 			}
 			return null;
 		}

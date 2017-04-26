@@ -236,7 +236,6 @@ namespace LongoMatch.Gui.Panel
 			drawingarea.HeightRequest = 200;
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
-			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = App.Current.TeamTemplatesProvider.Templates;
 
 			// Fill the combobox with project values or the templates ones
@@ -640,26 +639,21 @@ namespace LongoMatch.Gui.Panel
 				item.Activated += (sender, e) => {
 					hometemplate.RemovePlayers (players, false);
 					awaytemplate.RemovePlayers (players, false);
-					teamtagger.Reload ();
+					//FIXME: vmartos
+					//teamtagger.Reload ();
 				};
 			} else {
 				item = new MenuItem ("Reset players");
 				item.Activated += (sender, e) => {
 					hometemplate.ResetPlayers ();
 					awaytemplate.ResetPlayers ();
-					teamtagger.Reload ();
+					//FIXME: vmartos
+					//teamtagger.Reload ();
 				};
 			}
 			menu.Add (item);
 			menu.ShowAll ();
 			menu.Popup ();
-		}
-
-		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-											 SubstitutionReason reason, Time time)
-		{
-			team.List.Swap (p1, p2);
-			teamtagger.Substitute (p1, p2, team);
 		}
 
 		void HandleTacticsChanged (object sender, EventArgs e)
@@ -677,7 +671,8 @@ namespace LongoMatch.Gui.Panel
 
 			try {
 				team.FormationStr = entry.Text;
-				teamtagger.Reload ();
+				//FIXME: vmartos
+				//teamtagger.Reload ();
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));

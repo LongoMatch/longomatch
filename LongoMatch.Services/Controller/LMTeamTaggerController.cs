@@ -48,7 +48,10 @@ namespace LongoMatch.Services.Controller
 			}
 			set {
 				project = value;
-				SetLineup ();
+				if (project != null) {
+					SetLineup ();
+					UpdateLineup ();
+				}
 			}
 		}
 
@@ -95,6 +98,8 @@ namespace LongoMatch.Services.Controller
 				isAnalysis = true;
 				Project = analysisVM.Project as LMProjectVM;
 				VideoPlayer = analysisVM.VideoPlayer;
+			} else {
+				Project = (viewModel as ILMProjectVM)?.Project;
 			}
 		}
 
@@ -102,6 +107,7 @@ namespace LongoMatch.Services.Controller
 		{
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<TagPlayerEvent> (HandleTagPlayerEvent);
+			UpdateLineup ();
 		}
 
 		public override void Stop ()
@@ -162,6 +168,7 @@ namespace LongoMatch.Services.Controller
 				UpdateLineup ();
 			} else {
 				team.SubViewModel.ViewModels.Swap (player1, player2);
+				ChangeLineUp ();
 			}
 			ClearSelection ();
 		}
@@ -169,11 +176,14 @@ namespace LongoMatch.Services.Controller
 		void ClearSelection ()
 		{
 			substitutionPlayer = new KeyValuePair<PlayerVM, TeamVM> (null, null);
-			foreach (var player in teamTagger.HomeTeam.ViewModels.Where (p => p.Tagged)) {
-				player.Tagged = false;
-			}
-			if (teamTagger.HomeTeam.Selection.Any ()) {
-				teamTagger.HomeTeam.Selection.Clear ();
+
+			if (teamTagger.HomeTeam != null) {
+				foreach (var player in teamTagger.HomeTeam.ViewModels.Where (p => p.Tagged)) {
+					player.Tagged = false;
+				}
+				if (teamTagger.HomeTeam.Selection.Any ()) {
+					teamTagger.HomeTeam.Selection.Clear ();
+				}
 			}
 
 			if (teamTagger.AwayTeam != null) {
@@ -233,6 +243,11 @@ namespace LongoMatch.Services.Controller
 
 		void SetLineup ()
 		{
+			homeBenchPlayers.Clear ();
+			homeStartingPlayers.Clear ();
+			awayStartingPlayers.Clear ();
+			awayBenchPlayers.Clear ();
+
 			foreach (var player in project.Model.Lineup.HomeStartingPlayers) {
 				homeStartingPlayers.Add (project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
@@ -249,11 +264,40 @@ namespace LongoMatch.Services.Controller
 				awayBenchPlayers.Add (project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
+			//if (update) {
+			//	if (teamTagger.HomeTeam != null) {
+			//		teamTagger.HomeTeam.StartingPlayersList = homeStartingPlayers;
+			//		teamTagger.HomeTeam.BenchPlayersList = homeBenchPlayers;
+			//	}
+			//	if (teamTagger.AwayTeam != null) {
+			//		teamTagger.AwayTeam.StartingPlayersList = awayStartingPlayers;
+			//		teamTagger.AwayTeam.BenchPlayersList = awayBenchPlayers;
+			//	}
+			//}
+		}
 
-			teamTagger.HomeTeam.StartingPlayersList = homeStartingPlayers;
-			teamTagger.HomeTeam.BenchPlayersList = homeBenchPlayers;
-			teamTagger.AwayTeam.StartingPlayersList = awayStartingPlayers;
-			teamTagger.AwayTeam.BenchPlayersList = awayBenchPlayers;
+		void ChangeLineUp ()
+		{
+			if (teamTagger.HomeTeam != null) {
+				teamTagger.HomeTeam.PlayingPlayersList = teamTagger.HomeTeam.ViewModels.OfType<LMPlayerVM> ().
+					Take (teamTagger.HomeTeam.Model.StartingPlayers);
+
+				teamTagger.HomeTeam.StartingPlayersList = teamTagger.HomeTeam.PlayingPlayersList;
+
+				teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().
+					Except (teamTagger.HomeTeam.PlayingPlayersList);
+			}
+
+			if (teamTagger.AwayTeam != null) {
+				teamTagger.AwayTeam.PlayingPlayersList = teamTagger.AwayTeam.ViewModels.OfType<LMPlayerVM> ().
+					Take (teamTagger.AwayTeam.Model.StartingPlayers);
+
+				teamTagger.AwayTeam.StartingPlayersList = teamTagger.AwayTeam.PlayingPlayersList;
+
+				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().
+					Except (teamTagger.AwayTeam.PlayingPlayersList);
+			}
+
 		}
 
 		void UpdateLineup ()
@@ -263,7 +307,7 @@ namespace LongoMatch.Services.Controller
 			}
 
 			List<LMPlayerVM> initialHomePlayerList, initialAwayPlayerList;
-
+			SetLineup ();
 			initialHomePlayerList = homeStartingPlayers.Concat (homeBenchPlayers).ToList ();
 			initialAwayPlayerList = awayStartingPlayers.Concat (awayBenchPlayers).ToList ();
 
@@ -281,13 +325,16 @@ namespace LongoMatch.Services.Controller
 					}
 				}
 			}
-
-			teamTagger.HomeTeam.PlayingPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
-			teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Except (
-				teamTagger.HomeTeam.PlayingPlayersList);
-			teamTagger.AwayTeam.PlayingPlayersList = initialAwayPlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
-			teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
-				teamTagger.AwayTeam.PlayingPlayersList);
+			if (teamTagger.HomeTeam != null) {
+				teamTagger.HomeTeam.PlayingPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
+				teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Except (
+					teamTagger.HomeTeam.PlayingPlayersList);
+			}
+			if (teamTagger.AwayTeam != null) {
+				teamTagger.AwayTeam.PlayingPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
+				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
+					teamTagger.AwayTeam.PlayingPlayersList);
+			}
 
 
 			//homeFieldL.ForEach (p => p.Playing = true);

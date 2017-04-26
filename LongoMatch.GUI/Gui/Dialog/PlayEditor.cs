@@ -116,11 +116,10 @@ namespace LongoMatch.Gui.Dialog
 				notes.Play = editorVM.Play;
 			}
 			if (editorVM.EditionSettings.EditPlayers) {
-				teamtagger.Project = editorVM.Model;
 				//FIXME: vmartos
 				teamtagger.ViewModel = editorVM.TeamTagger;
 				/* Force lineup update */
-				teamtagger.CurrentTime = editorVM.Play.EventTime;
+				//teamtagger.CurrentTime = editorVM.Play.EventTime;
 				//FIXME: we should select through the VM
 				//teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
 				//editorVM.Play.Teams.Cast<LMTeam> ().ToList ());

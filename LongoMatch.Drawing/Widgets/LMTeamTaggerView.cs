@@ -35,7 +35,6 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class LMTeamTaggerView : SelectionCanvas, ICanvasView<LMTeamTaggerVM>
 	{
-
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
@@ -64,24 +63,6 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tagger.Dispose ();
 			base.DisposeManagedResources ();
-		}
-
-		public void Reload ()
-		{
-			tagger.Reload ();
-			widget?.ReDraw ();
-		}
-
-		public LMProject Project {
-			set {
-				tagger.Project = value;
-			}
-		}
-
-		public Time CurrentTime {
-			set {
-				tagger.CurrentTime = value;
-			}
 		}
 
 		public ObservableCollection<LMTeam> SelectedTeams {
@@ -113,31 +94,6 @@ namespace LongoMatch.Drawing.Widgets
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (LMTeamTaggerVM)viewModel;
-		}
-
-		//public void ResetSelection ()
-		//{
-		//	tagger.ResetSelection ();
-		//}
-
-		//public void Select (TeamType team)
-		//{
-		//	tagger.Select (team);
-		//}
-
-		//public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
-		//{
-		//	tagger.Select (players, teams);
-		//}
-
-		//public void Select (LMPlayer p)
-		//{
-		//	tagger.Select (p);
-		//}
-
-		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
-		{
-			tagger.Substitute (p1, p2, team);
 		}
 
 		protected override void ShowMenu (Point coords)

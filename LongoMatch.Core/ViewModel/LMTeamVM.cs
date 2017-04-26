@@ -139,6 +139,9 @@ namespace LongoMatch.Core.ViewModel
 				player.Playing = true;
 			}
 			BenchPlayersList = playersList.Except (PlayingPlayersList);
+			foreach (var player in BenchPlayersList) {
+				player.Playing = false;
+			}
 		}
 	}
 }
