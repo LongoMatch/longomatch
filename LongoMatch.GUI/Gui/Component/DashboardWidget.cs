@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Gtk;
-using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
@@ -53,7 +52,6 @@ namespace LongoMatch.Gui.Component
 		public event NewEventHandler NewTagEvent;
 
 		DashboardCanvas tagger;
-		ProjectVM projectVM;
 		DashboardVM viewModel;
 		DashboardButton selected;
 		bool internalButtons;
@@ -112,8 +110,9 @@ namespace LongoMatch.Gui.Component
 				tagproperties.Tagger = null;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 				tagproperties.Dashboard = value.Model;
-				popupbutton.Active = value.DisablePopupWindow;
+				popupbutton.Active = !value.DisablePopupWindow;
 				viewModel.FitMode = FitMode.Fit;
+				fitbutton.Active = true;
 				viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
 				ctx.UpdateViewModel (viewModel);
