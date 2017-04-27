@@ -226,7 +226,7 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 1;
+			this.notebook1.CurrentPage = 2;
 			this.notebook1.ShowBorder = false;
 			this.notebook1.Scrollable = true;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
@@ -1022,7 +1022,6 @@ namespace LongoMatch.Gui.Panel
 			this.projectperiods1 = new global::LongoMatch.Gui.Component.SynchronizationWidget ();
 			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
 			this.projectperiods1.Name = "projectperiods1";
-			this.projectperiods1.FixedPeriods = false;
 			this.notebook1.Add (this.projectperiods1);
 			global::Gtk.Notebook.NotebookChild w95 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
 			w95.Position = 2;

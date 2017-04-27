@@ -8,10 +8,6 @@ namespace LongoMatch.Gui.Panel
 
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
 
-		private global::Gtk.Notebook notebook1;
-
-		private global::Gtk.Alignment pm_content_alignment;
-
 		private global::Gtk.HBox pm_hbox;
 
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
@@ -84,12 +80,6 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Image deletebuttonimage;
 
-		private global::Gtk.Label label1;
-
-		private global::LongoMatch.Gui.Component.SynchronizationWidget projectperiods1;
-
-		private global::Gtk.Label label3;
-
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -109,15 +99,6 @@ namespace LongoMatch.Gui.Panel
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.notebook1 = new global::Gtk.Notebook ();
-			this.notebook1.CanFocus = true;
-			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
-			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.pm_content_alignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
-			this.pm_content_alignment.Name = "pm_content_alignment";
-			this.pm_content_alignment.BorderWidth = ((uint)(12));
-			// Container child pm_content_alignment.Gtk.Container+ContainerChild
 			this.pm_hbox = new global::Gtk.HBox ();
 			this.pm_hbox.Name = "pm_hbox";
 			this.pm_hbox.Spacing = 6;
@@ -418,29 +399,9 @@ namespace LongoMatch.Gui.Panel
 			this.pm_hbox.Add (this.projectpropertiesalignment);
 			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.pm_hbox [this.projectpropertiesalignment]));
 			w38.Position = 1;
-			this.pm_content_alignment.Add (this.pm_hbox);
-			this.notebook1.Add (this.pm_content_alignment);
-			// Notebook tab
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.notebook1.SetTabLabel (this.pm_content_alignment, this.label1);
-			this.label1.ShowAll ();
-			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.projectperiods1 = new global::LongoMatch.Gui.Component.SynchronizationWidget ();
-			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
-			this.projectperiods1.Name = "projectperiods1";
-			this.projectperiods1.FixedPeriods = false;
-			this.notebook1.Add (this.projectperiods1);
-			global::Gtk.Notebook.NotebookChild w41 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
-			w41.Position = 1;
-			// Notebook tab
-			this.label3 = new global::Gtk.Label ();
-			this.label3.Name = "label3";
-			this.notebook1.SetTabLabel (this.projectperiods1, this.label3);
-			this.label3.ShowAll ();
-			this.vbox3.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
-			w42.Position = 1;
+			this.vbox3.Add (this.pm_hbox);
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.pm_hbox]));
+			w39.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

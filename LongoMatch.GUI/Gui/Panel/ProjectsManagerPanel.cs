@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
@@ -34,7 +33,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
-using VAS.Core.ViewModel;
+using VAS.Services.State;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
@@ -74,8 +73,6 @@ namespace LongoMatch.Gui.Panel
 			openbutton.TooltipMarkup = Catalog.GetString ("Open");
 			deletebutton.TooltipMarkup = Catalog.GetString ("Delete");
 
-			notebook1.ShowTabs = false;
-			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.ProjectSelected += HandleProjectSelected;
@@ -90,7 +87,6 @@ namespace LongoMatch.Gui.Panel
 			datepicker.ValueChanged += HandleDateChanged;
 			desctextview.Buffer.Changed += HandleChanged;
 
-			notebook1.Page = 0;
 			panelheader1.Title = Title;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
@@ -106,7 +102,6 @@ namespace LongoMatch.Gui.Panel
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
-			projectperiods1.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -236,21 +231,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleBackClicked (object sender, EventArgs e)
 		{
-			if (notebook1.Page == 0) {
-				App.Current.StateController.MoveBack ();
-			} else {
-				projectperiods1.Pause ();
-				/* FIXME: we don't support adding new cameras, so there is nothing
-				 * to fix or update */
-				//projectperiods1.SaveChanges (false);
-
-				// We need to reload project details
-				LoadProject (loadedProject);
-				// And remember that the project has changed
-				edited = true;
-
-				notebook1.Page--;
-			}
+			App.Current.StateController.MoveBack ();
 		}
 
 		void HandleChanged (object sender, EventArgs e)
@@ -302,18 +283,17 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleResyncClicked (object sender, EventArgs e)
 		{
-			bool canNavigate = true;
 			if (!loadedProject.Description.FileSet.CheckFiles ()) {
 				// Show message in order to load video.
-				canNavigate = gkit.SelectMediaFiles (loadedProject.Description.FileSet);
+				if (!gkit.SelectMediaFiles (loadedProject.Description.FileSet)) {
+					return;
+				}
 			}
 
-			if (canNavigate) {
-				notebook1.Page = 1;
-
-				// Load data in the project periods widget.
-				projectperiods1.Project = loadedProject;
-			}
+			loadedProject.Load ();
+			App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME,
+												new LMProjectVM { Model = loadedProject });
+			edited = true;
 		}
 
 		void HandleSaveClicked (object sender, EventArgs e)

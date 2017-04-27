@@ -16,25 +16,24 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Linq;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class CamerasLabels : Canvas
+	public class CamerasLabelsView : Canvas, ICanvasView<MediaFileSetVM>
 	{
-		MediaFileSet fileSet;
+		MediaFileSetVM fileSetVM;
 
-		public CamerasLabels (IWidget widget) : base (widget)
+		public CamerasLabelsView (IWidget widget) : base (widget)
 		{
 		}
 
-		public CamerasLabels () : this (null)
+		public CamerasLabelsView () : this (null)
 		{
 		}
 
@@ -47,12 +46,21 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void Load (MediaFileSet fileSet)
+		public MediaFileSetVM ViewModel {
+			get {
+				return fileSetVM;
+			}
+			set {
+				fileSetVM = value;
+				ClearObjects ();
+				FillCanvas ();
+				widget?.ReDraw ();
+			}
+		}
+
+		public void SetViewModel (object viewModel)
 		{
-			ClearObjects ();
-			this.fileSet = fileSet;
-			FillCanvas ();
-			widget?.ReDraw ();
+			ViewModel = (MediaFileSetVM)viewModel;
 		}
 
 		void AddLabel (LabelView label)
@@ -60,54 +68,50 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Add (label);
 		}
 
+		void AddCamera (MediaFileVM fileVM, int width, int height, ref int row)
+		{
+			var l = App.Current.ViewLocator.Retrieve ("CameraLabelView") as CameraLabelView;
+			l.Width = width;
+			l.Height = height;
+			l.OffsetY = row * height;
+			l.BackgroundColor = App.Current.Style.PaletteBackgroundLight;
+			l.ViewModel = fileVM;
+			AddLabel (l);
+			row++;
+		}
+
 		void FillCanvas ()
 		{
-			LabelView l;
-			int i = 0, w, h;
+			int row = 0, w, h, height = 0;
 
 			w = StyleConf.TimelineLabelsWidth * 2;
 			h = StyleConf.TimelineCameraHeight;
 
 			// Main camera
-			l = new CameraLabelView {
-				Width = w,
-				Height = h,
-				OffsetY = i * h,
-				Name = fileSet [0].Name,
-				BackgroundColor = App.Current.Style.PaletteBackgroundLight
-			};
-			AddLabel (l);
-			i++;
+			AddCamera (fileSetVM.ViewModels [0], w, h, ref row);
 
 			// Periods
-			l = new CameraLabelView {
-				Width = w,
-				Height = h,
-				OffsetY = i * h,
-				Name = Catalog.GetString ("Periods"),
-				BackgroundColor = App.Current.Style.PaletteBackgroundLight
-			};
+			var l = new LabelView ();
+			l.Width = w;
+			l.Height = h;
+			l.OffsetY = row * h;
+			l.BackgroundColor = App.Current.Style.PaletteBackgroundLight;
+			l.Name = Catalog.GetString ("Periods");
 			AddLabel (l);
-			i++;
+			row++;
 
 			// Secondary cams
-			for (int j = 1; j < fileSet.Count; j++) {
-				l = new CameraLabelView {
-					Width = w,
-					Height = h,
-					OffsetY = i * h,
-					Name = fileSet [j].Name,
-					BackgroundColor = App.Current.Style.PaletteBackground
-				};
-				AddLabel (l);
-				i++;
+			for (int j = 1; j < fileSetVM.ViewModels.Count; j++) {
+				AddCamera (fileSetVM.ViewModels [j], w, h, ref row);
 			}
 
 			double width = Objects.Max (la => (la as LabelView).RequiredWidth);
 			foreach (LabelView label in Objects) {
 				label.Width = width;
+				height += h;
 			}
 			WidthRequest = (int)width;
+			HeightRequest = (int)height;
 		}
 	}
 }

@@ -181,6 +181,8 @@
 		<Compile Include="MenuLoaderBase.cs" />
 		<Compile Include="ProjectFileMenuLoader.cs" />
 		<Compile Include="ProjectToolsMenuLoader.cs" />
+		<Compile Include="Gui\Panel\CameraSynchronizationPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.CameraSynchronizationPanel.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">

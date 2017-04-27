@@ -10,8 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)PlayslistCellRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabels.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabelsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimelineView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\ProjectLocationsTaggerView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardView.cs" />

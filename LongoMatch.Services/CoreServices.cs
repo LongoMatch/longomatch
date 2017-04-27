@@ -89,6 +89,7 @@ namespace LongoMatch.Services
 			CoreTool tool = new CoreTool ();
 			tool.Enable ();
 			Scanner.ScanControllers (App.Current.ControllerLocator);
+			VASServicesInit.ScanController ();
 		}
 
 		public static void InitTranslations ()

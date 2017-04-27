@@ -34,6 +34,7 @@ using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
+using VAS.Services.State;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Device = VAS.Core.Common.Device;
@@ -48,7 +49,6 @@ namespace LongoMatch.Gui.Panel
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
-		const int PROJECT_PERIODS = 2;
 		int firstPage;
 		LMProject project;
 		ProjectType projectType;
@@ -64,6 +64,7 @@ namespace LongoMatch.Gui.Panel
 		TeamTagger teamtagger;
 		SizeGroup sg;
 		LMProjectVM viewModel;
+		CameraSynchronizationEditorState cameraSynchronizationState;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -85,6 +86,7 @@ namespace LongoMatch.Gui.Panel
 			Gdk.Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			urilabel.ModifyFg (StateType.Normal, red);
+
 			ApplyStyle ();
 		}
 
@@ -123,7 +125,6 @@ namespace LongoMatch.Gui.Panel
 					notebook1.Page = firstPage = 1;
 					projectType = ProjectType.EditProject;
 					resyncEvents = true;
-					projectperiods1.FixedPeriods = project.IsFakeCapture;
 					SetProjectType ();
 					FillProjectDetails ();
 				}
@@ -423,8 +424,6 @@ namespace LongoMatch.Gui.Panel
 				panelheader1.Title = Catalog.GetString ("PROJECT TYPE");
 			} else if (notebook1.Page == 1) {
 				panelheader1.Title = Catalog.GetString ("PROJECT PROPERTIES");
-			} else if (notebook1.Page == 2) {
-				panelheader1.Title = Catalog.GetString ("PERIODS SYNCHRONIZATION");
 			}
 		}
 
@@ -601,9 +600,6 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleBackClicked (object sender, EventArgs e)
 		{
-			if (notebook1.Page == PROJECT_PERIODS) {
-				projectperiods1.Pause ();
-			}
 			if (notebook1.Page == firstPage) {
 				App.Current.StateController.MoveBack ();
 			} else {
@@ -619,8 +615,9 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (notebook1.Page == PROJECT_TYPE) {
 				SetProjectType ();
-			}
-			if (notebook1.Page == PROJECT_DETAILS) {
+				notebook1.Page++;
+				UpdateTitle ();
+			} else if (notebook1.Page == PROJECT_DETAILS) {
 				if (!CreateProject ()) {
 					return;
 				}
@@ -628,20 +625,8 @@ namespace LongoMatch.Gui.Panel
 					StartProject ();
 					return;
 				}
-			} else if (notebook1.Page == PROJECT_PERIODS) {
-				// Pause playback and then save periods changes into the project. Fileset has already been updated.
-				projectperiods1.Pause ();
-				projectperiods1.SaveChanges (resyncEvents);
-				StartProject ();
-				return;
+				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel);
 			}
-
-			notebook1.Page++;
-
-			if (notebook1.Page == PROJECT_PERIODS) {
-				projectperiods1.Project = project;
-			}
-			UpdateTitle ();
 		}
 
 		void HandleShowMenuEvent (List<LMPlayer> players)
