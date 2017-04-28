@@ -18,21 +18,33 @@
 using System;
 using Gtk;
 using LongoMatch.Core;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing.Cairo;
-using VAS.Services.State;
 using VAS.UI.Dialog;
 
 namespace LongoMatch.Gui.Dialog
 {
-	[ViewAttribute (DrawingToolState.NAME)]
-	public class SportDrawingTool : DrawingTool
+	[ViewAttribute (LMDrawingToolState.NAME)]
+	public class SportDrawingTool : DrawingTool, IPanel<LMDrawingToolVM>
 	{
+		public new LMDrawingToolVM ViewModel {
+			get;
+			set;
+		}
+
+		public new void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMDrawingToolVM)viewModel;
+			base.SetViewModel (viewModel);
+		}
+
 		public override void EditPlayer (Text text)
 		{
 			playerText = text;
@@ -45,14 +57,15 @@ namespace LongoMatch.Gui.Dialog
 
 				DrawingArea da = new DrawingArea ();
 				LMTeamTaggerView tagger = new LMTeamTaggerView (new WidgetWrapper (da));
-				tagger.ViewModel = GetTeamTaggerVM ();
-				tagger.PlayersSelectionChangedEvent += players => {
-					if (players.Count == 1) {
-						Player p = players [0];
+				tagger.ViewModel = ViewModel.TeamTagger;
+				ViewModel.PropertyChanged += (sender, e) => {
+					if (e.PropertyName == "Tagged") {
+						var playerVM = (LMPlayerVM)sender;
+						Player p = playerVM.Model;
+						playerVM.Tagged = false;
 						playerText.Value = p.ToString ();
 						d.Respond (ResponseType.Ok);
 					}
-					//tagger.ResetSelection ();
 				};
 				d.VBox.PackStart (da, true, true, 0);
 				d.ShowAll ();
@@ -62,21 +75,6 @@ namespace LongoMatch.Gui.Dialog
 				text.Value = null;
 			}
 			playerDialog.Hide ();
-		}
-
-		LMTeamTaggerVM GetTeamTaggerVM ()
-		{
-			//FIXME: vmartos
-			var lmProject = ViewModel.Project as LMProject;
-			if (lmProject != null) {
-				LMTeamTaggerVM teamTagger = new LMTeamTaggerVM ();
-				teamTagger.AwayTeam.Model = lmProject.VisitorTeamTemplate;
-				teamTagger.HomeTeam.Model = lmProject.LocalTeamTemplate;
-				teamTagger.Background = lmProject.Dashboard?.FieldBackground;
-				teamTagger.ShowSubstitutionButtons = false;
-				return teamTagger;
-			}
-			return null;
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (NewProjectState.NAME, () => new NewProjectState ());
 			uiFlow.Add (ProjectsManagerState.NAME, () => new ProjectsManagerState ());
 			uiFlow.Add (OpenProjectState.NAME, () => new OpenProjectState ());
-			uiFlow.Add (DrawingToolState.NAME, () => new DrawingToolState ());
+			uiFlow.Add (LMDrawingToolState.NAME, () => new LMDrawingToolState ());
 			uiFlow.Add (JobsManagerState.NAME, () => new JobsManagerState ());
 			uiFlow.Add (ProjectAnalysisState.NAME, () => new ProjectAnalysisState ());
 			uiFlow.Add (LiveProjectAnalysisState.NAME, () => new LiveProjectAnalysisState ());
