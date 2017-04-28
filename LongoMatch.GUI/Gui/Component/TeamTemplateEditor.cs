@@ -27,6 +27,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
@@ -40,18 +41,17 @@ using Misc = VAS.UI.Helpers.Misc;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class TeamTemplateEditor : Gtk.Bin, IView<LMTeamTaggerVM>
+	public partial class TeamTemplateEditor : Gtk.Bin, IView<LMTeamEditorVM>
 	{
 		public event EventHandler TemplateSaved;
 
 		const int SHIELD_SIZE = 70;
 		const int PLAYER_SIZE = 70;
 
-		LMTeamTaggerVM viewModel;
+		LMTeamEditorVM viewModel;
 		LMPlayer loadedPlayer;
 		LMTeam template;
 		bool edited, ignoreChanges;
-		List<LMPlayer> selectedPlayers;
 		LMTeamTaggerView teamtagger;
 
 		public TeamTemplateEditor ()
@@ -112,57 +112,41 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public LMTeamTaggerVM ViewModel {
+		public LMTeamTaggerVM TeamTagger {
+			set {
+				teamtagger.ViewModel = value;
+			}
+		}
+
+		public LMTeamEditorVM ViewModel {
 			get {
 				return viewModel;
 			}
 			set {
 				if (viewModel != null) {
-					viewModel.HomeTeam.PropertyChanged -= HandleTeamPropertyChanged;
+					viewModel.Team.PropertyChanged -= HandleTeamPropertyChanged;
 				}
 				viewModel = value;
 				if (viewModel != null) {
-					//FIXME: vmartos
-					viewModel.SelectionMode = MultiSelectionMode.MultipleWithModifier;
-					teamtagger.ViewModel = viewModel;
-					viewModel.HomeTeam.PropertyChanged += HandleTeamPropertyChanged;
+					viewModel.Team.PropertyChanged += HandleTeamPropertyChanged;
+					Team = ViewModel.Team.Model as LMTeam;
 				}
 			}
 		}
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (LMTeamTaggerVM)viewModel;
+			ViewModel = (LMTeamEditorVM)viewModel;
 		}
 
 		public void AddPlayer ()
 		{
-			LMPlayer p = template.AddDefaultItem (template.List.Count) as LMPlayer;
-			//FIXME: vmartos Add Selection here?
-			//teamtagger.Select (p);
-			Edited = true;
+			App.Current.EventsBroker.Publish (new CreateEvent<LMPlayer> ());
 		}
 
 		public void DeleteSelectedPlayers ()
 		{
-			bool edited = false;
-
-			if (selectedPlayers == null || selectedPlayers.Count == 0) {
-				return;
-			}
-
-			foreach (var selectedPlayer in selectedPlayers) {
-				string msg = Catalog.GetString ("Do you want to delete player: ") + selectedPlayer.Name;
-				if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-					template.List.Remove (selectedPlayer);
-					edited = true;
-				}
-			}
-			if (edited) {
-				//FIXME: vmartos
-				//teamtagger.Reload ();
-				Edited = true;
-			}
+			App.Current.EventsBroker.Publish (new DeleteEvent<LMPlayer> ());
 		}
 
 		void ConnectSignals ()
@@ -303,26 +287,6 @@ namespace LongoMatch.Gui.Component
 			return playerImage;
 		}
 
-		void PlayersSelected (List<LMPlayer> players)
-		{
-			ignoreChanges = true;
-
-			selectedPlayers = players;
-			deletebutton.Sensitive = players.Count != 0;
-			if (players.Count == 1) {
-				LoadPlayer (players [0]);
-			} else {
-				ClearPlayer ();
-			}
-
-			ignoreChanges = false;
-		}
-
-		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
-		{
-			PlayersSelected (players);
-		}
-
 		void HandleSaveTemplateClicked (object sender, EventArgs e)
 		{
 			if (template != null) {
@@ -351,7 +315,7 @@ namespace LongoMatch.Gui.Component
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
 		{
 			if (args.Event.Key == Gdk.Key.Delete) {
-				DeleteSelectedPlayers ();
+				ViewModel.DeletePlayersCommand.Execute ();
 			}
 		}
 
@@ -411,13 +375,18 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTeamPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Model),
-											  sender, ViewModel.HomeTeam)) {
-				Team = ViewModel.HomeTeam.Model as LMTeam;
+			if (ViewModel.Team.NeedsSync (e.PropertyName, nameof (ViewModel.Team.Model),
+											  sender, ViewModel.Team)) {
+				Team = ViewModel.Team.Model as LMTeam;
 			}
-			if (ViewModel.HomeTeam.NeedsSync (e.PropertyName, "Selection",
-											  sender, ViewModel.HomeTeam)) {
-				PlayersSelected (ViewModel.HomeTeam.Selection.Select (p => p.Model as LMPlayer).ToList ());
+			if (ViewModel.Team.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.Team.Selection)}",
+											  sender, ViewModel.Team)) {
+				if (ViewModel.Team.Selection.Count == 1) {
+					LoadPlayer (ViewModel.Team.Selection.First ().Model as LMPlayer);
+				} else {
+					ClearPlayer ();
+				}
+				ViewModel.DeletePlayersCommand.EmitCanExecuteChanged ();
 			}
 		}
 	}

@@ -50,9 +50,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			set {
 				Player = value;
-				if (Player.Tagged) {
-					bool breakPoint = false;
-				}
 			}
 		}
 

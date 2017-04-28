@@ -31,19 +31,23 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for the teams manager.
 	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerVM
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerVM, ILMTeamEditorVM
 	{
 		public TeamsManagerVM ()
 		{
+			LoadedTemplate = new LMTeamVM ();
 			NewCommand.Icon = Resources.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
 			SaveCommand.Icon = Resources.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
 			DeleteCommand.Icon = Resources.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.HomeTeam = LoadedTemplate as LMTeamVM;
 			TeamTagger.AwayTeam = null;
 			TeamTagger.Background = App.Current.HHalfFieldBackground;
-			LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			TeamEditor = new LMTeamEditorVM ();
+			TeamEditor.Team = LoadedTemplate as LMTeamVM;
 		}
 
 		/// <summary>
@@ -54,16 +58,17 @@ namespace LongoMatch.Services.ViewModel
 			get;
 		}
 
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamEditorVM TeamEditor {
+			get;
+		}
+
 		protected override TeamVM CreateInstance (Team model)
 		{
 			return new LMTeamVM { Model = (LMTeam)model };
-		}
-
-		void HandleLoadedTemplateChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			if (LoadedTemplate.NeedsSync (e.PropertyName, nameof (LoadedTemplate.Model), sender, LoadedTemplate)) {
-				TeamTagger.HomeTeam.Model = LoadedTemplate.Model as LMTeam;
-			}
 		}
 	}
 }

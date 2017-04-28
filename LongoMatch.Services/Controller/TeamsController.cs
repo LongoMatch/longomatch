@@ -15,8 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.ComponentModel;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -56,6 +58,18 @@ namespace LongoMatch.Services.Controller
 		protected override bool SaveValidations (Team model)
 		{
 			return true;
+		}
+
+		protected override void HandleTemplateChanged (object sender, PropertyChangedEventArgs e)
+		{
+			base.HandleTemplateChanged (sender, e);
+			if (ViewModel.NeedsSync (e, nameof (ViewModel.Model))) {
+				var viewModel = ViewModel as TeamsManagerVM;
+				if (viewModel != null) {
+					viewModel.TeamEditor.Team.Selection.Clear ();
+					viewModel.TeamEditor.DeletePlayersCommand.EmitCanExecuteChanged ();
+				}
+			}
 		}
 	}
 }

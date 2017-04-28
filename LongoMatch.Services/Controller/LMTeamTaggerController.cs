@@ -62,10 +62,22 @@ namespace LongoMatch.Services.Controller
 			set {
 				if (teamTagger != null) {
 					teamTagger.PropertyChanged -= HandleTeamTaggerPropertyChanged;
+					if (teamTagger.HomeTeam != null) {
+						teamTagger.HomeTeam.PropertyChanged -= HandleTeamPropertyChanged;
+					}
+					if (teamTagger.AwayTeam != null) {
+						teamTagger.AwayTeam.PropertyChanged -= HandleTeamPropertyChanged;
+					}
 				}
 				teamTagger = value;
 				if (teamTagger != null) {
 					teamTagger.PropertyChanged += HandleTeamTaggerPropertyChanged;
+					if (teamTagger.HomeTeam != null) {
+						teamTagger.HomeTeam.PropertyChanged += HandleTeamPropertyChanged;
+					}
+					if (teamTagger.AwayTeam != null) {
+						teamTagger.AwayTeam.PropertyChanged += HandleTeamPropertyChanged;
+					}
 				}
 			}
 		}
@@ -107,6 +119,7 @@ namespace LongoMatch.Services.Controller
 		{
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<TagPlayerEvent> (HandleTagPlayerEvent);
+			App.Current.EventsBroker.Subscribe<UpdateLineup> (HandleUpdateLineup);
 			UpdateLineup ();
 		}
 
@@ -114,6 +127,7 @@ namespace LongoMatch.Services.Controller
 		{
 			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<TagPlayerEvent> (HandleTagPlayerEvent);
+			App.Current.EventsBroker.Unsubscribe<UpdateLineup> (HandleUpdateLineup);
 		}
 
 		void HandleTagPlayerEvent (TagPlayerEvent e)
@@ -128,7 +142,7 @@ namespace LongoMatch.Services.Controller
 				}
 			} else {
 				if (teamTagger.SelectionMode != MultiSelectionMode.Multiple &&
-					(teamTagger.SelectionMode == MultiSelectionMode.Single || !e.HasModifier)) {
+					(teamTagger.SelectionMode == MultiSelectionMode.Single || e.Modifier == ButtonModifier.None)) {
 					ClearSelection ();
 				}
 				if (!e.Player.Tagged) {
@@ -168,7 +182,7 @@ namespace LongoMatch.Services.Controller
 				UpdateLineup ();
 			} else {
 				team.SubViewModel.ViewModels.Swap (player1, player2);
-				ChangeLineUp ();
+				ChangeLineUp (team);
 			}
 			ClearSelection ();
 		}
@@ -191,20 +205,32 @@ namespace LongoMatch.Services.Controller
 					player.Tagged = false;
 				}
 				if (teamTagger.AwayTeam.Selection.Any ()) {
-					teamTagger.HomeTeam.Selection.Clear ();
+					teamTagger.AwayTeam.Selection.Clear ();
+				}
+			}
+		}
+
+		void HandleTeamPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Formation") {
+				if (project != null) {
+					UpdateLineup ();
+				} else {
+					ChangeLineUp (sender as LMTeamVM);
 				}
 			}
 		}
 
 		void HandleTeamTaggerPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (teamTagger.NeedsSync (e.PropertyName, nameof (teamTagger.SubstitutionMode), sender, teamTagger)) {
-				ClearSelection ();
-			}
+			if (e.PropertyName != null) {
+				if (teamTagger.NeedsSync (e.PropertyName, nameof (teamTagger.SubstitutionMode), sender, teamTagger)) {
+					ClearSelection ();
+				}
 
-			if (teamTagger.NeedsSync (e.PropertyName, nameof (teamTagger.CurrentTime), sender, teamTagger)) {
-				//Handle the logic to change LineUp based on the Current Time
-				CurrentTimeUpdate ();
+				if (teamTagger.NeedsSync (e.PropertyName, nameof (teamTagger.CurrentTime), sender, teamTagger)) {
+					CurrentTimeUpdate ();
+				}
 			}
 		}
 
@@ -264,40 +290,19 @@ namespace LongoMatch.Services.Controller
 				awayBenchPlayers.Add (project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
-			//if (update) {
-			//	if (teamTagger.HomeTeam != null) {
-			//		teamTagger.HomeTeam.StartingPlayersList = homeStartingPlayers;
-			//		teamTagger.HomeTeam.BenchPlayersList = homeBenchPlayers;
-			//	}
-			//	if (teamTagger.AwayTeam != null) {
-			//		teamTagger.AwayTeam.StartingPlayersList = awayStartingPlayers;
-			//		teamTagger.AwayTeam.BenchPlayersList = awayBenchPlayers;
-			//	}
-			//}
 		}
 
-		void ChangeLineUp ()
+		void ChangeLineUp (LMTeamVM team)
 		{
-			if (teamTagger.HomeTeam != null) {
-				teamTagger.HomeTeam.PlayingPlayersList = teamTagger.HomeTeam.ViewModels.OfType<LMPlayerVM> ().
-					Take (teamTagger.HomeTeam.Model.StartingPlayers);
+			if (team != null) {
+				team.PlayingPlayersList = team.ViewModels.OfType<LMPlayerVM> ().
+					Take (team.Model.StartingPlayers);
 
-				teamTagger.HomeTeam.StartingPlayersList = teamTagger.HomeTeam.PlayingPlayersList;
+				team.StartingPlayersList = team.PlayingPlayersList;
 
-				teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().
-					Except (teamTagger.HomeTeam.PlayingPlayersList);
+				team.BenchPlayersList = team.OfType<LMPlayerVM> ().
+					Except (team.PlayingPlayersList);
 			}
-
-			if (teamTagger.AwayTeam != null) {
-				teamTagger.AwayTeam.PlayingPlayersList = teamTagger.AwayTeam.ViewModels.OfType<LMPlayerVM> ().
-					Take (teamTagger.AwayTeam.Model.StartingPlayers);
-
-				teamTagger.AwayTeam.StartingPlayersList = teamTagger.AwayTeam.PlayingPlayersList;
-
-				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().
-					Except (teamTagger.AwayTeam.PlayingPlayersList);
-			}
-
 		}
 
 		void UpdateLineup ()
@@ -307,7 +312,9 @@ namespace LongoMatch.Services.Controller
 			}
 
 			List<LMPlayerVM> initialHomePlayerList, initialAwayPlayerList;
-			SetLineup ();
+			if (isAnalysis) {
+				SetLineup ();
+			}
 			initialHomePlayerList = homeStartingPlayers.Concat (homeBenchPlayers).ToList ();
 			initialAwayPlayerList = awayStartingPlayers.Concat (awayBenchPlayers).ToList ();
 
@@ -335,19 +342,20 @@ namespace LongoMatch.Services.Controller
 				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
 					teamTagger.AwayTeam.PlayingPlayersList);
 			}
+		}
 
-
-			//homeFieldL.ForEach (p => p.Playing = true);
-			//homeBenchL.ForEach (p => p.Playing = false);
-			//awayFieldL.ForEach (p => p.Playing = true);
-			//awayBenchL.ForEach (p => p.Playing = false);
-
-			//teamTagger.HomeTeam.PlayingPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Where (p => p.Playing);
-			//teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Except (
-			//	teamTagger.HomeTeam.PlayingPlayersList);
-			//teamTagger.AwayTeam.PlayingPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Where (p => p.Playing);
-			//teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
-			//	teamTagger.AwayTeam.PlayingPlayersList);
+		void HandleUpdateLineup (UpdateLineup e)
+		{
+			if (project != null) {
+				UpdateLineup ();
+			} else {
+				if (teamTagger.HomeTeam != null) {
+					ChangeLineUp (teamTagger.HomeTeam);
+				}
+				if (teamTagger.AwayTeam != null) {
+					ChangeLineUp (teamTagger.AwayTeam);
+				}
+			}
 		}
 	}
 }

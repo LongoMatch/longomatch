@@ -8,6 +8,10 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Services.ViewModel
 {
+	/// <summary>
+	/// ViewModel used in LMTeamTaggerView, it has a HomeTeam and AwayTeam in order to
+	/// render teams in views. It has properties to configure correctly the view.
+	/// </summary>
 	public class LMTeamTaggerVM : ViewModelBase
 	{
 		public LMTeamTaggerVM ()
@@ -102,12 +106,17 @@ namespace LongoMatch.Services.ViewModel
 			set;
 		}
 
-		public void PlayerClick (LMPlayerVM player, bool clickWithModif)
+		/// <summary>
+		/// Method to click a LMPlayerVM
+		/// </summary>
+		/// <param name="player">Player.</param>
+		/// <param name="modifier">Modifier.</param>
+		public void PlayerClick (LMPlayerVM player, ButtonModifier modifier)
 		{
 			App.Current.EventsBroker.Publish (new TagPlayerEvent {
 				Player = player,
 				Team = GetTeam (player),
-				HasModifier = clickWithModif,
+				Modifier = modifier,
 				Sender = player
 			});
 		}

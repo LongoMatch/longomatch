@@ -58,6 +58,19 @@ namespace LongoMatch.Core.ViewModel
 		}
 
 		/// <summary>
+		/// Gets or sets the display name used for a team
+		/// </summary>
+		/// <value>the display name</value>
+		public string TeamName {
+			get {
+				return Model.TeamName;
+			}
+			set {
+				Model.TeamName = value;
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets the formation.
 		/// </summary>
 		/// <value>The formation.</value>
@@ -93,13 +106,6 @@ namespace LongoMatch.Core.ViewModel
 		/// </summary>
 		/// <value>The playing players list.</value>
 		public IEnumerable<LMPlayerVM> PlayingPlayersList {
-			//get {
-			//	if (TemplateEditorMode) {
-			//		return SubViewModel.ViewModels.OfType<LMPlayerVM> ();
-			//	} else {
-			//		return SubViewModel.ViewModels.OfType<LMPlayerVM> ().Where (p => p.Playing);
-			//	}
-			//}
 			get;
 			set;
 		}

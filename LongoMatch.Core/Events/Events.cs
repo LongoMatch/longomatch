@@ -27,7 +27,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Events
 {
-    public class OpenProjectIDEvent : Event
+	public class OpenProjectIDEvent : Event
 	{
 		public Guid ProjectID { get; set; }
 
@@ -80,6 +80,10 @@ namespace LongoMatch.Core.Events
 	public class QueryToolsEvent : Event
 	{
 		public List<ITool> Tools { get; set; }
+	}
+
+	public class UpdateLineup : Event
+	{
 	}
 }
 
