@@ -93,15 +93,6 @@ namespace LongoMatch.Core.ViewModel
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Core.ViewModel.LMTeamVM"/> is tagged.
-		/// </summary>
-		/// <value><c>true</c> if tagged; otherwise, <c>false</c>.</value>
-		public bool Tagged {
-			get;
-			set;
-		}
-
-		/// <summary>
 		/// Gets the playing players list.
 		/// </summary>
 		/// <value>The playing players list.</value>

@@ -28,6 +28,7 @@ namespace LongoMatch.Services.Controller
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	[Controller (SubstitutionsEditorState.NAME)]
 	[Controller (PlayEditorState.NAME)]
+	[Controller (LMDrawingToolState.NAME)]
 	public class LMTeamTaggerController : ControllerBase
 	{
 		LMTeamTaggerVM teamTagger;
@@ -198,6 +199,7 @@ namespace LongoMatch.Services.Controller
 				if (teamTagger.HomeTeam.Selection.Any ()) {
 					teamTagger.HomeTeam.Selection.Clear ();
 				}
+				teamTagger.HomeTeam.Tagged = false;
 			}
 
 			if (teamTagger.AwayTeam != null) {
@@ -207,6 +209,7 @@ namespace LongoMatch.Services.Controller
 				if (teamTagger.AwayTeam.Selection.Any ()) {
 					teamTagger.AwayTeam.Selection.Clear ();
 				}
+				teamTagger.AwayTeam.Tagged = false;
 			}
 		}
 
