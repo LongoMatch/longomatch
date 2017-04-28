@@ -25,6 +25,10 @@ using VAS.Core.MVVMC;
 
 namespace LongoMatch.Services.ViewModel
 {
+	/// <summary>
+	/// A ViewModel used in SubstitutionEditor View, it needs a TimelineEvent of type SubstitutionEvent
+	/// or LineupEvent, it has a TeamTaggerVM that auto initializes based on the event type
+	/// </summary>
 	public class SubstitutionsEditorVM : LMProjectVM, ILMTeamTaggerVM, ILMProjectVM
 	{
 		LMTimelineEvent play;
@@ -58,7 +62,7 @@ namespace LongoMatch.Services.ViewModel
 		/// <value>The team tagger.</value>
 		public LMTeamTaggerVM TeamTagger {
 			get;
-			set;
+			protected set;
 		}
 
 		/// <summary>
@@ -81,7 +85,7 @@ namespace LongoMatch.Services.ViewModel
 		public LMPlayerVM OutPlayer { get; set; }
 
 		/// <summary>
-		/// Command to save a template.
+		/// Command to save a Event.
 		/// </summary>
 		/// <value>The save command.</value>
 		[PropertyChanged.DoNotNotify]
@@ -102,23 +106,23 @@ namespace LongoMatch.Services.ViewModel
 			UpdateViewModels ();
 		}
 
-		Task Save ()
+		async Task Save ()
 		{
 			if (LineupMode) {
-				return App.Current.EventsBroker.Publish (new UpdateEvent<LineupEvent> {
-					Object = play as LineupEvent
+				await App.Current.EventsBroker.Publish (new UpdateEvent<LineupEvent> {
+					Object = Play as LineupEvent
 				});
 			} else {
-				return App.Current.EventsBroker.Publish (new UpdateEvent<SubstitutionEvent> {
-					Object = play as SubstitutionEvent
+				await App.Current.EventsBroker.Publish (new UpdateEvent<SubstitutionEvent> {
+					Object = Play as SubstitutionEvent
 				});
 			}
 		}
 
 		void UpdateViewModels ()
 		{
-			if (play != null && Model != null) {
-				var substitutionEvent = play as SubstitutionEvent;
+			if (Play != null && Model != null) {
+				var substitutionEvent = Play as SubstitutionEvent;
 				if (substitutionEvent != null) {
 					InPlayer.Model = substitutionEvent.In;
 					OutPlayer.Model = substitutionEvent.Out;
@@ -132,7 +136,7 @@ namespace LongoMatch.Services.ViewModel
 
 					}
 				}
-				var lineupEvent = play as LineupEvent;
+				var lineupEvent = Play as LineupEvent;
 				if (lineupEvent != null) {
 					LineupMode = true;
 					TeamTagger.HomeTeam = HomeTeam;

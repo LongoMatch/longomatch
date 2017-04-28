@@ -59,8 +59,6 @@ namespace LongoMatch.Gui.Dialog
 			};
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea3));
-			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
-			teamtagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
 			nameentry.Changed += HandleChanged;
 		}
 
@@ -116,13 +114,7 @@ namespace LongoMatch.Gui.Dialog
 				notes.Play = editorVM.Play;
 			}
 			if (editorVM.EditionSettings.EditPlayers) {
-				//FIXME: vmartos
 				teamtagger.ViewModel = editorVM.TeamTagger;
-				/* Force lineup update */
-				//teamtagger.CurrentTime = editorVM.Play.EventTime;
-				//FIXME: we should select through the VM
-				//teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
-				//editorVM.Play.Teams.Cast<LMTeam> ().ToList ());
 			}
 
 			if (editorVM.EditionSettings.EditTags) {
@@ -250,16 +242,6 @@ namespace LongoMatch.Gui.Dialog
 			if (editorVM.Play != null) {
 				editorVM.Play.Name = nameentry.Text;
 			}
-		}
-
-		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
-		{
-			editorVM.Play.Players.Replace (players);
-		}
-
-		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
-		{
-			editorVM.Play.Teams.Replace (teams);
 		}
 	}
 }

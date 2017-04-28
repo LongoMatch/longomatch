@@ -61,6 +61,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\PlayEditorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
