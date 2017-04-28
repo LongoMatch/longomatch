@@ -50,7 +50,6 @@ namespace LongoMatch.Services.Controller
 			set {
 				project = value;
 				if (project != null) {
-					SetLineup ();
 					UpdateLineup ();
 				}
 			}
@@ -121,6 +120,8 @@ namespace LongoMatch.Services.Controller
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<TagPlayerEvent> (HandleTagPlayerEvent);
 			App.Current.EventsBroker.Subscribe<UpdateLineup> (HandleUpdateLineup);
+			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
+			App.Current.EventsBroker.Subscribe<EventEditedEvent> (HandleEventEdited);
 			UpdateLineup ();
 		}
 
@@ -129,6 +130,8 @@ namespace LongoMatch.Services.Controller
 			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<TagPlayerEvent> (HandleTagPlayerEvent);
 			App.Current.EventsBroker.Unsubscribe<UpdateLineup> (HandleUpdateLineup);
+			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
+			App.Current.EventsBroker.Unsubscribe<EventEditedEvent> (HandleEventEdited);
 		}
 
 		void HandleTagPlayerEvent (TagPlayerEvent e)
@@ -295,6 +298,20 @@ namespace LongoMatch.Services.Controller
 			}
 		}
 
+		void UpdatePlayersPosition ()
+		{
+			if (project != null) {
+				UpdateLineup ();
+			} else {
+				if (teamTagger.HomeTeam != null) {
+					ChangeLineUp (teamTagger.HomeTeam);
+				}
+				if (teamTagger.AwayTeam != null) {
+					ChangeLineUp (teamTagger.AwayTeam);
+				}
+			}
+		}
+
 		void ChangeLineUp (LMTeamVM team)
 		{
 			if (team != null) {
@@ -315,9 +332,8 @@ namespace LongoMatch.Services.Controller
 			}
 
 			List<LMPlayerVM> initialHomePlayerList, initialAwayPlayerList;
-			if (isAnalysis) {
-				SetLineup ();
-			}
+
+			SetLineup ();
 			initialHomePlayerList = homeStartingPlayers.Concat (homeBenchPlayers).ToList ();
 			initialAwayPlayerList = awayStartingPlayers.Concat (awayBenchPlayers).ToList ();
 
@@ -349,15 +365,20 @@ namespace LongoMatch.Services.Controller
 
 		void HandleUpdateLineup (UpdateLineup e)
 		{
-			if (project != null) {
-				UpdateLineup ();
-			} else {
-				if (teamTagger.HomeTeam != null) {
-					ChangeLineUp (teamTagger.HomeTeam);
-				}
-				if (teamTagger.AwayTeam != null) {
-					ChangeLineUp (teamTagger.AwayTeam);
-				}
+			UpdatePlayersPosition ();
+		}
+
+		void HandleEventsDeletedEvent (EventsDeletedEvent e)
+		{
+			if (e.TimelineEvents.Count (s => s is SubstitutionEvent) != 0) {
+				UpdatePlayersPosition ();
+			}
+		}
+
+		void HandleEventEdited (EventEditedEvent e)
+		{
+			if (e.TimelineEvent is SubstitutionEvent || e.TimelineEvent is LineupEvent) {
+				UpdatePlayersPosition ();
 			}
 		}
 	}
