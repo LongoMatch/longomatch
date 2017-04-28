@@ -16,18 +16,6 @@ namespace LongoMatch.Services.ViewModel
 			TeamTagger.SubstitutionMode = true;
 		}
 
-		public new LMProject Model {
-			get {
-				return base.Model;
-			}
-			set {
-				base.Model = value;
-				if (value != null) {
-					ResetTeamTagger (value);
-				}
-			}
-		}
-
 		/// <summary>
 		/// Gets the team tagger.
 		/// </summary>
@@ -36,11 +24,17 @@ namespace LongoMatch.Services.ViewModel
 			get;
 		}
 
-		void ResetTeamTagger (LMProject project)
+		protected override void SyncLoadedModel ()
 		{
-			TeamTagger.AwayTeam.Model = project.VisitorTeamTemplate;
-			TeamTagger.HomeTeam.Model = project.LocalTeamTemplate;
-			TeamTagger.Background = project.Dashboard?.FieldBackground;
+			base.SyncLoadedModel ();
+			ResetTeamTagger ();
+		}
+
+		void ResetTeamTagger ()
+		{
+			TeamTagger.AwayTeam.Model = Model.VisitorTeamTemplate;
+			TeamTagger.HomeTeam.Model = Model.LocalTeamTemplate;
+			TeamTagger.Background = Model.Dashboard?.FieldBackground;
 		}
 	}
 }

@@ -59,13 +59,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		List<LMPlayerView> homeBenchPlayers, awayBenchPlayers;
 		List<LMPlayerView> homePlayers, awayPlayers;
 		BenchObject homeBench, awayBench;
-		LMPlayerView clickedPlayer, substitutionPlayer;
+		LMPlayerView clickedPlayer;
 		ButtonObject clickedButton;
 		FieldObject field;
 		int NTeams;
 		Point offset;
 		double scaleX, scaleY;
-		Time lastTime, currentTime;
 
 		public PlayersTaggerView ()
 		{
@@ -78,7 +77,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayPlayerToPlayerObject = new Dictionary<LMPlayerVM, LMPlayerView> ();
 			field = new FieldObject ();
 			SelectedPlayers = new List<LMPlayer> ();
-			lastTime = null;
 			LoadSubsButtons ();
 			LoadTeamsButtons ();
 		}
@@ -170,7 +168,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			//ResetSelection ();
 			ClearPlayers ();
 			homePlayingPlayers = awayPlayingPlayers = null;
-			lastTime = null;
 
 			homePlayers = new List<LMPlayerView> ();
 			awayPlayers = new List<LMPlayerView> ();
@@ -230,6 +227,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				field.Position = new Point (homeBench.Width + 2 * border, 0);
 				awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
 			}
+			Update ();
 		}
 
 		public override void ResetDrawArea ()
@@ -420,8 +418,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void HandleTeamClickedEvent (ICanvasObject co)
 		{
-			if (TeamSelectionChangedEvent != null)
-				TeamSelectionChangedEvent (SelectedTeams);
+			var button = co as ButtonObject;
+			if (button == homeButton) {
+				ViewModel.HomeTeam.Tagged = button.Active;
+			} else if (button == awayButton) {
+				ViewModel.AwayTeam.Tagged = button.Active;
+			}
 		}
 
 		bool clickWithModif = false;
@@ -452,15 +454,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (selection != null) {
 				clickedPlayer = selection.Drawable as LMPlayerView;
-				if (ViewModel.SubstitutionMode && substitutionPlayer != null &&
-					clickedPlayer.Team != substitutionPlayer.Team) {
-					clickedPlayer = null;
-				} else {
-					if (modif != ButtonModifier.None) {
-						clickWithModif = true;
-					}
-					(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
+				if (modif != ButtonModifier.None) {
+					clickWithModif = true;
 				}
+				(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
 			} else {
 				clickedPlayer = null;
 			}
@@ -560,26 +557,44 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
+		void Update ()
+		{
+			homeBench.Update ();
+			awayBench.Update ();
+			field.Update ();
+		}
+
 		void HandleViewModelPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			if (ViewModel.HomeTeam != null &&
-				(ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.PlayingPlayersList), sender, ViewModel.HomeTeam) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.BenchPlayersList), sender, ViewModel.HomeTeam))) {
-				LoadTeams ();
-				ReDraw ();
+			if (ViewModel.HomeTeam != null) {
+				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.PlayingPlayersList), sender, ViewModel.HomeTeam) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.BenchPlayersList), sender, ViewModel.HomeTeam))) {
+					LoadTeams ();
+					ReDraw ();
+				}
+
+				if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Tagged), sender, ViewModel.HomeTeam) ||
+					ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Tagged), sender, ViewModel)) {
+					homeButton.Active = ViewModel.HomeTeam.Tagged;
+				}
+			}
+
+			if (ViewModel.AwayTeam != null) {
+				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
+				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.PlayingPlayersList), sender, ViewModel.AwayTeam) ||
+				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.BenchPlayersList), sender, ViewModel.AwayTeam))) {
+					LoadTeams ();
+					ReDraw ();
+				}
+				if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel.AwayTeam) ||
+					ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel)) {
+					awayButton.Active = ViewModel.AwayTeam.Tagged;
+				}
 			}
 
 			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Background), sender, ViewModel)) {
 				SetFieldBackground ();
-				ReDraw ();
-			}
-
-			if (ViewModel.AwayTeam != null &&
-				(ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.PlayingPlayersList), sender, ViewModel.AwayTeam) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.BenchPlayersList), sender, ViewModel.AwayTeam))) {
-				LoadTeams ();
 				ReDraw ();
 			}
 
