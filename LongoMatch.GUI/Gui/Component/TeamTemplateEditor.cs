@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Gdk;
 using Gtk;
@@ -129,7 +130,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				if (viewModel != null) {
 					viewModel.Team.PropertyChanged += HandleTeamPropertyChanged;
-					Team = ViewModel.Team.Model as LMTeam;
+					Team = ViewModel.Team.Model;
 				}
 			}
 		}
@@ -265,8 +266,6 @@ namespace LongoMatch.Gui.Component
 		{
 			try {
 				template.FormationStr = tacticsentry.Text;
-				//FIXME:vmartos
-				//teamtagger.Reload ();
 				Edited = true;
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
@@ -314,7 +313,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
 		{
-			if (args.Event.Key == Gdk.Key.Delete) {
+			if (args.Event.Key == Gdk.Key.Delete &&
+				ViewModel.DeletePlayersCommand.CanExecute ()) {
 				ViewModel.DeletePlayersCommand.Execute ();
 			}
 		}
@@ -334,8 +334,6 @@ namespace LongoMatch.Gui.Component
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 				loadedPlayer.Photo = player;
-				//FIXME: vmartos
-				//teamtagger.Reload ();
 				Edited = true;
 			}
 		}
@@ -373,16 +371,16 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 
-		void HandleTeamPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		void HandleTeamPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (ViewModel.Team.NeedsSync (e.PropertyName, nameof (ViewModel.Team.Model),
 											  sender, ViewModel.Team)) {
-				Team = ViewModel.Team.Model as LMTeam;
+				Team = ViewModel.Team.Model;
 			}
 			if (ViewModel.Team.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.Team.Selection)}",
 											  sender, ViewModel.Team)) {
 				if (ViewModel.Team.Selection.Count == 1) {
-					LoadPlayer (ViewModel.Team.Selection.First ().Model as LMPlayer);
+					LoadPlayer ((LMPlayer)ViewModel.Team.Selection.First ().Model);
 				} else {
 					ClearPlayer ();
 				}

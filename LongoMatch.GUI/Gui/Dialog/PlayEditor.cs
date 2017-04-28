@@ -17,11 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;

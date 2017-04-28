@@ -85,11 +85,10 @@ namespace LongoMatch.Gui.Dialog
 			}
 			set {
 				editorVM = value;
+				tagger.ViewModel = editorVM?.TeamTagger;
+				inpo.ViewModel = editorVM?.InPlayer;
+				outpo.ViewModel = editorVM?.OutPlayer;
 				if (editorVM != null) {
-					//FIXME: vmartos
-					tagger.ViewModel = editorVM.TeamTagger;
-					inpo.ViewModel = editorVM.InPlayer;
-					outpo.ViewModel = editorVM.OutPlayer;
 					playershbox.Visible = !editorVM.LineupMode;
 				}
 			}

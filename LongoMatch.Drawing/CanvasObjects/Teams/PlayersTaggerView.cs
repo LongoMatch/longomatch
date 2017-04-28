@@ -43,9 +43,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		 * For this reason we can't use the canvas selection logic and we have
 		 * to handle it internally
 		 */
-		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
-		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
-		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 
 		LMTeamTaggerVM viewModel;
 

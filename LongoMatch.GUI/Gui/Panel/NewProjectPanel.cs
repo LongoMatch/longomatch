@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
@@ -127,7 +128,6 @@ namespace LongoMatch.Gui.Panel
 					FillProjectDetails ();
 				}
 				UpdateTitle ();
-				//FIXME: vmartos
 				viewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 				teamtagger.ViewModel = viewModel.TeamTagger;
 			}
@@ -639,16 +639,13 @@ namespace LongoMatch.Gui.Panel
 				item.Activated += (sender, e) => {
 					hometemplate.RemovePlayers (players, false);
 					awaytemplate.RemovePlayers (players, false);
-					//FIXME: vmartos
-					//teamtagger.Reload ();
+					App.Current.EventsBroker.Publish (new UpdateLineup ());
 				};
 			} else {
 				item = new MenuItem ("Reset players");
 				item.Activated += (sender, e) => {
 					hometemplate.ResetPlayers ();
 					awaytemplate.ResetPlayers ();
-					//FIXME: vmartos
-					//teamtagger.Reload ();
 				};
 			}
 			menu.Add (item);
@@ -671,8 +668,6 @@ namespace LongoMatch.Gui.Panel
 
 			try {
 				team.FormationStr = entry.Text;
-				//FIXME: vmartos
-				//teamtagger.Reload ();
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
@@ -721,7 +716,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
 		}
-
 	}
 }
 

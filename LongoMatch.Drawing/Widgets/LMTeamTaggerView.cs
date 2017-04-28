@@ -35,9 +35,6 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class LMTeamTaggerView : SelectionCanvas, ICanvasView<LMTeamTaggerVM>
 	{
-		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
-		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
-		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
 		LMTeamTaggerVM viewModel;
@@ -47,9 +44,6 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			Accuracy = 0;
 			tagger = new PlayersTaggerView ();
-			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
-			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
-			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
 			BackgroundColor = App.Current.Style.PaletteBackground;
 			ObjectsCanMove = false;
 			AddObject (tagger);
@@ -121,29 +115,6 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.Height = widget.Height;
 			}
 			base.HandleSizeChangedEvent ();
-		}
-
-		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-											 SubstitutionReason reason, Time time)
-		{
-			widget?.ReDraw ();
-			if (PlayersSubstitutionEvent != null) {
-				PlayersSubstitutionEvent (team, p1, p2, reason, time);
-			}
-		}
-
-		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
-		{
-			if (PlayersSelectionChangedEvent != null) {
-				PlayersSelectionChangedEvent (players);
-			}
-		}
-
-		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
-		{
-			if (TeamSelectionChangedEvent != null) {
-				TeamSelectionChangedEvent (teams);
-			}
 		}
 	}
 }

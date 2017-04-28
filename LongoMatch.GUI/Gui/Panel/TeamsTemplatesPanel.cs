@@ -56,8 +56,6 @@ namespace LongoMatch.Gui.Panel
 
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
-			//newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			//deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			newteambutton.Entered += HandleEnterTeamButton;
@@ -73,14 +71,9 @@ namespace LongoMatch.Gui.Panel
 
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
-			//newplayerbutton1.Clicked += (object sender, EventArgs e) => {
-			//	teamtemplateeditor1.AddPlayer ();
-			//};
+
 			deleteplayerbutton.Entered += HandleEnterPlayerButton;
 			deleteplayerbutton.Left += HandleLeftPlayerButton;
-			//deleteplayerbutton.Clicked += (object sender, EventArgs e) => {
-			//	teamtemplateeditor1.DeleteSelectedPlayers ();
-			//};
 
 			teamsStore = new ListStore (typeof (LMTeamVM), typeof (bool));
 
@@ -153,7 +146,6 @@ namespace LongoMatch.Gui.Panel
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					//FIXME: vmartos
 					teamtemplateeditor1.ViewModel = viewModel.TeamEditor;
 					teamtemplateeditor1.TeamTagger = viewModel.TeamTagger;
 					Select (ViewModel.LoadedTemplate);
