@@ -7,7 +7,6 @@ using LongoMatch.Core;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
@@ -62,7 +61,7 @@ namespace LongoMatch.Services.Controller
 		{
 			foreach (var player in teamEditor.Team.Selection) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + player.Name;
-				if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
+				if (App.Current.Dialogs.QuestionMessage (msg, null).Result) {
 					teamEditor.Team.ViewModels.Remove (player);
 				}
 			}

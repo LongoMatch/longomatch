@@ -123,7 +123,9 @@ namespace Tests
 			LMProject p = new LMProject ();
 			p.Dashboard = LMDashboard.DefaultTemplate (10);
 			p.LocalTeamTemplate = LMTeam.DefaultTemplate (5);
+			p.LocalTeamTemplate.FormationStr = "2-2";
 			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (5);
+			p.VisitorTeamTemplate.FormationStr = "2-2";
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",

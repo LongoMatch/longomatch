@@ -136,6 +136,10 @@
     <Compile Include="Controller\TestLMTaggingController.cs" />
     <Compile Include="State\TestFakeLiveProjectAnalysisState.cs" />
     <Compile Include="State\TestLiveProjectAnalysisState.cs" />
+    <Compile Include="Controller\TestLMTeamTaggerController.cs" />
+    <Compile Include="Controller\TestSubstitutionsEditorController.cs" />
+    <Compile Include="Controller\TestPlayEditorController.cs" />
+    <Compile Include="Controller\TestLMTeamEditorController.cs" />
     <Compile Include="Services\ViewModel\TestPlayEditorVM.cs" />
     <Compile Include="Services\ViewModel\TestSubstitutionsEditorVM.cs" />
     <Compile Include="Services\ViewModel\TestNewProjectPanelVM.cs" />
