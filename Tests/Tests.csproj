@@ -136,6 +136,11 @@
     <Compile Include="Controller\TestLMTaggingController.cs" />
     <Compile Include="State\TestFakeLiveProjectAnalysisState.cs" />
     <Compile Include="State\TestLiveProjectAnalysisState.cs" />
+    <Compile Include="Services\ViewModel\TestPlayEditorVM.cs" />
+    <Compile Include="Services\ViewModel\TestSubstitutionsEditorVM.cs" />
+    <Compile Include="Services\ViewModel\TestNewProjectPanelVM.cs" />
+    <Compile Include="Services\ViewModel\TestTeamsManagerVM.cs" />
+    <Compile Include="Services\ViewModel\TestLMDrawingToolVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
@@ -225,6 +230,7 @@
     <Folder Include="Controller\" />
     <Folder Include="State\" />
     <Folder Include="Core\ViewModel\" />
+    <Folder Include="Services\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

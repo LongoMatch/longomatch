@@ -32,8 +32,8 @@ namespace LongoMatch.Services.ViewModel
 
 		void ResetTeamTagger ()
 		{
-			TeamTagger.AwayTeam.Model = Model.VisitorTeamTemplate;
-			TeamTagger.HomeTeam.Model = Model.LocalTeamTemplate;
+			TeamTagger.AwayTeam = AwayTeam;
+			TeamTagger.HomeTeam = HomeTeam;
 			TeamTagger.Background = Model.Dashboard?.FieldBackground;
 		}
 	}

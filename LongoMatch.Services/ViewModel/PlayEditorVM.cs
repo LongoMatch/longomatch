@@ -16,13 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Threading.Tasks;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
 using VAS.Core.Common;
-using VAS.Core.Events;
-using VAS.Core.MVVMC;
 
 namespace LongoMatch.Services.ViewModel
 {
