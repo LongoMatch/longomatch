@@ -22,13 +22,9 @@ using Gtk;
 using LongoMatch.Core.Store;
 using VAS;
 using VAS.Core;
-using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Interfaces;
 using VAS.Core.Store;
-using VAS.Core.Store.Playlists;
 using VAS.UI.Menus;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -39,6 +35,11 @@ namespace LongoMatch.Gui.Menus
 		{
 			PrepareMenu (project, plays, eventType, time, eventTypes, editableName);
 			Popup ();
+		}
+
+		public override void ShowMenu (Project project, List<TimelineEvent> plays)
+		{
+			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
 		protected override void PrepareMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,

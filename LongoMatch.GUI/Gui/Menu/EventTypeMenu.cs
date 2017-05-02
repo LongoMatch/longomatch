@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Menus
 		{
 			editItem = new MenuItem (Catalog.GetString ("Edit properties"));
 
-			sortItem = new MenuItem ();
+			sortItem = new MenuItem (Catalog.GetString ("Sort Method"));
 			sortMenu = new Menu ();
 
 			sortByName = new RadioMenuItem (Catalog.GetString ("Sort by name"));
@@ -67,15 +67,19 @@ namespace LongoMatch.Gui.Menus
 			sortByDuration = new RadioMenuItem (Catalog.GetString ("Sort by duration"));
 
 			sortByName.Group = new GLib.SList (IntPtr.Zero);
+			sortByName.Active = false;
 			sortByStart.Group = sortByName.Group;
+			sortByStart.Active = false;
 			sortByStop.Group = sortByName.Group;
+			sortByStop.Active = false;
 			sortByDuration.Group = sortByName.Group;
+			sortByDuration.Active = false;
 
 			addToPlaylistMenuItem = new MenuItem ();
 			exportToVideoFileItem = new MenuItem ();
 
 			Add (editItem);
-			Add (sortMenu);
+			Add (sortItem);
 			sortItem.Submenu = sortMenu;
 			sortMenu.Add (sortByName);
 			sortMenu.Add (sortByStart);
@@ -91,6 +95,7 @@ namespace LongoMatch.Gui.Menus
 
 			editItem.Activated += (s, e) => EditProperties (eventType);
 			exportToVideoFileItem.Activated += HandleExportEvents;
+			sortByName.Active = true;
 			ShowAll ();
 		}
 
