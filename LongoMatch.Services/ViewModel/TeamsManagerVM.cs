@@ -42,12 +42,13 @@ namespace LongoMatch.Services.ViewModel
 			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
-			TeamTagger.HomeTeam = LoadedTemplate as LMTeamVM;
+			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
 			TeamTagger.AwayTeam = null;
 			TeamTagger.Background = App.Current.HHalfFieldBackground;
 			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			TeamEditor = new LMTeamEditorVM ();
-			TeamEditor.Team = LoadedTemplate as LMTeamVM;
+			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
+			TeamEditor.Team.TemplateEditorMode = true;
 		}
 
 		/// <summary>

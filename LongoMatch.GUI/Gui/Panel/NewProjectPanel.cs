@@ -646,6 +646,7 @@ namespace LongoMatch.Gui.Panel
 				item.Activated += (sender, e) => {
 					hometemplate.ResetPlayers ();
 					awaytemplate.ResetPlayers ();
+					App.Current.EventsBroker.Publish (new UpdateLineup ());
 				};
 			}
 			menu.Add (item);

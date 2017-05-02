@@ -97,15 +97,19 @@ namespace LongoMatch.Core.ViewModel
 		/// </summary>
 		/// <value>The playing players list.</value>
 		public IEnumerable<LMPlayerVM> PlayingPlayersList {
-			get;
-			set;
+			get {
+				if (TemplateEditorMode) {
+					return ViewModels.OfType<LMPlayerVM> ();
+				}
+				return ViewModels.OfType<LMPlayerVM> ().Where (p => p.Playing);
+			}
 		}
 
 		/// <summary>
 		/// Gets the starting players list.
 		/// </summary>
 		/// <value>The starting players list.</value>
-		public IEnumerable<LMPlayerVM> StartingPlayersList {
+		public IEnumerable<LMPlayerVM> FieldPlayersList {
 			get;
 			set;
 		}
@@ -127,18 +131,9 @@ namespace LongoMatch.Core.ViewModel
 
 		void UpdatePlayerList ()
 		{
-			var playersList = SubViewModel.ViewModels.OfType<LMPlayerVM> ();
-
-			int count = Math.Min (Model.StartingPlayers, playersList.Count ());
-			StartingPlayersList = playersList.Take (count);
-			PlayingPlayersList = StartingPlayersList;
-			foreach (var player in PlayingPlayersList) {
-				player.Playing = true;
-			}
-			BenchPlayersList = playersList.Except (PlayingPlayersList);
-			foreach (var player in BenchPlayersList) {
-				player.Playing = false;
-			}
+			int count = Math.Min (Model.StartingPlayers, PlayingPlayersList.Count ());
+			FieldPlayersList = PlayingPlayersList.Take (count);
+			BenchPlayersList = PlayingPlayersList.Except (FieldPlayersList);
 		}
 	}
 }

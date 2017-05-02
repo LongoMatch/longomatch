@@ -20,27 +20,17 @@ namespace LongoMatch.Services.Controller
 	[Controller (SubstitutionsEditorState.NAME)]
 	public class SubstitutionsEditorController : ControllerBase
 	{
-		SubstitutionsEditorVM viewModel;
+		SubstitutionsEditorVM substitutionEditor;
 		LMPlayerVM taggedPlayer;
-
-		SubstitutionsEditorVM ViewModel {
-			get {
-				return viewModel;
-			}
-
-			set {
-				viewModel = value;
-				if (viewModel != null) {
-					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
-				}
-			}
-		}
 
 		public override void Start ()
 		{
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<UpdateEvent<SubstitutionEvent>> (HandleSaveSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<UpdateEvent<LineupEvent>> (HandleSaveLineupEvent);
+			if (substitutionEditor != null) {
+				substitutionEditor.PropertyChanged += HandleViewModelPropertyChanged;
+			}
 		}
 
 		public override void Stop ()
@@ -48,21 +38,24 @@ namespace LongoMatch.Services.Controller
 			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<UpdateEvent<SubstitutionEvent>> (HandleSaveSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<UpdateEvent<LineupEvent>> (HandleSaveLineupEvent);
+			if (substitutionEditor != null) {
+				substitutionEditor.PropertyChanged -= HandleViewModelPropertyChanged;
+			}
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			ViewModel = (SubstitutionsEditorVM)viewModel;
+			substitutionEditor = (SubstitutionsEditorVM)viewModel;
 		}
 
 		void SwitchPlayers ()
 		{
 			LMPlayerVM inOutPlayer = null;
-			if (ViewModel.InPlayer.Tagged) {
-				inOutPlayer = ViewModel.InPlayer;
+			if (substitutionEditor.InPlayer.Tagged) {
+				inOutPlayer = substitutionEditor.InPlayer;
 			}
-			if (ViewModel.OutPlayer.Tagged) {
-				inOutPlayer = ViewModel.OutPlayer;
+			if (substitutionEditor.OutPlayer.Tagged) {
+				inOutPlayer = substitutionEditor.OutPlayer;
 			}
 
 			if (inOutPlayer != null && taggedPlayer != null) {
@@ -75,15 +68,15 @@ namespace LongoMatch.Services.Controller
 
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (!ViewModel.LineupMode) {
+			if (!substitutionEditor.LineupMode) {
 				if (e.PropertyName == "Tagged") {
 					var player = sender as LMPlayerVM;
 					if (player != null) {
 						if (player.Tagged) {
-							if (player == ViewModel.InPlayer) {
-								ViewModel.OutPlayer.Tagged = false;
-							} else if (player == ViewModel.OutPlayer) {
-								ViewModel.InPlayer.Tagged = false;
+							if (player == substitutionEditor.InPlayer) {
+								substitutionEditor.OutPlayer.Tagged = false;
+							} else if (player == substitutionEditor.OutPlayer) {
+								substitutionEditor.InPlayer.Tagged = false;
 							} else {
 								taggedPlayer = player;
 							}
@@ -100,22 +93,22 @@ namespace LongoMatch.Services.Controller
 
 		void HandleSaveSubstitutionEvent (UpdateEvent<SubstitutionEvent> e)
 		{
-			e.Object.In = ViewModel.InPlayer.Model;
-			e.Object.Out = ViewModel.OutPlayer.Model;
+			e.Object.In = substitutionEditor.InPlayer.Model;
+			e.Object.Out = substitutionEditor.OutPlayer.Model;
 		}
 
 		void HandleSaveLineupEvent (UpdateEvent<LineupEvent> e)
 		{
-			e.Object.HomeStartingPlayers = ViewModel.TeamTagger.HomeTeam.StartingPlayersList.
+			e.Object.HomeStartingPlayers = substitutionEditor.TeamTagger.HomeTeam.FieldPlayersList.
 				Select (p => p.Model).OfType<LMPlayer> ().ToList ();
 
-			e.Object.HomeBenchPlayers = ViewModel.TeamTagger.HomeTeam.BenchPlayersList.
+			e.Object.HomeBenchPlayers = substitutionEditor.TeamTagger.HomeTeam.BenchPlayersList.
 				Select (p => p.Model).OfType<LMPlayer> ().ToList ();
 
-			e.Object.AwayStartingPlayers = ViewModel.TeamTagger.AwayTeam.StartingPlayersList.
+			e.Object.AwayStartingPlayers = substitutionEditor.TeamTagger.AwayTeam.FieldPlayersList.
 				Select (p => p.Model).OfType<LMPlayer> ().ToList ();
 
-			e.Object.AwayBenchPlayers = ViewModel.TeamTagger.AwayTeam.BenchPlayersList.
+			e.Object.AwayBenchPlayers = substitutionEditor.TeamTagger.AwayTeam.BenchPlayersList.
 				Select (p => p.Model).OfType<LMPlayer> ().ToList ();
 		}
 	}

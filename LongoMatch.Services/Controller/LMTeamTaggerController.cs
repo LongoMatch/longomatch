@@ -21,6 +21,11 @@ using VAS.Core.ViewModel;
 
 namespace LongoMatch.Services.Controller
 {
+	/// <summary>
+	/// LM Team Tagger Controller, is the responsible of tag (select) players and teams,
+	/// emit substitutions events, update the players in the field/bench based on the current
+	/// playing time, formation, etc.
+	/// </summary>
 	[Controller (NewProjectState.NAME)]
 	[Controller (TeamsManagerState.NAME)]
 	[Controller (ProjectAnalysisState.NAME)]
@@ -108,7 +113,7 @@ namespace LongoMatch.Services.Controller
 			var analysisVM = viewModel as IAnalysisViewModel;
 			if (analysisVM != null) {
 				isAnalysis = true;
-				Project = analysisVM.Project as LMProjectVM;
+				Project = (LMProjectVM)analysisVM.Project;
 				VideoPlayer = analysisVM.VideoPlayer;
 			} else {
 				Project = (viewModel as ILMProjectVM)?.Project;
@@ -140,6 +145,8 @@ namespace LongoMatch.Services.Controller
 				if (substitutionPlayer.Key == null) {
 					substitutionPlayer = new KeyValuePair<PlayerVM, TeamVM> (e.Player, e.Team);
 					e.Player.Tagged = true;
+				} else if (substitutionPlayer.Key == e.Player) {
+					ClearSelection ();
 				} else if (substitutionPlayer.Value == e.Team) {
 					e.Player.Tagged = true;
 					EmitSubstitutionEvent (e.Player as LMPlayerVM, substitutionPlayer.Key as LMPlayerVM, e.Team as LMTeamVM);
@@ -219,7 +226,7 @@ namespace LongoMatch.Services.Controller
 		void HandleTeamPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Formation") {
-				if (project != null) {
+				if (Project != null) {
 					UpdateLineup ();
 				} else {
 					ChangeLineUp (sender as LMTeamVM);
@@ -251,7 +258,7 @@ namespace LongoMatch.Services.Controller
 		{
 			if (lastTime == null) {
 				UpdateLineup ();
-			} else if (teamTagger.CurrentTime != lastTime && project != null) {
+			} else if (teamTagger.CurrentTime != lastTime && Project != null) {
 				Time start, stop;
 				if (lastTime < teamTagger.CurrentTime) {
 					start = lastTime;
@@ -269,7 +276,7 @@ namespace LongoMatch.Services.Controller
 
 		bool LineupChanged (Time start, Time stop)
 		{
-			return project.Timeline.Model.OfType<SubstitutionEvent> ().
+			return Project.Timeline.Model.OfType<SubstitutionEvent> ().
 				Count (s => s.EventTime > start && s.EventTime <= stop) > 0;
 		}
 
@@ -280,27 +287,27 @@ namespace LongoMatch.Services.Controller
 			awayStartingPlayers.Clear ();
 			awayBenchPlayers.Clear ();
 
-			foreach (var player in project.Model.Lineup.HomeStartingPlayers) {
-				homeStartingPlayers.Add (project.Players.FirstOrDefault (
+			foreach (var player in Project.Model.Lineup.HomeStartingPlayers) {
+				homeStartingPlayers.Add (Project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
-			foreach (var player in project.Model.Lineup.HomeBenchPlayers) {
-				homeBenchPlayers.Add (project.Players.FirstOrDefault (
+			foreach (var player in Project.Model.Lineup.HomeBenchPlayers) {
+				homeBenchPlayers.Add (Project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
-			foreach (var player in project.Model.Lineup.AwayStartingPlayers) {
-				awayStartingPlayers.Add (project.Players.FirstOrDefault (
+			foreach (var player in Project.Model.Lineup.AwayStartingPlayers) {
+				awayStartingPlayers.Add (Project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
-			foreach (var player in project.Model.Lineup.AwayBenchPlayers) {
-				awayBenchPlayers.Add (project.Players.FirstOrDefault (
+			foreach (var player in Project.Model.Lineup.AwayBenchPlayers) {
+				awayBenchPlayers.Add (Project.Players.FirstOrDefault (
 					p => p.Model == player) as LMPlayerVM);
 			}
 		}
 
 		void UpdatePlayersPosition ()
 		{
-			if (project != null) {
+			if (Project != null) {
 				UpdateLineup ();
 			} else {
 				if (teamTagger.HomeTeam != null) {
@@ -315,19 +322,16 @@ namespace LongoMatch.Services.Controller
 		void ChangeLineUp (LMTeamVM team)
 		{
 			if (team != null) {
-				team.PlayingPlayersList = team.ViewModels.OfType<LMPlayerVM> ().
-					Take (team.Model.StartingPlayers);
+				team.FieldPlayersList = team.PlayingPlayersList.Take (team.Model.StartingPlayers);
 
-				team.StartingPlayersList = team.PlayingPlayersList;
-
-				team.BenchPlayersList = team.OfType<LMPlayerVM> ().
-					Except (team.PlayingPlayersList);
+				team.BenchPlayersList = team.PlayingPlayersList.
+					Except (team.FieldPlayersList);
 			}
 		}
 
 		void UpdateLineup ()
 		{
-			if (project == null) {
+			if (Project == null) {
 				return;
 			}
 
@@ -337,10 +341,10 @@ namespace LongoMatch.Services.Controller
 			initialHomePlayerList = homeStartingPlayers.Concat (homeBenchPlayers).ToList ();
 			initialAwayPlayerList = awayStartingPlayers.Concat (awayBenchPlayers).ToList ();
 
-			foreach (var ev in project.Timeline.Model.OfType<SubstitutionEvent> ().
+			foreach (var ev in Project.Timeline.Model.OfType<SubstitutionEvent> ().
 					 Where (e => e.EventTime <= teamTagger.CurrentTime)) {
 				if (ev.In != null && ev.Out != null) {
-					if (ev.Teams.Contains (project.Model.LocalTeamTemplate)) {
+					if (ev.Teams.Contains (Project.Model.LocalTeamTemplate)) {
 						var playerInVM = initialHomePlayerList.FirstOrDefault (p => p.Model == ev.In);
 						var playerOutVM = initialHomePlayerList.FirstOrDefault (p => p.Model == ev.Out);
 						initialHomePlayerList.Swap (playerInVM, playerOutVM);
@@ -352,14 +356,14 @@ namespace LongoMatch.Services.Controller
 				}
 			}
 			if (teamTagger.HomeTeam != null) {
-				teamTagger.HomeTeam.PlayingPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
-				teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Except (
-					teamTagger.HomeTeam.PlayingPlayersList);
+				teamTagger.HomeTeam.FieldPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
+				teamTagger.HomeTeam.BenchPlayersList = initialHomePlayerList.Except (
+					teamTagger.HomeTeam.FieldPlayersList);
 			}
 			if (teamTagger.AwayTeam != null) {
-				teamTagger.AwayTeam.PlayingPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
-				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
-					teamTagger.AwayTeam.PlayingPlayersList);
+				teamTagger.AwayTeam.FieldPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
+				teamTagger.AwayTeam.BenchPlayersList = initialAwayPlayerList.Except (
+					teamTagger.AwayTeam.FieldPlayersList);
 			}
 		}
 
