@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
@@ -94,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			IEnumerable<TimelineEventVM> events = viewModels.OfType<TimelineEventVM> ();
 
 			EventTypeTimelineVM categoryVM = viewModels.OfType<EventTypeTimelineVM> ().FirstOrDefault ();
-			if (!events.Any() && categoryVM != null) {
+			if (!events.Any () && categoryVM != null) {
 				events = categoryVM.ViewModels.Where (vm => vm.Visible);
 				eventTypeMenu.ShowMenu (Project.Model, categoryVM.Model, events.Select (vm => vm.Model as LMTimelineEvent).ToList ());
 			} else {

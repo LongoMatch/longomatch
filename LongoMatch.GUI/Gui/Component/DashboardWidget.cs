@@ -213,10 +213,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleActionLinksSelectedEvent (List<ActionLink> actionLinks)
+		void HandleActionLinksSelectedEvent (List<ActionLinkVM> actionLinks)
 		{
 			if (actionLinks.Count == 1) {
-				linkproperties.Link = actionLinks [0];
+				linkproperties.Link = actionLinks [0].Model;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_LINKS;
 			} else {
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
@@ -252,14 +252,14 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleActionLinkCreatedEvent (ActionLink actionLink)
+		void HandleActionLinkCreatedEvent (ActionLinkVM actionLink)
 		{
 			//			if (template.HasCircularDependencies ()) {
 			//				Config.GUIToolkit.ErrorMessage (Catalog.GetString (
 			//					"This linking option is not valid: infinite loop."));
 			//				RemoveLink (actionLink, true);
 			//			}
-			HandleActionLinksSelectedEvent (new List<ActionLink> { actionLink });
+			HandleActionLinksSelectedEvent (new List<ActionLinkVM> { actionLink });
 		}
 
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
@@ -281,7 +281,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (List<DashboardButtonVM> buttons, List<ActionLink> links)
+		void HandleShowMenuEvent (List<DashboardButtonVM> buttons, List<ActionLinkVM> links)
 		{
 			Menu menu;
 			MenuItem delbut, dupbut;
@@ -303,8 +303,9 @@ namespace LongoMatch.Gui.Component
 																   commandParam: button);
 				menu.Add (dupbut);
 			}
-			foreach (ActionLink link in links) {
-				delbut = ViewModel.DeleteLink.CreateMenuItem ($"{ViewModel.DeleteLink.Text}: {link}", commandParam: link);
+
+			foreach (ActionLinkVM link in links) {
+				delbut = ViewModel.DeleteLink.CreateMenuItem ($"{ViewModel.DeleteLink.Text}: {link.Name}", commandParam: link);
 				menu.Add (delbut);
 			}
 			menu.ShowAll ();
