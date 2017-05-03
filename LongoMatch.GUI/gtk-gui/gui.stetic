@@ -830,9 +830,21 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator1">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -843,9 +855,21 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator3">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">3</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -856,9 +880,21 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
-                <property name="Position">2</property>
+                <property name="Position">4</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator5">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">5</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -869,9 +905,10 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
-                <property name="Position">3</property>
+                <property name="Position">6</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -882,9 +919,10 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
-                <property name="Position">4</property>
+                <property name="Position">7</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -895,9 +933,10 @@ Sort by competition</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="Relief">None</property>
               </widget>
               <packing>
-                <property name="Position">5</property>
+                <property name="Position">8</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
