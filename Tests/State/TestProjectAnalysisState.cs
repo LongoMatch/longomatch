@@ -20,6 +20,7 @@ using NUnit.Framework;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Store;
 
 namespace Tests.State
 {
@@ -36,6 +37,7 @@ namespace Tests.State
 			var capturerMock = new Mock<IFramesCapturer> ();
 			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
+			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), true)).Returns (new MediaFile());
 			App.Current.MultimediaToolkit = mtkMock.Object;
 			App.Current.HotkeysService = hotkeysMock.Object;
 		}
