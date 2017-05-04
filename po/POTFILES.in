@@ -17,7 +17,7 @@ LongoMatch.DB/Views/PlayersView.cs
 LongoMatch.DB/Views/ProjectsView.cs
 LongoMatch.DB/Views/TeamsView.cs
 LongoMatch.DB/Views/TimelineEventsView.cs
-LongoMatch.Drawing/Widgets/CamerasLabels.cs
+LongoMatch.Drawing/Widgets/CamerasLabelsView.cs
 LongoMatch.Drawing/Widgets/LMTimelineLabels.cs
 LongoMatch.GUI/ProjectFileMenuLoader.cs
 LongoMatch.GUI/ProjectToolsMenuLoader.cs
@@ -55,6 +55,7 @@ LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs
 LongoMatch.GUI/Gui/Menu/PlayerMenu.cs
 LongoMatch.GUI/Gui/Menu/SportsPlaysMenu.cs
+LongoMatch.GUI/Gui/Panel/CameraSynchronizationPanel.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs
