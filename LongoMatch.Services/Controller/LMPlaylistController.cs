@@ -58,7 +58,7 @@ namespace LongoMatch.Services
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			base.SetViewModel (viewModel);
-			ProjectViewModel = (ProjectVM) (viewModel as dynamic);
+			ProjectViewModel = ((IProjectDealer)viewModel).Project;
 		}
 
 		void HandleNext (NextPlaylistElementEvent e)

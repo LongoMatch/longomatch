@@ -28,12 +28,10 @@ using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
-using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Services.Controller;
-using KeyAction = VAS.Core.Hotkeys.KeyAction;
 using LMKeyAction = LongoMatch.Core.Common.KeyAction;
 
 namespace LongoMatch.Services
@@ -67,7 +65,7 @@ namespace LongoMatch.Services
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			this.viewModel = (LMProjectAnalysisVM)(viewModel as dynamic);
+			this.viewModel = (LMProjectAnalysisVM)viewModel;
 			base.SetViewModel (viewModel);
 		}
 

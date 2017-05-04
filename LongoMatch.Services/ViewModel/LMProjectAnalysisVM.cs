@@ -7,12 +7,13 @@ using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>
+	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer
 	{
 		public LMProjectAnalysisVM ()
 		{

@@ -22,6 +22,7 @@ using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
@@ -46,7 +47,8 @@ namespace Tests.Services
 		public async Task ShowAsync_StatEvent_MoveToSubstitutionsEditorOk ()
 		{
 			// Arrange
-			LMProjectVM projectVM = new LMProjectVM { Model = Utils.CreateProject () };
+			var projectVM = new LMProjectAnalysisVM ();
+			projectVM.Project.Model = Utils.CreateProject ();
 			EventEditorController eventEditor = new EventEditorController ();
 			eventEditor.SetViewModel (projectVM);
 			eventEditor.Start ();
@@ -63,7 +65,8 @@ namespace Tests.Services
 		public async Task ShowAsync_StatEvent_MoveToPlayEditorOk ()
 		{
 			// Arrange
-			LMProjectVM projectVM = new LMProjectVM { Model = Utils.CreateProject () };
+			var projectVM = new LMProjectAnalysisVM ();
+			projectVM.Project.Model = Utils.CreateProject ();
 			EventEditorController eventEditor = new EventEditorController ();
 			eventEditor.SetViewModel (projectVM);
 			eventEditor.Start ();
