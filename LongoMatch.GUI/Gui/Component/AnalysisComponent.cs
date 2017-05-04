@@ -130,8 +130,8 @@ namespace LongoMatch.Gui.Component
 		{
 			var keyContext = new KeyContext ();
 			keyContext.AddAction (
-				new VKeyAction ( App.Current.HotkeysService.GetByName ("ZOOM_IN"),
-				               () => codingwidget.ZoomIn ()));
+				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_IN"),
+							   () => codingwidget.ZoomIn ()));
 			keyContext.AddAction (
 				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_OUT"),
 							   () => codingwidget.ZoomOut ()));

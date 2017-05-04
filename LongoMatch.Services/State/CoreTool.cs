@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2016 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
@@ -50,6 +50,8 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (EditPlaylistState.NAME, () => new EditPlaylistState ());
 			uiFlow.Add (PlayEditorState.NAME, () => new PlayEditorState ());
 			uiFlow.Add (SubstitutionsEditorState.NAME, () => new SubstitutionsEditorState ());
+			uiFlow.Add (CameraSynchronizationState.NAME, () => new CameraSynchronizationState ());
+			uiFlow.Add (CameraSynchronizationEditorState.NAME, () => new CameraSynchronizationEditorState ());
 		}
 
 		#region ITool implementation

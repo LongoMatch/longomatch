@@ -15,8 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
@@ -27,26 +27,21 @@ using VAS.Core.Store.Drawables;
 using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
+using VAS.Services.ViewModel;
 using Timer = VAS.Core.Store.Timer;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class CamerasTimeline : SelectionCanvas, ICanvasView<ProjectVM>
+	public class CamerasTimelineView : SelectionCanvas, ICanvasView<CameraSynchronizationVM>
 	{
-		// For cameras
-		public event CameraDraggedHandler CameraDragged;
-		public event EventHandler SelectedCameraChanged;
-		// And periods
-		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		double secondsPerPixel;
 		Time currentTime;
-
 		List<TimelineView> timelines;
-		ProjectVM viewModel;
+		CameraSynchronizationVM viewModel;
 
-		public CamerasTimeline (IWidget widget) : base (widget)
+		public CamerasTimelineView (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
 			Accuracy = VAS.Drawing.Constants.TIMELINE_ACCURACY;
@@ -54,19 +49,25 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 		}
 
-		public CamerasTimeline () : this (null)
+		public CamerasTimelineView () : this (null)
 		{
 		}
 
-		public ProjectVM ViewModel {
+		public CameraSynchronizationVM ViewModel {
 			get {
 				return viewModel;
 			}
 			set {
+				if (viewModel != null) {
+					viewModel.VideoPlayer.PropertyChanged -= HandlePropertyChanged;
+				}
 				viewModel = value;
 				timelines = new List<TimelineView> ();
 				ClearObjects ();
 				FillCanvas ();
+				if (viewModel != null) {
+					viewModel.VideoPlayer.PropertyChanged += HandlePropertyChanged;
+				}
 				widget?.ReDraw ();
 			}
 		}
@@ -76,7 +77,28 @@ namespace LongoMatch.Drawing.Widgets
 			set;
 		}
 
-		public Time CurrentTime {
+		public double SecondsPerPixel {
+			set {
+				secondsPerPixel = value;
+				Update ();
+			}
+			get {
+				return secondsPerPixel;
+			}
+		}
+
+		public CameraView SelectedCamera {
+			get {
+				return Selections.FirstOrDefault ()?.Drawable as CameraView;
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (CameraSynchronizationVM)viewModel;
+		}
+
+		Time CurrentTime {
 			set {
 				Area area;
 				double start, stop;
@@ -99,43 +121,20 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public double SecondsPerPixel {
-			set {
-				secondsPerPixel = value;
-				Update ();
-			}
-			get {
-				return secondsPerPixel;
-			}
-		}
-
-		public CameraView SelectedCamera {
-			get {
-				Selection sel = Selections.FirstOrDefault ();
-
-				if (sel != null && sel.Drawable is CameraView)
-					return sel.Drawable as CameraView;
-				else
-					return null;
-			}
-		}
-
-		public void SetViewModel (object viewModel)
-		{
-			ViewModel = (ProjectVM)viewModel;
-		}
-
 		void Update ()
 		{
+			int height = 0;
 			if (ViewModel == null)
 				return;
 
-			double width = ViewModel.FileSet.Duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
+			double width = ViewModel.Project.FileSet.Duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
 			foreach (TimelineView tl in timelines) {
 				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
+				height += (int)tl.Height;
 			}
 			WidthRequest = (int)width;
+			HeightRequest = height;
 		}
 
 		void AddTimeLine (TimelineView tl)
@@ -150,34 +149,34 @@ namespace LongoMatch.Drawing.Widgets
 			// Add the timeline for periods
 			PeriodsTimeline = new PeriodsTimelineView {
 				ShowLine = true,
-				Duration = ViewModel.FileSet.Duration,
+				Duration = ViewModel.Project.FileSet.Duration,
 				DraggingMode = NodeDraggingMode.All,
 				Height = StyleConf.TimelineCameraHeight,
 				OffsetY = 0,
 				LineColor = App.Current.Style.PaletteBackgroundLight,
 				BackgroundColor = App.Current.Style.PaletteBackground
 			};
-			PeriodsTimeline.ViewModel = ViewModel.Periods;
+			PeriodsTimeline.ViewModel = ViewModel.Project.Periods;
 			AddTimeLine (PeriodsTimeline);
 			i++;
 
-			// And for the cameras
-			foreach (MediaFileVM fileVM in ViewModel.FileSet) {
+			// Now add the timeline for the secondary cameras.
+			// The main camera does not have a timeline since its the master camera and secondary cameras are synced
+			// with respect of the main camera.
+			foreach (MediaFileVM fileVM in ViewModel.Project.FileSet.Skip (1)) {
 				CameraTimelineView cameraTimeLine = new CameraTimelineView {
 					ShowName = false,
 					ShowLine = true,
 					Height = StyleConf.TimelineCameraHeight,
 					OffsetY = i * StyleConf.TimelineCameraHeight,
-					LineColor = App.Current.Style.PaletteBackground,
-					BackgroundColor = App.Current.Style.PaletteBackgroundLight,
+					LineColor = App.Current.Style.PaletteBackgroundLight,
+					BackgroundColor = App.Current.Style.PaletteBackground,
 				};
 				cameraTimeLine.ViewModel = fileVM;
 				AddTimeLine (cameraTimeLine);
 				i++;
 			}
 			Update ();
-			// Calculate height depending on number of cameras - 1 (for the main camera) + the line for periods
-			HeightRequest = StyleConf.TimelineCameraHeight * ViewModel.FileSet.Count ();
 		}
 
 		protected override void StartMove (Selection sel)
@@ -185,7 +184,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (sel == null || sel.Drawable as TimeNodeView == null)
 				return;
 
-			(sel.Drawable as TimeNodeView).ClippingMode = NodeClippingMode.LeftStrict;
+			(sel.Drawable as TimeNodeView).ClippingMode = NodeClippingMode.NoStrict;
 
 			if (sel.Position == SelectionPosition.All) {
 				widget.SetCursor (CursorType.Selection);
@@ -199,39 +198,6 @@ namespace LongoMatch.Drawing.Widgets
 			widget.SetCursor (CursorType.Arrow);
 		}
 
-		protected override void SelectionMoved (Selection sel)
-		{
-			if (sel.Drawable is CameraView) {
-				if (CameraDragged != null) {
-					CameraView co = sel.Drawable as CameraView;
-					// Adjust offset
-					co.ViewModel.Offset = new Time (-co.TimeNode.Start.MSeconds);
-					// And notify
-					CameraDragged (co.ViewModel.Model, co.TimeNode.Model);
-				}
-			} else {
-				if (TimeNodeChanged != null) {
-					Time moveTime;
-					TimeNodeVM tn = (sel.Drawable as TimeNodeView).TimeNode;
-
-					if (sel.Position == SelectionPosition.Right) {
-						moveTime = tn.Stop;
-					} else {
-						moveTime = tn.Start;
-					}
-					TimeNodeChanged (tn.Model, moveTime);
-				}
-			}
-		}
-
-		protected override void SelectionChanged (List<Selection> sel)
-		{
-			// Fire an event
-			if (SelectedCameraChanged != null) {
-				SelectedCameraChanged (this, new EventArgs ());
-			}
-		}
-
 		protected override void ShowMenu (Point coords)
 		{
 			if (ShowTimerMenuEvent != null &&
@@ -243,6 +209,13 @@ namespace LongoMatch.Drawing.Widgets
 					t = to.Timer.Model;
 				}
 				ShowTimerMenuEvent (t, VAS.Drawing.Utils.PosToTime (coords, SecondsPerPixel));
+			}
+		}
+
+		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof (VideoPlayerVM.CurrentTime)) {
+				CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 			}
 		}
 	}
