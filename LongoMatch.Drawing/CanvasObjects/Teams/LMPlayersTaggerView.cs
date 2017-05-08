@@ -36,7 +36,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
+	public class LMPlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
 	{
 
 		/* This object can be used like single object filling a canvas or embedded
@@ -65,7 +65,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		double scaleX, scaleY;
 		ButtonModifier modifier;
 
-		public PlayersTaggerView ()
+		public LMPlayersTaggerView ()
 		{
 			Position = new Point (0, 0);
 			homeBench = new BenchObject ();

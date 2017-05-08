@@ -38,12 +38,12 @@ namespace LongoMatch.Drawing.Widgets
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
 		LMTeamTaggerVM viewModel;
-		PlayersTaggerView tagger;
+		LMPlayersTaggerView tagger;
 
 		public LMTeamTaggerView (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
-			tagger = new PlayersTaggerView ();
+			tagger = new LMPlayersTaggerView ();
 			BackgroundColor = App.Current.Style.PaletteBackground;
 			ObjectsCanMove = false;
 			AddObject (tagger);

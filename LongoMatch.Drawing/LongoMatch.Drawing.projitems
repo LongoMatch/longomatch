@@ -18,7 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\LMPlayersTaggerView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimeNodeObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
