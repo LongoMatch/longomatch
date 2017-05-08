@@ -152,7 +152,10 @@ namespace LongoMatch.Gui.Menus
 
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
-				EmitEditPlayEvent (this, null);
+				App.Current.EventsBroker.Publish (
+				new EditEventEvent {
+					TimelineEvent = plays.Single ()
+				});
 			};
 			Add (edit);
 
