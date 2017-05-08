@@ -70,9 +70,9 @@ namespace LongoMatch.Addins
 			AddinManager.Registry.Update ();
 			foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
 				string addinPath = addin.Description.AddinFile;
-				
-				if (!addinPath.StartsWith (searchPath) &&
-				    !addinPath.StartsWith (Path.GetFullPath (App.Current.baseDirectory))) {
+
+				if (!App.Current.Uninstalled && !addinPath.StartsWith (searchPath) &&
+					!addinPath.StartsWith (Path.GetFullPath (App.Current.baseDirectory))) {
 					AddinManager.Registry.DisableAddin (addin.Id);
 					Log.Debug ("Disable addin at path " + addinPath);
 				} else {
