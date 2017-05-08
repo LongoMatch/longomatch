@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2017 Fluendo S.A.
 using System;
 using System.Collections.Generic;
@@ -229,7 +229,7 @@ namespace LongoMatch.Services.Controller
 				if (Project != null) {
 					UpdateLineup ();
 				} else {
-					ChangeLineUp (sender as LMTeamVM);
+					ChangeLineUp ((LMTeamVM)sender);
 				}
 			}
 		}
@@ -319,14 +319,21 @@ namespace LongoMatch.Services.Controller
 			}
 		}
 
-		void ChangeLineUp (LMTeamVM team)
+		void ChangeLineUp (LMTeamVM team, IEnumerable<LMPlayerVM> players = null)
 		{
-			if (team != null) {
-				team.FieldPlayersList = team.PlayingPlayersList.Take (team.Model.StartingPlayers);
-
-				team.BenchPlayersList = team.PlayingPlayersList.
-					Except (team.FieldPlayersList);
+			if (players == null) {
+				players = team.CalledPlayersList;
 			}
+			var fieldPlayers = players.Take (team.Model.StartingPlayers);
+			foreach (var player in fieldPlayers) {
+				player.Playing = true;
+			}
+			var benchPlayers = players.Except (fieldPlayers);
+			foreach (var player in benchPlayers) {
+				player.Playing = false;
+			}
+			team.FieldPlayersList = fieldPlayers;
+			team.BenchPlayersList = benchPlayers;
 		}
 
 		void UpdateLineup ()
@@ -356,14 +363,10 @@ namespace LongoMatch.Services.Controller
 				}
 			}
 			if (teamTagger.HomeTeam != null) {
-				teamTagger.HomeTeam.FieldPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
-				teamTagger.HomeTeam.BenchPlayersList = initialHomePlayerList.Except (
-					teamTagger.HomeTeam.FieldPlayersList);
+				ChangeLineUp (teamTagger.HomeTeam, initialHomePlayerList);
 			}
 			if (teamTagger.AwayTeam != null) {
-				teamTagger.AwayTeam.FieldPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
-				teamTagger.AwayTeam.BenchPlayersList = initialAwayPlayerList.Except (
-					teamTagger.AwayTeam.FieldPlayersList);
+				ChangeLineUp (teamTagger.AwayTeam, initialAwayPlayerList);
 			}
 		}
 

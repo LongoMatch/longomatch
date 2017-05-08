@@ -89,19 +89,19 @@ namespace Tests.Core.Store.Templates
 			t.Name = "test";
 			t.TeamName = "team";
 
-			Assert.AreEqual (t.PlayingPlayersList.Count, 0);
+			Assert.AreEqual (t.CalledPlayersList.Count, 0);
 
 			p1 = new LMPlayer { Name = "P1", Playing = true };
 			p2 = new LMPlayer { Name = "P2", Playing = false };
 			p3 = new LMPlayer { Name = "P3", Playing = true };
 			t.List.Add (p1);
-			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
+			Assert.AreEqual (t.CalledPlayersList.Count, 1);
 			t.List.Add (p2);
-			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
+			Assert.AreEqual (t.CalledPlayersList.Count, 1);
 			t.List.Add (p3);
-			Assert.AreEqual (t.PlayingPlayersList.Count, 2);
-			Assert.AreEqual (t.PlayingPlayersList [0], p1);
-			Assert.AreEqual (t.PlayingPlayersList [1], p3);
+			Assert.AreEqual (t.CalledPlayersList.Count, 2);
+			Assert.AreEqual (t.CalledPlayersList [0], p1);
+			Assert.AreEqual (t.CalledPlayersList [1], p3);
 		}
 
 		[Test ()]

@@ -1,4 +1,4 @@
-﻿//
+//
 //  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -96,12 +96,12 @@ namespace LongoMatch.Core.ViewModel
 		/// Gets the playing players list.
 		/// </summary>
 		/// <value>The playing players list.</value>
-		public IEnumerable<LMPlayerVM> PlayingPlayersList {
+		public IEnumerable<LMPlayerVM> CalledPlayersList {
 			get {
 				if (TemplateEditorMode) {
 					return ViewModels.OfType<LMPlayerVM> ();
 				}
-				return ViewModels.OfType<LMPlayerVM> ().Where (p => p.Playing);
+				return ViewModels.OfType<LMPlayerVM> ().Where (p => p.Called);
 			}
 		}
 
@@ -131,9 +131,15 @@ namespace LongoMatch.Core.ViewModel
 
 		void UpdatePlayerList ()
 		{
-			int count = Math.Min (Model.StartingPlayers, PlayingPlayersList.Count ());
-			FieldPlayersList = PlayingPlayersList.Take (count);
-			BenchPlayersList = PlayingPlayersList.Except (FieldPlayersList);
+			int count = Math.Min (Model.StartingPlayers, CalledPlayersList.Count ());
+			FieldPlayersList = CalledPlayersList.Take (count);
+			BenchPlayersList = CalledPlayersList.Except (FieldPlayersList);
+			foreach (var player in FieldPlayersList) {
+				player.Playing = true;
+			}
+			foreach (var player in BenchPlayersList) {
+				player.Playing = false;
+			}
 		}
 	}
 }

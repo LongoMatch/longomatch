@@ -140,7 +140,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<LMPlayer> PlayingPlayersList {
+		public List<LMPlayer> CalledPlayersList {
 			get {
 				if (TemplateEditorMode) {
 					return Players.ToList ();
@@ -154,7 +154,7 @@ namespace LongoMatch.Core.Store.Templates
 		[PropertyChanged.DoNotNotify]
 		public List<LMPlayer> StartingPlayersList {
 			get {
-				List<LMPlayer> playingPlayers = PlayingPlayersList;
+				List<LMPlayer> playingPlayers = CalledPlayersList;
 				int count = Math.Min (StartingPlayers, playingPlayers.Count);
 				return playingPlayers.GetRange (0, count);
 			}
@@ -164,7 +164,7 @@ namespace LongoMatch.Core.Store.Templates
 		[PropertyChanged.DoNotNotify]
 		public List<LMPlayer> BenchPlayersList {
 			get {
-				List<LMPlayer> playingPlayers = PlayingPlayersList;
+				List<LMPlayer> playingPlayers = CalledPlayersList;
 				int starting = StartingPlayers;
 				if (playingPlayers.Count > starting) {
 					return playingPlayers.GetRange (starting, playingPlayers.Count - starting);

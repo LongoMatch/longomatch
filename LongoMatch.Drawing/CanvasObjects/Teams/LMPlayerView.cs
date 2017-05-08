@@ -125,7 +125,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				ISurface arrow;
 				Point ap;
 
-				//FIXME: vmartos this is not working
 				if (ViewModel.Playing) {
 					arrow = arrowout;
 				} else {
