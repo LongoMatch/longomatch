@@ -93,10 +93,7 @@ namespace LongoMatch.Gui.Panel
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
-
 			teamtagger?.Dispose ();
-			projectperiods1?.Destroy ();
-
 			base.OnDestroyed ();
 		}
 
