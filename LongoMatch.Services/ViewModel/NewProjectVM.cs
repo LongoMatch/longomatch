@@ -30,14 +30,7 @@ namespace LongoMatch.Services.ViewModel
 		protected override void SyncLoadedModel ()
 		{
 			base.SyncLoadedModel ();
-			ResetTeamTagger ();
-		}
-
-		void ResetTeamTagger ()
-		{
-			TeamTagger.AwayTeam = AwayTeam;
-			TeamTagger.HomeTeam = HomeTeam;
-			TeamTagger.Background = Model.Dashboard?.FieldBackground;
+			TeamTagger.ResetTeamTagger (this);
 		}
 	}
 }

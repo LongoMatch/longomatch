@@ -48,7 +48,7 @@ namespace LongoMatch.Services.ViewModel
 				base.Project = value;
 				if (base.Project != null) {
 					base.Project.PropertyChanged += HandleProjectPropertyChanged;
-					ResetTeamTagger ();
+					TeamTagger.ResetTeamTagger (base.Project);
 				}
 			}
 		}
@@ -85,17 +85,10 @@ namespace LongoMatch.Services.ViewModel
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = Project });
 		}
 
-		void ResetTeamTagger ()
-		{
-			TeamTagger.AwayTeam = Project.AwayTeam;
-			TeamTagger.HomeTeam = Project.HomeTeam;
-			TeamTagger.Background = Project.Dashboard.Model != null ? Project.Dashboard.FieldBackground : null;
-		}
-
 		void HandleProjectPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (Project.NeedsSync (e, nameof (Project.Model))) {
-				ResetTeamTagger ();
+				TeamTagger.ResetTeamTagger (Project);
 			}
 		}
 	}

@@ -121,6 +121,17 @@ namespace LongoMatch.Services.ViewModel
 			});
 		}
 
+		/// <summary>
+		/// Resets the team tagger based on a ProjectVM
+		/// </summary>
+		/// <param name="project">Project View Model</param>
+		public void ResetTeamTagger (LMProjectVM project)
+		{
+			AwayTeam = project.AwayTeam;
+			HomeTeam = project.HomeTeam;
+			Background = project.Dashboard.Model?.FieldBackground;
+		}
+
 		LMTeamVM GetTeam (LMPlayerVM player)
 		{
 			if (HomeTeam != null) {
