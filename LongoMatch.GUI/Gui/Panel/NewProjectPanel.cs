@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (NewProjectState.NAME)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel<NewProjectPanelVM>
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<NewProjectVM>
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Panel
 		LMTeamTaggerView teamtagger;
 		SizeGroup sg;
 		CameraSynchronizationEditorState cameraSynchronizationState;
-		NewProjectPanelVM viewModel;
+		NewProjectVM viewModel;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public NewProjectPanelVM ViewModel {
+		public NewProjectVM ViewModel {
 			set {
 				viewModel = value;
 				project = viewModel.Model;
@@ -153,7 +153,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (NewProjectPanelVM)viewModel;
+			ViewModel = (NewProjectVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -637,6 +637,8 @@ namespace LongoMatch.Gui.Panel
 			if (players.Count > 0) {
 				item = new MenuItem ("Remove for this match");
 				item.Activated += (sender, e) => {
+					//FIXME: this logic should be handled in a Controller (NewProjectController?)
+					// When this View is Ported fully to MVVM
 					hometemplate.RemovePlayers (players, false);
 					awaytemplate.RemovePlayers (players, false);
 					App.Current.EventsBroker.Publish (new UpdateLineup ());
@@ -644,6 +646,8 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				item = new MenuItem ("Reset players");
 				item.Activated += (sender, e) => {
+					//FIXME: this logic should be handled in a Controller (NewProjectController?)
+					// When this View is Ported fully to MVVM
 					hometemplate.ResetPlayers ();
 					awaytemplate.ResetPlayers ();
 					App.Current.EventsBroker.Publish (new UpdateLineup ());

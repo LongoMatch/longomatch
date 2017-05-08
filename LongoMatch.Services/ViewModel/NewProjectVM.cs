@@ -7,9 +7,12 @@ using LongoMatch.Services.Interfaces;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class NewProjectPanelVM : LMProjectVM, ILMTeamTaggerVM
+	/// <summary>
+	/// ViewModel used in NewProjectPanel View, it has a LMTeamTaggerVM that auto initializes
+	/// </summary>
+	public class NewProjectVM : LMProjectVM, ILMTeamTaggerVM
 	{
-		public NewProjectPanelVM ()
+		public NewProjectVM ()
 		{
 			TeamTagger = new LMTeamTaggerVM ();
 			TeamTagger.ShowSubstitutionButtons = false;

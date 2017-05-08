@@ -142,7 +142,7 @@
     <Compile Include="Controller\TestLMTeamEditorController.cs" />
     <Compile Include="Services\ViewModel\TestPlayEditorVM.cs" />
     <Compile Include="Services\ViewModel\TestSubstitutionsEditorVM.cs" />
-    <Compile Include="Services\ViewModel\TestNewProjectPanelVM.cs" />
+    <Compile Include="Services\ViewModel\TestNewProjectVM.cs" />
     <Compile Include="Services\ViewModel\TestTeamsManagerVM.cs" />
     <Compile Include="Services\ViewModel\TestLMDrawingToolVM.cs" />
   </ItemGroup>

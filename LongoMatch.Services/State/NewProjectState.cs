@@ -24,7 +24,7 @@ using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
-	public class NewProjectState : ScreenState<NewProjectPanelVM>
+	public class NewProjectState : ScreenState<NewProjectVM>
 	{
 		public const string NAME = "NewProject";
 
@@ -36,7 +36,7 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			ViewModel = new NewProjectPanelVM ();
+			ViewModel = new NewProjectVM ();
 			if (data != null) {
 				ViewModel.Model = data;
 			}

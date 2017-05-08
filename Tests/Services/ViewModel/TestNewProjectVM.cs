@@ -23,14 +23,14 @@ using VAS.Core.Common;
 namespace Tests.Services.ViewModel
 {
 	[TestFixture]
-	public class TestNewProjectPanelVM
+	public class TestNewProjectVM
 	{
-		NewProjectPanelVM viewModel;
+		NewProjectVM viewModel;
 
 		[SetUp]
 		public void SetUp ()
 		{
-			viewModel = new NewProjectPanelVM ();
+			viewModel = new NewProjectVM ();
 		}
 
 		[Test]
