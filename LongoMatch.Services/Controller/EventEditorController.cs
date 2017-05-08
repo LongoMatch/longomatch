@@ -39,7 +39,7 @@ namespace LongoMatch.Services.Controller
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			project = (ProjectVM)(viewModel as dynamic);
+			project = ((IProjectDealer)viewModel).Project;
 		}
 
 		public override void Start ()
@@ -71,7 +71,7 @@ namespace LongoMatch.Services.Controller
 				await App.Current.StateController.MoveToModal (PlayEditorState.NAME, properties, true);
 			}
 
-			await App.Current.EventsBroker.Publish(
+			await App.Current.EventsBroker.Publish (
 				new EventEditedEvent {
 					TimelineEvent = e.TimelineEvent
 				}

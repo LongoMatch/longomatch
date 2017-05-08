@@ -23,10 +23,12 @@ using VAS.Services.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using System;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>
+	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
 
 		public DashboardsManagerVM ()
@@ -39,14 +41,15 @@ namespace LongoMatch.Services.ViewModel
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 		}
 
-		public static implicit operator DashboardVM (DashboardsManagerVM viewModel)
-		{
-			return viewModel?.LoadedTemplate;
-		}
-
 		public Command<string> AddButton {
 			get;
 			private set;
+		}
+
+		public DashboardVM Dashboard {
+			get {
+				return LoadedTemplate;
+			}
 		}
 	}
 }

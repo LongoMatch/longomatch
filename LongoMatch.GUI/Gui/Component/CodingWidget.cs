@@ -206,7 +206,7 @@ namespace LongoMatch.Gui.Component
 			if (ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.ViewModel = ViewModel;
 			} else if (ViewModel.Project.ProjectType == ProjectType.FakeCaptureProject) {
-				eventslistwidget.ViewModel = ViewModel;
+				eventslistwidget.ViewModel = ViewModel.Project;
 			}
 			playspositionviewer1.ViewModel = ViewModel.Project;
 		}
@@ -286,10 +286,10 @@ namespace LongoMatch.Gui.Component
 		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof (ViewModel.Capturer.CurrentCaptureTime)
-			    && ViewModel.Project.ProjectType == ProjectType.FileProject) {
+				&& ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-					buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-					teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+				buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+				teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 			}
 		}
 

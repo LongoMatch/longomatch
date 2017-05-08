@@ -55,9 +55,9 @@ namespace LongoMatch.Gui.Component
 		protected override NestedViewModel<PlayerTimelineVM> GetSubTimeline (TimelineVM viewModel)
 		{
 			if (teamType == TeamType.LOCAL) {
-				return (viewModel as LMTimelineVM).HomeTeamTimelineVM;
+				return ((LMTimelineVM)viewModel).HomeTeamTimelineVM;
 			} else {
-				return (viewModel as LMTimelineVM).AwayTeamTimelineVM;
+				return ((LMTimelineVM)viewModel).AwayTeamTimelineVM;
 			}
 		}
 
