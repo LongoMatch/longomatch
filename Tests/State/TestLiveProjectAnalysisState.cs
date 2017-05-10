@@ -26,45 +26,69 @@ using NUnit.Framework;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace Tests.State
 {
 	public class TestLiveProjectAnalysisState
 	{
 		Mock<IMultimediaToolkit> mtkMock;
+		Mock<ICapturerBin> capturerMock;
+		LiveProjectAnalysisState state;
+		LMProject project;
+		LMProjectVM projectVM;
+		LMProjectAnalysisVM analysisVM;
 
-		[SetUp]
-		public void Setup ()
+		[TestFixtureSetUp]
+		public void SetupOnce ()
 		{
 			var hotkeysMock = new Mock<IHotkeysService> ();
 			var playerMock = new Mock<IVideoPlayer> ();
 			mtkMock = new Mock<IMultimediaToolkit> ();
-			var capturerMock = new Mock<IFramesCapturer> ();
-			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
+			var framesCapturerMock = new Mock<IFramesCapturer> ();
+			capturerMock = new Mock<ICapturerBin> ();
+			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (framesCapturerMock.Object);
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			App.Current.MultimediaToolkit = mtkMock.Object;
 			App.Current.HotkeysService = hotkeysMock.Object;
 		}
 
-		[Test]
-		public void LoadState_ViewModelFromPropDisposed_AssignOnlyModel ()
+		[SetUp]
+		public void Setup ()
 		{
-			// Arrange
-			LiveProjectAnalysisState state = new LiveProjectAnalysisState ();
-			LMProject project = Utils.CreateProject ();
-			LMProjectVM projectVM = new LMProjectVM { Model = project };
-			LMProjectAnalysisVM analysisVM = new LMProjectAnalysisVM { Project = projectVM };
-
+			state = new LiveProjectAnalysisState ();
+			project = Utils.CreateProject ();
+			projectVM = new LMProjectVM { Model = project };
+			analysisVM = new LMProjectAnalysisVM { Project = projectVM };
 			var panel = new Mock<Utils.IDummyCapturerPanel> ();
-			panel.Setup (p => p.Capturer).Returns (new Mock<ICapturerBin> ().Object);
+			panel.Setup (p => p.Capturer).Returns (capturerMock.Object);
 			state.Panel = panel.Object;
+		}
 
+		[Test]
+		public async void LoadState_AllGood_TransitionOK ()
+		{
 			// Act
-			state.LoadState (analysisVM);
+			bool ret = await state.LoadState (analysisVM);
 
 			// Assert
 			Assert.AreNotEqual (projectVM, state.ViewModel.Project);
 			Assert.AreEqual (project, state.ViewModel.Project.Model);
+			Assert.IsTrue (ret);
+		}
+
+		[Test]
+		public async void LoadState_VideoPlayerException_TransitionCancelled ()
+		{
+			capturerMock.Setup (p => p.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ())).
+						Throws<Exception> ();
+
+			// Act
+			bool ret = await state.LoadState (analysisVM);
+
+			// Assert
+			Assert.IsFalse (ret);
 		}
 	}
 }

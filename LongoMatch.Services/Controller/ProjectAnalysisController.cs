@@ -65,14 +65,20 @@ namespace LongoMatch.Services
 			}
 			set {
 				viewModel = value;
+				if (viewModel != null) {
+					Project = viewModel.Project;
+					VideoPlayer = viewModel.VideoPlayer;
+					Capturer = viewModel.Capturer;
+					Project.CloseHandled = false;
+					Log.Debug ("Loading project " + viewModel.Project + " " + viewModel.Project.ProjectType);
+				}
+
 			}
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			ViewModel = (LMProjectAnalysisVM)viewModel;
-			// Fixme: load project asynchronously
-			Load (ViewModel);
 		}
 
 		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
@@ -115,7 +121,7 @@ namespace LongoMatch.Services
 					Project.CloseHandled = true;
 					e.ReturnValue = await PromptCloseProject ();
 					if (!e.ReturnValue) {
-						Project.CloseHandled = false;	
+						Project.CloseHandled = false;
 					}
 				} else {
 					e.ReturnValue = true;
@@ -202,48 +208,6 @@ namespace LongoMatch.Services
 				App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (project);
 				return false;
 			}
-		}
-
-		async Task<bool> Load (LMProjectAnalysisVM analysisVM)
-		{
-			Project = analysisVM.Project;
-			VideoPlayer = analysisVM.VideoPlayer;
-			Capturer = analysisVM.Capturer;
-			Project.CloseHandled = false;
-
-			Log.Debug ("Loading project " + analysisVM.Project + " " + analysisVM.Project.ProjectType);
-
-			Project.Model.CleanupTimers ();
-
-			if (Project.ProjectType == ProjectType.FileProject) {
-				// Check if the file associated to the project exists
-				if (!Project.FileSet.Model.CheckFiles ()) {
-					if (!App.Current.GUIToolkit.SelectMediaFiles (Project.FileSet.Model)) {
-						await CloseOpenedProject (true);
-						return false;
-					}
-				}
-				try {
-					VideoPlayer.OpenFileSet (Project.FileSet);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
-					await CloseOpenedProject (false);
-					return false;
-				}
-
-			} else if (Project.IsLive) {
-				try {
-					Capturer.Run (analysisVM.CaptureSettings, Project.FileSet.First ().Model);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					App.Current.Dialogs.ErrorMessage (ex.Message);
-					await CloseOpenedProject (false);
-					return false;
-				}
-			}
-
-			return true;
 		}
 
 		async Task<bool> PromptCloseProject ()

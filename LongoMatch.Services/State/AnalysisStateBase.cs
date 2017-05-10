@@ -17,13 +17,14 @@
 //
 using System;
 using System.Threading.Tasks;
-using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Services.State;
+using Catalog = LongoMatch.Core.Catalog;
 
 namespace LongoMatch.Services.State
 {
@@ -46,8 +47,10 @@ namespace LongoMatch.Services.State
 			return await base.HideState ();
 		}
 
-		protected bool InternalLoad (LMProjectVM projectVM)
+		public override async Task<bool> LoadState (dynamic data)
 		{
+			LMProjectVM projectVM = data.Project;
+
 			// FIXME: Load project asynchronously
 			if (!projectVM.Model.IsLoaded) {
 				try {
@@ -67,7 +70,21 @@ namespace LongoMatch.Services.State
 				}
 			}
 
-			return true;
+			if (!await Initialize (data)) {
+				return false;
+			}
+
+			return await LoadProject ();
+		}
+
+		/// <summary>
+		/// Finishes loading the project. This function can be overriden by subclass to provide
+		/// extra checks and loading logic for the project.
+		/// </summary>
+		/// <returns>The state result.</returns>
+		protected virtual Task<bool> LoadProject ()
+		{
+			return AsyncHelpers.Return (true);
 		}
 	}
 }

@@ -16,7 +16,9 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using System;
 using System.Threading.Tasks;
+using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
@@ -39,36 +41,44 @@ namespace LongoMatch.Services.State
 			}
 		}
 
-		/// <summary>
-		/// Loads the project state using the project passed in data.
-		/// </summary>
-		/// <returns>The state.</returns>
-		/// <param name="data">Data.</param>
-		public override async Task<bool> LoadState (dynamic data)
+		protected override async Task<bool> LoadProject ()
 		{
-			LMProjectVM projectVM = data.Project;
+			ProjectVM project = ViewModel.Project;
 
-			if (!InternalLoad (projectVM)) {
-				return false;
-			}
-
-			if (projectVM.Model.IsFakeCapture) {
+			if (project.Model.IsFakeCapture) {
 				/* If it's a fake live project prompt for a video file and
 			 	* create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				await App.Current.StateController.MoveTo (NewProjectState.NAME, projectVM);
+				await App.Current.StateController.MoveTo (NewProjectState.NAME, project);
 				return false;
 			}
 
-			if (projectVM.FileSet.Duration == null) {
-				Log.Warning ("The selected project is empty. Rediscovering files");
-				for (int i = 0; i < projectVM.Model.FileSet.Count; i++) {
-					projectVM.Model.FileSet [i] = App.Current.MultimediaToolkit.DiscoverFile (projectVM.Model.FileSet [i].FilePath);
+			// Check if the file associated to the project exists
+			if (!project.FileSet.Model.CheckFiles ()) {
+				if (!App.Current.GUIToolkit.SelectMediaFiles (project.FileSet.Model)) {
+					return false;
 				}
 			}
 
-			projectVM.Model.UpdateEventTypesAndTimers ();
-			return await Initialize (data);
+			if (project.FileSet.Duration == null) {
+				Log.Warning ("The selected project is empty. Rediscovering files");
+				for (int i = 0; i < project.Model.FileSet.Count; i++) {
+					project.Model.FileSet [i] = App.Current.MultimediaToolkit.DiscoverFile (project.Model.FileSet [i].FilePath);
+				}
+			}
+
+			project.Model.CleanupTimers ();
+			project.Model.UpdateEventTypesAndTimers ();
+
+			try {
+				ViewModel.VideoPlayer.OpenFileSet (project.FileSet);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+				return false;
+			}
+
+			return true;
 		}
 
 		protected override void CreateViewModel (dynamic data)
