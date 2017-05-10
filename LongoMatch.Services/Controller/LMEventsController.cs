@@ -48,6 +48,7 @@ namespace LongoMatch.Services
 		public override void Start ()
 		{
 			base.Start ();
+			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
@@ -56,6 +57,7 @@ namespace LongoMatch.Services
 
 		public override void Stop ()
 		{
+			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
@@ -67,6 +69,12 @@ namespace LongoMatch.Services
 		{
 			this.viewModel = (LMProjectAnalysisVM)viewModel;
 			base.SetViewModel (viewModel);
+		}
+
+		// FIXME: remove this when the video capturer is ported to MVVM
+		void HandleLoadTimelineEvent (LoadTimelineEventEvent<TimelineEvent> e)
+		{
+			PlayerVM.LoadEvent (e.Object, e.Playing);
 		}
 
 		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)
