@@ -17,6 +17,7 @@
 //
 using System;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using NUnit.Framework;
 using VAS.Core.Common;
@@ -48,12 +49,12 @@ namespace Tests.Services.ViewModel
 		public void TestTeamTaggerUpdatesWhenSettingProject ()
 		{
 			var lmProject = Utils.CreateProject ();
-			viewModel.Model = lmProject;
+			viewModel.Project = new LMProjectVM { Model = lmProject };
 
 			Assert.AreSame (lmProject.LocalTeamTemplate, viewModel.TeamTagger.HomeTeam.Model);
 			Assert.AreSame (lmProject.VisitorTeamTemplate, viewModel.TeamTagger.AwayTeam.Model);
-			Assert.AreSame (viewModel.HomeTeam, viewModel.TeamTagger.HomeTeam);
-			Assert.AreSame (viewModel.AwayTeam, viewModel.TeamTagger.AwayTeam);
+			Assert.AreSame (viewModel.Project.HomeTeam, viewModel.TeamTagger.HomeTeam);
+			Assert.AreSame (viewModel.Project.AwayTeam, viewModel.TeamTagger.AwayTeam);
 			Assert.AreSame (lmProject.Dashboard.FieldBackground, viewModel.TeamTagger.Background);
 		}
 
@@ -61,7 +62,7 @@ namespace Tests.Services.ViewModel
 		public void TestTeamTaggerUpdatesWhenSettingPlay ()
 		{
 			var lmProject = Utils.CreateProject ();
-			viewModel.Model = lmProject;
+			viewModel.Project = new LMProjectVM { Model = lmProject };
 			var play = lmProject.Timeline [0] as LMTimelineEvent;
 			play.Players.Add (lmProject.LocalTeamTemplate.List [0]);
 			play.Teams.Add (lmProject.LocalTeamTemplate);

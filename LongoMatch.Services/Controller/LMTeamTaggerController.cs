@@ -37,10 +37,10 @@ namespace LongoMatch.Services.Controller
 	public class LMTeamTaggerController : ControllerBase
 	{
 		LMTeamTaggerVM teamTagger;
-		KeyValuePair<PlayerVM, TeamVM> substitutionPlayer;
 		LMProjectVM project;
 		VideoPlayerVM videoPlayer;
 		bool isAnalysis;
+		KeyValuePair<PlayerVM, TeamVM> substitutionPlayer;
 		Time lastTime;
 
 		List<LMPlayerVM> homeStartingPlayers = new List<LMPlayerVM> ();
@@ -109,14 +109,14 @@ namespace LongoMatch.Services.Controller
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			TeamTagger = (viewModel as ILMTeamTaggerVM)?.TeamTagger;
+			TeamTagger = ((ILMTeamTaggerDealer)viewModel).TeamTagger;
 			var analysisVM = viewModel as IAnalysisViewModel;
 			if (analysisVM != null) {
 				isAnalysis = true;
 				Project = (LMProjectVM)analysisVM.Project;
 				VideoPlayer = analysisVM.VideoPlayer;
 			} else {
-				Project = (viewModel as ILMProjectVM)?.Project;
+				Project = (LMProjectVM)(viewModel as IProjectDealer)?.Project;
 			}
 		}
 
@@ -127,6 +127,8 @@ namespace LongoMatch.Services.Controller
 			App.Current.EventsBroker.Subscribe<UpdateLineup> (HandleUpdateLineup);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			App.Current.EventsBroker.Subscribe<EventEditedEvent> (HandleEventEdited);
+			substitutionPlayer = new KeyValuePair<PlayerVM, TeamVM> (null, null);
+			lastTime = null;
 			UpdateLineup ();
 		}
 

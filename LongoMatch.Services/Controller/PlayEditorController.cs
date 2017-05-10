@@ -20,33 +20,30 @@ namespace LongoMatch.Services.Controller
 		PlayEditorVM playEditorVM;
 		LMTeamTaggerVM teamTagger;
 
-		LMTeamTaggerVM TeamTagger {
-			get {
-				return teamTagger;
-			}
-			set {
-				if (teamTagger != null) {
-					teamTagger.PropertyChanged -= HandleTeamTaggerPropertyChanged;
-				}
-				teamTagger = value;
-				if (teamTagger != null) {
-					teamTagger.PropertyChanged += HandleTeamTaggerPropertyChanged;
-				}
-			}
-		}
-
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			playEditorVM = (PlayEditorVM)viewModel;
-			TeamTagger = playEditorVM.TeamTagger;
+			teamTagger = playEditorVM.TeamTagger;
+		}
+
+		public override void Start ()
+		{
+			base.Start ();
+			teamTagger.PropertyChanged += HandleTeamTaggerPropertyChanged;
+		}
+
+		public override void Stop ()
+		{
+			base.Stop ();
+			teamTagger.PropertyChanged -= HandleTeamTaggerPropertyChanged;
 		}
 
 		void HandleTeamTaggerPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (TeamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, TeamTagger.HomeTeam) ||
-				TeamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, TeamTagger.AwayTeam)) {
-				playEditorVM.Play.Players.Replace (TeamTagger.HomeTeam.Selection.Select (p => p.Model)
-												   .Concat (TeamTagger.AwayTeam.Selection.Select (p => p.Model)));
+			if (teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.HomeTeam) ||
+				teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.AwayTeam)) {
+				playEditorVM.Play.Players.Replace (teamTagger.HomeTeam.Selection.Select (p => p.Model)
+												   .Concat (teamTagger.AwayTeam.Selection.Select (p => p.Model)));
 			}
 
 			if (teamTagger.NeedsSync (e.PropertyName, nameof (teamTagger.HomeTeam.Tagged), sender, teamTagger.HomeTeam)) {
@@ -60,6 +57,8 @@ namespace LongoMatch.Services.Controller
 
 		void UpdatePlayTeams (LMTeamVM team)
 		{
+			//FIXME: this is using playEditorVM.Play as Model, it should use TimelineEventVM,
+			//when the PlayEditor view is fully migrated to MVVM
 			if (team.Tagged && !playEditorVM.Play.Teams.Contains (team.Model)) {
 				playEditorVM.Play.Teams.Add (team.Model);
 			} else if (!team.Tagged && playEditorVM.Play.Teams.Contains (team.Model)) {

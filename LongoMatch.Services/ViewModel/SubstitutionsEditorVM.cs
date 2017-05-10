@@ -21,7 +21,9 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
 using VAS.Core.Events;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -29,9 +31,10 @@ namespace LongoMatch.Services.ViewModel
 	/// A ViewModel used in SubstitutionEditor View, it needs a TimelineEvent of type SubstitutionEvent
 	/// or LineupEvent, it has a TeamTaggerVM that auto initializes based on the event type
 	/// </summary>
-	public class SubstitutionsEditorVM : LMProjectVM, ILMTeamTaggerVM, ILMProjectVM
+	public class SubstitutionsEditorVM : ViewModelBase, ILMTeamTaggerDealer, IProjectDealer
 	{
 		LMTimelineEvent play;
+		LMProjectVM project;
 
 		public SubstitutionsEditorVM ()
 		{
@@ -40,6 +43,16 @@ namespace LongoMatch.Services.ViewModel
 			TeamTagger.ShowSubstitutionButtons = false;
 			InPlayer = new LMPlayerVM ();
 			OutPlayer = new LMPlayerVM ();
+		}
+
+		public LMProjectVM Project {
+			get {
+				return project;
+			}
+			set {
+				project = value;
+				UpdateViewModels ();
+			}
 		}
 
 		/// <summary>
@@ -94,16 +107,10 @@ namespace LongoMatch.Services.ViewModel
 			protected set;
 		}
 
-		public LMProjectVM Project {
+		ProjectVM IProjectDealer.Project {
 			get {
-				return this;
+				return Project;
 			}
-		}
-
-		protected override void SyncLoadedModel ()
-		{
-			base.SyncLoadedModel ();
-			UpdateViewModels ();
 		}
 
 		async Task Save ()
@@ -121,17 +128,17 @@ namespace LongoMatch.Services.ViewModel
 
 		void UpdateViewModels ()
 		{
-			if (Play != null && Model != null) {
+			if (Play != null && Project.Model != null) {
 				var substitutionEvent = Play as SubstitutionEvent;
 				if (substitutionEvent != null) {
 					InPlayer.Model = substitutionEvent.In;
 					OutPlayer.Model = substitutionEvent.Out;
 					TeamTagger.CurrentTime = substitutionEvent.EventTime;
-					if (substitutionEvent.Teams.Contains (Model.LocalTeamTemplate)) {
-						TeamTagger.HomeTeam = HomeTeam;
+					if (substitutionEvent.Teams.Contains (Project.Model.LocalTeamTemplate)) {
+						TeamTagger.HomeTeam = Project.HomeTeam;
 						TeamTagger.AwayTeam = null;
 					} else {
-						TeamTagger.AwayTeam = AwayTeam;
+						TeamTagger.AwayTeam = Project.AwayTeam;
 						TeamTagger.HomeTeam = null;
 
 					}
@@ -139,11 +146,11 @@ namespace LongoMatch.Services.ViewModel
 				var lineupEvent = Play as LineupEvent;
 				if (lineupEvent != null) {
 					LineupMode = true;
-					TeamTagger.HomeTeam = HomeTeam;
-					TeamTagger.AwayTeam = AwayTeam;
+					TeamTagger.HomeTeam = Project.HomeTeam;
+					TeamTagger.AwayTeam = Project.AwayTeam;
 					TeamTagger.SubstitutionMode = true;
 				}
-				TeamTagger.Background = Model.Dashboard?.FieldBackground;
+				TeamTagger.Background = Project.Model.Dashboard?.FieldBackground;
 			}
 		}
 	}

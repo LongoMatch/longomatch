@@ -20,6 +20,9 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -27,9 +30,10 @@ namespace LongoMatch.Services.ViewModel
 	/// Play Editor view model, used in PlayEditor View. It needs a TimelineEvent.
 	/// It has a LMTeamTaggerVM for the teamtagger component that auto initializes.
 	/// </summary>
-	public class PlayEditorVM : LMProjectVM, ILMTeamTaggerVM, ILMProjectVM
+	public class PlayEditorVM : ViewModelBase, ILMTeamTaggerDealer, IProjectDealer
 	{
 		LMTimelineEvent play;
+		LMProjectVM project;
 
 		public PlayEditorVM ()
 		{
@@ -38,6 +42,19 @@ namespace LongoMatch.Services.ViewModel
 			TeamTagger.Compact = true;
 			TeamTagger.SelectionMode = MultiSelectionMode.Multiple;
 			TeamTagger.ShowTeamsButtons = true;
+		}
+
+		public LMProjectVM Project {
+			get {
+				return project;
+			}
+			set {
+				project = value;
+				if (project != null) {
+					TeamTagger.ResetTeamTagger (project);
+					UpdateTeamTagger ();
+				}
+			}
 		}
 
 		/// <summary>
@@ -70,17 +87,14 @@ namespace LongoMatch.Services.ViewModel
 			protected set;
 		}
 
-		public LMProjectVM Project {
+		/// <summary>
+		/// Gets the project.
+		/// </summary>
+		/// <value>The project.</value>
+		ProjectVM IProjectDealer.Project {
 			get {
-				return this;
+				return Project;
 			}
-		}
-
-		protected override void SyncLoadedModel ()
-		{
-			base.SyncLoadedModel ();
-			TeamTagger.ResetTeamTagger (this);
-			UpdateTeamTagger ();
 		}
 
 		void UpdateTeamTagger ()
@@ -88,6 +102,8 @@ namespace LongoMatch.Services.ViewModel
 			if (Play == null) {
 				return;
 			}
+			TeamTagger.HomeTeam.Selection.Clear ();
+			TeamTagger.AwayTeam.Selection.Clear ();
 			foreach (var player in TeamTagger.HomeTeam) {
 				if (Play.Players.Contains (player.Model)) {
 					player.Tagged = true;

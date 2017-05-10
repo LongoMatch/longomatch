@@ -32,6 +32,7 @@ using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
 using LongoMatch.Services.State;
+using LongoMatch.Core.ViewModel;
 
 namespace LongoMatch.Services
 {
@@ -125,7 +126,7 @@ namespace LongoMatch.Services
 					return;
 				}
 				if (importer.NeedsEdition) {
-					App.Current.StateController.MoveTo (NewProjectState.NAME, project);
+					App.Current.StateController.MoveTo (NewProjectState.NAME, new LMProjectVM { Model = project });
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {

@@ -54,13 +54,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMCameraSynchronizationController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewProjectVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamTaggerController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMProjectVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\SubstitutionsEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\PlayEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDrawingToolVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMDrawingToolState.cs" />

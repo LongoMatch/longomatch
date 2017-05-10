@@ -53,8 +53,7 @@ namespace LongoMatch.Services.Controller
 			LMPlayerVM inOutPlayer = null;
 			if (substitutionEditor.InPlayer.Tagged) {
 				inOutPlayer = substitutionEditor.InPlayer;
-			}
-			if (substitutionEditor.OutPlayer.Tagged) {
+			} else if (substitutionEditor.OutPlayer.Tagged) {
 				inOutPlayer = substitutionEditor.OutPlayer;
 			}
 

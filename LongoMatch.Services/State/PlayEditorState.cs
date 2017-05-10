@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Services.State;
 
@@ -35,7 +36,8 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			ViewModel = new PlayEditorVM { Model = data.project.Model };
+			ViewModel = new PlayEditorVM ();
+			ViewModel.Project = new LMProjectVM { Model = data.project.Model };
 			ViewModel.EditionSettings = data.settings;
 			ViewModel.Play = data.play;
 		}

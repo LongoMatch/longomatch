@@ -59,7 +59,7 @@ namespace Tests.Controller
 		{
 			var viewModel = new PlayEditorVM ();
 			teamTagger = viewModel.TeamTagger;
-			viewModel.Model = Utils.CreateProject ();
+			viewModel.Project = new LMProjectVM { Model = Utils.CreateProject () };
 			project = viewModel.Project;
 			ControllerSetUp (viewModel);
 		}

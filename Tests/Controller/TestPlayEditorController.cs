@@ -18,6 +18,7 @@
 using System;
 using System.Linq;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
 using NUnit.Framework;
@@ -41,7 +42,7 @@ namespace Tests.Controller
 			viewModel = new PlayEditorVM ();
 
 			project = Utils.CreateProject ();
-			viewModel.Model = project;
+			viewModel.Project = new LMProjectVM { Model = project };
 			var play = project.Timeline [0] as LMTimelineEvent;
 			play.Players.Add (project.LocalTeamTemplate.List [0]);
 			play.Teams.Add (project.LocalTeamTemplate);
@@ -99,23 +100,23 @@ namespace Tests.Controller
 		[Test]
 		public void TestClickTeamAddsToEvent ()
 		{
-			Assert.IsFalse (viewModel.Play.Teams.Contains (viewModel.AwayTeam.Model));
+			Assert.IsFalse (viewModel.Play.Teams.Contains (viewModel.Project.AwayTeam.Model));
 			Assert.IsFalse (viewModel.TeamTagger.AwayTeam.Tagged);
 
 			viewModel.TeamTagger.AwayTeam.Tagged = true;
 
-			Assert.IsTrue (viewModel.Play.Teams.Contains (viewModel.AwayTeam.Model));
+			Assert.IsTrue (viewModel.Play.Teams.Contains (viewModel.Project.AwayTeam.Model));
 		}
 
 		[Test]
 		public void TestClickTeamRemoveFromEvent ()
 		{
-			Assert.IsTrue (viewModel.Play.Teams.Contains (viewModel.HomeTeam.Model));
+			Assert.IsTrue (viewModel.Play.Teams.Contains (viewModel.Project.HomeTeam.Model));
 			Assert.IsTrue (viewModel.TeamTagger.HomeTeam.Tagged);
 
 			viewModel.TeamTagger.HomeTeam.Tagged = false;
 
-			Assert.IsFalse (viewModel.Play.Teams.Contains (viewModel.HomeTeam.Model));
+			Assert.IsFalse (viewModel.Play.Teams.Contains (viewModel.Project.HomeTeam.Model));
 		}
 	}
 }

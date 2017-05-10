@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using NUnit.Framework;
 using VAS.Core.Common;
@@ -44,13 +45,13 @@ namespace Tests.Services.ViewModel
 		}
 
 		[Test]
-		public void TestTeamTaggerUpdatesWhenSettingModel ()
+		public void TestTeamTaggerUpdatesWhenSettingProject ()
 		{
 			var lmProject = Utils.CreateProject ();
-			viewModel.Model = lmProject;
+			viewModel.Project = new LMProjectVM { Model = lmProject };
 
-			Assert.AreSame (viewModel.TeamTagger.AwayTeam, viewModel.AwayTeam);
-			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.HomeTeam);
+			Assert.AreSame (viewModel.TeamTagger.AwayTeam, viewModel.Project.AwayTeam);
+			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.Project.HomeTeam);
 			Assert.AreSame (viewModel.TeamTagger.Background, lmProject.Dashboard.FieldBackground);
 		}
 	}

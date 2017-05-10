@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Dialog
 			nameentry.GrabFocus ();
 
 			if (editorVM.EditionSettings.EditPositions) {
-				LoadBackgrounds (editorVM.Model);
+				LoadBackgrounds (editorVM.Project.Model);
 				LoadTimelineEvent (editorVM.Play);
 			}
 
@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 
 			if (editorVM.EditionSettings.EditTags) {
-				FillTags (editorVM.Model, editorVM.Play);
+				FillTags (editorVM.Project.Model, editorVM.Play);
 			}
 		}
 

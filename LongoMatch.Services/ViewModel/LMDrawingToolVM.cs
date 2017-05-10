@@ -8,7 +8,7 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class LMDrawingToolVM : DrawingToolVM, ILMTeamTaggerVM
+	public class LMDrawingToolVM : DrawingToolVM, ILMTeamTaggerDealer
 	{
 		public LMDrawingToolVM ()
 		{
@@ -23,6 +23,8 @@ namespace LongoMatch.Services.ViewModel
 			}
 			set {
 				base.Project = value;
+				//FIXME: this should use the TeamTagger.ResetTeamTagger(LMProjectVM)
+				// when having a LMProjectVM instead of the Model
 				ResetTeamTagger ();
 			}
 		}

@@ -1,12 +1,13 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
 using System;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 
 namespace LongoMatch.Services.Interfaces
 {
-	public interface ILMTeamTaggerVM
+	public interface ILMTeamEditorDealer
 	{
-		LMTeamTaggerVM TeamTagger { get; }
+		LMTeamEditorVM TeamEditor { get; }
 	}
 }

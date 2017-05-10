@@ -31,7 +31,7 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for the teams manager.
 	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerVM, ILMTeamEditorVM
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerDealer, ILMTeamEditorDealer
 	{
 		public TeamsManagerVM ()
 		{

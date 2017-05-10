@@ -27,7 +27,7 @@ namespace LongoMatch.Services.Controller
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			teamEditor = ((ILMTeamEditorVM)viewModel).TeamEditor;
+			teamEditor = ((ILMTeamEditorDealer)viewModel).TeamEditor;
 		}
 
 		public override void Start ()

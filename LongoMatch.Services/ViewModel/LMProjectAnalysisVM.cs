@@ -14,7 +14,7 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer, ILMTeamTaggerVM
+	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer, ILMTeamTaggerDealer
 	{
 		public LMProjectAnalysisVM ()
 		{

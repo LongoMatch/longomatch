@@ -17,6 +17,7 @@
 //
 using System;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using NUnit.Framework;
 using VAS.Core.Common;
@@ -54,10 +55,10 @@ namespace Tests.Services.ViewModel
 			substitutionEvent.In = lmProject.LocalTeamTemplate.Players [0];
 			substitutionEvent.Out = lmProject.LocalTeamTemplate.Players [1];
 			substitutionEvent.Teams.Add (lmProject.LocalTeamTemplate);
-			viewModel.Model = lmProject;
+			viewModel.Project = new LMProjectVM { Model = lmProject };
 			viewModel.Play = substitutionEvent;
 
-			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.HomeTeam);
+			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.Project.HomeTeam);
 			Assert.IsNull (viewModel.TeamTagger.AwayTeam);
 			Assert.AreSame (substitutionEvent.In, viewModel.InPlayer.Model);
 			Assert.AreSame (substitutionEvent.Out, viewModel.OutPlayer.Model);
@@ -71,11 +72,11 @@ namespace Tests.Services.ViewModel
 		public void TestTeamTaggerUpdatesWhenSettingProjectAndLineupEvent ()
 		{
 			var lmProject = Utils.CreateProject ();
-			viewModel.Model = lmProject;
+			viewModel.Project = new LMProjectVM { Model = lmProject };
 			viewModel.Play = lmProject.Lineup;
 
-			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.HomeTeam);
-			Assert.AreSame (viewModel.TeamTagger.AwayTeam, viewModel.AwayTeam);
+			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.Project.HomeTeam);
+			Assert.AreSame (viewModel.TeamTagger.AwayTeam, viewModel.Project.AwayTeam);
 			Assert.AreSame (viewModel.TeamTagger.Background, lmProject.Dashboard.FieldBackground);
 			Assert.IsTrue (viewModel.LineupMode);
 			Assert.IsTrue (viewModel.TeamTagger.SubstitutionMode);

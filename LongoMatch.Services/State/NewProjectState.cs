@@ -16,10 +16,9 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Threading.Tasks;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
-using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
@@ -38,7 +37,7 @@ namespace LongoMatch.Services.State
 		{
 			ViewModel = new NewProjectVM ();
 			if (data != null) {
-				ViewModel.Model = data;
+				ViewModel.Project = data;
 			}
 		}
 

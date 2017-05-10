@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Panel
 		public NewProjectVM ViewModel {
 			set {
 				viewModel = value;
-				project = viewModel.Model;
+				project = viewModel.Project.Model;
 				LoadTeams (project);
 				if (project == null) {
 					notebook1.Page = firstPage = 0;
@@ -480,7 +480,7 @@ namespace LongoMatch.Gui.Panel
 			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
-			ViewModel.Model = project;
+			ViewModel.Project.Model = project;
 
 
 			encSettings = new EncodingSettings ();
@@ -543,11 +543,11 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (projectType == ProjectType.EditProject) {
 				projectType = ProjectType.FileProject;
-				ViewModel.ProjectType = projectType;
+				ViewModel.Project.ProjectType = projectType;
 			} else {
 				project.CreateLineupEvent ();
 			}
-			LMStateHelper.OpenProject (ViewModel, captureSettings);
+			LMStateHelper.OpenProject (ViewModel.Project, captureSettings);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
@@ -621,11 +621,11 @@ namespace LongoMatch.Gui.Panel
 				if (!CreateProject ()) {
 					return;
 				}
-				if (ViewModel.IsLive) {
+				if (ViewModel.Project.IsLive) {
 					StartProject ();
 					return;
 				}
-				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel);
+				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel.Project);
 			}
 		}
 
