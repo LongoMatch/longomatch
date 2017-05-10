@@ -95,7 +95,7 @@ namespace Tests.Controller
 			App.Current.KeyContextManager.AddContext (context);
 			HotKey key = App.Current.Keyboard.ParseName ("h");
 			HotKey subkey = App.Current.Keyboard.ParseName ("t");
-			projectVM.Dashboard.ViewModels [0].HotKey = key;
+			projectVM.Dashboard.ViewModels [0].HotKey.Model = key;
 			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).Tags.First ().HotKey = subkey;
 			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).CurrentTime = new Time ();
 

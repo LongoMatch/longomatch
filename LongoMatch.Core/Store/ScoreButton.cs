@@ -18,6 +18,7 @@
 //
 using System;
 using Newtonsoft.Json;
+using VAS.Core.Serialization;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
@@ -39,6 +40,7 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
+		[CloneIgnoreAttribute]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Score Score {
