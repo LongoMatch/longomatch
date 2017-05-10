@@ -24,7 +24,7 @@ namespace LongoMatch.Services.State
 	/// <summary>
 	/// State of the Substitutions editor dialog.
 	/// </summary>
-	public class SubstitutionsEditorState: ScreenState<SubstitutionsEditorVM>
+	public class SubstitutionsEditorState : ScreenState<SubstitutionsEditorVM>
 	{
 		public const string NAME = "SubstitutionsEditor";
 
@@ -36,7 +36,8 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			ViewModel = new SubstitutionsEditorVM { Model = data.project.Model };
+			ViewModel = new SubstitutionsEditorVM ();
+			ViewModel.Project = new LMProjectVM { Model = data.project.Model };
 			ViewModel.Play = data.play;
 		}
 	}

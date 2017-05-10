@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (TeamsManagerState.NAME)]
-	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel
+	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel<TeamsManagerVM>
 	{
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
@@ -56,8 +56,6 @@ namespace LongoMatch.Gui.Panel
 
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
-			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			newteambutton.Entered += HandleEnterTeamButton;
@@ -73,14 +71,9 @@ namespace LongoMatch.Gui.Panel
 
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
-			newplayerbutton1.Clicked += (object sender, EventArgs e) => {
-				teamtemplateeditor1.AddPlayer ();
-			};
+
 			deleteplayerbutton.Entered += HandleEnterPlayerButton;
 			deleteplayerbutton.Left += HandleLeftPlayerButton;
-			deleteplayerbutton.Clicked += (object sender, EventArgs e) => {
-				teamtemplateeditor1.DeleteSelectedPlayers ();
-			};
 
 			teamsStore = new ListStore (typeof (LMTeamVM), typeof (bool));
 
@@ -153,7 +146,9 @@ namespace LongoMatch.Gui.Panel
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					UpdateLoadedTemplate ();
+					teamtemplateeditor1.ViewModel = viewModel.TeamEditor;
+					teamtemplateeditor1.TeamTagger = viewModel.TeamTagger;
+					Select (ViewModel.LoadedTemplate);
 				}
 			}
 		}
@@ -182,6 +177,8 @@ namespace LongoMatch.Gui.Panel
 			ctx.Add (importteambutton.Bind (vm => ((TeamsManagerVM)vm).ImportCommand));
 			ctx.Add (exportteambutton.Bind (vm => ((TeamsManagerVM)vm).ExportCommand));
 			ctx.Add (saveteambutton.Bind (vm => ((TeamsManagerVM)vm).SaveCommand, true));
+			ctx.Add (newplayerbutton1.Bind (vm => ((TeamsManagerVM)vm).TeamEditor.NewPlayerCommand));
+			ctx.Add (deleteplayerbutton.Bind (vm => ((TeamsManagerVM)vm).TeamEditor.DeletePlayersCommand));
 		}
 
 		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
@@ -217,14 +214,6 @@ namespace LongoMatch.Gui.Panel
 			if (GetIterFromTeam (teamVM, out iter)) {
 				teamseditortreeview.Selection.SelectIter (iter);
 			}
-		}
-
-		void UpdateLoadedTemplate ()
-		{
-			// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
-			teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model as LMTeam;
-			teamtemplateeditor1.Sensitive = true;
-			Select (ViewModel.LoadedTemplate);
 		}
 
 		bool GetIterFromTeam (TeamVM team, out TreeIter iter)
@@ -302,7 +291,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Model") {
-				UpdateLoadedTemplate ();
+				Select (ViewModel.LoadedTemplate);
 			}
 		}
 

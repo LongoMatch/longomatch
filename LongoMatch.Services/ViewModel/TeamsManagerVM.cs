@@ -15,8 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
@@ -29,15 +31,40 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for the teams manager.
 	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerDealer, ILMTeamEditorDealer
 	{
 		public TeamsManagerVM ()
 		{
+			LoadedTemplate = new LMTeamVM ();
 			NewCommand.Icon = Resources.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
 			SaveCommand.Icon = Resources.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
 			DeleteCommand.Icon = Resources.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
+			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
+			TeamTagger.AwayTeam = null;
+			TeamTagger.Background = App.Current.HHalfFieldBackground;
+			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			TeamEditor = new LMTeamEditorVM ();
+			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
+			TeamEditor.Team.TemplateEditorMode = true;
+		}
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
+			get;
+		}
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamEditorVM TeamEditor {
+			get;
 		}
 
 		protected override TeamVM CreateInstance (Team model)

@@ -25,10 +25,10 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class FieldObject: CanvasObject, ICanvasSelectableObject
+	public class FieldObject : CanvasObject, ICanvasSelectableObject
 	{
-		int[] homeFormation;
-		int[] awayFormation;
+		int [] homeFormation;
+		int [] awayFormation;
 		int playerSize;
 		Image background;
 
@@ -67,9 +67,18 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public void LoadTeams (Image backgroundImg, int[] homeF, int[] awayF,
-		                       List<LMPlayerView> homeT, List<LMPlayerView> awayT,
-		                       int size, int nteams)
+		public Image Background {
+			get {
+				return background;
+			}
+			set {
+				background = value;
+			}
+		}
+
+		public void LoadTeams (Image backgroundImg, int [] homeF, int [] awayF,
+							   List<LMPlayerView> homeT, List<LMPlayerView> awayT,
+							   int size, int nteams)
 		{
 			background = backgroundImg;
 			homeFormation = homeF;
@@ -96,7 +105,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		void UpdateTeam (List<LMPlayerView> players, int[] formation, TeamType team)
+		void UpdateTeam (List<LMPlayerView> players, int [] formation, TeamType team)
 		{
 			int index = 0, offsetX;
 			int width, colWidth;
@@ -108,14 +117,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				color = App.Current.Style.HomeTeamColor;
 				offsetX = 0;
 			} else {
-				color = App.Current.Style.AwayTeamColor; 
+				color = App.Current.Style.AwayTeamColor;
 				offsetX = Width;
 			}
 
 			/* Columns */
 			for (int col = 0; col < formation.Length; col++) {
 				double colX, rowHeight;
-				
+
 				if (players.Count == index)
 					break;
 
@@ -154,7 +163,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (HomePlayingPlayers != null) {
 				foreach (LMPlayerView po in HomePlayingPlayers) {
-					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
 					po.Draw (tk, area);
@@ -162,7 +170,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (AwayPlayingPlayers != null) {
 				foreach (LMPlayerView po in AwayPlayingPlayers) {
-					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
 					po.Draw (tk, area);

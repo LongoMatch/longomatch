@@ -20,11 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Hotkeys;
@@ -45,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (NewProjectState.NAME)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel<LMProjectVM>
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<NewProjectVM>
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
@@ -61,10 +63,10 @@ namespace LongoMatch.Gui.Panel
 		Gdk.Color red;
 		LMTeam hometemplate, awaytemplate;
 		LMDashboard analysisTemplate;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 		SizeGroup sg;
-		LMProjectVM viewModel;
 		CameraSynchronizationEditorState cameraSynchronizationState;
+		NewProjectVM viewModel;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -109,10 +111,10 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public LMProjectVM ViewModel {
+		public NewProjectVM ViewModel {
 			set {
 				viewModel = value;
-				project = viewModel.Model;
+				project = viewModel.Project.Model;
 				LoadTeams (project);
 				if (project == null) {
 					notebook1.Page = firstPage = 0;
@@ -126,6 +128,8 @@ namespace LongoMatch.Gui.Panel
 					FillProjectDetails ();
 				}
 				UpdateTitle ();
+				viewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
+				teamtagger.ViewModel = viewModel.TeamTagger;
 			}
 			get {
 				return viewModel;
@@ -149,7 +153,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (LMProjectVM)viewModel;
+			ViewModel = (NewProjectVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -230,11 +234,8 @@ namespace LongoMatch.Gui.Panel
 			bool hasAwayTeam = false;
 
 			drawingarea.HeightRequest = 200;
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
-			teamtagger.SubstitutionMode = true;
-			teamtagger.ShowSubstitutionButtons = false;
-			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = App.Current.TeamTemplatesProvider.Templates;
 
 			// Fill the combobox with project values or the templates ones
@@ -302,6 +303,8 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				project.Dashboard = analysisTemplate;
 			}
+
+			ViewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 
 			// In case the project does have a team, do not allow a modification
 			// otherwise set the loaded template
@@ -398,6 +401,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					homecolor1button.Click ();
 				}
+				ViewModel.TeamTagger.HomeTeam.Model = hometemplate;
 			} else {
 				awaytemplate = template;
 				awaytacticsentry.Text = awaytemplate.FormationStr;
@@ -410,9 +414,8 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					awaycolor1button.Click ();
 				}
+				ViewModel.TeamTagger.AwayTeam.Model = awaytemplate;
 			}
-			teamtagger.LoadTeams (hometemplate, awaytemplate,
-				analysisTemplate.FieldBackground);
 		}
 
 		void UpdateTitle ()
@@ -477,7 +480,7 @@ namespace LongoMatch.Gui.Panel
 			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
-			ViewModel.Model = project;
+			ViewModel.Project.Model = project;
 
 
 			encSettings = new EncodingSettings ();
@@ -540,11 +543,11 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (projectType == ProjectType.EditProject) {
 				projectType = ProjectType.FileProject;
-				ViewModel.ProjectType = projectType;
+				ViewModel.Project.ProjectType = projectType;
 			} else {
 				project.CreateLineupEvent ();
 			}
-			LMStateHelper.OpenProject (ViewModel, captureSettings);
+			LMStateHelper.OpenProject (ViewModel.Project, captureSettings);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
@@ -567,8 +570,8 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 			tagscombobox.GetActiveIter (out iter);
 			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as LMDashboard;
-			if (teamtagger != null) {
-				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
+			if (ViewModel != null) {
+				ViewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 			}
 		}
 
@@ -618,11 +621,11 @@ namespace LongoMatch.Gui.Panel
 				if (!CreateProject ()) {
 					return;
 				}
-				if (ViewModel.IsLive) {
+				if (ViewModel.Project.IsLive) {
 					StartProject ();
 					return;
 				}
-				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel);
+				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel.Project);
 			}
 		}
 
@@ -634,28 +637,25 @@ namespace LongoMatch.Gui.Panel
 			if (players.Count > 0) {
 				item = new MenuItem ("Remove for this match");
 				item.Activated += (sender, e) => {
+					//FIXME: this logic should be handled in a Controller (NewProjectController?)
+					// When this View is Ported fully to MVVM
 					hometemplate.RemovePlayers (players, false);
 					awaytemplate.RemovePlayers (players, false);
-					teamtagger.Reload ();
+					App.Current.EventsBroker.Publish (new UpdateLineup ());
 				};
 			} else {
 				item = new MenuItem ("Reset players");
 				item.Activated += (sender, e) => {
+					//FIXME: this logic should be handled in a Controller (NewProjectController?)
+					// When this View is Ported fully to MVVM
 					hometemplate.ResetPlayers ();
 					awaytemplate.ResetPlayers ();
-					teamtagger.Reload ();
+					App.Current.EventsBroker.Publish (new UpdateLineup ());
 				};
 			}
 			menu.Add (item);
 			menu.ShowAll ();
 			menu.Popup ();
-		}
-
-		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-											 SubstitutionReason reason, Time time)
-		{
-			team.List.Swap (p1, p2);
-			teamtagger.Substitute (p1, p2, team);
 		}
 
 		void HandleTacticsChanged (object sender, EventArgs e)
@@ -673,7 +673,6 @@ namespace LongoMatch.Gui.Panel
 
 			try {
 				team.FormationStr = entry.Text;
-				teamtagger.Reload ();
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
@@ -722,7 +721,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
 		}
-
 	}
 }
 

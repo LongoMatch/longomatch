@@ -16,7 +16,6 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -54,22 +53,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		// FIXME: We keep this to be compatible with View that are not using MVVM yet
-		public LMPlayer Model {
-			get {
-				return ViewModel.Model as LMPlayer;
-			}
-			set {
-				ViewModel = new LMPlayerVM { Model = value };
-			}
-		}
-
 		public bool SubstitutionMode {
-			get;
-			set;
-		}
-
-		public bool Playing {
 			get;
 			set;
 		}
@@ -137,11 +121,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.DrawRectangle (p, size, 3);
 
 			/* Draw Arrow */
-			if (SubstitutionMode && (Highlighted || Active)) {
+			if (SubstitutionMode && (Highlighted || Player.Tagged)) {
 				ISurface arrow;
 				Point ap;
 
-				if (Playing) {
+				if (ViewModel.Playing) {
 					arrow = arrowout;
 				} else {
 					arrow = arrowin;
@@ -168,7 +152,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
 						 ViewModel.Number.ToString ());
 
-			if (Active) {
+			if (Player.Tagged && !SubstitutionMode) {
 				Color c = Color.Copy ();
 				c.A = (byte)(c.A * 60 / 100);
 				tk.FillColor = c;

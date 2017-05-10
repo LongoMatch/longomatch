@@ -65,7 +65,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// Whether this player is playing or not and shouldn't be added the
+		/// Whether this player is in the LINEUP (can be in the field or bench) or not and shouldn't be added the
 		/// list of taggable players
 		/// </summary>
 		public bool Playing {

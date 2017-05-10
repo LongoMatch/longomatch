@@ -18,11 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -33,7 +36,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class PlayersTaggerView : CanvasObject, ICanvasSelectableObject
+	public class LMPlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
 	{
 
 		/* This object can be used like single object filling a canvas or embedded
@@ -41,51 +44,44 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		 * For this reason we can't use the canvas selection logic and we have
 		 * to handle it internally
 		 */
-		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
-		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
-		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
+
+		LMTeamTaggerVM viewModel;
 
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		LMTeam homeTeam, awayTeam;
-		Image background;
-		Dictionary<LMPlayer, LMPlayerView> homePlayerToPlayerObject;
-		Dictionary<LMPlayer, LMPlayerView> awayPlayerToPlayerObject;
+		Dictionary<LMPlayerVM, LMPlayerView> homePlayerToPlayerObject;
+		Dictionary<LMPlayerVM, LMPlayerView> awayPlayerToPlayerObject;
 		List<LMPlayerView> homePlayingPlayers, awayPlayingPlayers;
 		List<LMPlayerView> homeBenchPlayers, awayBenchPlayers;
 		List<LMPlayerView> homePlayers, awayPlayers;
 		BenchObject homeBench, awayBench;
-		LMPlayerView clickedPlayer, substitutionPlayer;
+		LMPlayerView clickedPlayer;
 		ButtonObject clickedButton;
 		FieldObject field;
 		int NTeams;
 		Point offset;
-		bool substitutionMode, showSubsitutionButtons, showTeamsButtons;
 		double scaleX, scaleY;
-		Time lastTime, currentTime;
+		ButtonModifier modifier;
 
-		public PlayersTaggerView ()
+		public LMPlayersTaggerView ()
 		{
 			Position = new Point (0, 0);
 			homeBench = new BenchObject ();
 			awayBench = new BenchObject ();
 			offset = new Point (0, 0);
 			scaleX = scaleY = 1;
-			homePlayerToPlayerObject = new Dictionary<LMPlayer, LMPlayerView> ();
-			awayPlayerToPlayerObject = new Dictionary<LMPlayer, LMPlayerView> ();
+			homePlayerToPlayerObject = new Dictionary<LMPlayerVM, LMPlayerView> ();
+			awayPlayerToPlayerObject = new Dictionary<LMPlayerVM, LMPlayerView> ();
 			field = new FieldObject ();
 			SelectedPlayers = new List<LMPlayer> ();
-			lastTime = null;
 			LoadSubsButtons ();
 			LoadTeamsButtons ();
-			ShowSubsitutionButtons = false;
-			ShowTeamsButtons = false;
 		}
 
 		protected override void DisposeManagedResources ()
 		{
-			ResetSelection ();
 			ClearPlayers ();
 			homeBench.Dispose ();
 			awayBench.Dispose ();
@@ -95,31 +91,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			homeButton.Dispose ();
 			awayButton.Dispose ();
 			base.DisposeManagedResources ();
-		}
-
-		public Time CurrentTime {
-			get {
-				return currentTime;
-			}
-			set {
-				currentTime = value;
-				if (lastTime == null) {
-					UpdateLineup ();
-				} else if (currentTime != lastTime && Project != null) {
-					Time start, stop;
-					if (lastTime < currentTime) {
-						start = lastTime;
-						stop = currentTime;
-					} else {
-						start = currentTime;
-						stop = lastTime;
-					}
-					if (Project.LineupChanged (start, stop)) {
-						UpdateLineup ();
-					}
-				}
-				lastTime = currentTime;
-			}
 		}
 
 		public Point Position {
@@ -137,60 +108,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public MultiSelectionMode SelectionMode {
-			set;
-			get;
-		}
-
-		public bool Compact {
-			get;
-			set;
-		}
-
-		public LMProject Project {
-			get;
-			set;
-		}
-
 		/// <summary>
 		/// Gets or sets the color of the background.
 		/// </summary>
 		public Color BackgroundColor {
 			get;
 			set;
-		}
-
-		public bool SubstitutionMode {
-			get {
-				return substitutionMode;
-			}
-			set {
-				substitutionMode = value;
-				homeBench.SubstitutionMode = awayBench.SubstitutionMode = field.SubstitutionMode = value;
-			}
-		}
-
-		public bool ShowSubsitutionButtons {
-			get {
-				return showSubsitutionButtons;
-			}
-			set {
-				subPlayers.Visible = value;
-				/* FIXME: Not displayed for now */
-				subInjury.Visible = false;
-				showSubsitutionButtons = value;
-			}
-		}
-
-		public bool ShowTeamsButtons {
-			get {
-				return showTeamsButtons;
-			}
-			set {
-				showTeamsButtons = value;
-				homeButton.Visible = value;
-				awayButton.Visible = value;
-			}
 		}
 
 		public List<LMPlayer> SelectedPlayers {
@@ -211,144 +134,68 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public void Reload ()
-		{
-			LoadTeams (homeTeam, awayTeam, background);
-			UpdateLineup ();
-		}
-
-		public void Update ()
-		{
-			homeBench.Update ();
-			awayBench.Update ();
-			field.Update ();
-		}
-
-		public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
-		{
-			ResetSelection ();
-			foreach (LMPlayer p in players) {
-				Select (p, true, false);
+		public LMTeamTaggerVM ViewModel {
+			get {
+				return viewModel;
 			}
-			homeButton.Active = teams.Contains (homeTeam);
-			awayButton.Active = teams.Contains (awayTeam);
-			if (PlayersSelectionChangedEvent != null) {
-				PlayersSelectionChangedEvent (SelectedPlayers);
-			}
-		}
-
-		public void Select (TeamType team)
-		{
-			if (team == TeamType.LOCAL) {
-				homeButton.Active = true;
-				awayButton.Active = false;
-			} else {
-				awayButton.Active = true;
-				homeButton.Active = false;
-			}
-		}
-
-		public void Select (LMPlayer player, bool silent = false, bool reset = false)
-		{
-			LMPlayerView po;
-
-			po = homePlayers.FirstOrDefault (p => p.Model == player);
-			if (po == null) {
-				po = awayPlayers.FirstOrDefault (p => p.Model == player);
-			}
-			if (po != null) {
-				if (reset) {
-					ResetSelection ();
+			set {
+				if (viewModel != null) {
+					viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
 				}
-				SelectedPlayers.Add (player);
-				po.Active = true;
-				if (!silent && PlayersSelectionChangedEvent != null) {
-					PlayersSelectionChangedEvent (SelectedPlayers);
+				viewModel = value;
+				if (viewModel != null) {
+					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+					viewModel.Sync ();
 				}
 			}
 		}
 
-		public void ResetSelection ()
+		public void SetViewModel (object viewModel)
 		{
-			SelectedPlayers.Clear ();
-			substitutionPlayer = null;
-			if (homePlayers != null) {
-				foreach (LMPlayerView player in homePlayers) {
-					player.Active = false;
-				}
-			}
-			if (awayPlayers != null) {
-				foreach (LMPlayerView player in awayPlayers) {
-					player.Active = false;
-				}
-			}
-			homeButton.Active = false;
-			awayButton.Active = false;
+			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
-		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
-		{
-			if (team == homeTeam) {
-				Substitute (homePlayers.FirstOrDefault (p => p.Model == p1),
-							homePlayers.FirstOrDefault (p => p.Model == p2),
-					homePlayingPlayers, homeBenchPlayers);
-			} else {
-				Substitute (awayPlayers.FirstOrDefault (p => p.Model == p1),
-							awayPlayers.FirstOrDefault (p => p.Model == p2),
-					awayPlayingPlayers, awayBenchPlayers);
-			}
-		}
-
-		public void LoadTeams (LMTeam homeTeam, LMTeam awayTeam, Image background)
+		public void LoadTeams ()
 		{
 			int [] homeF = null, awayF = null;
 			int playerSize, colSize, border;
 
-			this.homeTeam = homeTeam;
-			this.awayTeam = awayTeam;
-			this.background = background;
 			NTeams = 0;
 
-			if (background != null) {
-				field.Height = background.Height;
-				field.Width = background.Width;
-			} else {
-				field.Width = 300;
-				field.Height = 250;
-			}
-			ResetSelection ();
+			SetFieldBackground ();
 			ClearPlayers ();
 			homePlayingPlayers = awayPlayingPlayers = null;
-			lastTime = null;
 
 			homePlayers = new List<LMPlayerView> ();
 			awayPlayers = new List<LMPlayerView> ();
 
-			if (homeTeam != null) {
+			if (ViewModel.HomeTeam != null) {
+				homeTeam = ViewModel.HomeTeam.Model;
 				homeTeam.UpdateColors ();
-				homePlayingPlayers = GetPlayers (homeTeam.StartingPlayersList, TeamType.LOCAL);
-				homeBenchPlayers = GetPlayers (homeTeam.BenchPlayersList, TeamType.LOCAL);
+				homePlayingPlayers = GetPlayersViews (ViewModel.HomeTeam.FieldPlayersList, TeamType.LOCAL);
+				homeBenchPlayers = GetPlayersViews (ViewModel.HomeTeam.BenchPlayersList, TeamType.LOCAL);
 				homePlayers.AddRange (homePlayingPlayers);
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
-				if (homeTeam.Shield == null) {
+				if (ViewModel.HomeTeam.Icon == null) {
 					homeButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
 				} else {
-					homeButton.BackgroundImage = homeTeam.Shield;
+					homeButton.BackgroundImage = ViewModel.HomeTeam.Icon;
 				}
 				NTeams++;
 			}
-			if (awayTeam != null) {
+			if (ViewModel.AwayTeam != null) {
+				awayTeam = ViewModel.AwayTeam.Model;
 				awayTeam.UpdateColors ();
-				awayPlayingPlayers = GetPlayers (awayTeam.StartingPlayersList, TeamType.VISITOR);
-				awayBenchPlayers = GetPlayers (awayTeam.BenchPlayersList, TeamType.VISITOR);
+				awayPlayingPlayers = GetPlayersViews (ViewModel.AwayTeam.FieldPlayersList, TeamType.VISITOR);
+				awayBenchPlayers = GetPlayersViews (ViewModel.AwayTeam.BenchPlayersList, TeamType.VISITOR);
 				awayPlayers.AddRange (awayPlayingPlayers);
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
-				if (awayTeam.Shield == null) {
+				if (ViewModel.AwayTeam.Icon == null) {
 					awayButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
 				} else {
-					awayButton.BackgroundImage = awayTeam.Shield;
+					awayButton.BackgroundImage = ViewModel.AwayTeam.Icon;
 				}
 				NTeams++;
 			}
@@ -357,7 +204,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			playerSize = colSize * 90 / 100;
 
 			BenchWidth (colSize, field.Height, playerSize);
-			field.LoadTeams (background, homeF, awayF, homePlayingPlayers,
+			field.LoadTeams (ViewModel.Background, homeF, awayF, homePlayingPlayers,
 				awayPlayingPlayers, playerSize, NTeams);
 			homeBench.BenchPlayers = homeBenchPlayers;
 			awayBench.BenchPlayers = awayBenchPlayers;
@@ -377,7 +224,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				field.Position = new Point (homeBench.Width + 2 * border, 0);
 				awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
 			}
-
 			Update ();
 		}
 
@@ -400,28 +246,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayButton.ResetDrawArea ();
 		}
 
-		void UpdateLineup ()
-		{
-			List<LMPlayer> homeFieldL, awayFieldL, homeBenchL, awayBenchL;
-
-			if (Project == null) {
-				return;
-			}
-
-			Project.CurrentLineup (currentTime, out homeFieldL, out homeBenchL,
-				out awayFieldL, out awayBenchL);
-			homePlayingPlayers = homeFieldL.Select (p => homePlayerToPlayerObject [p]).ToList ();
-			homeBenchPlayers = homeBenchL.Select (p => homePlayerToPlayerObject [p]).ToList ();
-			awayPlayingPlayers = awayFieldL.Select (p => awayPlayerToPlayerObject [p]).ToList ();
-			awayBenchPlayers = awayBenchL.Select (p => awayPlayerToPlayerObject [p]).ToList ();
-			homeBench.BenchPlayers = homeBenchPlayers;
-			awayBench.BenchPlayers = awayBenchPlayers;
-			field.HomePlayingPlayers = homePlayingPlayers;
-			field.AwayPlayingPlayers = awayPlayingPlayers;
-			Update ();
-			EmitRedrawEvent (this, new Area (Position, Width, Height));
-		}
-
 		void BenchWidth (int colSize, int height, int playerSize)
 		{
 			int maxPlayers, playersPerColumn, playersPerRow;
@@ -433,7 +257,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homeBenchPlayers != null ? homeBenchPlayers.Count : 0,
 				awayBenchPlayers != null ? awayBenchPlayers.Count : 0);
 			playersPerColumn = height / colSize;
-			if (Compact) {
+			if (ViewModel.Compact) {
 				/* Try with 4/4, 3/4 and 2/4 of the original column size
 				 * to fit all players in a single column */
 				for (int i = 4; i > 1; i--) {
@@ -505,43 +329,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			};
 		}
 
-		void Substitute (LMPlayerView p1, LMPlayerView p2,
-						 List<LMPlayerView> playingPlayers,
-						 List<LMPlayerView> benchPlayers)
-		{
-			Point tmpPos;
-			List<LMPlayerView> p1List, p2List;
-
-			if (playingPlayers.Contains (p1)) {
-				p1List = playingPlayers;
-			} else {
-				p1List = benchPlayers;
-			}
-			if (playingPlayers.Contains (p2)) {
-				p2List = playingPlayers;
-			} else {
-				p2List = benchPlayers;
-			}
-
-			if (p1List == p2List) {
-				p1List.Swap (p1, p2);
-			} else {
-				int p1Index, p2Index;
-
-				p1Index = p1List.IndexOf (p1);
-				p2Index = p2List.IndexOf (p2);
-				p1List.Remove (p1);
-				p2List.Remove (p2);
-				p1List.Insert (p1Index, p2);
-				p2List.Insert (p2Index, p1);
-			}
-			tmpPos = p2.Center;
-			p2.Center = p1.Center;
-			p1.Center = tmpPos;
-			ResetSelection ();
-			EmitRedrawEvent (this, null);
-		}
-
 		int ColumnSize {
 			get {
 				int width, optWidth, optHeight, count = 0, max = 0;
@@ -565,7 +352,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		List<LMPlayerView> GetPlayers (List<LMPlayer> players, TeamType team)
+		List<LMPlayerView> GetPlayersViews (IEnumerable<LMPlayerVM> players, TeamType team)
 		{
 			List<LMPlayerView> playerObjects;
 			Color color = null;
@@ -578,7 +365,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			playerObjects = new List<LMPlayerView> ();
 			foreach (var player in players) {
-				LMPlayerView po = new LMPlayerView { Model = player, Team = team };
+				LMPlayerView po = new LMPlayerView { Team = team };
+				po.ViewModel = player;
 				po.ClickedEvent += HandlePlayerClickedEvent;
 				po.RedrawEvent += (co, area) => {
 					EmitRedrawEvent (po, area);
@@ -593,68 +381,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			return playerObjects;
 		}
 
-		void EmitSubsitutionEvent (LMPlayerView player1, LMPlayerView player2)
-		{
-			LMTeam team;
-			List<LMPlayerView> bench;
-
-			if (substitutionPlayer.Team == TeamType.LOCAL) {
-				team = homeTeam;
-				bench = homeBenchPlayers;
-			} else {
-				team = awayTeam;
-				bench = awayBenchPlayers;
-			}
-			if (PlayersSubstitutionEvent != null) {
-				if (bench.Contains (player1) && bench.Contains (player2)) {
-					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
-						SubstitutionReason.BenchPositionChange, CurrentTime);
-				} else if (!bench.Contains (player1) && !bench.Contains (player2)) {
-					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
-						SubstitutionReason.PositionChange, CurrentTime);
-				} else if (bench.Contains (player1)) {
-					PlayersSubstitutionEvent (team, player1.Model, player2.Model,
-						SubstitutionReason.PlayersSubstitution, CurrentTime);
-				} else {
-					PlayersSubstitutionEvent (team, player2.Model, player1.Model,
-						SubstitutionReason.PlayersSubstitution, CurrentTime);
-				}
-			}
-			ResetSelection ();
-			UpdateLineup ();
-		}
-
 		void HandlePlayerClickedEvent (ICanvasObject co)
 		{
 			LMPlayerView player = co as LMPlayerView;
-
-			if (SubstitutionMode) {
-				if (substitutionPlayer == null) {
-					substitutionPlayer = player;
-				} else {
-					if (substitutionPlayer.Team == player.Team) {
-						EmitSubsitutionEvent (player, substitutionPlayer);
-					} else {
-						player.Active = false;
-					}
-				}
-			} else {
-				if (player.Active) {
-					SelectedPlayers.Add (player.Model);
-				} else {
-					SelectedPlayers.Remove (player.Model);
-				}
-				if (PlayersSelectionChangedEvent != null) {
-					PlayersSelectionChangedEvent (SelectedPlayers);
-				}
-			}
+			ViewModel.PlayerClick (player.ViewModel, modifier);
 		}
 
 		bool ButtonClickPressed (Point point, ButtonModifier modif, params ButtonObject [] buttons)
 		{
 			Selection sel;
 
-			if (!ShowSubsitutionButtons && !ShowTeamsButtons) {
+			if (!ViewModel.ShowSubstitutionButtons && !ViewModel.ShowTeamsButtons) {
 				return false;
 			}
 
@@ -673,32 +410,26 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void HandleSubsClicked (ICanvasObject co)
 		{
-			ResetSelection ();
-			if (PlayersSelectionChangedEvent != null) {
-				PlayersSelectionChangedEvent (SelectedPlayers);
-			}
-			SubstitutionMode = !SubstitutionMode;
+			ViewModel.SubstitutionMode = !ViewModel.SubstitutionMode;
 		}
 
 		void HandleTeamClickedEvent (ICanvasObject co)
 		{
-			if (TeamSelectionChangedEvent != null)
-				TeamSelectionChangedEvent (SelectedTeams);
+			var button = co as ButtonObject;
+			if (button == homeButton) {
+				ViewModel.HomeTeam.Tagged = button.Active;
+			} else if (button == awayButton) {
+				ViewModel.AwayTeam.Tagged = button.Active;
+			}
 		}
 
 		public override void ClickPressed (Point point, ButtonModifier modif)
 		{
 			Selection selection = null;
-
+			modifier = ButtonModifier.None;
 			if (ButtonClickPressed (point, modif, subPlayers, subInjury,
 					homeButton, awayButton)) {
 				return;
-			}
-
-			if (!SubstitutionMode && SelectionMode != MultiSelectionMode.Multiple) {
-				if (SelectionMode == MultiSelectionMode.Single || modif == ButtonModifier.None) {
-					ResetSelection ();
-				}
 			}
 
 			// FIXME: this is very awkward, click events should be forwarded to the child views
@@ -719,12 +450,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (selection != null) {
 				clickedPlayer = selection.Drawable as LMPlayerView;
-				if (SubstitutionMode && substitutionPlayer != null &&
-					clickedPlayer.Team != substitutionPlayer.Team) {
-					clickedPlayer = null;
-				} else {
-					(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
-				}
+				modifier = modif;
+				(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
 			} else {
 				clickedPlayer = null;
 			}
@@ -737,11 +464,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				clickedButton = null;
 			} else if (clickedPlayer != null) {
 				clickedPlayer.ClickReleased ();
-			} else {
-				ResetSelection ();
-				if (PlayersSelectionChangedEvent != null) {
-					PlayersSelectionChangedEvent (SelectedPlayers);
-				}
+				modifier = ButtonModifier.None;
 			}
 		}
 
@@ -815,6 +538,75 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public void Move (Selection s, Point p, Point start)
 		{
 			throw new NotImplementedException ("Unsupported move for PlayersTaggerObject:  " + s.Position);
+		}
+
+		void SetFieldBackground ()
+		{
+			if (ViewModel.Background != null) {
+				field.Height = ViewModel.Background.Height;
+				field.Width = ViewModel.Background.Width;
+			} else {
+				field.Width = 300;
+				field.Height = 250;
+			}
+		}
+
+		void Update ()
+		{
+			homeBench.Update ();
+			awayBench.Update ();
+			field.Update ();
+		}
+
+		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (ViewModel.HomeTeam != null) {
+				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.FieldPlayersList), sender, ViewModel.HomeTeam) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.BenchPlayersList), sender, ViewModel.HomeTeam))) {
+					LoadTeams ();
+					ReDraw ();
+				}
+
+				if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Tagged), sender, ViewModel.HomeTeam) ||
+					ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.Tagged), sender, ViewModel)) {
+					homeButton.Active = ViewModel.HomeTeam.Tagged;
+				}
+			}
+
+			if (ViewModel.AwayTeam != null) {
+				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.FieldPlayersList), sender, ViewModel.AwayTeam) ||
+				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.BenchPlayersList), sender, ViewModel.AwayTeam))) {
+					LoadTeams ();
+					ReDraw ();
+				}
+				if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel.AwayTeam) ||
+					ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel)) {
+					awayButton.Active = ViewModel.AwayTeam.Tagged;
+				}
+			}
+
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Background), sender, ViewModel)) {
+				SetFieldBackground ();
+				ReDraw ();
+			}
+
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.ShowSubstitutionButtons), sender, ViewModel)) {
+				subPlayers.Visible = ViewModel.ShowSubstitutionButtons;
+				/* FIXME: Not displayed for now */
+				subInjury.Visible = false;
+			}
+
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.SubstitutionMode), sender, ViewModel)) {
+				homeBench.SubstitutionMode =
+					awayBench.SubstitutionMode =
+						field.SubstitutionMode = ViewModel.SubstitutionMode;
+			}
+
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.ShowTeamsButtons), sender, ViewModel)) {
+				homeButton.Visible = awayButton.Visible = ViewModel.ShowTeamsButtons;
+			}
 		}
 	}
 }

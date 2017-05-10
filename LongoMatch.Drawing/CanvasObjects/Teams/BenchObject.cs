@@ -24,7 +24,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class BenchObject: CanvasObject, ICanvasSelectableObject
+	public class BenchObject : CanvasObject, ICanvasSelectableObject
 	{
 		public BenchObject ()
 		{
@@ -75,7 +75,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				LMPlayerView po;
 				double x, y;
 				double s = Width / PlayersPerRow;
-				
+
 				x = s * (i % PlayersPerRow) + s / 2;
 				y = s * (i / PlayersPerRow) + s / 2;
 
@@ -91,7 +91,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return;
 			}
 			tk.Begin ();
-			tk.TranslateAndScale (Position, new Point (1, 1)); 
+			tk.TranslateAndScale (Position, new Point (1, 1));
 			tk.LineStyle = LineStyle.Dashed;
 			tk.LineWidth = App.Current.Style.BenchLineWidth;
 			tk.StrokeColor = App.Current.Style.PaletteActive;
@@ -100,12 +100,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.LineStyle = LineStyle.Normal;
 
 			foreach (LMPlayerView po in BenchPlayers) {
-				po.Playing = false;
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
 				po.Draw (tk, area);
 			}
-			
+
 			tk.End ();
 		}
 
@@ -116,9 +115,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (BenchPlayers == null || Position == null) {
 				return selection;
 			}
-			
+
 			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
-			
+
 			foreach (LMPlayerView po in BenchPlayers) {
 				selection = po.GetSelection (point, precision);
 				if (selection != null)

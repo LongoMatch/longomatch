@@ -28,6 +28,13 @@ using LKeyAction = LongoMatch.Core.Common.KeyAction;
 using VAS.Core.Hotkeys;
 using LongoMatch.Core.ViewModel;
 using System.Linq;
+using LongoMatch.Services.ViewModel;
+using LongoMatch.Services.Interfaces;
+using VAS.Core.Interfaces.MVVMC;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
+using Constants = VAS.Core.Common.Constants;
+using VAS.Core.Events;
 
 namespace LongoMatch.Services.Controller
 {
@@ -36,6 +43,11 @@ namespace LongoMatch.Services.Controller
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	public class LMTaggingController : TaggingController
 	{
+		public override void SetViewModel (IViewModel viewModel)
+		{
+			base.SetViewModel (viewModel);
+		}
+
 		public override IEnumerable<VKeyAction> GetDefaultKeyActions ()
 		{
 			List<VKeyAction> keyActions = (List<VKeyAction>)base.GetDefaultKeyActions ();
@@ -70,12 +82,11 @@ namespace LongoMatch.Services.Controller
 			}
 
 			KeyTemporalContext tempContext = new KeyTemporalContext { };
-			for (int i = 0; i < 10; i++)
-			{
+			for (int i = 0; i < 10; i++) {
 				string newTaggedPlayer = taggedPlayer + i;
 				VKeyAction action = new VKeyAction (new KeyConfig {
 					Name = taggedPlayer,
-					Key = App.Current.Keyboard.ParseName (i.ToString())
+					Key = App.Current.Keyboard.ParseName (i.ToString ())
 				}, () => HandleTeamTagging (team, newTaggedPlayer));
 				tempContext.AddAction (action);
 			}
@@ -88,9 +99,14 @@ namespace LongoMatch.Services.Controller
 		void HandleTaggedPlayer (LMTeamVM team, string taggedPlayer)
 		{
 			if (taggedPlayer != string.Empty) {
-				PlayerVM player = team.ViewModels.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32(taggedPlayer));
+				PlayerVM player = team.ViewModels.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 (taggedPlayer));
 				if (player != null) {
-					player.Tagged = true;
+					App.Current.EventsBroker.Publish (new TagPlayerEvent {
+						Player = player,
+						Team = team,
+						Modifier = ButtonModifier.None,
+						Sender = player
+					});
 				}
 			}
 		}

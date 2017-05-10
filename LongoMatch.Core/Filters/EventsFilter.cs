@@ -40,8 +40,8 @@ namespace LongoMatch.Core.Filters
 		protected override void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
-				VisiblePlayers = Project.LocalTeamTemplate.PlayingPlayersList.Union (
-					Project.VisitorTeamTemplate.PlayingPlayersList).Cast<Player> ().ToList ();
+				VisiblePlayers = Project.LocalTeamTemplate.CalledPlayersList.Union (
+					Project.VisitorTeamTemplate.CalledPlayersList).Cast<Player> ().ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
 			}
@@ -50,8 +50,8 @@ namespace LongoMatch.Core.Filters
 		protected override bool IsVisibleByPlayer (TimelineEvent play)
 		{
 			if (play.Players.Count == 0 &&
-			    VisiblePlayers.Count == Project.LocalTeamTemplate.PlayingPlayersList.Union (
-				    Project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
+			    VisiblePlayers.Count == Project.LocalTeamTemplate.CalledPlayersList.Union (
+				    Project.VisitorTeamTemplate.CalledPlayersList).Count<Player> ()) {
 				return true;
 
 			} else {

@@ -17,11 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
@@ -38,10 +35,10 @@ namespace LongoMatch.Gui.Dialog
 {
 	// Fixme: Change the view to not use the model, use the VM provided
 	[ViewAttribute (PlayEditorState.NAME)]
-	public partial class PlayEditor : Gtk.Dialog, IPanel
+	public partial class PlayEditor : Gtk.Dialog, IPanel<PlayEditorVM>
 	{
 		const int TAGS_PER_ROW = 5;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 		TimelineEventLocationTaggerView field, hfield, goal;
 		PlayEditorVM editorVM;
 
@@ -58,13 +55,7 @@ namespace LongoMatch.Gui.Dialog
 				FieldPosition = FieldPositionType.Goal
 			};
 
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea3));
-			teamtagger.Compact = true;
-			teamtagger.ShowSubstitutionButtons = false;
-			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
-			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
-			teamtagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
-			teamtagger.ShowTeamsButtons = true;
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea3));
 			nameentry.Changed += HandleChanged;
 		}
 
@@ -85,6 +76,15 @@ namespace LongoMatch.Gui.Dialog
 			Disposed = true;
 		}
 
+		public PlayEditorVM ViewModel {
+			get {
+				return editorVM;
+			}
+			set {
+				editorVM = value;
+			}
+		}
+
 		protected bool Disposed { get; private set; } = false;
 
 		public void OnLoad ()
@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Dialog
 			nameentry.GrabFocus ();
 
 			if (editorVM.EditionSettings.EditPositions) {
-				LoadBackgrounds (editorVM.Model);
+				LoadBackgrounds (editorVM.Project.Model);
 				LoadTimelineEvent (editorVM.Play);
 			}
 
@@ -111,17 +111,11 @@ namespace LongoMatch.Gui.Dialog
 				notes.Play = editorVM.Play;
 			}
 			if (editorVM.EditionSettings.EditPlayers) {
-				teamtagger.Project = editorVM.Model;
-				teamtagger.LoadTeams (editorVM.Model.LocalTeamTemplate, editorVM.Model.VisitorTeamTemplate,
-					editorVM.Model.Dashboard.FieldBackground);
-				/* Force lineup update */
-				teamtagger.CurrentTime = editorVM.Play.EventTime;
-				teamtagger.Select (editorVM.Play.Players.Cast<LMPlayer> ().ToList (),
-					editorVM.Play.Teams.Cast<LMTeam> ().ToList ());
+				teamtagger.ViewModel = editorVM.TeamTagger;
 			}
 
 			if (editorVM.EditionSettings.EditTags) {
-				FillTags (editorVM.Model, editorVM.Play);
+				FillTags (editorVM.Project.Model, editorVM.Play);
 			}
 		}
 
@@ -131,7 +125,7 @@ namespace LongoMatch.Gui.Dialog
 
 		public void SetViewModel (object viewModel)
 		{
-			editorVM = ((PlayEditorVM)viewModel as dynamic);
+			ViewModel = ((PlayEditorVM)viewModel as dynamic);
 		}
 
 		public KeyContext GetKeyContext ()
@@ -245,16 +239,6 @@ namespace LongoMatch.Gui.Dialog
 			if (editorVM.Play != null) {
 				editorVM.Play.Name = nameentry.Text;
 			}
-		}
-
-		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
-		{
-			editorVM.Play.Players.Replace (players);
-		}
-
-		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
-		{
-			editorVM.Play.Teams.Replace (teams);
 		}
 	}
 }

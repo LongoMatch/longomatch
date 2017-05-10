@@ -17,13 +17,13 @@
 //
 using System.Threading.Tasks;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
-using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
 {
-	public class NewProjectState : ScreenState<IViewModel>
+	public class NewProjectState : ScreenState<NewProjectVM>
 	{
 		public const string NAME = "NewProject";
 
@@ -35,10 +35,10 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
-			if (data == null) {
-				data = new LMProjectVM ();
+			ViewModel = new NewProjectVM ();
+			if (data != null) {
+				ViewModel.Project = data;
 			}
-			ViewModel = data;
 		}
 
 		public override async Task<bool> LoadState (dynamic data)

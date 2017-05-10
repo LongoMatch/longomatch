@@ -97,11 +97,11 @@ namespace LongoMatch.Gui.Component
 			visitorIter = store.AppendValues (visitorTeam.Name, false, visitorTeam);
 
 			filter.IgnoreUpdates = true;
-			foreach (LMPlayer player in local.PlayingPlayersList) {
+			foreach (LMPlayer player in local.CalledPlayersList) {
 				store.AppendValues (localIter, player.ToString (), false, player);
 			}
 			
-			foreach (LMPlayer player in visitor.PlayingPlayersList) {
+			foreach (LMPlayer player in visitor.CalledPlayersList) {
 				store.AppendValues (visitorIter, player.ToString (), false, player);
 			}
 			filter.IgnoreUpdates = false;

@@ -14,6 +14,10 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMPlayersCollectionVM : CollectionViewModel<Player, PlayerVM>
 	{
+		public LMPlayersCollectionVM ()
+		{
+			TypeMappings.Add (typeof (LMPlayerVM), typeof (LMPlayer));
+		}
 		protected override PlayerVM CreateInstance (Player model)
 		{
 			return new LMPlayerVM { Model = (LMPlayer)model };

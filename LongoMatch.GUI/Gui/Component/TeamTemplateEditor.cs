@@ -17,14 +17,19 @@
 //
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using VAS.UI.UI.Component;
@@ -37,27 +42,24 @@ using Misc = VAS.UI.Helpers.Misc;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class TeamTemplateEditor : Gtk.Bin
+	public partial class TeamTemplateEditor : Gtk.Bin, IView<LMTeamEditorVM>
 	{
 		public event EventHandler TemplateSaved;
 
 		const int SHIELD_SIZE = 70;
 		const int PLAYER_SIZE = 70;
 
+		LMTeamEditorVM viewModel;
 		LMPlayer loadedPlayer;
 		LMTeam template;
 		bool edited, ignoreChanges;
-		List<LMPlayer> selectedPlayers;
-		TeamTagger teamtagger;
+		LMTeamTaggerView teamtagger;
 
 		public TeamTemplateEditor ()
 		{
 			this.Build ();
 
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
-			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
-			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
+			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			shieldimage.HeightRequest = shieldvbox.WidthRequest = SHIELD_SIZE;
 			colorbutton1.Color = Misc.ToGdkColor (Color.Red1);
 			colorbutton1.ColorSet += HandleColorSet;
@@ -96,7 +98,6 @@ namespace LongoMatch.Gui.Component
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
-				teamtagger.LoadTeams (template, null, App.Current.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
 				colorbutton1.Color = Misc.ToGdkColor (value.Colors [0]);
@@ -112,33 +113,41 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public LMTeamTaggerVM TeamTagger {
+			set {
+				teamtagger.ViewModel = value;
+			}
+		}
+
+		public LMTeamEditorVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				if (viewModel != null) {
+					viewModel.Team.PropertyChanged -= HandleTeamPropertyChanged;
+				}
+				viewModel = value;
+				if (viewModel != null) {
+					viewModel.Team.PropertyChanged += HandleTeamPropertyChanged;
+					Team = ViewModel.Team.Model;
+				}
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamEditorVM)viewModel;
+		}
+
 		public void AddPlayer ()
 		{
-			LMPlayer p = template.AddDefaultItem (template.List.Count) as LMPlayer;
-			teamtagger.Reload ();
-			teamtagger.Select (p);
-			Edited = true;
+			App.Current.EventsBroker.Publish (new CreateEvent<LMPlayer> ());
 		}
 
 		public void DeleteSelectedPlayers ()
 		{
-			bool edited = false;
-
-			if (selectedPlayers == null || selectedPlayers.Count == 0) {
-				return;
-			}
-
-			foreach (var selectedPlayer in selectedPlayers) {
-				string msg = Catalog.GetString ("Do you want to delete player: ") + selectedPlayer.Name;
-				if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-					template.List.Remove (selectedPlayer);
-					edited = true;
-				}
-			}
-			if (edited) {
-				teamtagger.Reload ();
-				Edited = true;
-			}
+			App.Current.EventsBroker.Publish (new DeleteEvent<LMPlayer> ());
 		}
 
 		void ConnectSignals ()
@@ -257,7 +266,6 @@ namespace LongoMatch.Gui.Component
 		{
 			try {
 				template.FormationStr = tacticsentry.Text;
-				teamtagger.Reload ();
 				Edited = true;
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
@@ -276,26 +284,6 @@ namespace LongoMatch.Gui.Component
 				playerImage = Misc.LoadIcon ("longomatch-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
-		}
-
-		void PlayersSelected (List<LMPlayer> players)
-		{
-			ignoreChanges = true;
-
-			selectedPlayers = players;
-			deletebutton.Sensitive = players.Count != 0;
-			if (players.Count == 1) {
-				LoadPlayer (players [0]);
-			} else {
-				ClearPlayer ();
-			}
-
-			ignoreChanges = false;
-		}
-
-		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
-		{
-			PlayersSelected (players);
 		}
 
 		void HandleSaveTemplateClicked (object sender, EventArgs e)
@@ -325,8 +313,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
 		{
-			if (args.Event.Key == Gdk.Key.Delete) {
-				DeleteSelectedPlayers ();
+			if (args.Event.Key == Gdk.Key.Delete &&
+				ViewModel.DeletePlayersCommand.CanExecute ()) {
+				ViewModel.DeletePlayersCommand.Execute ();
 			}
 		}
 
@@ -345,7 +334,6 @@ namespace LongoMatch.Gui.Component
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 				loadedPlayer.Photo = player;
-				teamtagger.Reload ();
 				Edited = true;
 			}
 		}
@@ -369,14 +357,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
-											 SubstitutionReason reason, Time time)
-		{
-			team.List.Swap (p1, p2);
-			teamtagger.Substitute (p1, p2, team);
-			Edited = true;
-		}
-
 		void HandleColorSet (object sender, EventArgs e)
 		{
 			if (ignoreChanges)
@@ -391,5 +371,21 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 
+		void HandleTeamPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (ViewModel.Team.NeedsSync (e.PropertyName, nameof (ViewModel.Team.Model),
+											  sender, ViewModel.Team)) {
+				Team = ViewModel.Team.Model;
+			}
+			if (ViewModel.Team.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.Team.Selection)}",
+											  sender, ViewModel.Team)) {
+				if (ViewModel.Team.Selection.Count == 1) {
+					LoadPlayer ((LMPlayer)ViewModel.Team.Selection.First ().Model);
+				} else {
+					ClearPlayer ();
+				}
+				ViewModel.DeletePlayersCommand.EmitCanExecuteChanged ();
+			}
+		}
 	}
 }
