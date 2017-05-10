@@ -45,6 +45,7 @@ namespace LongoMatch.Gui.Component
 		public event ProjectsSelectedHandler ProjectsSelected;
 		public event ProjectSelectedHandler ProjectSelected;
 
+		const int PREVIEW_SIZE = 100;
 		const int COL_DISPLAY_NAME = 0;
 		const int COL_PIXBUF1 = 1;
 		const int COL_PIXBUF2 = 2;
@@ -111,7 +112,7 @@ namespace LongoMatch.Gui.Component
 				if (file != null && file.IsFakeCapture) {
 					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
 				} else if (pdesc.FileSet.Preview != null) {
-					image = pdesc.FileSet.Preview.Value;
+					image = pdesc.FileSet.Preview.Scale (PREVIEW_SIZE, PREVIEW_SIZE).Value;
 				} else {
 					image = Misc.LoadIcon ("longomatch-video-file", 50);
 				}
