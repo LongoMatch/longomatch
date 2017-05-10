@@ -20,6 +20,7 @@
 using System;
 using Newtonsoft.Json;
 using VAS.Core.Common;
+using VAS.Core.Serialization;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
@@ -62,6 +63,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[CloneIgnoreAttribute]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public PenaltyCard PenaltyCard {
