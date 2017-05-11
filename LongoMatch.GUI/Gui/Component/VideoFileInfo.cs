@@ -28,6 +28,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event EventHandler Changed;
 
+		const int PREVIEW_SIZE = 80;
 		MediaFileSet fileSet;
 		MediaFile mediaFile;
 		bool disableChanges;
@@ -62,7 +63,7 @@ namespace LongoMatch.Gui.Component
 			namelabel.Text = mediaFile.Name;
 			if (mediaFile.IsFakeCapture) {
 				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
-				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
+				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", PREVIEW_SIZE);
 				table1.Visible = false;
 				disableChanges = true;
 				return;
@@ -70,9 +71,9 @@ namespace LongoMatch.Gui.Component
 			table1.Visible = true;
 			filelabel.Text = mediaFile.FilePath;
 			if (mediaFile.Preview != null) {
-				snapshotimage.Pixbuf = mediaFile.Preview.Value;
+				snapshotimage.Pixbuf = mediaFile.Preview.Scale (PREVIEW_SIZE, PREVIEW_SIZE).Value;
 			} else {
-				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-file", 80);
+				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-file", PREVIEW_SIZE);
 			}
 			if (mediaFile.Duration != null) {
 				durationlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Duration"),
