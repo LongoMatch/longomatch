@@ -145,6 +145,7 @@
     <Compile Include="Services\ViewModel\TestNewProjectVM.cs" />
     <Compile Include="Services\ViewModel\TestTeamsManagerVM.cs" />
     <Compile Include="Services\ViewModel\TestLMDrawingToolVM.cs" />
+    <Compile Include="Controller\TestLMEventsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
