@@ -38,18 +38,6 @@ namespace LongoMatch.Services.State
 			}
 		}
 
-		public override async Task<bool> LoadState (dynamic data)
-		{
-			LMProjectVM projectVM = data.Project;
-
-			if (!InternalLoad (projectVM)) {
-				return false;
-			}
-
-			projectVM.Model.UpdateEventTypesAndTimers ();
-			return await Initialize (data);
-		}
-
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new LMProjectAnalysisVM ();
