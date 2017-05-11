@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Menus
 			this.project = project;
 			this.selectionCanvas = selectionCanvas;
 			delitem.Visible = project != null && timer != null;
+			delitem.Sensitive = project.Periods.Count > 1;
 			Popup ();
 		}
 

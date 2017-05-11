@@ -101,7 +101,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			TimerVM t = Selections.Select (p => (p.Drawable as TimerTimeNodeView).Timer).FirstOrDefault ();
 			if (ShowPeriodsMenuEvent != null) {
-				ShowPeriodsMenuEvent (t.Model, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowPeriodsMenuEvent (t?.Model, Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}
