@@ -26,23 +26,21 @@ namespace LongoMatch.Gui.Menus
 {
 	public class PlayerMenu : Menu
 	{
-		Menu playerMenu;
 		MenuItem addToPlaylistMenu, exportToVideoFile;
 
 		public PlayerMenu ()
 		{
-			playerMenu = new Menu ();
 			addToPlaylistMenu = new MenuItem ("");
-			playerMenu.Add (addToPlaylistMenu);
+			Add (addToPlaylistMenu);
 			exportToVideoFile = new MenuItem ("");
-			exportToVideoFile.Add (exportToVideoFile);
+			Add (exportToVideoFile);
 		}
 
 		public void ShowMenu (Project project, IEnumerable<TimelineEvent> events)
 		{
 			if (events.Count () > 0) {
 				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, project.Playlists, events);
-				MenuHelpers.FillExportToVideoFileMenu (addToPlaylistMenu, project, events,
+				MenuHelpers.FillExportToVideoFileMenu (exportToVideoFile, project, events,
 													   Catalog.GetString ("Export to video file"));
 				Popup ();
 			}
