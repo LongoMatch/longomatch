@@ -122,6 +122,7 @@ LongoMatch.Plugins/CSVExporter.cs
 LongoMatch.Plugins/LongoMatchExporter.cs
 LongoMatch.Plugins/LongoMatchImporter.cs
 LongoMatch.Services/Controller/DashboardsController.cs
+LongoMatch.Services/Controller/LMTeamEditorController.cs
 LongoMatch.Services/Controller/ProjectAnalysisController.cs
 LongoMatch.Services/Controller/TeamsController.cs
 LongoMatch.Services/CoreServices.cs
@@ -131,5 +132,6 @@ LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
 LongoMatch.Services/State/AnalysisStateBase.cs
 LongoMatch.Services/State/NewProjectState.cs
+LongoMatch.Services/State/ProjectAnalysisState.cs
 LongoMatch/Main.cs
 LongoMatch/longomatch.desktop.in.in
