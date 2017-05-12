@@ -32,6 +32,7 @@ namespace LongoMatch.Gui.Component
 {
 	public class TeamTimelineEventsTreeView : TimelineEventsTreeView<PlayerTimelineVM, Player>
 	{
+		SportsPlaysMenu menu;
 		PlayerMenu playerMenu;
 		TeamType teamType;
 
@@ -39,6 +40,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.teamType = teamType;
 			playerMenu = new PlayerMenu ();
+			menu = new SportsPlaysMenu ();
 			ShowExpanders = false;
 		}
 
@@ -69,9 +71,18 @@ namespace LongoMatch.Gui.Component
 			renderer.Count = Model.IterNChildren (iter);
 		}
 
-		protected override void ShowMenu (IEnumerable<TimelineEventVM> events)
+		protected override void ShowMenu ()
 		{
-			playerMenu.ShowMenu (Project.Model, events.Select (e => e.Model));
+			IEnumerable<IViewModel> viewModels = GetSelectedViewModels ();
+			IEnumerable<TimelineEventVM> events = viewModels.OfType<TimelineEventVM> ();
+			PlayerTimelineVM playerVM = viewModels.OfType<PlayerTimelineVM> ().FirstOrDefault ();
+
+			if (!events.Any () && playerVM != null) {
+				events = playerVM.ViewModels.Where (vm => vm.Visible);
+				playerMenu.ShowMenu (Project.Model, events.Select (e => e.Model));
+			} else {
+				menu.ShowMenu (Project.Model, events.Select (vm => vm.Model).ToList ());
+			}
 		}
 	}
 }
