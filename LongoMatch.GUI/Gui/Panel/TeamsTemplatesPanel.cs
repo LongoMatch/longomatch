@@ -83,7 +83,8 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.Model = teamsStore;
 			teamseditortreeview.HeadersVisible = false;
 			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), RenderIcon);
-			teamseditortreeview.AppendColumn ("Text", cell, RenderTemplateName);
+			var col = teamseditortreeview.AppendColumn ("Text", cell, RenderTemplateName);
+			col.AddAttribute (cell, "editable", COL_EDITABLE);
 			teamseditortreeview.SearchColumn = COL_TEAM;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
