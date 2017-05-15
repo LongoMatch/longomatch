@@ -210,8 +210,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 					a.Height += PointRelativeSize * 6;
 					Area = a;
 				}
+			} else {
+				Area = new Area (new Point (0, 0), 0, 0);
 			}
-			Area = new Area (new Point (0, 0), 0, 0);
 		}
 	}
 }
