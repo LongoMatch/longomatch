@@ -49,6 +49,10 @@ namespace Tests.Integration
 		public void Reset ()
 		{
 			SetupClass.Initialize ();
+			try {
+				CoreServices.Stop ();
+			} catch {
+			}
 		}
 
 		[Test ()]

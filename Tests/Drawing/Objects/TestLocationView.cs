@@ -51,6 +51,12 @@ namespace Tests.Drawing.Objects
 			App.Current.DrawingToolkit = tkMock.Object;
 		}
 
+		[SetUp]
+		public void SetUp ()
+		{
+			tkMock.ResetCalls ();
+		}
+
 		[Test]
 		public void PointsSetter_OnePoint_AreaUpdated ()
 		{
