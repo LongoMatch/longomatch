@@ -15,7 +15,7 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
 		<Optimize>true</Optimize>
-		<OutputPath>..\bin</OutputPath>
+		<OutputPath>..\..\bin</OutputPath>
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
@@ -27,7 +27,7 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
 		<Optimize>true</Optimize>
-		<OutputPath>..\bin</OutputPath>
+		<OutputPath>..\..\bin</OutputPath>
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>3</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
