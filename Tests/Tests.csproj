@@ -147,6 +147,7 @@
     <Compile Include="Services\ViewModel\TestLMDrawingToolVM.cs" />
     <Compile Include="Controller\TestLMEventsController.cs" />
     <Compile Include="Drawing\Objects\TestLocationView.cs" />
+    <Compile Include="State\TestLMStateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
