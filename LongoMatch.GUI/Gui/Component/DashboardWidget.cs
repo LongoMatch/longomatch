@@ -102,7 +102,6 @@ namespace LongoMatch.Gui.Component
 			set {
 				viewModel = value;
 				tagger.ViewModel = value;
-				periodsentry.Text = String.Join ("-", viewModel.Model.GamePeriods);
 				// Start with disabled widget until something get selected
 				tagproperties.Tagger = null;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
@@ -264,6 +263,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
+			if (ViewModel.NeedsSync (e, nameof (DashboardVM.GamePeriods))) {
+				periodsentry.Text = string.Join ("-", viewModel.Model.GamePeriods);
+			}
 			if (ViewModel.NeedsSync (e, nameof (DashboardVM.FitMode))) {
 				UpdateFitMode ();
 			}
