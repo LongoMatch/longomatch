@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>LongoMatch.Addins</RootNamespace>
-    <AssemblyName>LongoMatch.Addins</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseMSBuildEngine>True</UseMSBuildEngine>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="ExtensionPoints\IConfigModifier.cs" />
-    <Compile Include="AddinsManager.cs" />
-    <Compile Include="ExtensionPoints\IImportProject.cs" />
-    <Compile Include="ExtensionPoints\IMultimediaBackend.cs" />
-    <Compile Include="ExtensionPoints\IGStreamerPluginsProvider.cs" />
-    <Compile Include="ExtensionPoints\IAnalisysDashboardsProvider.cs" />
-    <Compile Include="ExtensionPoints\IStatsUI.cs" />
-    <Compile Include="ExtensionPoints\IGUIBackend.cs" />
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ExtensionPoints\IServicesPlugin.cs" />
-    <Compile Include="ExtensionPoints\IExportProject.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Addins">
-      <HintPath>$(SolutionDir)\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\.nuget\NuGet.targets" />
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>LongoMatch.Addins</RootNamespace>
+		<AssemblyName>LongoMatch.Addins</AssemblyName>
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<UseMSBuildEngine>True</UseMSBuildEngine>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>false</Optimize>
+		<OutputPath>..\bin</OutputPath>
+		<DefineConstants>DEBUG</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<Optimize>false</Optimize>
+		<OutputPath>..\bin</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="ExtensionPoints\IConfigModifier.cs" />
+		<Compile Include="AddinsManager.cs" />
+		<Compile Include="ExtensionPoints\IImportProject.cs" />
+		<Compile Include="ExtensionPoints\IMultimediaBackend.cs" />
+		<Compile Include="ExtensionPoints\IGStreamerPluginsProvider.cs" />
+		<Compile Include="ExtensionPoints\IAnalisysDashboardsProvider.cs" />
+		<Compile Include="ExtensionPoints\IStatsUI.cs" />
+		<Compile Include="ExtensionPoints\IGUIBackend.cs" />
+		<Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+			<Link>AssemblyInfo.cs</Link>
+		</Compile>
+		<Compile Include="ExtensionPoints\IServicesPlugin.cs" />
+		<Compile Include="ExtensionPoints\IExportProject.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="Mono.Addins">
+			<HintPath>$(SolutionDir)\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+			<Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+			<Name>LongoMatch.Services.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+			<Name>LongoMatch.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+		  <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+		  <Name>VAS.Core.Net45</Name>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="packages.config" />
+	</ItemGroup>
+	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+	<Import Project="..\.nuget\NuGet.targets" />
 </Project>

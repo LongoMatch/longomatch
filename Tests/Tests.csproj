@@ -150,52 +150,6 @@
     <Compile Include="State\TestLMStateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
-      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
-      <Name>LongoMatch.Addins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
-      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
-      <Name>LongoMatch.DB.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.DB\VAS.DB.Net45.csproj">
-      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
-      <Name>VAS.DB.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>VAS.Drawing.Cairo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
-      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
-      <Name>VAS.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
-      <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
-      <Name>LongoMatch.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
-      <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
-      <Name>LongoMatch.Drawing.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
-      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
-      <Name>VAS.Drawing.Net45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Core\dibujo.svg">
       <LogicalName>dibujo.svg</LogicalName>
     </EmbeddedResource>
@@ -241,5 +195,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
+      <Name>LongoMatch.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
+      <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
+      <Name>LongoMatch.Drawing.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
+      <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
+      <Name>LongoMatch.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.DB\VAS.DB.Net45.csproj">
+      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Name>VAS.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>VAS.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+      <Name>VAS.Drawing.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
+      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+      <Name>LongoMatch.Addins</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

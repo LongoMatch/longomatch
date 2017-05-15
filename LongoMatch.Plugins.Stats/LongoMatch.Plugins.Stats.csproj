@@ -81,25 +81,25 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
-      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
-      <Name>LongoMatch.Addins</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
       <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
       <Name>LongoMatch.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+    <ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
+      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+      <Name>LongoMatch.Addins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
