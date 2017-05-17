@@ -101,20 +101,20 @@ namespace LongoMatch.Gui.Component
 		{
 			var keyContext = new KeyContext ();
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_IN"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.ZOOM_IN),
 							   () => codingwidget1.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_OUT"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.ZOOM_OUT),
 							   () => codingwidget1.ZoomOut ()));
 
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("FIT_TIMELINE"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.FIT_TIMELINE),
 							   () => codingwidget1.FitTimeline ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_DASHBOARD"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_DASHBOARD),
 							   () => codingwidget1.ShowDashboard ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_TIMELINE"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_TIMELINE),
 							   () => codingwidget1.ShowTimeline ()));
 
 			return keyContext;

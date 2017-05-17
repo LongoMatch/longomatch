@@ -84,9 +84,9 @@ namespace LongoMatch.Services
 		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
 		{
 			var actions = new List<KeyAction> ();
-			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName ("SAVE_PROJECT"),
+			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SAVE),
 										() => ViewModel.SaveCommand.Execute ()));
-			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName ("CLOSE_PROJECT"),
+			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.CLOSE),
 										() => ViewModel.CloseCommand.Execute ()));
 			return actions;
 		}
