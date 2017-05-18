@@ -18,6 +18,7 @@
 using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Services.ViewModel;
+using VAS.Core.Hotkeys;
 using VAS.UI.Helpers;
 
 namespace LongoMatch.Gui
@@ -37,11 +38,11 @@ namespace LongoMatch.Gui
 			MenuItem fileMenu = ((MenuItem)window.GetUIManager ().GetWidget (window.FileMenuEntry.MenuName));
 
 			MenuItem save = projectVM.SaveCommand.CreateMenuItem (
-				Catalog.GetString ("Save Project"), window.GetUIManager ().AccelGroup, "SAVE_PROJECT");
+				Catalog.GetString ("Save Project"), window.GetUIManager ().AccelGroup, GeneralUIHotkeys.SAVE);
 			RegisterMenuItem (save, fileMenu.Submenu as Menu, window.FileMenuEntry);
 
 			MenuItem close = projectVM.CloseCommand.CreateMenuItem (
-				Catalog.GetString ("Close Project"), window.GetUIManager ().AccelGroup, "CLOSE_PROJECT");
+				Catalog.GetString ("Close Project"), window.GetUIManager ().AccelGroup, GeneralUIHotkeys.CLOSE);
 			RegisterMenuItem (close, fileMenu.Submenu as Menu, window.FileMenuEntry);
 		}
 

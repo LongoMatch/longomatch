@@ -26,11 +26,14 @@ namespace LongoMatch.Core.Hotkeys
 		static List<KeyConfig> hotkeys;
 		public const string CATEGORY = "General Interface";
 
+		// Keep this sorted alphabetically
+		public const string SHOW_ZONAL_TAGS = "SHOW_ZONAL_TAGS";
+
 		static LMGeneralUIHotkeys ()
 		{
 			hotkeys = new List<KeyConfig> {
 				new KeyConfig {
-					Name = "SHOW_ZONAL_TAGS",
+					Name = SHOW_ZONAL_TAGS,
 					Key = App.Current.Keyboard.ParseName ("<Shift_L>+c"),
 					Category = CATEGORY,
 					Description = Catalog.GetString("Show zonal tags")

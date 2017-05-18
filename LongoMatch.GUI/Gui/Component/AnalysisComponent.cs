@@ -15,12 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.Collections.Generic;
 using System.Linq;
-using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
@@ -28,7 +24,6 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
-using VAS.Core.Store;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
@@ -130,22 +125,22 @@ namespace LongoMatch.Gui.Component
 		{
 			var keyContext = new KeyContext ();
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_IN"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.ZOOM_IN),
 							   () => codingwidget.ZoomIn ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("ZOOM_OUT"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.ZOOM_OUT),
 							   () => codingwidget.ZoomOut ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_ZONAL_TAGS"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_ZONAL_TAGS),
 							   () => codingwidget.ShowZonalTags ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("FIT_TIMELINE"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.FIT_TIMELINE),
 							   () => codingwidget.FitTimeline ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_DASHBOARD"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_DASHBOARD),
 							   () => codingwidget.ShowDashboard ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName ("SHOW_TIMELINE"),
+				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_TIMELINE),
 							   () => codingwidget.ShowTimeline ()));
 
 			return keyContext;
