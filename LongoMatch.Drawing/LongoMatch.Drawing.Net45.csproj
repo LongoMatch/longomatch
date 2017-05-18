@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{519B4B01-07EC-4CA4-8073-E6F468317138}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>LongoMatch.Drawing</RootNamespace>
-    <AssemblyName>LongoMatch.Drawing</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-  </ItemGroup>
-  <Import Project="LongoMatch.Drawing.projitems" Label="Shared" Condition="Exists('LongoMatch.Drawing.projitems')" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
-      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
-      <Name>VAS.Drawing.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
-      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
-      <Name>VAS.Services.Net45</Name>
-    </ProjectReference>
-  </ItemGroup>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{519B4B01-07EC-4CA4-8073-E6F468317138}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>LongoMatch.Drawing</RootNamespace>
+		<AssemblyName>LongoMatch.Drawing</AssemblyName>
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>false</Optimize>
+		<OutputPath>..\..\bin</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<Optimize>true</Optimize>
+		<OutputPath>..\..\bin</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+	</ItemGroup>
+	<Import Project="LongoMatch.Drawing.projitems" Label="Shared" Condition="Exists('LongoMatch.Drawing.projitems')" />
+	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+	<ItemGroup>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+			<Name>LongoMatch.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+			<Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+			<Name>LongoMatch.Services.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
+			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+			<Name>VAS.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+			<Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+			<Name>VAS.Drawing.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Services\VAS.Services.Net45.csproj">
+			<Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+			<Name>VAS.Services.Net45</Name>
+		</ProjectReference>
+	</ItemGroup>
 </Project>

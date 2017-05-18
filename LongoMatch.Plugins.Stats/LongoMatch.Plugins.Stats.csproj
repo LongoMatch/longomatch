@@ -1,108 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F03D161E-CC4D-4FE6-968A-04F884AB0939}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>LongoMatch.Plugins.Stats</RootNamespace>
-    <AssemblyName>LongoMatch.Plugins.Stats</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <Reference Include="Mono.Cairo" />
-    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Posix" />
-    <Reference Include="OxyPlot">
-      <HintPath>$(SolutionDir)\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot.GtkSharp">
-      <HintPath>$(SolutionDir)\packages\OxyPlot.GtkSharp.1.0.0\lib\net45\OxyPlot.GtkSharp.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\.nuget\NuGet.targets" />
-  <ItemGroup>
-    <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="Stats\CategoriesViewer.cs" />
-    <Compile Include="Stats\CategoryViewer.cs" />
-    <Compile Include="Stats\GameViewer.cs" />
-    <Compile Include="Stats\PlayerCategoriesViewer.cs" />
-    <Compile Include="Stats\PlayerCategoryViewer.cs" />
-    <Compile Include="Stats\PlayerSubcategoryViewer.cs" />
-    <Compile Include="Stats\PlayersViewer.cs" />
-    <Compile Include="Stats\Plotter.cs" />
-    <Compile Include="Stats\SubcategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.SubCategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.CategoriesViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.CategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerCategoriesViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerCategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerSubcategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayersViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.Plotter.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.StatsDialog.cs" />
-    <Compile Include="Stats\StatsDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.GameViewer.cs" />
-    <Compile Include="StatsUIPlugin.cs" />
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="gtk-gui\gui.stetic">
-      <LogicalName>gui.stetic</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
-      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
-      <Name>LongoMatch.Addins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
-      <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
-      <Name>LongoMatch.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>VAS.UI.Helpers.Gtk2</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{F03D161E-CC4D-4FE6-968A-04F884AB0939}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>LongoMatch.Plugins.Stats</RootNamespace>
+		<AssemblyName>LongoMatch.Plugins.Stats</AssemblyName>
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>..\..\bin</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>full</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>..\..\bin</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<ConsolePause>false</ConsolePause>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+		<Reference Include="Mono.Cairo" />
+		<Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="Mono.Posix" />
+		<Reference Include="OxyPlot">
+			<HintPath>$(SolutionDir)\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+		</Reference>
+		<Reference Include="OxyPlot.GtkSharp">
+			<HintPath>$(SolutionDir)\packages\OxyPlot.GtkSharp.1.0.0\lib\net45\OxyPlot.GtkSharp.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+	<Import Project="..\.nuget\NuGet.targets" />
+	<ItemGroup>
+		<Compile Include="gtk-gui\generated.cs" />
+		<Compile Include="Stats\CategoriesViewer.cs" />
+		<Compile Include="Stats\CategoryViewer.cs" />
+		<Compile Include="Stats\GameViewer.cs" />
+		<Compile Include="Stats\PlayerCategoriesViewer.cs" />
+		<Compile Include="Stats\PlayerCategoryViewer.cs" />
+		<Compile Include="Stats\PlayerSubcategoryViewer.cs" />
+		<Compile Include="Stats\PlayersViewer.cs" />
+		<Compile Include="Stats\Plotter.cs" />
+		<Compile Include="Stats\SubcategoryViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.SubCategoryViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.CategoriesViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.CategoryViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerCategoriesViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerCategoryViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayerSubcategoryViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.PlayersViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.Plotter.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.StatsDialog.cs" />
+		<Compile Include="Stats\StatsDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Plugins.Stats.GameViewer.cs" />
+		<Compile Include="StatsUIPlugin.cs" />
+		<Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+			<Link>AssemblyInfo.cs</Link>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="gtk-gui\gui.stetic">
+			<LogicalName>gui.stetic</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.GUI\LongoMatch.GUI.csproj">
+			<Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
+			<Name>LongoMatch.GUI</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+			<Name>LongoMatch.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
+			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+			<Name>VAS.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+			<Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+			<Name>VAS.UI.Helpers.Gtk2</Name>
+		</ProjectReference>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Addins\LongoMatch.Addins.csproj">
+			<Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+			<Name>LongoMatch.Addins</Name>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="packages.config" />
+	</ItemGroup>
 </Project>
