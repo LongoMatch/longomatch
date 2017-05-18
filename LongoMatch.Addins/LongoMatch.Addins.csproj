@@ -56,17 +56,17 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
 			<Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
 			<Name>LongoMatch.Services.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
 			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
 			<Name>LongoMatch.Core.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-		  <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-		  <Name>VAS.Core.Net45</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
+			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+			<Name>VAS.Core.Net45</Name>
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>

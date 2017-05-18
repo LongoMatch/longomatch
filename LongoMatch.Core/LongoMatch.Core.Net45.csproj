@@ -35,7 +35,7 @@
 		<Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
 		<Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
 		<Reference Include="Newtonsoft.Json">
-			<HintPath>$(SolutionDir)packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+			<HintPath>$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
 			<Package>newtonsoft-json</Package>
 		</Reference>
 		<Reference Include="System" />
@@ -54,7 +54,7 @@
 			<Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
 			<Name>Weavers</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
 			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
 			<Name>VAS.Core.Net45</Name>
 		</ProjectReference>

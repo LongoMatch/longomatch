@@ -20,7 +20,7 @@
 		<WarningLevel>4</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
 		<Execution>
-		  <Execution clr-version="Net_2_0" />
+			<Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 		<WarningLevel>3</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
 		<Execution>
-		  <Execution clr-version="Net_2_0" />
+			<Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -228,57 +228,57 @@
 		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
 			<Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
 			<Name>LongoMatch.Drawing.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
 			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
 			<Name>LongoMatch.Core.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
 			<Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
 			<Name>LongoMatch.Services.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-		  <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-		  <Name>VAS.Core.Net45</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
+			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+			<Name>VAS.Core.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
-		  <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-		  <Name>VAS.Drawing.Cairo</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+			<Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+			<Name>VAS.Drawing.Cairo</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
-		  <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
-		  <Name>VAS.Drawing.Net45</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+			<Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+			<Name>VAS.Drawing.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.Services\VAS.Services.Net45.csproj">
-		  <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
-		  <Name>VAS.Services.Net45</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Services\VAS.Services.Net45.csproj">
+			<Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+			<Name>VAS.Services.Net45</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
-		  <Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
-		  <Name>VAS.UI.Gtk2</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
+			<Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
+			<Name>VAS.UI.Gtk2</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
-		  <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-		  <Name>VAS.UI.Helpers.Gtk2</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+			<Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+			<Name>VAS.UI.Helpers.Gtk2</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
-		  <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
-		  <Name>VAS.UI.Multimedia.Gtk2</Name>
+		<ProjectReference Include="$(SolutionDir)\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+			<Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+			<Name>VAS.UI.Multimedia.Gtk2</Name>
 		</ProjectReference>
-		<ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
-		  <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
-		  <Name>LongoMatch.Addins</Name>
+		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Addins\LongoMatch.Addins.csproj">
+			<Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+			<Name>LongoMatch.Addins</Name>
 		</ProjectReference>
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 	<ProjectExtensions>
-	  <MonoDevelop>
-	    <Properties>
-	      <GtkDesignInfo gettextClass="VAS.Core.Catalog" />
-	    </Properties>
-	  </MonoDevelop>
+		<MonoDevelop>
+			<Properties>
+				<GtkDesignInfo gettextClass="VAS.Core.Catalog" />
+			</Properties>
+		</MonoDevelop>
 	</ProjectExtensions>
 </Project>
