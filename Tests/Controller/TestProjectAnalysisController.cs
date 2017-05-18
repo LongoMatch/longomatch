@@ -30,6 +30,7 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
@@ -61,6 +62,9 @@ namespace Tests.Controller
 			settings = new CaptureSettings ();
 			settings.EncodingSettings = new EncodingSettings ();
 			settings.EncodingSettings.EncodingProfile = EncodingProfiles.MP4;
+
+			App.Current.HotkeysService = new HotkeysService ();
+			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 
 			var playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
@@ -116,12 +120,21 @@ namespace Tests.Controller
 			projectsManager = new ProjectAnalysisController ();
 			projectsManager.SetViewModel (viewModel);
 			projectsManager.Start ();
+
+			KeyContext context = new KeyContext ();
+			foreach (KeyAction action in projectsManager.GetDefaultKeyActions ()) {
+				context.AddAction (action);
+			}
+			App.Current.KeyContextManager.NewKeyContexts (new List<KeyContext> { context });
 		}
 
 		[TearDown ()]
 		public void TearDown ()
 		{
-			projectsManager.Stop ();
+			try {
+				projectsManager.Stop ();
+			} catch {
+			}
 			Utils.DeleteProject (project);
 			try {
 				File.Delete (settings.EncodingSettings.OutputFile);
@@ -289,6 +302,30 @@ namespace Tests.Controller
 			Assert.IsTrue (result);
 			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
 			mockDialogs.Verify (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (2));
+		}
+
+		[Test]
+		public void TestHotkey_Save_SaveCommandCalled ()
+		{
+			bool saveCalled = false;
+
+			projectsManager.Stop ();
+			App.Current.EventsBroker.Subscribe<SaveEvent<LMProjectVM>> ((obj) => saveCalled = true);
+			App.Current.KeyContextManager.HandleKeyPressed (App.Current.Keyboard.ParseName ("<Primary>+s"));
+
+			Assert.IsTrue (saveCalled);
+		}
+
+		[Test]
+		public void TestHotkey_Close_CloseCommandCalled ()
+		{
+			bool closeCalled = false;
+
+			projectsManager.Stop ();
+			App.Current.EventsBroker.Subscribe<CloseEvent<LMProjectVM>> ((obj) => closeCalled = true);
+			App.Current.KeyContextManager.HandleKeyPressed (App.Current.Keyboard.ParseName ("<Primary>+w"));
+
+			Assert.IsTrue (closeCalled);
 		}
 	}
 }
