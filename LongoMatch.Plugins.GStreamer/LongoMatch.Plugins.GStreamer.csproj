@@ -38,11 +38,13 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
 		<Reference Include="System" />
 		<Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
 		<Reference Include="Newtonsoft.Json, Version=7.0.1, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
 			<Package>newtonsoft-json</Package>
+		</Reference>
+		<Reference Include="Mono.Addins">
+		  <HintPath>..\..\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -64,5 +66,6 @@
 		<None Include="LongoMatch.Plugins.GStreamer.dll.config">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Include="packages.config" />
 	</ItemGroup>
 </Project>
