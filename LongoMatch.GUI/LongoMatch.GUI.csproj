@@ -20,7 +20,7 @@
 		<WarningLevel>4</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
 		<Execution>
-			<Execution clr-version="Net_2_0" />
+		  <Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 		<WarningLevel>3</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
 		<Execution>
-			<Execution clr-version="Net_2_0" />
+		  <Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -223,9 +223,11 @@
 		<Reference Include="System" />
 		<Reference Include="System.Core" />
 		<Reference Include="System.Drawing" />
-		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
 		<Reference Include="Mono.Posix" />
 		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="Mono.Addins">
+		  <HintPath>..\..\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
@@ -273,12 +275,15 @@
 			<Name>LongoMatch.Addins</Name>
 		</ProjectReference>
 	</ItemGroup>
+	<ItemGroup>
+	  <None Include="packages.config" />
+	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 	<ProjectExtensions>
-		<MonoDevelop>
-			<Properties>
-				<GtkDesignInfo gettextClass="VAS.Core.Catalog" />
-			</Properties>
-		</MonoDevelop>
+	  <MonoDevelop>
+	    <Properties>
+	      <GtkDesignInfo gettextClass="VAS.Core.Catalog" />
+	    </Properties>
+	  </MonoDevelop>
 	</ProjectExtensions>
 </Project>
