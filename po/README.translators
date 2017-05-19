@@ -1,7 +1,0 @@
-LongoMatch is a software for video analysis with a special terminology. 
-Reading the user's guide[1] will help you to get in touch with the project and the translations :)
-If you helped translating LongoMatch, fell free to add yourself to AUTHORS, and to the TRANSLATORS string[2](and your name will appear in the about dialog).
-Thanks for your help :)
-
-[1]http://www.longomatch.ylatuya.es/documentation/manual.html
-[2]LongoMatch/Common/Constants.cs

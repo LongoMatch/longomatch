@@ -188,28 +188,28 @@
 		<EmbeddedResource Include="gtk-gui\gui.stetic">
 			<LogicalName>gui.stetic</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\video.png">
+		<EmbeddedResource Include="$(SolutionDir)\images\video.png">
 			<LogicalName>video.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\background.png">
+		<EmbeddedResource Include="$(SolutionDir)\images\background.png">
 			<LogicalName>background.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\dash-line.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\dash-line.svg">
 			<LogicalName>dash-line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\line.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\line.svg">
 			<LogicalName>line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\line-double-dot.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-double-dot.svg">
 			<LogicalName>line-double-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\line-dot.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-dot.svg">
 			<LogicalName>line-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\line-double-arrow.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-double-arrow.svg">
 			<LogicalName>line-double-arrow.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="..\images\tools\line-arrow.svg">
+		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-arrow.svg">
 			<LogicalName>line-arrow.svg</LogicalName>
 		</EmbeddedResource>
 	</ItemGroup>
