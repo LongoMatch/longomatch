@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Component
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
+			newvideobutton.Clicked += HandleRenderPlaylistClicked;
 			ctx = this.GetBindingContext ();
 			ctx.Add (newbutton.Bind (vm => ((PlaylistCollectionVM)vm).NewCommand));
 		}
@@ -77,7 +78,7 @@ namespace LongoMatch.Gui.Component
 			ViewModel = (PlaylistCollectionVM)viewModel;
 		}
 
-		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
+		protected virtual void HandleRenderPlaylistClicked (object sender, System.EventArgs ea)
 		{
 			Menu menu;
 
