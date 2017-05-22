@@ -41,15 +41,12 @@ namespace LongoMatch.Services
 	[Controller (LiveProjectAnalysisState.NAME)]
 	public class LMEventsController : EventsController
 	{
-		TimelineEvent loadedPlay;
-		IVideoPlayerController player;
 		LMProjectAnalysisVM viewModel;
 
 		public override void Start ()
 		{
 			base.Start ();
 			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
@@ -58,7 +55,6 @@ namespace LongoMatch.Services
 		public override void Stop ()
 		{
 			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
@@ -74,7 +70,7 @@ namespace LongoMatch.Services
 		// FIXME: remove this when the video capturer is ported to MVVM
 		void HandleLoadTimelineEvent (LoadTimelineEventEvent<TimelineEvent> e)
 		{
-			PlayerVM.LoadEvent (e.Object, e.Playing);
+			VideoPlayer.LoadEvent (e.Object, e.Playing);
 		}
 
 		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)
@@ -105,34 +101,29 @@ namespace LongoMatch.Services
 				return;
 			}
 
-			if (action == LMKeyAction.None || loadedPlay == null) {
+			if (action == LMKeyAction.None || LoadedPlay == null) {
 				return;
 			}
 
 			switch (action) {
 			case LMKeyAction.EditEvent:
-				bool playing = player.Playing;
-				player.Pause ();
+				bool playing = VideoPlayer.Playing;
+				VideoPlayer.Pause ();
 
-				App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = loadedPlay });
+				App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = LoadedPlay });
 
 				if (playing) {
-					player.Play ();
+					VideoPlayer.Play ();
 				}
 				break;
 			case LMKeyAction.DeleteEvent:
 				App.Current.EventsBroker.Publish (
 					new EventsDeletedEvent {
-						TimelineEvents = new List<TimelineEvent> { loadedPlay }
+						TimelineEvents = new List<TimelineEvent> { LoadedPlay }
 					}
 				);
 				break;
 			}
-		}
-
-		void HandlePlayLoaded (EventLoadedEvent e)
-		{
-			loadedPlay = e.TimelineEvent;
 		}
 
 		void HandleShowProjectStatsEvent (ShowProjectStatsEvent e)
