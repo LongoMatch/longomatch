@@ -47,7 +47,6 @@
 	</ItemGroup>
 	<Import Project="LongoMatch.Core.projitems" Label="Shared" Condition="Exists('LongoMatch.Core.projitems')" />
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="..\.nuget\NuGet.targets" />
 	<Import Project="$(SolutionDir)\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" />
 	<ItemGroup>
 		<ProjectReference Include="$(SolutionDir)\VAS\Weavers\Weavers.csproj">

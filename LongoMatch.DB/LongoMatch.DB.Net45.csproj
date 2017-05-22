@@ -62,7 +62,6 @@
 	</ItemGroup>
 	<Import Project="LongoMatch.DB.projitems" Label="Shared" Condition="Exists('LongoMatch.DB.projitems')" />
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="..\.nuget\NuGet.targets" />
 	<Import Project="$(SolutionDir)\packages\SQLitePCL.native.sqlite3.v110_xp.0.9.1\build\SQLitePCL.native.sqlite3.v110_xp.targets" Condition="Exists('$(SolutionDir)\packages\SQLitePCL.native.sqlite3.v110_xp.0.9.1\build\SQLitePCL.native.sqlite3.v110_xp.targets')" />
 	<Import Project="$(SolutionDir)\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" />
 	<ItemGroup>
