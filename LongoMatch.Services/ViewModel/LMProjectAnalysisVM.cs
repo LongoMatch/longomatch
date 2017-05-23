@@ -28,7 +28,7 @@ namespace LongoMatch.Services.ViewModel
 				() => Project.Edited);
 			ShowStatsCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = Project.Model }));
-			CloseCommand = new Command (Close);
+			CloseCommand = new AsyncCommand (Close);
 		}
 
 		protected override void DisposeManagedResources ()

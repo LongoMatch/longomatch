@@ -38,7 +38,7 @@ namespace LongoMatch.Services.ViewModel
 
 		public SubstitutionsEditorVM ()
 		{
-			SaveCommand = new Command (Save);
+			SaveCommand = new AsyncCommand (Save);
 			TeamTagger = new LMTeamTaggerVM ();
 			TeamTagger.ShowSubstitutionButtons = false;
 			InPlayer = new LMPlayerVM ();
