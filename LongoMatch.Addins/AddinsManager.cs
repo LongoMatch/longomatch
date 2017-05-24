@@ -23,19 +23,15 @@ using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
 using VAS.Core.Addins;
 using VAS.Core.Common;
-using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
-using VAS.Core.Interfaces.Plugins;
-using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 
-[assembly:AddinRoot ("LongoMatch", "1.1")]
+[assembly: AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
 {
 	public class AddinsManager
@@ -83,117 +79,15 @@ namespace LongoMatch.Addins
 			pluginsDict = ListPlugins ();
 		}
 
-		public static bool RegisterGStreamerPlugins ()
-		{
-			IGStreamerPluginsProvider[] gstPluginsProvider = AddinManager.GetExtensionObjects<IGStreamerPluginsProvider> ();
-			
-			if (gstPluginsProvider.Length == 0) {
-				return false;
-			}
-
-			foreach (IGStreamerPluginsProvider provider in gstPluginsProvider) {
-				Log.Information ("Registering GStreamer plugins from plugin: " + provider.Name);
-				provider.RegisterPlugins ();
-			}
-			return true; 
-		}
-
-		public static void LoadConfigModifierAddins ()
-		{
-			foreach (IConfigModifier configModifier in AddinManager.GetExtensionObjects<IConfigModifier> ()) {
-				try {
-					configModifier.ModifyConfig ();
-				} catch (Exception ex) {
-					Log.Error ("Error loading config modifier");
-					Log.Exception (ex);
-				}
-			}
-		}
-
-		public static void LoadExportProjectAddins ()
-		{
-			foreach (IProjectExporter exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
-				App.Current.DependencyRegistry.Register<IProjectExporter> (exportProject.GetType (), 0);
-			}
-		}
-
-		public static void LoadImportProjectAddins (IProjectsImporter importer)
-		{
-			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
-				Log.Information ("Adding import entry from plugin: " + importProject.Name);
-				importer.RegisterImporter (new Func<Project> (importProject.ImportProject),
-					importProject.Description,
-					importProject.FilterName,
-					importProject.FilterExtensions,
-					importProject.NeedsEdition,
-					importProject.CanOverwrite);
-			}
-		}
-
-		public static void LoadMultimediaBackendsAddins (IMultimediaToolkit mtoolkit)
-		{
-			foreach (IMultimediaBackendPlugin backend in AddinManager.GetExtensionObjects<IMultimediaBackendPlugin> ()) {
-				try {
-					Log.Information ("Adding multimedia backend from plugin: " + backend.Name);
-					backend.RegisterElements (mtoolkit);
-				} catch (Exception ex) {
-					Log.Error ("Error registering multimedia backend");
-					Log.Exception (ex);
-				}
-			}
-		}
-
-		public static void LoadUIBackendsAddins (IGUIToolkit gtoolkit)
-		{
-			foreach (IGUIBackend backend in AddinManager.GetExtensionObjects<IGUIBackend> ()) {
-				try {
-					Log.Information ("Registering UI backend from plugin: " + backend.Name);
-					backend.RegisterElements (gtoolkit);
-				} catch (Exception ex) {
-					Log.Error ("Error registering multimedia backend");
-					Log.Exception (ex);
-				}
-			}
-		}
-
-		public static void ShutdownMultimediaBackends ()
-		{
-			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackendPlugin> ()) {
-				backend.Shutdown ();
-			}
-		}
-
-		public static void LoadDashboards (ICategoriesTemplatesProvider provider)
-		{
-			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
-				foreach (Dashboard dashboard in plugin.Dashboards) {
-					dashboard.Static = true;
-					provider.Register (dashboard as LMDashboard);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Register <see cref="IService"/> exposed by addins through the <see cref="IServicesPlugin"/> extension point.
-		/// </summary>
-		public static void LoadServicesAddins ()
-		{
-			foreach (IServicesPlugin plugin in AddinManager.GetExtensionObjects<IServicesPlugin> ()) {
-				foreach (IService service in plugin.Services) {
-					CoreServices.RegisterService (service);
-				}
-			}
-		}
-
 		public static Dictionary<AddinDescription, List<ConfigurablePlugin>> Plugins {
 			get { return pluginsDict; }
 		}
 
 		private static Dictionary<AddinDescription, List<ConfigurablePlugin>> ListPlugins ()
 		{
-			HashSet <string> paths;
+			HashSet<string> paths;
 			Dictionary<AddinDescription, List<ConfigurablePlugin>> plugins;
-			
+
 			paths = new HashSet<string> ();
 			plugins = new Dictionary<AddinDescription, List<ConfigurablePlugin>> ();
 
@@ -208,7 +102,7 @@ namespace LongoMatch.Addins
 			}
 
 			foreach (string path in paths) {
-				foreach (TypeExtensionNode n  in AddinManager.GetExtensionNodes (path)) {
+				foreach (TypeExtensionNode n in AddinManager.GetExtensionNodes (path)) {
 					var list = plugins.FirstOrDefault (a => a.Key.LocalId == n.Addin.Id).Value;
 					try {
 						var instance = n.GetInstance ();
@@ -229,7 +123,8 @@ namespace LongoMatch.Addins
 
 		public static bool ShowStats (LMProject project)
 		{
-			IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
+			//IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
+			IStatsUI statsUI = App.Current.DependencyRegistry.Retrieve<IStatsUI> ();
 			if (statsUI != null) {
 				statsUI.ShowStats (project);
 				return true;

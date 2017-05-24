@@ -123,14 +123,12 @@ namespace Tests.Integration
 			App.Current.DependencyRegistry.Register<VAS.DB.IFileStorage, FileStorage> (0);
 
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
-			AddinsManager.LoadConfigModifierAddins ();
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
 			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 			App.Current.GUIToolkit = guiToolkitMock.Object;
 			App.Current.Dialogs = mockDialogs.Object;
 			App.Current.Config.AutoSave = true;
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
-			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 			// Do controllers start in here since the EventBroker is instantiante again in the test
 			eventsController.Start ();

@@ -22,14 +22,12 @@ using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using Mono.Addins;
 using VAS.Core;
 using VAS.Core.Store;
 using VAS.Plugins;
 
 namespace LongoMatch.Plugins
 {
-	[Extension]
 	public class CSVExporter : ProjectExporterBase, IExportProject
 	{
 		public override string Name {

@@ -17,15 +17,12 @@
 //
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
-using Mono.Addins;
-using Mono.Addins.Description;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Plugins;
 
 namespace LongoMatch.Plugins
 {
-	[Extension]
 	public class LongoMatchExporter : ProjectExporterBase, IExportProject
 	{
 		public override string Name {

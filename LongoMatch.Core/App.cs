@@ -54,7 +54,7 @@ namespace LongoMatch
 
 			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
 			InitConstants ();
-			App.Current.DataDir.Add (Path.Combine (Path.GetFullPath ("."), "../longomatch-core/data"));
+			App.Current.DataDir.Add (Path.Combine (Path.GetFullPath ("."), "../data"));
 			Load ();
 		}
 

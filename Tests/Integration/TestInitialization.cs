@@ -78,16 +78,10 @@ namespace Tests.Integration
 			Assert.AreEqual (homePath, Directory.GetParent (App.Current.VideosDir).ToString ());
 
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
-			AddinsManager.LoadConfigModifierAddins ();
 
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
 			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 			App.Current.GUIToolkit = guiToolkitMock.Object;
-			AddinsManager.RegisterGStreamerPlugins ();
-			AddinsManager.LoadExportProjectAddins ();
-			AddinsManager.LoadMultimediaBackendsAddins (App.Current.MultimediaToolkit);
-			AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
-			AddinsManager.LoadServicesAddins ();
 
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 
@@ -95,9 +89,6 @@ namespace Tests.Integration
 			Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.TeamsDir).ToString ());
 			Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.AnalysisDir).ToString ());
 			Assert.AreEqual (1, App.Current.DatabaseManager.Databases.Count);
-
-			AddinsManager.LoadDashboards (App.Current.CategoriesTemplatesProvider);
-			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 			// Check templates and db are initialized
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);

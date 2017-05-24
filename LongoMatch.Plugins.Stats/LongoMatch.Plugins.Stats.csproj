@@ -44,9 +44,6 @@
 		<Reference Include="OxyPlot.GtkSharp">
 			<HintPath>$(SolutionDir)\packages\OxyPlot.GtkSharp.1.0.0\lib\net45\OxyPlot.GtkSharp.dll</HintPath>
 		</Reference>
-		<Reference Include="Mono.Addins">
-			<HintPath>..\..\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 	<ItemGroup>

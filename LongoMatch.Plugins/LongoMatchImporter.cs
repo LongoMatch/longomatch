@@ -15,11 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using Mono.Addins;
 using VAS.Addins.ExtensionPoints;
 using VAS.Core;
 using VAS.Core.Interfaces.GUI;
@@ -28,13 +26,8 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Plugins
 {
-	[Extension]
-	public class LongoMatchImporter: IPlugin, IImportProject
+	public class LongoMatchImporter : IPlugin, IImportProject
 	{
-		public LongoMatchImporter ()
-		{
-		}
-
 		#region ILongoMatchPlugin implementation
 
 		public string Name {
@@ -58,7 +51,7 @@ namespace LongoMatch.Plugins
 			LMProject project = null;
 
 			string filename = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir,
-				                  FilterName, FilterExtensions);
+								  FilterName, FilterExtensions);
 			if (filename == null)
 				return null;
 
@@ -75,9 +68,9 @@ namespace LongoMatch.Plugins
 			}
 		}
 
-		public string[] FilterExtensions { 
+		public string [] FilterExtensions {
 			get {
-				return new string[] { "*" + Constants.PROJECT_EXT };
+				return new string [] { "*" + Constants.PROJECT_EXT };
 			}
 		}
 

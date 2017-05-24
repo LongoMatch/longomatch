@@ -50,7 +50,6 @@ namespace Tests
 			VAS.App.Current = App.Current = new App ();
 			App.InitDependencies ();
 			App.Current.Config = new Config ();
-			App.InitConstants ();
 
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
