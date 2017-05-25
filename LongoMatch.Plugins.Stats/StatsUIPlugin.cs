@@ -19,11 +19,6 @@ using LongoMatch.Addins.ExtensionPoints;
 using VAS.Core;
 using LongoMatch.Core.Store;
 
-// [assembly: Addin]
-// [assembly: AddinAuthor ("LongoMatch Project")]
-// [assembly: AddinName ("Stats")]
-// [assembly: AddinDescription ("Statistics plugin")]
-// [assembly: AddinDependency ("LongoMatch", "1.1")]
 namespace LongoMatch.Plugins.Stats
 {
 	public class StatsUIPlugin : IStatsUI

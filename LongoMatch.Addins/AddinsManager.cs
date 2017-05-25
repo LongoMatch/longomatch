@@ -123,7 +123,6 @@ namespace LongoMatch.Addins
 
 		public static bool ShowStats (LMProject project)
 		{
-			//IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
 			IStatsUI statsUI = App.Current.DependencyRegistry.Retrieve<IStatsUI> ();
 			if (statsUI != null) {
 				statsUI.ShowStats (project);
