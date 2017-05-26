@@ -188,28 +188,28 @@
 		<EmbeddedResource Include="gtk-gui\gui.stetic">
 			<LogicalName>gui.stetic</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\video.png">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\video.png">
 			<LogicalName>video.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\background.png">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\background.png">
 			<LogicalName>background.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\dash-line.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\dash-line.svg">
 			<LogicalName>dash-line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\line.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line.svg">
 			<LogicalName>line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-double-dot.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-double-dot.svg">
 			<LogicalName>line-double-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-dot.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-dot.svg">
 			<LogicalName>line-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-double-arrow.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-double-arrow.svg">
 			<LogicalName>line-double-arrow.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\images\tools\line-arrow.svg">
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-arrow.svg">
 			<LogicalName>line-arrow.svg</LogicalName>
 		</EmbeddedResource>
 	</ItemGroup>
@@ -226,7 +226,7 @@
 		<Reference Include="Mono.Posix" />
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Mono.Addins">
-		  <HintPath>..\..\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
+			<HintPath>..\..\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
@@ -276,7 +276,7 @@
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <None Include="packages.config" />
+		<None Include="packages.config" />
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 	<ProjectExtensions>
