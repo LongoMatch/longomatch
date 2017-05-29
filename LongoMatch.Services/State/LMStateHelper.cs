@@ -31,12 +31,12 @@ namespace LongoMatch.Services.State
 			dynamic settings = new ExpandoObject ();
 			settings.Project = project;
 			settings.CaptureSettings = props;
-			if (project.Model.IsFakeCapture) {
+			if (project.ProjectType == ProjectType.FakeCaptureProject) {
+				App.Current.StateController.MoveTo (FakeLiveProjectAnalysisState.NAME, settings, true);
+			} else if (project.Model.IsFakeCapture) {
 				App.Current.StateController.MoveTo (NewProjectState.NAME, project);
 			} else if (project.ProjectType == ProjectType.FileProject || project.ProjectType == ProjectType.EditProject) {
 				App.Current.StateController.MoveTo (ProjectAnalysisState.NAME, settings, true);
-			} else if (project.ProjectType == ProjectType.FakeCaptureProject) {
-				App.Current.StateController.MoveTo (FakeLiveProjectAnalysisState.NAME, settings, true);
 			} else {
 				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
 			}

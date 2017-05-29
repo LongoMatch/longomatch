@@ -22,15 +22,18 @@ using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Store;
 
 namespace Tests.State
 {
 	public class TestFakeLiveProjectAnalysisState
 	{
 		Mock<IMultimediaToolkit> mtkMock;
+		Mock<ICapturerBin> capturerMock;
 
 		[SetUp]
 		public void Setup ()
@@ -38,8 +41,9 @@ namespace Tests.State
 			var hotkeysMock = new Mock<IHotkeysService> ();
 			var playerMock = new Mock<IVideoPlayer> ();
 			mtkMock = new Mock<IMultimediaToolkit> ();
-			var capturerMock = new Mock<IFramesCapturer> ();
-			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
+			var framesCapturerMock = new Mock<IFramesCapturer> ();
+			capturerMock = new Mock<ICapturerBin> ();
+			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (framesCapturerMock.Object);
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			App.Current.MultimediaToolkit = mtkMock.Object;
 			App.Current.HotkeysService = hotkeysMock.Object;
@@ -55,13 +59,14 @@ namespace Tests.State
 			LMProjectAnalysisVM analysisVM = new LMProjectAnalysisVM { Project = projectVM };
 
 			var panel = new Mock<Utils.IDummyCapturerPanel> ();
-			panel.Setup (p => p.Capturer).Returns(new Mock<ICapturerBin>().Object);
+			panel.Setup (p => p.Capturer).Returns (capturerMock.Object);
 			state.Panel = panel.Object;
 
 			// Act
 			state.LoadState (analysisVM);
 
 			// Assert
+			capturerMock.Verify (c => c.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ()), Times.Once);
 			Assert.AreNotEqual (projectVM, state.ViewModel.Project);
 			Assert.AreEqual (project, state.ViewModel.Project.Model);
 		}
