@@ -73,6 +73,7 @@ namespace Tests.State
 			bool ret = await state.LoadState (analysisVM);
 
 			// Assert
+			capturerMock.Verify (c => c.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ()), Times.Once);
 			Assert.AreNotEqual (projectVM, state.ViewModel.Project);
 			Assert.AreEqual (project, state.ViewModel.Project.Model);
 			Assert.IsTrue (ret);

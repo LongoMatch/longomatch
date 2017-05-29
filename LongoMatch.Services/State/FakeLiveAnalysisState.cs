@@ -16,9 +16,13 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
+using VAS.Core.Common;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.ViewModel;
 using VAS.Services;
@@ -36,6 +40,18 @@ namespace LongoMatch.Services.State
 			get {
 				return NAME;
 			}
+		}
+
+		protected override Task<bool> LoadProject ()
+		{
+			try {
+				ViewModel.Capturer.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				App.Current.Dialogs.ErrorMessage (ex.Message);
+				return AsyncHelpers.Return (false);
+			}
+			return AsyncHelpers.Return (true);
 		}
 
 		protected override void CreateViewModel (dynamic data)

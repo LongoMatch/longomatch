@@ -47,6 +47,11 @@ namespace Tests.State
 			var projectVM = new LMProjectVM { Model = project };
 			project.ProjectType = ProjectType.FakeCaptureProject;
 
+			project.Description = new ProjectDescription ();
+			project.Description.FileSet = new MediaFileSet ();
+			project.Description.FileSet.Add (new MediaFile ());
+			project.Description.FileSet [0].FilePath = Constants.FAKE_PROJECT;
+
 			LMStateHelper.OpenProject (projectVM);
 
 			stateControllerMock.Verify (s => s.MoveTo (FakeLiveProjectAnalysisState.NAME, It.IsAny<object> (), true, false));
