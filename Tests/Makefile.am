@@ -1,8 +1,7 @@
 PROJECT_FILE = Tests.csproj
 ASSEMBLY=Tests.dll
 
-include $(top_srcdir)/build/build_env.mk
-include $(top_srcdir)/build/build.mk
+include $(top_srcdir)/VAS/build/build.mk
 
 if ENABLE_TESTS
 check:

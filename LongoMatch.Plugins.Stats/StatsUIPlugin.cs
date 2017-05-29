@@ -15,20 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using Mono.Addins;
 using LongoMatch.Addins.ExtensionPoints;
 using VAS.Core;
 using LongoMatch.Core.Store;
 
-[assembly:Addin]
-[assembly:AddinAuthor ("LongoMatch Project")]
-[assembly:AddinName ("Stats")]
-[assembly:AddinDescription ("Statistics plugin")]
-[assembly:AddinDependency ("LongoMatch", "1.1")]
 namespace LongoMatch.Plugins.Stats
 {
-	[Extension]
-	public class StatsUIPlugin: IStatsUI
+	public class StatsUIPlugin : IStatsUI
 	{
 		public void ShowStats (LMProject project)
 		{

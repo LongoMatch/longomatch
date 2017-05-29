@@ -5,11 +5,11 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../bin/VAS.Drawing.Cairo.dll" />
-    <widget-library name="../../bin/VAS.UI.Helpers.Gtk2.dll" />
-    <widget-library name="../../bin/VAS.UI.dll" />
-    <widget-library name="../../bin/VAS.UI.Multimedia.Gtk2.dll" />
-    <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
+    <widget-library name="../../../bin/VAS.Drawing.Cairo.dll" />
+    <widget-library name="../../../bin/VAS.UI.dll" />
+    <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />
+    <widget-library name="../../../bin/VAS.UI.Multimedia.Gtk2.dll" />
+    <widget-library name="../../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
     <action-group name="Default" />

@@ -29,7 +29,6 @@
 		<DebugSymbols>true</DebugSymbols>
 	</PropertyGroup>
 	<ItemGroup>
-		<Compile Include="Assembly.cs" />
 		<Compile Include="CSVExporter.cs" />
 		<Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
 			<Link>AssemblyInfo.cs</Link>
@@ -39,9 +38,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="System" />
-		<Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
