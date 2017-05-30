@@ -2,6 +2,7 @@ PROJECT_FILE = Tests.csproj
 ASSEMBLY=Tests.dll
 
 include $(top_srcdir)/VAS/build/build.mk
+XBUILD_CMD += /property:SolutionDir=$(abs_top_builddir)
 
 if ENABLE_TESTS
 check:
