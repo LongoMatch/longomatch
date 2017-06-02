@@ -173,7 +173,11 @@ namespace LongoMatch.Services
 			DrawingToolHotkeys.RegisterDefaultHotkeys ();
 			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
 
+#if DEVEL
+			AppUpdater notifier = new AppUpdater ("Fluendo", "http://sparkle.fluendo.lan:8080/longomatch.xml");
+#else
 			AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
+#endif
 			RegisterService (notifier);
 		}
 
