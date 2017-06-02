@@ -1,8 +1,4 @@
-PROJECT_FILE = Tests.csproj
-ASSEMBLY=Tests.dll
-
-include $(top_srcdir)/VAS/build/build.mk
-XBUILD_CMD += /property:SolutionDir=$(abs_top_builddir)
+ASSEMBLY_FILE=$(SolutionDir)/bin/Tests.dll
 
 if ENABLE_TESTS
 check:
@@ -26,7 +22,6 @@ coverage:do-coverage print-coverage
 endif
 endif
 
-CLEANFILES += \
+CLEANFILES = \
 	Tests.dll.covcfg.* \
 	TestsResult.xml
-
