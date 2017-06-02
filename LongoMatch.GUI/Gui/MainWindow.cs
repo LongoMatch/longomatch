@@ -202,15 +202,6 @@ namespace LongoMatch.Gui
 			ToolMenuEntry = new MenuExtensionEntry ("/menubar1/ToolsAction", 6);
 		}
 
-		/// <summary>
-		/// Quit application, proposing to close a potentially opened project before.
-		/// </summary>
-		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
-		public async Task<bool> CloseAndQuit ()
-		{
-			return await App.Current.GUIToolkit.Quit ();
-		}
-
 		#endregion
 
 		#region Private Methods
