@@ -152,15 +152,15 @@ namespace LongoMatch.Gui.Component
 			ctx.Add (hfieldimage.Bind (vm => ((DashboardVM)vm).HalfFieldBackground, 50, 50));
 			ctx.Add (goalimage.Bind (vm => ((DashboardVM)vm).GoalBackground, 50, 50));
 
-			ctx.Add (addcatbutton.BindWithIcon (Resources.LoadIcon ("longomatch-tag-category", StyleConf.NotebookTabSize),
+			ctx.Add (addcatbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-category", StyleConf.NotebookTabSize),
 												vm => ((DashboardVM)vm).AddButton, "Category"));
-			ctx.Add (addscorebutton.BindWithIcon (Resources.LoadIcon ("longomatch-tag-score", StyleConf.NotebookTabSize),
+			ctx.Add (addscorebutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-score", StyleConf.NotebookTabSize),
 												  vm => ((DashboardVM)vm).AddButton, "Score"));
-			ctx.Add (addtimerbutton.BindWithIcon (Resources.LoadIcon ("longomatch-tag-timer", StyleConf.NotebookTabSize),
+			ctx.Add (addtimerbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-timer", StyleConf.NotebookTabSize),
 												  vm => ((DashboardVM)vm).AddButton, "Timer"));
-			ctx.Add (addtagbutton.BindWithIcon (Resources.LoadIcon ("longomatch-tag-tag", StyleConf.NotebookTabSize),
+			ctx.Add (addtagbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.NotebookTabSize),
 												   vm => ((DashboardVM)vm).AddButton, "Tag"));
-			ctx.Add (addcardbutton.BindWithIcon (Resources.LoadIcon ("longomatch-tag-tag", StyleConf.NotebookTabSize),
+			ctx.Add (addcardbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.NotebookTabSize),
 												 vm => ((DashboardVM)vm).AddButton, "Card"));
 
 			ctx.Add (resetfieldbutton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Field));
@@ -170,11 +170,11 @@ namespace LongoMatch.Gui.Component
 			ctx.Add (editbutton.Bind (vm => ((DashboardVM)vm).ChangeDashboardMode, DashboardMode.Edit, DashboardMode.Code));
 			ctx.Add (linksbutton.Bind (vm => ((DashboardVM)vm).ToggleActionLinks, true, false));
 			ctx.Add (popupbutton.Bind (vm => ((DashboardVM)vm).TogglePopupWindow, true, false));
-			ctx.Add (fitbutton.BindWithIcon (Resources.LoadIcon ("longomatch-dash-fit", 22),
+			ctx.Add (fitbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-dash-fit", 22),
 											 vm => ((DashboardVM)vm).ChangeFitMode, FitMode.Fit));
-			ctx.Add (fillbutton.BindWithIcon (Resources.LoadIcon ("longomatch-dash-fill", 22),
+			ctx.Add (fillbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-dash-fill", 22),
 											  vm => ((DashboardVM)vm).ChangeFitMode, FitMode.Fill));
-			ctx.Add (d11button.BindWithIcon (Resources.LoadIcon ("longomatch-dash-11", 22),
+			ctx.Add (d11button.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("longomatch-dash-11", 22),
 											 vm => ((DashboardVM)vm).ChangeFitMode, FitMode.Original));
 		}
 

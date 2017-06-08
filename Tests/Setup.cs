@@ -41,8 +41,8 @@ namespace Tests
 			// Initialize LongoMath.Core by using a type, this will call the module initialization
 			var st = new LMTeam ();
 			VFS.SetCurrent (new FileSystem ());
-			Resources.TEST_MODE = true;
 			Initialize ();
+			App.Current.ResourcesLocator.TestMode = true;
 		}
 
 		public static void Initialize ()
@@ -51,7 +51,7 @@ namespace Tests
 			App.InitDependencies ();
 			App.Current.Config = new Config ();
 			App.InitConstants ();
-
+			App.Current.ResourcesLocator = new ResourcesLocator ();
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;

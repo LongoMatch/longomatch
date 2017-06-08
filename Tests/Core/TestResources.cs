@@ -29,27 +29,27 @@ namespace Tests.Core.Common
 		public void Setup ()
 		{
 			App.Current.DataDir.Add ("../data/");
-			VAS.Core.Resources.TEST_MODE = false;
+			App.Current.ResourcesLocator.TestMode = false;
 		}
 
 		[TestFixtureTearDown]
 		public void TearDown ()
 		{
 			App.Current.DataDir.Add ("../data/");
-			VAS.Core.Resources.TEST_MODE = true;
+			App.Current.ResourcesLocator.TestMode = true;
 		}
 
 		[Test ()]
 		public void TestLoadIconResource ()
 		{
-			Image img = VAS.Core.Resources.LoadImage ("images/longomatch-dark-bg.svg");
+			Image img = App.Current.ResourcesLocator.LoadImage ("images/longomatch-dark-bg.svg");
 			Assert.IsNotNull (img);
 		}
 
 		[Test ()]
 		public void TestLoadImageResource ()
 		{
-			Image img = VAS.Core.Resources.LoadImage ("icons/hicolor/scalable/apps/longomatch.svg");
+			Image img = App.Current.ResourcesLocator.LoadImage ("icons/hicolor/scalable/apps/longomatch.svg");
 			Assert.IsNotNull (img);
 		}
 
@@ -58,7 +58,7 @@ namespace Tests.Core.Common
 		{
 			Assert.Throws<System.IO.FileNotFoundException> (
 				delegate {
-					var img = VAS.Core.Resources.LoadImage ("longomatch.svg");
+					var img = App.Current.ResourcesLocator.LoadImage ("longomatch.svg");
 				});
 		}
 	}

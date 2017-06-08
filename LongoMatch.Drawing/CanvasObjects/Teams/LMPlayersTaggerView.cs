@@ -178,7 +178,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
 				if (ViewModel.HomeTeam.Icon == null) {
-					homeButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
+					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
 				} else {
 					homeButton.BackgroundImage = ViewModel.HomeTeam.Icon;
 				}
@@ -193,7 +193,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
 				if (ViewModel.AwayTeam.Icon == null) {
-					awayButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
+					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
 				} else {
 					awayButton.BackgroundImage = ViewModel.AwayTeam.Icon;
 				}
@@ -297,9 +297,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		void LoadSubsButtons ()
 		{
 			subPlayers = new ButtonObject ();
-			subPlayers.BackgroundImageActive = Resources.LoadImage (StyleConf.SubsUnlock);
+			subPlayers.BackgroundImageActive = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsUnlock);
 			subPlayers.BackgroundColorActive = App.Current.Style.PaletteBackground;
-			subPlayers.BackgroundImage = Resources.LoadImage (StyleConf.SubsLock);
+			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();

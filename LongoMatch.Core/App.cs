@@ -93,7 +93,7 @@ namespace LongoMatch
 				Current.Config = new Config ();
 				Current.Config.Save ();
 			}
-			Current.Background = Resources.LoadImage (Constants.BACKGROUND);
+			Current.Background = App.Current.ResourcesLocator.LoadImage (Constants.BACKGROUND);
 			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
 		}
 

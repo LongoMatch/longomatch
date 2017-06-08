@@ -31,7 +31,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		static ScoreView ()
 		{
-			iconImage = Resources.LoadImage (StyleConf.ButtonScoreIcon);
+			iconImage = App.Current.ResourcesLocator.LoadImage (StyleConf.ButtonScoreIcon);
 		}
 
 		public ScoreButtonVM ViewModel {
