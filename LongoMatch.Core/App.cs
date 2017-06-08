@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
@@ -95,6 +96,7 @@ namespace LongoMatch
 			}
 			Current.Background = App.Current.ResourcesLocator.LoadImage (Constants.BACKGROUND);
 			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
+			Current.ResourcesLocator.Register (Assembly.GetExecutingAssembly ());
 		}
 
 		Config config;
