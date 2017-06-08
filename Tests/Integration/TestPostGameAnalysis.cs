@@ -130,10 +130,6 @@ namespace Tests.Integration
 			App.Current.Config.AutoSave = true;
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 
-			// Do controllers start in here since the EventBroker is instantiante again in the test
-			eventsController.Start ();
-			toolsManager.Start ();
-
 			// Start importing templates
 			App.Current.TeamTemplatesProvider.Save (
 				App.Current.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
@@ -153,6 +149,10 @@ namespace Tests.Integration
 			viewModel.Project = new LMProjectVM { Model = p };
 			viewModel.VideoPlayer = new VideoPlayerVM { Player = playerController };
 			eventsController.SetViewModel (viewModel);
+
+			// Do controllers start in here since the EventBroker is instantiante again in the test
+			eventsController.Start ();
+			toolsManager.Start ();
 
 			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (p, true);
 
