@@ -28,6 +28,7 @@ using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.DB;
+using VAS.Tests;
 using LMDB = LongoMatch.DB;
 
 namespace Tests
@@ -42,7 +43,6 @@ namespace Tests
 			var st = new LMTeam ();
 			VFS.SetCurrent (new FileSystem ());
 			Initialize ();
-			App.Current.ResourcesLocator.TestMode = true;
 		}
 
 		public static void Initialize ()
@@ -51,7 +51,6 @@ namespace Tests
 			App.InitDependencies ();
 			App.Current.Config = new Config ();
 			App.InitConstants ();
-			App.Current.ResourcesLocator = new ResourcesLocator ();
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
@@ -69,6 +68,7 @@ namespace Tests
 			App.Current.StateController.Register (PlayEditorState.NAME, () => CreateScreenState ());
 			App.Current.StateController.Register (SubstitutionsEditorState.NAME, () => CreateScreenState ());
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
+			App.Current.ResourcesLocator = new DummyResourcesLocator ();
 		}
 
 		static IScreenState CreateScreenState ()
