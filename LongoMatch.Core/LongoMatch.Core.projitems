@@ -73,5 +73,11 @@
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)Hotkeys\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\logo-watermark.svg">
+      <LogicalName>logo-watermark.svg</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

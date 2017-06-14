@@ -36,11 +36,11 @@ namespace LongoMatch.Services.ViewModel
 		public TeamsManagerVM ()
 		{
 			LoadedTemplate = new LMTeamVM ();
-			NewCommand.Icon = Resources.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			SaveCommand.Icon = Resources.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
-			DeleteCommand.Icon = Resources.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
-			ExportCommand.Icon = Resources.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
-			ImportCommand.Icon = Resources.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
+			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
+			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
+			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
+			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
+			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
 			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
 			TeamTagger.AwayTeam = null;

@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Dialog
 		ListStore bitStore;
 		uint maxHeight;
 		VideoStandard selectedVideoStandard;
-		VideoStandard[] supportedVideoStandards;
+		VideoStandard [] supportedVideoStandards;
 
 		public VideoConversionTool ()
 		{
@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Dialog
 			mediafilechooser1.FileChooserMode = FileChooserMode.File;
 			mediafilechooser1.ChangedEvent += HandleFileChanges;
 			mediafilechooser1.ProposedFileName = String.Format ("{0}-Video-{1}.mp4", Constants.SOFTWARE_NAME,
-				DateTime.Now.ToShortDateString ().Replace ('/', '-')); 
+				DateTime.Now.ToShortDateString ().Replace ('/', '-'));
 			FillStandards ();
 			FillBitrates ();
 			addbutton1.Clicked += OnAddbuttonClicked;
@@ -81,12 +81,12 @@ namespace LongoMatch.Gui.Dialog
 			int index = 0, active = 0;
 			VideoStandard min_std = null;
 
-			stdStore = new ListStore (typeof(string), typeof(VideoStandard));
+			stdStore = new ListStore (typeof (string), typeof (VideoStandard));
 			foreach (VideoStandard std in supportedVideoStandards) {
 				if (std.Height <= maxHeight) {
 					stdStore.AppendValues (std.Name, std);
 					if (std == selectedVideoStandard) {
-						active = index; 
+						active = index;
 					}
 					index++;
 				}
@@ -105,7 +105,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void FillBitrates ()
 		{
-			bitStore = new ListStore (typeof(string), typeof(EncodingQuality));
+			bitStore = new ListStore (typeof (string), typeof (EncodingQuality));
 			foreach (EncodingQuality qual in EncodingQualities.Transcode) {
 				bitStore.AppendValues (qual.Name, qual);
 			}
@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Dialog
 			Button delButton;
 			Gtk.Image delImage;
 			VideoFileInfo fileinfo;
-			
+
 			if (file == null)
 				return;
 			Files.Add (file);
@@ -176,13 +176,13 @@ namespace LongoMatch.Gui.Dialog
 			TreeIter iter;
 			VideoStandard std;
 			uint fps_n, fps_d;
-			
+
 			sizecombobox.GetActiveIter (out iter);
 			std = (VideoStandard)stdStore.GetValue (iter, 1);
 
 			bitratecombobox.GetActiveIter (out iter);
 			qual = bitStore.GetValue (iter, 1) as EncodingQuality;
-			
+
 			var rates = new HashSet<uint> (Files.Select (f => (uint)f.Fps));
 			if (rates.Count == 1) {
 				fps_n = rates.First ();
@@ -191,15 +191,15 @@ namespace LongoMatch.Gui.Dialog
 				fps_n = App.Current.Config.FPS_N;
 				fps_d = App.Current.Config.FPS_D;
 			}
-			
+
 			if (fps_n == 50) {
 				fps_n = 25;
 			} else if (fps_n == 60) {
 				fps_n = 30;
 			}
 			encSettings = new EncodingSettings (std, EncodingProfiles.MP4, qual, fps_n, fps_d,
-				mediafilechooser1.CurrentPath, true, false, 0);
-			
+				mediafilechooser1.CurrentPath, true, false, 0, null);
+
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);
 		}

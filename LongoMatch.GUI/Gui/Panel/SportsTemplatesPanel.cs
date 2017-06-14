@@ -177,19 +177,19 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx = this.GetBindingContext ();
 			ctx.Add (addcategorybutton.BindWithIcon (
-				Resources.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Category"));
 			ctx.Add (scorebutton.BindWithIcon (
-				Resources.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Score"));
 			ctx.Add (timerbutton.BindWithIcon (
-				Resources.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Timer"));
 			ctx.Add (addtagbutton1.BindWithIcon (
-				Resources.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Tag"));
 			ctx.Add (cardbutton.BindWithIcon (
-				Resources.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Card"));
 
 			ctx.Add (deletetemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).DeleteCommand));

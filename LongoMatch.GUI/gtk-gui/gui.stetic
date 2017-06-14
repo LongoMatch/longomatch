@@ -3961,10 +3961,13 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Table" id="rendertable">
                     <property name="MemberName" />
-                    <property name="NRows">5</property>
+                    <property name="NRows">6</property>
                     <property name="NColumns">2</property>
                     <property name="RowSpacing">6</property>
                     <property name="ColumnSpacing">6</property>
+                    <child>
+                      <placeholder />
+                    </child>
                     <child>
                       <placeholder />
                     </child>
@@ -4019,6 +4022,26 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="TopAttach">2</property>
                         <property name="BottomAttach">3</property>
                         <property name="AutoSize">False</property>
+                        <property name="XOptions">Fill</property>
+                        <property name="YOptions">Fill</property>
+                        <property name="XExpand">False</property>
+                        <property name="XFill">True</property>
+                        <property name="XShrink">False</property>
+                        <property name="YExpand">False</property>
+                        <property name="YFill">True</property>
+                        <property name="YShrink">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label7">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">Add watermark</property>
+                      </widget>
+                      <packing>
+                        <property name="TopAttach">5</property>
+                        <property name="BottomAttach">6</property>
+                        <property name="AutoSize">True</property>
                         <property name="XOptions">Fill</property>
                         <property name="YOptions">Fill</property>
                         <property name="XExpand">False</property>

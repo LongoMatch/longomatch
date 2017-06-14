@@ -30,6 +30,8 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Label label3;
 
+		private global::Gtk.Label label7;
+
 		private global::Gtk.Label label8;
 
 		private global::Gtk.Label label9;
@@ -129,7 +131,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			this.rendertable = new global::Gtk.Table (((uint)(5)), ((uint)(2)), false);
+			this.rendertable = new global::Gtk.Table (((uint)(6)), ((uint)(2)), false);
 			this.rendertable.Name = "rendertable";
 			this.rendertable.RowSpacing = ((uint)(6));
 			this.rendertable.ColumnSpacing = ((uint)(6));
@@ -165,58 +167,69 @@ namespace LongoMatch.Gui.Component
 			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child rendertable.Gtk.Table+TableChild
+			this.label7 = new global::Gtk.Label ();
+			this.label7.Name = "label7";
+			this.label7.Xalign = 0F;
+			this.label7.LabelProp = global::VAS.Core.Catalog.GetString ("Add watermark");
+			this.rendertable.Add (this.label7);
+			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label7]));
+			w9.TopAttach = ((uint)(5));
+			w9.BottomAttach = ((uint)(6));
+			w9.XOptions = ((global::Gtk.AttachOptions)(4));
+			w9.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child rendertable.Gtk.Table+TableChild
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 0F;
 			this.label8.LabelProp = global::VAS.Core.Catalog.GetString ("Enable audio");
 			this.rendertable.Add (this.label8);
-			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label8]));
-			w9.TopAttach = ((uint)(3));
-			w9.BottomAttach = ((uint)(4));
-			w9.XOptions = ((global::Gtk.AttachOptions)(4));
-			w9.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label8]));
+			w10.TopAttach = ((uint)(3));
+			w10.BottomAttach = ((uint)(4));
+			w10.XOptions = ((global::Gtk.AttachOptions)(4));
+			w10.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child rendertable.Gtk.Table+TableChild
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 0F;
 			this.label9.LabelProp = global::VAS.Core.Catalog.GetString ("Enable title overlay");
 			this.rendertable.Add (this.label9);
-			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label9]));
-			w10.TopAttach = ((uint)(4));
-			w10.BottomAttach = ((uint)(5));
-			w10.XOptions = ((global::Gtk.AttachOptions)(4));
-			w10.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label9]));
+			w11.TopAttach = ((uint)(4));
+			w11.BottomAttach = ((uint)(5));
+			w11.XOptions = ((global::Gtk.AttachOptions)(4));
+			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child rendertable.Gtk.Table+TableChild
 			this.renderenccombo = global::Gtk.ComboBox.NewText ();
 			this.renderenccombo.Name = "renderenccombo";
 			this.rendertable.Add (this.renderenccombo);
-			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderenccombo]));
-			w11.TopAttach = ((uint)(1));
-			w11.BottomAttach = ((uint)(2));
-			w11.LeftAttach = ((uint)(1));
-			w11.RightAttach = ((uint)(2));
-			w11.XOptions = ((global::Gtk.AttachOptions)(4));
-			w11.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child rendertable.Gtk.Table+TableChild
-			this.renderimagecombo = global::Gtk.ComboBox.NewText ();
-			this.renderimagecombo.Name = "renderimagecombo";
-			this.rendertable.Add (this.renderimagecombo);
-			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderimagecombo]));
+			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderenccombo]));
+			w12.TopAttach = ((uint)(1));
+			w12.BottomAttach = ((uint)(2));
 			w12.LeftAttach = ((uint)(1));
 			w12.RightAttach = ((uint)(2));
 			w12.XOptions = ((global::Gtk.AttachOptions)(4));
 			w12.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child rendertable.Gtk.Table+TableChild
-			this.renderqualcombo = global::Gtk.ComboBox.NewText ();
-			this.renderqualcombo.Name = "renderqualcombo";
-			this.rendertable.Add (this.renderqualcombo);
-			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderqualcombo]));
-			w13.TopAttach = ((uint)(2));
-			w13.BottomAttach = ((uint)(3));
+			this.renderimagecombo = global::Gtk.ComboBox.NewText ();
+			this.renderimagecombo.Name = "renderimagecombo";
+			this.rendertable.Add (this.renderimagecombo);
+			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderimagecombo]));
 			w13.LeftAttach = ((uint)(1));
 			w13.RightAttach = ((uint)(2));
 			w13.XOptions = ((global::Gtk.AttachOptions)(4));
 			w13.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child rendertable.Gtk.Table+TableChild
+			this.renderqualcombo = global::Gtk.ComboBox.NewText ();
+			this.renderqualcombo.Name = "renderqualcombo";
+			this.rendertable.Add (this.renderqualcombo);
+			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.rendertable [this.renderqualcombo]));
+			w14.TopAttach = ((uint)(2));
+			w14.BottomAttach = ((uint)(3));
+			w14.LeftAttach = ((uint)(1));
+			w14.RightAttach = ((uint)(2));
+			w14.XOptions = ((global::Gtk.AttachOptions)(4));
+			w14.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.GtkAlignment.Add (this.rendertable);
 			this.frame1.Add (this.GtkAlignment);
 			this.GtkLabel = new global::Gtk.Label ();
@@ -225,9 +238,9 @@ namespace LongoMatch.Gui.Component
 			this.GtkLabel.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel;
 			this.vbox2.Add (this.frame1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame1]));
-			w16.Position = 1;
-			w16.Expand = false;
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame1]));
+			w17.Position = 1;
+			w17.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.frame2 = new global::Gtk.Frame ();
 			this.frame2.Name = "frame2";
@@ -245,64 +258,64 @@ namespace LongoMatch.Gui.Component
 			this.captureenccombo = global::Gtk.ComboBox.NewText ();
 			this.captureenccombo.Name = "captureenccombo";
 			this.capturetable.Add (this.captureenccombo);
-			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.capturetable [this.captureenccombo]));
-			w17.TopAttach = ((uint)(1));
-			w17.BottomAttach = ((uint)(2));
-			w17.LeftAttach = ((uint)(1));
-			w17.RightAttach = ((uint)(2));
-			w17.XOptions = ((global::Gtk.AttachOptions)(4));
-			w17.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child capturetable.Gtk.Table+TableChild
-			this.captureimagecombo = global::Gtk.ComboBox.NewText ();
-			this.captureimagecombo.Name = "captureimagecombo";
-			this.capturetable.Add (this.captureimagecombo);
-			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.capturetable [this.captureimagecombo]));
+			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.capturetable [this.captureenccombo]));
+			w18.TopAttach = ((uint)(1));
+			w18.BottomAttach = ((uint)(2));
 			w18.LeftAttach = ((uint)(1));
 			w18.RightAttach = ((uint)(2));
 			w18.XOptions = ((global::Gtk.AttachOptions)(4));
 			w18.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
-			this.capturequalcombo = global::Gtk.ComboBox.NewText ();
-			this.capturequalcombo.Name = "capturequalcombo";
-			this.capturetable.Add (this.capturequalcombo);
-			global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.capturetable [this.capturequalcombo]));
-			w19.TopAttach = ((uint)(2));
-			w19.BottomAttach = ((uint)(3));
+			this.captureimagecombo = global::Gtk.ComboBox.NewText ();
+			this.captureimagecombo.Name = "captureimagecombo";
+			this.capturetable.Add (this.captureimagecombo);
+			global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.capturetable [this.captureimagecombo]));
 			w19.LeftAttach = ((uint)(1));
 			w19.RightAttach = ((uint)(2));
 			w19.XOptions = ((global::Gtk.AttachOptions)(4));
 			w19.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child capturetable.Gtk.Table+TableChild
+			this.capturequalcombo = global::Gtk.ComboBox.NewText ();
+			this.capturequalcombo.Name = "capturequalcombo";
+			this.capturetable.Add (this.capturequalcombo);
+			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.capturetable [this.capturequalcombo]));
+			w20.TopAttach = ((uint)(2));
+			w20.BottomAttach = ((uint)(3));
+			w20.LeftAttach = ((uint)(1));
+			w20.RightAttach = ((uint)(2));
+			w20.XOptions = ((global::Gtk.AttachOptions)(4));
+			w20.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
 			this.label4.LabelProp = global::VAS.Core.Catalog.GetString ("Quality");
 			this.capturetable.Add (this.label4);
-			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label4]));
-			w20.TopAttach = ((uint)(2));
-			w20.BottomAttach = ((uint)(3));
-			w20.XOptions = ((global::Gtk.AttachOptions)(4));
-			w20.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label4]));
+			w21.TopAttach = ((uint)(2));
+			w21.BottomAttach = ((uint)(3));
+			w21.XOptions = ((global::Gtk.AttachOptions)(4));
+			w21.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
 			this.label5.Xalign = 0F;
 			this.label5.LabelProp = global::VAS.Core.Catalog.GetString ("Encoding format");
 			this.capturetable.Add (this.label5);
-			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label5]));
-			w21.TopAttach = ((uint)(1));
-			w21.BottomAttach = ((uint)(2));
-			w21.XOptions = ((global::Gtk.AttachOptions)(4));
-			w21.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label5]));
+			w22.TopAttach = ((uint)(1));
+			w22.BottomAttach = ((uint)(2));
+			w22.XOptions = ((global::Gtk.AttachOptions)(4));
+			w22.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
 			this.label6.Xalign = 0F;
 			this.label6.LabelProp = global::VAS.Core.Catalog.GetString ("Image format");
 			this.capturetable.Add (this.label6);
-			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label6]));
-			w22.XOptions = ((global::Gtk.AttachOptions)(4));
-			w22.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label6]));
+			w23.XOptions = ((global::Gtk.AttachOptions)(4));
+			w23.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.GtkAlignment1.Add (this.capturetable);
 			this.frame2.Add (this.GtkAlignment1);
 			this.GtkLabel1 = new global::Gtk.Label ();
@@ -311,9 +324,9 @@ namespace LongoMatch.Gui.Component
 			this.GtkLabel1.UseMarkup = true;
 			this.frame2.LabelWidget = this.GtkLabel1;
 			this.vbox2.Add (this.frame2);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame2]));
-			w25.Position = 2;
-			w25.Expand = false;
+			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame2]));
+			w26.Position = 2;
+			w26.Expand = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

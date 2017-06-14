@@ -40,7 +40,7 @@ namespace LongoMatch.Core.Store.Templates
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
 			try {
-				Shield = Resources.LoadImage (StyleConf.DefaultShield);
+				Shield = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
 			} catch {
 				/* Ignore for unit tests */
 			}

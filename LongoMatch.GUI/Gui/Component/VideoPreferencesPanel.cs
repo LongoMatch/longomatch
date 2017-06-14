@@ -25,12 +25,12 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class VideoPreferencesPanel : Gtk.Bin
 	{
-		CheckButton overlayTitle, enableSound;
+		CheckButton overlayTitle, enableSound, addWatermark;
 
 		public VideoPreferencesPanel ()
 		{
 			this.Build ();
-			
+
 			if (App.Current.Config.FPS_N == 30) {
 				fpscombobox.Active = 1;
 			} else if (App.Current.Config.FPS_N == 50) {
@@ -44,20 +44,20 @@ namespace LongoMatch.Gui.Component
 			Misc.FillImageFormat (renderimagecombo, VideoStandards.Rendering, App.Current.Config.RenderVideoStandard);
 			Misc.FillEncodingFormat (renderenccombo, App.Current.Config.RenderEncodingProfile);
 			Misc.FillQuality (renderqualcombo, App.Current.Config.RenderEncodingQuality);
-			
+
 			Misc.FillImageFormat (captureimagecombo, VideoStandards.Capture, App.Current.Config.CaptureVideoStandard);
 			Misc.FillEncodingFormat (captureenccombo, App.Current.Config.CaptureEncodingProfile);
 			Misc.FillQuality (capturequalcombo, App.Current.Config.CaptureEncodingQuality);
-			
+
 			renderimagecombo.Changed += HandleImageChanged;
 			captureimagecombo.Changed += HandleImageChanged;
-			
-			renderenccombo.Changed += HandleEncodingChanged;  
-			captureenccombo.Changed += HandleEncodingChanged;  
-			
+
+			renderenccombo.Changed += HandleEncodingChanged;
+			captureenccombo.Changed += HandleEncodingChanged;
+
 			renderqualcombo.Changed += HandleQualityChanged;
 			capturequalcombo.Changed += HandleQualityChanged;
-			
+
 			enableSound = new CheckButton ();
 			rendertable.Attach (enableSound, 1, 2, 3, 4,
 				AttachOptions.Fill,
@@ -79,7 +79,18 @@ namespace LongoMatch.Gui.Component
 			overlayTitle.Toggled += (sender, e) => {
 				App.Current.Config.OverlayTitle = overlayTitle.Active;
 			};
-			
+
+			addWatermark = new CheckButton ();
+			rendertable.Attach (addWatermark, 1, 2, 5, 6,
+				AttachOptions.Fill,
+				AttachOptions.Fill, 0, 0);
+			addWatermark.CanFocus = false;
+			addWatermark.Show ();
+			addWatermark.Active = App.Current.Config.AddWatermark;
+			addWatermark.Toggled += (sender, e) => {
+				App.Current.Config.AddWatermark = addWatermark.Active;
+			};
+
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
 			SizeGroup sgroup2 = new SizeGroup (SizeGroupMode.Horizontal);
 			foreach (Widget w in generaltable) {
@@ -125,7 +136,7 @@ namespace LongoMatch.Gui.Component
 			ListStore store;
 			TreeIter iter;
 			ComboBox combo = sender as ComboBox;
-			
+
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
 			qual = (EncodingQuality)store.GetValue (iter, 1);
@@ -146,12 +157,12 @@ namespace LongoMatch.Gui.Component
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
 			std = (VideoStandard)store.GetValue (iter, 1);
-			
+
 			if (combo == renderimagecombo)
 				App.Current.Config.RenderVideoStandard = std;
 			else
 				App.Current.Config.CaptureVideoStandard = std;
-			
+
 		}
 
 		void HandleEncodingChanged (object sender, EventArgs e)
@@ -160,16 +171,16 @@ namespace LongoMatch.Gui.Component
 			ListStore store;
 			TreeIter iter;
 			ComboBox combo = sender as ComboBox;
-			
+
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
 			enc = (EncodingProfile)store.GetValue (iter, 1);
-			
+
 			if (combo == renderenccombo)
 				App.Current.Config.RenderEncodingProfile = enc;
 			else
 				App.Current.Config.CaptureEncodingProfile = enc;
-			
+
 		}
 	}
 }

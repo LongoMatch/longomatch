@@ -106,7 +106,6 @@
 		<Compile Include="Integration\TestInitialization.cs" />
 		<Compile Include="Integration\TestPostGameAnalysis.cs" />
 		<Compile Include="DummyBusyDialog.cs" />
-		<Compile Include="Core\TestResources.cs" />
 		<Compile Include="DB\TestQueries.cs" />
 		<Compile Include="Core\Common\TestExtensions.cs" />
 		<Compile Include="Core\Filters\TestProjectsFilter.cs" />
@@ -239,6 +238,10 @@
 		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Addins\LongoMatch.Addins.csproj">
 			<Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
 			<Name>LongoMatch.Addins</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\VAS\VAS.Tests\VAS.Tests.csproj">
+		  <Project>{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}</Project>
+		  <Name>VAS.Tests</Name>
 		</ProjectReference>
 	</ItemGroup>
 </Project>

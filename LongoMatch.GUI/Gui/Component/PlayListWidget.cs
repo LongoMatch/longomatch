@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 		{
 			ctx = this.GetBindingContext ();
 			ctx.Add (newbutton.BindWithIcon (
-				Resources.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize),
 				vm => ((PlaylistCollectionVM)vm).NewCommand));
 		}
 

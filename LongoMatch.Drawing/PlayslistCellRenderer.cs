@@ -233,7 +233,7 @@ namespace LongoMatch.Drawing
 			double textWidth;
 
 			if (subsImage == null) {
-				subsImage = Resources.LoadImage (StyleConf.SubsIcon);
+				subsImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsIcon);
 			}
 			tk.Context = context;
 			tk.Begin ();
