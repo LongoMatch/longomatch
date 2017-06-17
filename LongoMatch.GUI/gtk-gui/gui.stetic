@@ -95,7 +95,7 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Image" id="focusimage">
+              <widget class="VAS.UI.Helpers.ImageView" id="focusimage">
                 <property name="MemberName" />
               </widget>
               <packing>
@@ -201,7 +201,7 @@ Sort by competition</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DashboardWidget" design-size="1288 509">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DashboardWidget" design-size="1288 492">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.HBox" id="hbox2">
@@ -223,7 +223,7 @@ Sort by competition</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">Custom</property>
                     <child>
-                      <widget class="Gtk.Image" id="addcatbuttonimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addcatbuttonimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -239,7 +239,7 @@ Sort by competition</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">Custom</property>
                     <child>
-                      <widget class="Gtk.Image" id="addtimerbuttonimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addtimerbuttonimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -256,7 +256,7 @@ Sort by competition</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">Custom</property>
                     <child>
-                      <widget class="Gtk.Image" id="addscorebuttonimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addscorebuttonimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -273,7 +273,7 @@ Sort by competition</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">Custom</property>
                     <child>
-                      <widget class="Gtk.Image" id="addcardbuttonimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addcardbuttonimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -290,7 +290,7 @@ Sort by competition</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">Custom</property>
                     <child>
-                      <widget class="Gtk.Image" id="addtagbuttonimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addtagbuttonimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -382,7 +382,7 @@ Sort by competition</property>
                                                 <property name="MemberName" />
                                                 <property name="Spacing">2</property>
                                                 <child>
-                                                  <widget class="Gtk.Image" id="fieldimage">
+                                                  <widget class="VAS.UI.Helpers.ImageView" id="fieldimage">
                                                     <property name="MemberName" />
                                                     <property name="WidthRequest">71</property>
                                                     <property name="HeightRequest">50</property>
@@ -483,7 +483,7 @@ Sort by competition</property>
                                                 <property name="MemberName" />
                                                 <property name="Spacing">2</property>
                                                 <child>
-                                                  <widget class="Gtk.Image" id="hfieldimage">
+                                                  <widget class="VAS.UI.Helpers.ImageView" id="hfieldimage">
                                                     <property name="MemberName" />
                                                     <property name="WidthRequest">71</property>
                                                     <property name="HeightRequest">50</property>
@@ -582,7 +582,7 @@ Sort by competition</property>
                                                 <property name="MemberName" />
                                                 <property name="Spacing">2</property>
                                                 <child>
-                                                  <widget class="Gtk.Image" id="goalimage">
+                                                  <widget class="VAS.UI.Helpers.ImageView" id="goalimage">
                                                     <property name="MemberName" />
                                                     <property name="WidthRequest">71</property>
                                                     <property name="HeightRequest">50</property>
@@ -700,7 +700,7 @@ Sort by competition</property>
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="applyimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="applyimage">
                                     <property name="MemberName" />
                                   </widget>
                                 </child>
@@ -2136,7 +2136,7 @@ Away</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
                 <child>
-                  <widget class="Gtk.Image" id="newimage">
+                  <widget class="VAS.UI.Helpers.ImageView" id="newimage">
                     <property name="MemberName" />
                   </widget>
                 </child>
@@ -2155,7 +2155,7 @@ Away</property>
                 <property name="Type">Custom</property>
                 <property name="Relief">None</property>
                 <child>
-                  <widget class="Gtk.Image" id="recimage">
+                  <widget class="VAS.UI.Helpers.ImageView" id="recimage">
                     <property name="MemberName" />
                   </widget>
                 </child>
@@ -2627,7 +2627,7 @@ Away</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Image" id="image">
+              <widget class="VAS.UI.Helpers.ImageView" id="image">
                 <property name="MemberName" />
               </widget>
               <packing>
@@ -3323,7 +3323,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="Type">Custom</property>
                     <property name="Relief">None</property>
                     <child>
-                      <widget class="Gtk.Image" id="addimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="addimage">
                         <property name="MemberName" />
                       </widget>
                     </child>
@@ -3351,7 +3351,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="HeightRequest">130</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Image" id="convertimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="convertimage">
                         <property name="MemberName" />
                         <property name="WidthRequest">170</property>
                       </widget>
@@ -4657,7 +4657,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="fileimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="fileimage">
                                     <property name="MemberName" />
                                   </widget>
                                 </child>
@@ -4712,7 +4712,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="captureimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="captureimage">
                                     <property name="MemberName" />
                                   </widget>
                                 </child>
@@ -4767,7 +4767,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="fakeimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="fakeimage">
                                     <property name="MemberName" />
                                   </widget>
                                 </child>
@@ -4822,7 +4822,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="ipimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="ipimage">
                                     <property name="MemberName" />
                                   </widget>
                                 </child>
@@ -5094,7 +5094,7 @@ You can continue with the current capture, cancel it or save your project.
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="Gtk.Image" id="vsimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="vsimage">
                                     <property name="MemberName" />
                                   </widget>
                                   <packing>
@@ -5932,7 +5932,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="LeftPadding">12</property>
                         <property name="RightPadding">24</property>
                         <child>
-                          <widget class="Gtk.Image" id="teamimage">
+                          <widget class="VAS.UI.Helpers.ImageView" id="teamimage">
                             <property name="MemberName" />
                             <property name="Yalign">1</property>
                           </widget>
@@ -5975,7 +5975,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="newteamimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="newteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -5996,7 +5996,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="importteamimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="importteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6017,7 +6017,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="saveteamimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="saveteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6038,7 +6038,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="exportteamimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="exportteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6059,7 +6059,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="deleteteamimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="deleteteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6090,7 +6090,7 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Image" id="vseparatorimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="vseparatorimage">
                         <property name="MemberName" />
                       </widget>
                       <packing>
@@ -6129,7 +6129,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="newplayerimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="newplayerimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6150,7 +6150,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="deleteplayerimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="deleteplayerimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -6189,7 +6189,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="Yalign">1</property>
                         <property name="RightPadding">12</property>
                         <child>
-                          <widget class="Gtk.Image" id="playerheaderimage">
+                          <widget class="VAS.UI.Helpers.ImageView" id="playerheaderimage">
                             <property name="MemberName" />
                             <property name="Ypad">14</property>
                           </widget>
@@ -6325,7 +6325,7 @@ You can continue with the current capture, cancel it or save your project.
                                             <property name="MemberName" />
                                             <property name="Spacing">2</property>
                                             <child>
-                                              <widget class="Gtk.Image" id="shieldimage">
+                                              <widget class="VAS.UI.Helpers.ImageView" id="shieldimage">
                                                 <property name="MemberName" />
                                               </widget>
                                               <packing>
@@ -6420,14 +6420,16 @@ You can continue with the current capture, cancel it or save your project.
                                       <widget class="Gtk.Button" id="applybutton">
                                         <property name="MemberName" />
                                         <property name="CanFocus">True</property>
-                                        <property name="Type">TextAndIcon</property>
-                                        <property name="Icon">stock:gtk-apply Menu</property>
-                                        <property name="Label" translatable="yes" />
-                                        <property name="UseUnderline">True</property>
+                                        <property name="Type">Custom</property>
+                                        <child>
+                                          <widget class="VAS.UI.Helpers.ImageView" id="applyimage">
+                                            <property name="MemberName" />
+                                          </widget>
+                                        </child>
                                       </widget>
                                       <packing>
                                         <property name="Position">1</property>
-                                        <property name="AutoSize">False</property>
+                                        <property name="AutoSize">True</property>
                                         <property name="Expand">False</property>
                                         <property name="Fill">False</property>
                                       </packing>
@@ -6639,7 +6641,7 @@ You can continue with the current capture, cancel it or save your project.
                                                 <property name="MemberName" />
                                                 <property name="Spacing">2</property>
                                                 <child>
-                                                  <widget class="Gtk.Image" id="playerimage">
+                                                  <widget class="VAS.UI.Helpers.ImageView" id="playerimage">
                                                     <property name="MemberName" />
                                                   </widget>
                                                   <packing>
@@ -7614,7 +7616,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="CanFocus">True</property>
                             <property name="Type">Custom</property>
                             <child>
-                              <widget class="Gtk.Image" id="openbuttonimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="openbuttonimage">
                                 <property name="MemberName" />
                               </widget>
                             </child>
@@ -7632,7 +7634,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="CanFocus">True</property>
                             <property name="Type">Custom</property>
                             <child>
-                              <widget class="Gtk.Image" id="savebuttonimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="savebuttonimage">
                                 <property name="MemberName" />
                               </widget>
                             </child>
@@ -7651,7 +7653,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="CanFocus">True</property>
                             <property name="Type">Custom</property>
                             <child>
-                              <widget class="Gtk.Image" id="exportbuttonimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="exportbuttonimage">
                                 <property name="MemberName" />
                               </widget>
                             </child>
@@ -7670,7 +7672,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="CanFocus">True</property>
                             <property name="Type">Custom</property>
                             <child>
-                              <widget class="Gtk.Image" id="resyncbuttonimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="resyncbuttonimage">
                                 <property name="MemberName" />
                               </widget>
                             </child>
@@ -7689,7 +7691,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="CanFocus">True</property>
                             <property name="Type">Custom</property>
                             <child>
-                              <widget class="Gtk.Image" id="deletebuttonimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="deletebuttonimage">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                               </widget>
@@ -7768,7 +7770,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="LeftPadding">12</property>
                         <property name="RightPadding">24</property>
                         <child>
-                          <widget class="Gtk.Image" id="templateimage">
+                          <widget class="VAS.UI.Helpers.ImageView" id="templateimage">
                             <property name="MemberName" />
                             <property name="Yalign">1</property>
                           </widget>
@@ -7810,7 +7812,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="newtemplateimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="newtemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7831,7 +7833,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="importtemplateimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="importtemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7852,7 +7854,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="savetemplateimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="savetemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7873,7 +7875,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="exporttemplateimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="exporttemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7894,7 +7896,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="deletetemplateimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="deletetemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7925,7 +7927,7 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Image" id="vseparatorimage">
+                      <widget class="VAS.UI.Helpers.ImageView" id="vseparatorimage">
                         <property name="MemberName" />
                       </widget>
                       <packing>
@@ -7964,7 +7966,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="addcategoryimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="addcategoryimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7985,7 +7987,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="addtagimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="addtagimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -8006,7 +8008,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="scoreimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="scoreimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -8027,7 +8029,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="cardimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="cardimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -8048,7 +8050,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="timerimage">
+                                  <widget class="VAS.UI.Helpers.ImageView" id="timerimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -8088,7 +8090,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="RightPadding">24</property>
                         <property name="BottomPadding">14</property>
                         <child>
-                          <widget class="Gtk.Image" id="categoryheaderimage">
+                          <widget class="VAS.UI.Helpers.ImageView" id="categoryheaderimage">
                             <property name="MemberName" />
                             <property name="Yalign">1</property>
                           </widget>
@@ -8395,7 +8397,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
                             <child>
-                              <widget class="Gtk.Image" id="zoomoutimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="zoomoutimage">
                                 <property name="MemberName" />
                                 <property name="WidthRequest">14</property>
                                 <property name="HeightRequest">8</property>
@@ -8424,7 +8426,7 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Image" id="zoominimage">
+                              <widget class="VAS.UI.Helpers.ImageView" id="zoominimage">
                                 <property name="MemberName" />
                                 <property name="WidthRequest">14</property>
                                 <property name="HeightRequest">8</property>
@@ -8571,7 +8573,7 @@ You can continue with the current capture, cancel it or save your project.
             <property name="HeightRequest">60</property>
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Image" id="logoimage">
+              <widget class="VAS.UI.Helpers.ImageView" id="logoimage">
                 <property name="MemberName" />
               </widget>
               <packing>
@@ -8604,7 +8606,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="Type">Custom</property>
                 <property name="FocusOnClick">False</property>
                 <child>
-                  <widget class="Gtk.Image" id="applyroundedbuttonimage">
+                  <widget class="VAS.UI.Helpers.ImageView" id="applyroundedbuttonimage">
                     <property name="MemberName" />
                   </widget>
                 </child>
@@ -8627,7 +8629,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="FocusOnClick">False</property>
                 <property name="BorderWidth">10</property>
                 <child>
-                  <widget class="Gtk.Image" id="backrectbuttonimage">
+                  <widget class="VAS.UI.Helpers.ImageView" id="backrectbuttonimage">
                     <property name="MemberName" />
                   </widget>
                 </child>
@@ -9712,7 +9714,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
             <property name="Type">Custom</property>
             <property name="ResponseId">-3</property>
             <child>
-              <widget class="Gtk.Image" id="buttonOKimage">
+              <widget class="VAS.UI.Helpers.ImageView" id="buttonOKimage">
                 <property name="MemberName" />
               </widget>
             </child>
@@ -9733,7 +9735,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Image" id="homeimage">
+          <widget class="VAS.UI.Helpers.ImageView" id="homeimage">
             <property name="MemberName" />
           </widget>
           <packing>
@@ -9822,7 +9824,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Image" id="awayimage">
+          <widget class="VAS.UI.Helpers.ImageView" id="awayimage">
             <property name="MemberName" />
           </widget>
           <packing>
@@ -9848,7 +9850,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                 <property name="MemberName" />
                 <property name="Spacing">20</property>
                 <child>
-                  <widget class="Gtk.Image" id="snapshotimage">
+                  <widget class="VAS.UI.Helpers.ImageView" id="snapshotimage">
                     <property name="MemberName" />
                     <property name="WidthRequest">100</property>
                   </widget>

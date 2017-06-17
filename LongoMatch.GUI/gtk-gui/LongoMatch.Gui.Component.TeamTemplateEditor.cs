@@ -24,7 +24,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.VBox shieldvbox;
 
-		private global::Gtk.Image shieldimage;
+		private global::VAS.UI.Helpers.ImageView shieldimage;
 
 		private global::Gtk.Label teamshieldlabel1;
 
@@ -39,6 +39,8 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Entry tacticsentry;
 
 		private global::Gtk.Button applybutton;
+
+		private global::VAS.UI.Helpers.ImageView applyimage;
 
 		private global::Gtk.HBox hbox6;
 
@@ -72,7 +74,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.VBox playervbox;
 
-		private global::Gtk.Image playerimage;
+		private global::VAS.UI.Helpers.ImageView playerimage;
 
 		private global::Gtk.Label playerimagelabel1;
 
@@ -182,7 +184,7 @@ namespace LongoMatch.Gui.Component
 			this.shieldvbox.Name = "shieldvbox";
 			this.shieldvbox.Spacing = 2;
 			// Container child shieldvbox.Gtk.Box+BoxChild
-			this.shieldimage = new global::Gtk.Image ();
+			this.shieldimage = new global::VAS.UI.Helpers.ImageView ();
 			this.shieldimage.Name = "shieldimage";
 			this.shieldvbox.Add (this.shieldimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.shieldvbox [this.shieldimage]));
@@ -247,10 +249,10 @@ namespace LongoMatch.Gui.Component
 			this.applybutton = new global::Gtk.Button ();
 			this.applybutton.CanFocus = true;
 			this.applybutton.Name = "applybutton";
-			this.applybutton.UseUnderline = true;
-			global::Gtk.Image w10 = new global::Gtk.Image ();
-			w10.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-			this.applybutton.Image = w10;
+			// Container child applybutton.Gtk.Container+ContainerChild
+			this.applyimage = new global::VAS.UI.Helpers.ImageView ();
+			this.applyimage.Name = "applyimage";
+			this.applybutton.Add (this.applyimage);
 			this.hbox5.Add (this.applybutton);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.applybutton]));
 			w11.Position = 1;
@@ -387,7 +389,7 @@ namespace LongoMatch.Gui.Component
 			this.playervbox.Name = "playervbox";
 			this.playervbox.Spacing = 2;
 			// Container child playervbox.Gtk.Box+BoxChild
-			this.playerimage = new global::Gtk.Image ();
+			this.playerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.playerimage.Name = "playerimage";
 			this.playervbox.Add (this.playerimage);
 			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.playervbox [this.playerimage]));

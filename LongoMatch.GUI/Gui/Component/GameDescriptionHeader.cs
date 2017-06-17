@@ -17,6 +17,7 @@
 //
 using Gtk;
 using LongoMatch.Core.Store;
+using VAS.Core;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -36,22 +37,24 @@ namespace LongoMatch.Gui.Component
 			scoreGroup = new SizeGroup (SizeGroupMode.Horizontal);
 			scoreGroup.AddWidget (homescorelabel);
 			scoreGroup.AddWidget (awayscorelabel);
+			homeimage.SetSize (100, 50);
+			awayimage.SetSize (100, 50);
 		}
 
 		public ProjectDescription ProjectDescription {
 			set {
 				if (value.LocalShield != null) {
-					homeimage.Pixbuf = value.LocalShield.Scale (100, 50).Value;
+					homeimage.Image = value.LocalShield;
 				} else {
-					homeimage.Pixbuf = Misc.LoadIcon ("vas-default-shield", 50);
+					homeimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", 50);
 				}
 				homenamelabel.Text = value.LocalName;
 				homescorelabel.Text = value.LocalGoals.ToString ();
-				
+
 				if (value.VisitorShield != null) {
-					awayimage.Pixbuf = value.VisitorShield.Scale (100, 50).Value;
+					awayimage.Image = value.VisitorShield;
 				} else {
-					awayimage.Pixbuf = Misc.LoadIcon ("vas-default-shield", 50);
+					awayimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", 50);
 				}
 				awaynamelabel.Text = value.VisitorName;
 				awayscorelabel.Text = value.VisitorGoals.ToString ();

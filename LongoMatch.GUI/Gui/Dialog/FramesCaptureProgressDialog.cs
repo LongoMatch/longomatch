@@ -45,9 +45,9 @@ namespace LongoMatch.Gui.Dialog
 				progressbar.Text = Catalog.GetString ("Capturing frame: ") + actual + "/" + total;
 				progressbar.Fraction = (double)actual / (double)total;
 				if (frame != null) {
-					if (image.Pixbuf != null)
-						image.Pixbuf.Dispose ();
-					image.Pixbuf = frame.Value;
+					if (image.Image != null)
+						image.Image.Dispose ();
+					image.Image = frame;
 				}
 			}
 			if (actual == total) {

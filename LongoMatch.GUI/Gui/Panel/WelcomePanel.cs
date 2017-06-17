@@ -27,6 +27,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.UI.Helpers;
 using Action = System.Action;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
@@ -54,7 +55,7 @@ namespace LongoMatch.Gui.Panel
 
 		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
-		Gtk.Image logoImage;
+		ImageView logoImage;
 		SizeGroup sizegroup;
 
 		public WelcomePanel ()
@@ -120,15 +121,13 @@ namespace LongoMatch.Gui.Panel
 									  Helpers.Misc.LoadIcon ("lm-preferences",
 										  StyleConf.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
+
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
 
 			// Our logo
-			logoImage = new Gtk.Image ();
-			logoImage.Pixbuf = App.Current.Background.Scale (StyleConf.WelcomeLogoWidth,
-				StyleConf.WelcomeLogoHeight).Value;
-			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
-			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
+			logoImage = new ImageView (App.Current.Background);
+			logoImage.SetSize (StyleConf.WelcomeLogoWidth, StyleConf.WelcomeLogoHeight);
 
 			//Adding the title
 			vbox2.Add (logoImage);
@@ -160,16 +159,16 @@ namespace LongoMatch.Gui.Panel
 		{
 			Button button;
 			VBox box;
-			Gtk.Image image;
+			ImageView image;
 			Gtk.Alignment alignment;
 			Label label;
 
 			if (b.Icon == null) {
-				image = new Gtk.Image (
-					Helpers.Misc.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize, 0));
+				image = new ImageView (App.Current.ResourcesLocator.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize));
 			} else {
-				image = new Gtk.Image (b.Icon.Value);
+				image = new ImageView (b.Icon);
 			}
+			image.SetSize (StyleConf.WelcomeIconImageSize, StyleConf.WelcomeIconImageSize);
 
 			button = new Button ();
 			button.Clicked += (sender, e) => (b.Func ());

@@ -10,7 +10,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.HBox hbox1;
 
-		private global::Gtk.Image snapshotimage;
+		private global::VAS.UI.Helpers.ImageView snapshotimage;
 
 		private global::Gtk.Table table1;
 
@@ -49,9 +49,10 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 20;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.snapshotimage = new global::Gtk.Image ();
-			this.snapshotimage.WidthRequest = 100;
+			this.snapshotimage = new global::VAS.UI.Helpers.ImageView ();
+			this.snapshotimage.WidthRequest = 0;
 			this.snapshotimage.Name = "snapshotimage";
+			this.snapshotimage.WidthRequest = 0;
 			this.hbox1.Add (this.snapshotimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.snapshotimage]));
 			w1.Position = 0;

@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Alignment templateimagealignment;
 
-		private global::Gtk.Image teamimage;
+		private global::VAS.UI.Helpers.ImageView teamimage;
 
 		private global::Gtk.VBox editteamsvbox;
 
@@ -28,25 +28,25 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Button newteambutton;
 
-		private global::Gtk.Image newteamimage;
+		private global::VAS.UI.Helpers.ImageView newteamimage;
 
 		private global::Gtk.Button importteambutton;
 
-		private global::Gtk.Image importteamimage;
+		private global::VAS.UI.Helpers.ImageView importteamimage;
 
 		private global::Gtk.Button saveteambutton;
 
-		private global::Gtk.Image saveteamimage;
+		private global::VAS.UI.Helpers.ImageView saveteamimage;
 
 		private global::Gtk.Button exportteambutton;
 
-		private global::Gtk.Image exportteamimage;
+		private global::VAS.UI.Helpers.ImageView exportteamimage;
 
 		private global::Gtk.Button deleteteambutton;
 
-		private global::Gtk.Image deleteteamimage;
+		private global::VAS.UI.Helpers.ImageView deleteteamimage;
 
-		private global::Gtk.Image vseparatorimage;
+		private global::VAS.UI.Helpers.ImageView vseparatorimage;
 
 		private global::Gtk.VBox editplayersvbox;
 
@@ -56,15 +56,15 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Button newplayerbutton1;
 
-		private global::Gtk.Image newplayerimage;
+		private global::VAS.UI.Helpers.ImageView newplayerimage;
 
 		private global::Gtk.Button deleteplayerbutton;
 
-		private global::Gtk.Image deleteplayerimage;
+		private global::VAS.UI.Helpers.ImageView deleteplayerimage;
 
 		private global::Gtk.Alignment playerheaderalignment;
 
-		private global::Gtk.Image playerheaderimage;
+		private global::VAS.UI.Helpers.ImageView playerheaderimage;
 
 		private global::Gtk.HBox hbox1;
 
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Panel
 			this.templateimagealignment.LeftPadding = ((uint)(12));
 			this.templateimagealignment.RightPadding = ((uint)(24));
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
-			this.teamimage = new global::Gtk.Image ();
+			this.teamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.teamimage.Name = "teamimage";
 			this.teamimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.teamimage);
@@ -151,7 +151,7 @@ namespace LongoMatch.Gui.Panel
 			this.newteambutton.CanFocus = true;
 			this.newteambutton.Name = "newteambutton";
 			// Container child newteambutton.Gtk.Container+ContainerChild
-			this.newteamimage = new global::Gtk.Image ();
+			this.newteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.newteamimage.Name = "newteamimage";
 			this.newteamimage.Xpad = 5;
 			this.newteamimage.Ypad = 5;
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Panel
 			this.importteambutton.CanFocus = true;
 			this.importteambutton.Name = "importteambutton";
 			// Container child importteambutton.Gtk.Container+ContainerChild
-			this.importteamimage = new global::Gtk.Image ();
+			this.importteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.importteamimage.Name = "importteamimage";
 			this.importteamimage.Xpad = 5;
 			this.importteamimage.Ypad = 5;
@@ -181,7 +181,7 @@ namespace LongoMatch.Gui.Panel
 			this.saveteambutton.CanFocus = true;
 			this.saveteambutton.Name = "saveteambutton";
 			// Container child saveteambutton.Gtk.Container+ContainerChild
-			this.saveteamimage = new global::Gtk.Image ();
+			this.saveteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.saveteamimage.Name = "saveteamimage";
 			this.saveteamimage.Xpad = 5;
 			this.saveteamimage.Ypad = 5;
@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Panel
 			this.exportteambutton.CanFocus = true;
 			this.exportteambutton.Name = "exportteambutton";
 			// Container child exportteambutton.Gtk.Container+ContainerChild
-			this.exportteamimage = new global::Gtk.Image ();
+			this.exportteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.exportteamimage.Name = "exportteamimage";
 			this.exportteamimage.Xpad = 5;
 			this.exportteamimage.Ypad = 5;
@@ -211,7 +211,7 @@ namespace LongoMatch.Gui.Panel
 			this.deleteteambutton.CanFocus = true;
 			this.deleteteambutton.Name = "deleteteambutton";
 			// Container child deleteteambutton.Gtk.Container+ContainerChild
-			this.deleteteamimage = new global::Gtk.Image ();
+			this.deleteteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deleteteamimage.Name = "deleteteamimage";
 			this.deleteteamimage.Xpad = 5;
 			this.deleteteamimage.Ypad = 5;
@@ -232,7 +232,7 @@ namespace LongoMatch.Gui.Panel
 			w17.Expand = false;
 			w17.Fill = false;
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
-			this.vseparatorimage = new global::Gtk.Image ();
+			this.vseparatorimage = new global::VAS.UI.Helpers.ImageView ();
 			this.vseparatorimage.Name = "vseparatorimage";
 			this.teameditorbuttonbar.Add (this.vseparatorimage);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.vseparatorimage]));
@@ -263,7 +263,7 @@ namespace LongoMatch.Gui.Panel
 			this.newplayerbutton1.CanFocus = true;
 			this.newplayerbutton1.Name = "newplayerbutton1";
 			// Container child newplayerbutton1.Gtk.Container+ContainerChild
-			this.newplayerimage = new global::Gtk.Image ();
+			this.newplayerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.newplayerimage.Name = "newplayerimage";
 			this.newplayerimage.Xpad = 5;
 			this.newplayerimage.Ypad = 5;
@@ -278,7 +278,7 @@ namespace LongoMatch.Gui.Panel
 			this.deleteplayerbutton.CanFocus = true;
 			this.deleteplayerbutton.Name = "deleteplayerbutton";
 			// Container child deleteplayerbutton.Gtk.Container+ContainerChild
-			this.deleteplayerimage = new global::Gtk.Image ();
+			this.deleteplayerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deleteplayerimage.Name = "deleteplayerimage";
 			this.deleteplayerimage.Xpad = 5;
 			this.deleteplayerimage.Ypad = 5;
@@ -303,7 +303,7 @@ namespace LongoMatch.Gui.Panel
 			this.playerheaderalignment.Name = "playerheaderalignment";
 			this.playerheaderalignment.RightPadding = ((uint)(12));
 			// Container child playerheaderalignment.Gtk.Container+ContainerChild
-			this.playerheaderimage = new global::Gtk.Image ();
+			this.playerheaderimage = new global::VAS.UI.Helpers.ImageView ();
 			this.playerheaderimage.Name = "playerheaderimage";
 			this.playerheaderimage.Ypad = 14;
 			this.playerheaderalignment.Add (this.playerheaderimage);

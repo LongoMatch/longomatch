@@ -29,6 +29,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers.Bindings;
+using Image = VAS.Core.Common.Image;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -55,9 +56,10 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
-			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-template-header", StyleConf.TemplatesHeaderIconSize);
-			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-category-header", StyleConf.TemplatesHeaderIconSize);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize);
+			templateimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-template-header", StyleConf.TemplatesHeaderIconSize);
+			categoryheaderimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-category-header", StyleConf.TemplatesHeaderIconSize);
+			// FIXME: "vertical-separator" has a png extension
+			vseparatorimage.Image = new Image (Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize));
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;

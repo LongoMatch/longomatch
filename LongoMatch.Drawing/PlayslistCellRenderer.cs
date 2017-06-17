@@ -17,6 +17,7 @@
 //
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
@@ -25,7 +26,6 @@ using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using VAS.Core.ViewModel;
 using VAS.Drawing.CanvasObjects.Teams;
-using LongoMatch.Core.ViewModel;
 
 namespace LongoMatch.Drawing
 {
