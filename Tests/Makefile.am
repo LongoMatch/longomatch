@@ -1,4 +1,4 @@
-ASSEMBLY_FILE=$(SolutionDir)/bin/Tests.dll
+ASSEMBLY_FILE=$(top_builddir)/bin/Tests.dll
 
 if ENABLE_TESTS
 check:
