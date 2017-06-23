@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Dialog
 			FillBitrates ();
 			addbutton1.Clicked += OnAddbuttonClicked;
 			buttonOk.Clicked += OnButtonOkClicked;
-			convertimage.Pixbuf = Misc.LoadIcon ("longomatch-video-converter-big", 64);
+			convertimage.Pixbuf = Misc.LoadIcon ("lm-video-converter-big", 64);
 			addimage.Pixbuf = Misc.LoadStockIcon (addimage, "gtk-add", IconSize.Button);
 			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
 			addbutton1.CanFocus = false;

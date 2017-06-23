@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.SnapshotsDialog
 			this.Name = "LongoMatch.Gui.Dialog.SnapshotsDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Gravity = ((global::Gdk.Gravity)(5));
 			this.SkipPagerHint = true;

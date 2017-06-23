@@ -149,13 +149,13 @@ namespace LongoMatch.Gui.Component
 		public void LoadIcons ()
 		{
 			notebookHelper = new Helpers.IconNotebookHelper (notebook);
-			notebookHelper.SetTabIcon (timeline, "longomatch-tab-timeline", "longomatch-tab-active-timeline",
+			notebookHelper.SetTabIcon (timeline, "lm-tab-timeline", "lm-tab-active-timeline",
 				Catalog.GetString ("Timeline view"));
-			notebookHelper.SetTabIcon (dashboardhpaned, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
+			notebookHelper.SetTabIcon (dashboardhpaned, "lm-tab-dashboard", "lm-tab-active-dashboard",
 				Catalog.GetString ("Coding View"));
-			notebookHelper.SetTabIcon (playspositionviewer1, "longomatch-tab-position", "longomatch-tab-active-position",
+			notebookHelper.SetTabIcon (playspositionviewer1, "lm-tab-position", "lm-tab-active-position",
 				Catalog.GetString ("Zonal tags"));
-			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
+			notebookHelper.SetTabIcon (eventslistwidget, "lm-tab-dashboard", "lm-tab-active-dashboard",
 				Catalog.GetString ("Events list"));
 
 			notebookHelper.UpdateTabs ();

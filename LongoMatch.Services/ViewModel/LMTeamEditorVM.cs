@@ -21,8 +21,8 @@ namespace LongoMatch.Services.ViewModel
 		{
 			NewPlayerCommand = new AsyncCommand (CreatePlayer, () => Team.Model != null);
 			DeletePlayersCommand = new AsyncCommand (DeletePlayers, () => Team.Selection.Any ());
-			NewPlayerCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
-			DeletePlayersCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
+			NewPlayerCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.TemplatesIconSize);
+			DeletePlayersCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", StyleConf.TemplatesIconSize);
 		}
 
 		public LMTeamVM Team {

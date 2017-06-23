@@ -21,7 +21,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.UpdateDialog
 			this.Name = "LongoMatch.Gui.Dialog.UpdateDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Internal child LongoMatch.Gui.Dialog.UpdateDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;

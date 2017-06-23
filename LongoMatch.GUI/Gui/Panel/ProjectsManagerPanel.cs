@@ -60,11 +60,11 @@ namespace LongoMatch.Gui.Panel
 
 			this.videoFileInfos = new List<VideoFileInfo> ();
 
-			savebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-save", 34);
-			exportbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-export", 34);
-			resyncbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-resync", 34);
-			deletebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-delete", 34);
-			openbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-open", 34);
+			savebuttonimage.Pixbuf = Misc.LoadIcon ("vas-save", 34);
+			exportbuttonimage.Pixbuf = Misc.LoadIcon ("lm-export", 34);
+			resyncbuttonimage.Pixbuf = Misc.LoadIcon ("lm-project-resync", 34);
+			deletebuttonimage.Pixbuf = Misc.LoadIcon ("vas-delete", 34);
+			openbuttonimage.Pixbuf = Misc.LoadIcon ("vas-open", 34);
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.

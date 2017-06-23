@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.EndCaptureDialog
 			this.Name = "LongoMatch.Gui.Dialog.EndCaptureDialog";
 			this.Title = "";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			// Internal child LongoMatch.Gui.Dialog.EndCaptureDialog.VBox

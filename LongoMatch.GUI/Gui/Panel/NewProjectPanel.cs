@@ -203,11 +203,11 @@ namespace LongoMatch.Gui.Panel
 			int s = StyleConf.ProjectTypeIconSize;
 			IconLookupFlags f = IconLookupFlags.ForceSvg;
 
-			fileimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-file", s, f);
-			captureimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device", s, f);
-			fakeimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device-fake", s, f);
-			ipimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device-ip", s, f);
-			vsimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-vs", 50, f);
+			fileimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-file", s, f);
+			captureimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-video-device", s, f);
+			fakeimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-device-fake", s, f);
+			ipimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-device-ip", s, f);
+			vsimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vs", 50, f);
 
 			filebutton.Clicked += HandleProjectTypeSet;
 			capturebutton.Clicked += HandleProjectTypeSet;

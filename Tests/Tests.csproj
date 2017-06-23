@@ -148,8 +148,8 @@
 		<Compile Include="State\TestLMStateHelper.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Core\dibujo.svg">
-			<LogicalName>dibujo.svg</LogicalName>
+		<EmbeddedResource Include="Core\vas-dibujo.svg">
+			<LogicalName>vas-dibujo.svg</LogicalName>
 		</EmbeddedResource>
 		<EmbeddedResource Include="Services\latest-test.json">
 			<LogicalName>latest-test.json</LogicalName>

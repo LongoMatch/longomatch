@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build ();
 
-			Image img = App.Current.ResourcesLocator.LoadImage ("images/longomatch-pro-small.png");
+			Image img = App.Current.ResourcesLocator.LoadImage ("images/lm-pro-small.png");
 			buttonOKimage.Pixbuf = img.Value;
 
 			titlelabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 14"));

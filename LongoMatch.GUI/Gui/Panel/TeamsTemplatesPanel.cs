@@ -54,9 +54,9 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
-			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
-			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
+			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-team-header", StyleConf.TemplatesHeaderIconSize);
+			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-player-header", StyleConf.TemplatesHeaderIconSize);
+			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize);
 
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;

@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 				if (template.Shield != null) {
 					shieldimage.Pixbuf = template.Shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				} else {
-					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-default-shield", SHIELD_SIZE);
+					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-default-shield", SHIELD_SIZE);
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
@@ -257,7 +257,7 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Text = "";
 			bdaydatepicker.Date = new DateTime ();
 			mailentry.Text = "";
-			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
+			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
 
 			ignoreChanges = false;
 		}
@@ -281,7 +281,7 @@ namespace LongoMatch.Gui.Component
 			if (p.Photo != null) {
 				playerImage = p.Photo.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 			} else {
-				playerImage = Misc.LoadIcon ("longomatch-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
+				playerImage = Misc.LoadIcon ("lm-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
 		}

@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 				sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
 				App.Current.Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
 			};
-			focusimage.Pixbuf = Misc.LoadIcon ("longomatch-search", 27);
+			focusimage.Pixbuf = Misc.LoadIcon ("vas-search", 27);
 			ViewMode = ProjectListViewMode.List;
 		}
 
@@ -110,21 +110,21 @@ namespace LongoMatch.Gui.Component
 				ProjectDescription pdesc = p.Description;
 				MediaFile file = pdesc.FileSet.FirstOrDefault ();
 				if (file != null && file.IsFakeCapture) {
-					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
+					image = Misc.LoadIcon ("lm-video-device-fake", 50);
 				} else if (pdesc.FileSet.Preview != null) {
 					image = pdesc.FileSet.Preview.Scale (PREVIEW_SIZE, PREVIEW_SIZE).Value;
 				} else {
-					image = Misc.LoadIcon ("longomatch-video-file", 50);
+					image = Misc.LoadIcon ("lm-video-file", 50);
 				}
 				if (pdesc.LocalShield != null) {
 					homeShield = pdesc.LocalShield.Scale (50, 50).Value;
 				} else {
-					homeShield = Misc.LoadIcon ("longomatch-default-shield", 50);
+					homeShield = Misc.LoadIcon ("vas-default-shield", 50);
 				}
 				if (pdesc.VisitorShield != null) {
 					awayShield = pdesc.VisitorShield.Scale (50, 50).Value;
 				} else {
-					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
+					awayShield = Misc.LoadIcon ("vas-default-shield", 50);
 				}
 				
 				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, p, false);

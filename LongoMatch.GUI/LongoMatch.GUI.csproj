@@ -188,29 +188,29 @@
 		<EmbeddedResource Include="gtk-gui\gui.stetic">
 			<LogicalName>gui.stetic</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\video.png">
-			<LogicalName>video.png</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\lm-video.png">
+			<LogicalName>lm-video.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\background.png">
-			<LogicalName>background.png</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\lm-background.png">
+			<LogicalName>lm-background.png</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\dash-line.svg">
-			<LogicalName>dash-line.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-dash-line.svg">
+			<LogicalName>lm-dashlm-line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line.svg">
-			<LogicalName>line.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line.svg">
+			<LogicalName>lm-line.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-double-dot.svg">
-			<LogicalName>line-double-dot.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-double-dot.svg">
+			<LogicalName>lm-line-double-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-dot.svg">
-			<LogicalName>line-dot.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-dot.svg">
+			<LogicalName>lm-line-dot.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-double-arrow.svg">
-			<LogicalName>line-double-arrow.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-double-arrow.svg">
+			<LogicalName>lm-line-double-arrow.svg</LogicalName>
 		</EmbeddedResource>
-		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\line-arrow.svg">
-			<LogicalName>line-arrow.svg</LogicalName>
+		<EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-arrow.svg">
+			<LogicalName>lm-line-arrow.svg</LogicalName>
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>

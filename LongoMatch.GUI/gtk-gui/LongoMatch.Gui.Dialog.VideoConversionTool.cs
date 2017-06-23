@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Dialog
 			this.HeightRequest = 0;
 			this.Name = "LongoMatch.Gui.Dialog.VideoConversionTool";
 			this.Title = global::VAS.Core.Catalog.GetString ("Video converter tool");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
