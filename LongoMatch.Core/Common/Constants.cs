@@ -111,6 +111,8 @@ Xavier Queralt Mateu (ca)";
 
 		public const string LOGO_ICON = "longomatch";
 		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
+		//FIXME: this should go to a new StyleConf in longomatch
+		public const string LM_LOGO_ANY = "images/lm-any-logo-green" + IMAGE_EXT;
 
 		public const string SPLASH = "images/longomatch-splash" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
@@ -125,5 +127,7 @@ Xavier Queralt Mateu (ca)";
 		// Pixels limit to start scrolling a window when using drag and drop
 		public const uint FAST_SCROLL_PIXELS = 5;
 		public const uint SLOW_SCROLL_PIXELS = 10;
+
+		public const string LICENSE_CODE_URL = "https://longomatch.com/profile/register_personal/";
 	}
 }
