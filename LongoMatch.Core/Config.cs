@@ -23,7 +23,7 @@ using VAS.Core.Hotkeys;
 namespace LongoMatch
 {
 	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
+	[PropertyChanged.AddINotifyPropertyChangedInterface]
 	public class Config : VAS.Config
 	{
 		public Config () : base ()
