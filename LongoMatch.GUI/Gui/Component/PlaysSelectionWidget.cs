@@ -105,17 +105,17 @@ namespace LongoMatch.Gui.Component
 		void LoadIcons ()
 		{
 			notebookHelperFilter = new IconNotebookHelper (notebookFilter);
-			notebookHelperFilter.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter",
+			notebookHelperFilter.SetTabIcon (filtersvbox, "lm-tab-filter", "lm-tab-active-filter",
 				Catalog.GetString ("Filters"));
 			notebookHelperPlaylist = new IconNotebookHelper (notebookPlaylist);
-			notebookHelperPlaylist.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist",
+			notebookHelperPlaylist.SetTabIcon (playlistwidget, "lm-tab-playlist", "lm-tab-active-playlist",
 				Catalog.GetString ("Playlists"));
 			notebookHelper = new IconNotebookHelper (notebook);
-			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
+			notebookHelper.SetTabIcon (eventslistwidget, "lm-tab-dashboard", "lm-tab-active-dashboard",
 				Catalog.GetString ("Events List"));
-			notebookHelper.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter",
+			notebookHelper.SetTabIcon (filtersvbox, "lm-tab-filter", "lm-tab-active-filter",
 				Catalog.GetString ("Filters"));
-			notebookHelper.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist",
+			notebookHelper.SetTabIcon (playlistwidget, "lm-tab-playlist", "lm-tab-active-playlist",
 				Catalog.GetString ("Playlists"));
 
 			notebookHelper.UpdateTabs ();

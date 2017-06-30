@@ -84,14 +84,14 @@ namespace LongoMatch.Gui.Component
 		{
 			LMProject project = ViewModel.Model;
 			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
-			notebookHelper.SetTabIcon (eventsScrolledWindow, "longomatch-category", "longomatch-category",
+			notebookHelper.SetTabIcon (eventsScrolledWindow, "vas-category", "vas-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
 				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
 									StyleConf.NotebookTabIconSize).Value;
 				notebookHelper.SetTabIcon (homescrolledwindow, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (homescrolledwindow, "longomatch-default-shield", "longomatch-default-shield",
+				notebookHelper.SetTabIcon (homescrolledwindow, "vas-default-shield", "vas-default-shield",
 					project.LocalTeamTemplate.Name);
 			}
 
@@ -100,7 +100,7 @@ namespace LongoMatch.Gui.Component
 									  StyleConf.NotebookTabIconSize).Value;
 				notebookHelper.SetTabIcon (awayscrolledwindow, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (awayscrolledwindow, "longomatch-default-shield", "longomatch-default-shield",
+				notebookHelper.SetTabIcon (awayscrolledwindow, "vas-default-shield", "vas-default-shield",
 					project.VisitorTeamTemplate.Name);
 			}
 

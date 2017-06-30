@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			newvideobutton.CanFocus = false;
 
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
+			recimage.Pixbuf = Misc.LoadIcon ("vas-control-record", StyleConf.PlayerCapturerIconSize);
 			newvideobutton.Clicked += HandleRenderPlaylistClicked;
 
 			Bind ();
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 		{
 			ctx = this.GetBindingContext ();
 			ctx.Add (newbutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-playlist-new", StyleConf.PlayerCapturerIconSize),
 				vm => ((PlaylistCollectionVM)vm).NewCommand));
 		}
 

@@ -25,7 +25,7 @@ namespace LongoMatch.Plugins.Stats
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Plugins.Stats.StatsDialog
 			this.Name = "LongoMatch.Plugins.Stats.StatsDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.DestroyWithParent = true;

@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			keyLabel = new Label (); 
 			keyLabel.Markup = GLib.Markup.EscapeText (key.ToString ());
 			edit = new Button ();
-			editImage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-pencil", 24));
+			editImage = new Gtk.Image (Helpers.Misc.LoadIcon ("vas-pencil", 24));
 			edit.Add (editImage);
 			box.PackStart (descLabel, true, true, 0);
 			box.PackStart (keyLabel, false, true, 0);

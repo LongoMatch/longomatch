@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.HotKeySelectorDialog
 			this.Name = "LongoMatch.Gui.Dialog.HotKeySelectorDialog";
 			this.Title = global::VAS.Core.Catalog.GetString ("Select a HotKey");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Gravity = ((global::Gdk.Gravity)(5));
 			this.SkipPagerHint = true;

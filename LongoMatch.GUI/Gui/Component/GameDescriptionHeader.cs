@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Component
 				if (value.LocalShield != null) {
 					homeimage.Pixbuf = value.LocalShield.Scale (100, 50).Value;
 				} else {
-					homeimage.Pixbuf = Misc.LoadIcon ("longomatch-default-shield", 50);
+					homeimage.Pixbuf = Misc.LoadIcon ("vas-default-shield", 50);
 				}
 				homenamelabel.Text = value.LocalName;
 				homescorelabel.Text = value.LocalGoals.ToString ();
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 				if (value.VisitorShield != null) {
 					awayimage.Pixbuf = value.VisitorShield.Scale (100, 50).Value;
 				} else {
-					awayimage.Pixbuf = Misc.LoadIcon ("longomatch-default-shield", 50);
+					awayimage.Pixbuf = Misc.LoadIcon ("vas-default-shield", 50);
 				}
 				awaynamelabel.Text = value.VisitorName;
 				awayscorelabel.Text = value.VisitorGoals.ToString ();

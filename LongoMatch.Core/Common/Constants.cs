@@ -109,12 +109,12 @@ Xavier Queralt Mateu (ca)";
 		public const string PROJECT_EXT = ".lgm";
 		public const string PROJECT_ENCRYPTED_EXT = ".lgmx";
 
-		public const string LOGO_ICON = "longomatch";
-		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
+		public const string LOGO_ICON = "lm-longomatch";
+		public const string BACKGROUND = "images/vas-dark-bg" + IMAGE_EXT;
 		//FIXME: this should go to a new StyleConf in longomatch
 		public const string LM_LOGO_ANY = "images/lm-any-logo-green" + IMAGE_EXT;
 
-		public const string SPLASH = "images/longomatch-splash" + IMAGE_EXT;
+		public const string SPLASH = "images/lm-splash" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
 
 		public static Color HOME_COLOR = Color.Red1;

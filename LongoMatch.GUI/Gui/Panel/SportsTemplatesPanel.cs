@@ -55,9 +55,9 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
-			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
-			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", StyleConf.TemplatesHeaderIconSize);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
+			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-template-header", StyleConf.TemplatesHeaderIconSize);
+			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-category-header", StyleConf.TemplatesHeaderIconSize);
+			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize);
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
@@ -177,19 +177,19 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx = this.GetBindingContext ();
 			ctx.Add (addcategorybutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-category", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Category"));
 			ctx.Add (scorebutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-score", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Score"));
 			ctx.Add (timerbutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-timer", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Timer"));
 			ctx.Add (addtagbutton1.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Tag"));
 			ctx.Add (cardbutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Card"));
 
 			ctx.Add (deletetemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).DeleteCommand));

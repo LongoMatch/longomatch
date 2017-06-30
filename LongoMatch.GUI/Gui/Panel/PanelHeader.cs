@@ -42,11 +42,11 @@ namespace LongoMatch.Gui.Panel
 					BackClicked (this, null);
 				}
 			};
-			logoimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch", 45,
+			logoimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-longomatch", 45,
 				IconLookupFlags.ForceSvg);
-			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-back", 40,
+			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-back", 40,
 				IconLookupFlags.ForceSvg);
-			applyroundedbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", 40,
+			applyroundedbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-apply", 40,
 				IconLookupFlags.ForceSvg);
 			headerhbox.HeightRequest = StyleConf.HeaderHeight;
 		}

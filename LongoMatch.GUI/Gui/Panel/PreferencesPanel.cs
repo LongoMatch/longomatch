@@ -95,19 +95,19 @@ namespace LongoMatch.Gui.Panel
 		void AddPanels ()
 		{
 			AddPanel (Catalog.GetString ("General"),
-				Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
+				Helpers.Misc.LoadIcon ("lm-preferences", IconSize.Dialog, 0),
 				new GeneralPreferencesPanel ());
 			AddPanel (Catalog.GetString ("Keyboard shortcuts"),
-				Helpers.Misc.LoadIcon ("longomatch-shortcut", IconSize.Dialog, 0),
+				Helpers.Misc.LoadIcon ("lm-shortcut", IconSize.Dialog, 0),
 				new HotkeysConfiguration ());
 			AddPanel (Catalog.GetString ("Video"),
-				Helpers.Misc.LoadIcon ("longomatch-record", IconSize.Dialog, 0),
+				Helpers.Misc.LoadIcon ("vas-record", IconSize.Dialog, 0),
 				new VideoPreferencesPanel ());
 			AddPanel (Catalog.GetString ("Live analysis"),
-				Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
+				Helpers.Misc.LoadIcon ("vas-video-device", IconSize.Dialog, 0),
 				new LiveAnalysisPreferences ());
 			AddPanel (Catalog.GetString ("Plugins"),
-				Helpers.Misc.LoadIcon ("longomatch-plugin", IconSize.Dialog, 0),
+				Helpers.Misc.LoadIcon ("vas-plugin", IconSize.Dialog, 0),
 				new PluginsPreferences ());
 		}
 

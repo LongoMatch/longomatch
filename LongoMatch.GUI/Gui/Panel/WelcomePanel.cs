@@ -38,17 +38,17 @@ namespace LongoMatch.Gui.Panel
 	public partial class WelcomePanel : Gtk.Bin, IPanel
 	{
 		static WelcomeButton [] default_buttons = {
-			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
+			new WelcomeButton ("lm-project-new", Catalog.GetString ("New"),
 							   new Action (() => App.Current.StateController.MoveTo (NewProjectState.NAME, null))),
-			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
+			new WelcomeButton ("vas-open", Catalog.GetString ("Open"),
 							   new Action (() => (App.Current.StateController.MoveTo (OpenProjectState.NAME, null)))),
-			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
+			new WelcomeButton ("vas-import", Catalog.GetString ("Import"),
 							   new Action (() => (App.Current.EventsBroker.Publish (new ImportProjectEvent ())))),
-			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
+			new WelcomeButton ("lm-project", Catalog.GetString ("Projects"),
 							   new Action (() => (App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null)))),
-			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
+			new WelcomeButton ("lm-team-config", Catalog.GetString ("Teams"),
 							   new Action (() => (App.Current.StateController.MoveTo (TeamsManagerState.NAME, null)))),
-			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
+			new WelcomeButton ("lm-template-config", Catalog.GetString ("Analysis Dashboards"),
 							   new Action (() => (App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null)))),
 		};
 
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Panel
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 
 			Gtk.Image prefImage = new Gtk.Image (
-									  Helpers.Misc.LoadIcon ("longomatch-preferences",
+									  Helpers.Misc.LoadIcon ("lm-preferences",
 										  StyleConf.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
