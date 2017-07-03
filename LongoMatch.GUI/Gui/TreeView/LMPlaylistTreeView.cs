@@ -47,41 +47,5 @@ namespace LongoMatch.Gui.Component
 			c.Item = item;
 			c.Count = model.IterNChildren (iter);
 		}
-
-		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element)
-		{
-			PlaylistElementMenu menu = new PlaylistElementMenu (this, playlist, new List<IPlaylistElement> { element });
-			menu.Popup ();
-		}
-
-		void ShowPlaylistMenu (Playlist playlist)
-		{
-			Menu menu;
-			MenuItem edit, delete, render;
-
-			menu = new Menu ();
-
-			edit = new MenuItem (Catalog.GetString ("Edit name"));
-			edit.Activated += (sender, e) => {
-				string name = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Name:"), null,
-								  playlist.Name).Result;
-				if (!String.IsNullOrEmpty (name)) {
-					playlist.Name = name;
-				}
-			};
-			menu.Append (edit);
-
-			render = new MenuItem (Catalog.GetString ("Render"));
-			//render.Activated += (sender, e) => ViewModel.Render (playlist);
-			menu.Append (render);
-
-			delete = new MenuItem (Catalog.GetString ("Delete"));
-			//delete.Activated += (sender, e) => ViewModel.Delete (playlist);
-			menu.Append (delete);
-
-			menu.ShowAll ();
-			menu.Popup ();
-		}
-
 	}
 }

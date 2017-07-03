@@ -54,7 +54,6 @@
 		<Compile Include="Gui\Dialog\FramesCaptureProgressDialog.cs" />
 		<Compile Include="Gui\Dialog\HotKeySelectorDialog.cs" />
 		<Compile Include="Gui\TreeView\PlayersTreeView.cs" />
-		<Compile Include="Gui\TreeView\PlayListTreeView.cs" />
 		<Compile Include="Gui\TreeView\PlaysTreeView.cs" />
 		<Compile Include="Gui\Dialog\SnapshotsDialog.cs" />
 		<Compile Include="Gui\Dialog\UpdateDialog.cs" />
