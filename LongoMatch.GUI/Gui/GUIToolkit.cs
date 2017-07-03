@@ -37,7 +37,7 @@ using VAS.Video.Utils;
 
 namespace LongoMatch.Gui
 {
-	public sealed class GUIToolkit : GUIToolkitBase, INavigation
+	public sealed class GUIToolkit : GUIToolkitBase
 	{
 		static readonly GUIToolkit instance = new GUIToolkit ();
 
@@ -70,31 +70,6 @@ namespace LongoMatch.Gui
 			get {
 				return MainWindow;
 			}
-		}
-
-		public Task<bool> Push (IPanel panel)
-		{
-			bool result = MainWindow.SetPanel (panel);
-			return AsyncHelpers.Return (result);
-		}
-
-		public Task<bool> Pop (IPanel panel)
-		{
-			// In Gtk+ poping a panel is equivalent to replacing the current panel with the previous panel
-			// in the stack
-			return Push (panel);
-		}
-
-		public Task PushModal (IPanel panel, IPanel parent)
-		{
-			ShowModalWindow (panel, parent);
-			return AsyncHelpers.Return ();
-		}
-
-		public Task PopModal (IPanel panel)
-		{
-			RemoveModalPanelAndWindow (panel);
-			return AsyncHelpers.Return ();
 		}
 
 		public override void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
@@ -135,9 +110,9 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public override void LoadPanel (IPanel panel)
+		public override bool LoadPanel (IPanel panel)
 		{
-			MainWindow.SetPanel (panel);
+			return MainWindow.SetPanel (panel);
 		}
 
 		public override void ShowProjectStats (Project project)
