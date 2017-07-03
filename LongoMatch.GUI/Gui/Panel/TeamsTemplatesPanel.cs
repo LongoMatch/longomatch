@@ -19,7 +19,6 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
@@ -30,8 +29,10 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
+using VAS.UI.Component;
 using VAS.UI.Helpers.Bindings;
 using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -54,9 +55,11 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
-			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-team-header", StyleConf.TemplatesHeaderIconSize);
-			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-player-header", StyleConf.TemplatesHeaderIconSize);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize);
+			teamimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-team-header", StyleConf.TemplatesHeaderIconSize);
+			playerheaderimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-player-header", StyleConf.TemplatesHeaderIconSize);
+			// FIXME: "vertical-separator" has a png extension
+			vseparatorimage.Image = new Image (Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize));
+
 
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
@@ -82,7 +85,7 @@ namespace LongoMatch.Gui.Panel
 			cell.Edited += HandleEdited;
 			teamseditortreeview.Model = teamsStore;
 			teamseditortreeview.HeadersVisible = false;
-			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), RenderIcon);
+			teamseditortreeview.AppendColumn ("Icon", new CellRendererImage (), RenderIcon);
 			var col = teamseditortreeview.AppendColumn ("Text", cell, RenderTemplateName);
 			col.AddAttribute (cell, "editable", COL_EDITABLE);
 			teamseditortreeview.SearchColumn = COL_TEAM;
@@ -185,7 +188,10 @@ namespace LongoMatch.Gui.Panel
 		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
 			LMTeamVM teamVM = (LMTeamVM)model.GetValue (iter, COL_TEAM);
-			(cell as CellRendererPixbuf).Pixbuf = teamVM.Icon.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
+			CellRendererImage renderer = (cell as CellRendererImage);
+			renderer.Width = SHIELD_SIZE;
+			renderer.Height = SHIELD_SIZE;
+			renderer.Image = teamVM.Icon;
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

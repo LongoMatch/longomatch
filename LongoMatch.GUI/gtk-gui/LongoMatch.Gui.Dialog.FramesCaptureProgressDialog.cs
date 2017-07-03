@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::Gtk.ProgressBar progressbar;
 
-		private global::Gtk.Image image;
+		private global::VAS.UI.Helpers.ImageView image;
 
 		private global::Gtk.Button okbutton;
 
@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Dialog
 			w2.Position = 0;
 			w2.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.image = new global::Gtk.Image ();
+			this.image = new global::VAS.UI.Helpers.ImageView ();
 			this.image.Name = "image";
 			this.vbox2.Add (this.image);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.image]));

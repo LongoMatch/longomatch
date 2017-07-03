@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::Gtk.Button buttonOk;
 
-		private global::Gtk.Image buttonOKimage;
+		private global::VAS.UI.Helpers.ImageView buttonOKimage;
 
 		protected virtual void Build ()
 		{
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
 			// Container child buttonOk.Gtk.Container+ContainerChild
-			this.buttonOKimage = new global::Gtk.Image ();
+			this.buttonOKimage = new global::VAS.UI.Helpers.ImageView ();
 			this.buttonOKimage.Name = "buttonOKimage";
 			this.buttonOk.Add (this.buttonOKimage);
 			this.AddActionWidget (this.buttonOk, -3);

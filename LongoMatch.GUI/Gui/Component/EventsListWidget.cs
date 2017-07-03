@@ -87,8 +87,7 @@ namespace LongoMatch.Gui.Component
 			notebookHelper.SetTabIcon (eventsScrolledWindow, "vas-category", "vas-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
-				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-									StyleConf.NotebookTabIconSize).Value;
+				var localIcon = project.LocalTeamTemplate.Shield;
 				notebookHelper.SetTabIcon (homescrolledwindow, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
 				notebookHelper.SetTabIcon (homescrolledwindow, "vas-default-shield", "vas-default-shield",
@@ -96,8 +95,7 @@ namespace LongoMatch.Gui.Component
 			}
 
 			if (project.VisitorTeamTemplate.Shield != null) {
-				var visitorIcon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-									  StyleConf.NotebookTabIconSize).Value;
+				var visitorIcon = project.VisitorTeamTemplate.Shield;
 				notebookHelper.SetTabIcon (awayscrolledwindow, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
 				notebookHelper.SetTabIcon (awayscrolledwindow, "vas-default-shield", "vas-default-shield",

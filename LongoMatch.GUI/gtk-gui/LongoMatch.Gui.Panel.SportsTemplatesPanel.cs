@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Alignment templateimagealignment;
 
-		private global::Gtk.Image templateimage;
+		private global::VAS.UI.Helpers.ImageView templateimage;
 
 		private global::Gtk.VBox vbox3;
 
@@ -28,25 +28,25 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Button newtemplatebutton;
 
-		private global::Gtk.Image newtemplateimage;
+		private global::VAS.UI.Helpers.ImageView newtemplateimage;
 
 		private global::Gtk.Button importtemplatebutton;
 
-		private global::Gtk.Image importtemplateimage;
+		private global::VAS.UI.Helpers.ImageView importtemplateimage;
 
 		private global::Gtk.Button savetemplatebutton;
 
-		private global::Gtk.Image savetemplateimage;
+		private global::VAS.UI.Helpers.ImageView savetemplateimage;
 
 		private global::Gtk.Button exporttemplatebutton;
 
-		private global::Gtk.Image exporttemplateimage;
+		private global::VAS.UI.Helpers.ImageView exporttemplateimage;
 
 		private global::Gtk.Button deletetemplatebutton;
 
-		private global::Gtk.Image deletetemplateimage;
+		private global::VAS.UI.Helpers.ImageView deletetemplateimage;
 
-		private global::Gtk.Image vseparatorimage;
+		private global::VAS.UI.Helpers.ImageView vseparatorimage;
 
 		private global::Gtk.VBox vbox17;
 
@@ -56,27 +56,27 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Button addcategorybutton;
 
-		private global::Gtk.Image addcategoryimage;
+		private global::VAS.UI.Helpers.ImageView addcategoryimage;
 
 		private global::Gtk.Button addtagbutton1;
 
-		private global::Gtk.Image addtagimage;
+		private global::VAS.UI.Helpers.ImageView addtagimage;
 
 		private global::Gtk.Button scorebutton;
 
-		private global::Gtk.Image scoreimage;
+		private global::VAS.UI.Helpers.ImageView scoreimage;
 
 		private global::Gtk.Button cardbutton;
 
-		private global::Gtk.Image cardimage;
+		private global::VAS.UI.Helpers.ImageView cardimage;
 
 		private global::Gtk.Button timerbutton;
 
-		private global::Gtk.Image timerimage;
+		private global::VAS.UI.Helpers.ImageView timerimage;
 
 		private global::Gtk.Alignment categoryheaderimagealignment;
 
-		private global::Gtk.Image categoryheaderimage;
+		private global::VAS.UI.Helpers.ImageView categoryheaderimage;
 
 		private global::Gtk.HBox hbox1;
 
@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Panel
 			this.templateimagealignment.LeftPadding = ((uint)(12));
 			this.templateimagealignment.RightPadding = ((uint)(24));
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
-			this.templateimage = new global::Gtk.Image ();
+			this.templateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.templateimage.Name = "templateimage";
 			this.templateimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.templateimage);
@@ -164,7 +164,7 @@ namespace LongoMatch.Gui.Panel
 			this.newtemplatebutton.CanFocus = true;
 			this.newtemplatebutton.Name = "newtemplatebutton";
 			// Container child newtemplatebutton.Gtk.Container+ContainerChild
-			this.newtemplateimage = new global::Gtk.Image ();
+			this.newtemplateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.newtemplateimage.Name = "newtemplateimage";
 			this.newtemplateimage.Xpad = 5;
 			this.newtemplateimage.Ypad = 5;
@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Panel
 			this.importtemplatebutton.CanFocus = true;
 			this.importtemplatebutton.Name = "importtemplatebutton";
 			// Container child importtemplatebutton.Gtk.Container+ContainerChild
-			this.importtemplateimage = new global::Gtk.Image ();
+			this.importtemplateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.importtemplateimage.Name = "importtemplateimage";
 			this.importtemplateimage.Xpad = 5;
 			this.importtemplateimage.Ypad = 5;
@@ -194,7 +194,7 @@ namespace LongoMatch.Gui.Panel
 			this.savetemplatebutton.CanFocus = true;
 			this.savetemplatebutton.Name = "savetemplatebutton";
 			// Container child savetemplatebutton.Gtk.Container+ContainerChild
-			this.savetemplateimage = new global::Gtk.Image ();
+			this.savetemplateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.savetemplateimage.Name = "savetemplateimage";
 			this.savetemplateimage.Xpad = 5;
 			this.savetemplateimage.Ypad = 5;
@@ -209,7 +209,7 @@ namespace LongoMatch.Gui.Panel
 			this.exporttemplatebutton.CanFocus = true;
 			this.exporttemplatebutton.Name = "exporttemplatebutton";
 			// Container child exporttemplatebutton.Gtk.Container+ContainerChild
-			this.exporttemplateimage = new global::Gtk.Image ();
+			this.exporttemplateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.exporttemplateimage.Name = "exporttemplateimage";
 			this.exporttemplateimage.Xpad = 5;
 			this.exporttemplateimage.Ypad = 5;
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Panel
 			this.deletetemplatebutton.CanFocus = true;
 			this.deletetemplatebutton.Name = "deletetemplatebutton";
 			// Container child deletetemplatebutton.Gtk.Container+ContainerChild
-			this.deletetemplateimage = new global::Gtk.Image ();
+			this.deletetemplateimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deletetemplateimage.Name = "deletetemplateimage";
 			this.deletetemplateimage.Xpad = 5;
 			this.deletetemplateimage.Ypad = 5;
@@ -245,7 +245,7 @@ namespace LongoMatch.Gui.Panel
 			w17.Expand = false;
 			w17.Fill = false;
 			// Container child dashboardeditorbuttonbar.Gtk.Box+BoxChild
-			this.vseparatorimage = new global::Gtk.Image ();
+			this.vseparatorimage = new global::VAS.UI.Helpers.ImageView ();
 			this.vseparatorimage.Name = "vseparatorimage";
 			this.dashboardeditorbuttonbar.Add (this.vseparatorimage);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vseparatorimage]));
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Panel
 			this.addcategorybutton.CanFocus = true;
 			this.addcategorybutton.Name = "addcategorybutton";
 			// Container child addcategorybutton.Gtk.Container+ContainerChild
-			this.addcategoryimage = new global::Gtk.Image ();
+			this.addcategoryimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addcategoryimage.Name = "addcategoryimage";
 			this.addcategoryimage.Xpad = 5;
 			this.addcategoryimage.Ypad = 5;
@@ -291,7 +291,7 @@ namespace LongoMatch.Gui.Panel
 			this.addtagbutton1.CanFocus = true;
 			this.addtagbutton1.Name = "addtagbutton1";
 			// Container child addtagbutton1.Gtk.Container+ContainerChild
-			this.addtagimage = new global::Gtk.Image ();
+			this.addtagimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addtagimage.Name = "addtagimage";
 			this.addtagimage.Xpad = 5;
 			this.addtagimage.Ypad = 5;
@@ -306,7 +306,7 @@ namespace LongoMatch.Gui.Panel
 			this.scorebutton.CanFocus = true;
 			this.scorebutton.Name = "scorebutton";
 			// Container child scorebutton.Gtk.Container+ContainerChild
-			this.scoreimage = new global::Gtk.Image ();
+			this.scoreimage = new global::VAS.UI.Helpers.ImageView ();
 			this.scoreimage.Name = "scoreimage";
 			this.scoreimage.Xpad = 5;
 			this.scoreimage.Ypad = 5;
@@ -321,7 +321,7 @@ namespace LongoMatch.Gui.Panel
 			this.cardbutton.CanFocus = true;
 			this.cardbutton.Name = "cardbutton";
 			// Container child cardbutton.Gtk.Container+ContainerChild
-			this.cardimage = new global::Gtk.Image ();
+			this.cardimage = new global::VAS.UI.Helpers.ImageView ();
 			this.cardimage.Name = "cardimage";
 			this.cardimage.Xpad = 5;
 			this.cardimage.Ypad = 5;
@@ -336,7 +336,7 @@ namespace LongoMatch.Gui.Panel
 			this.timerbutton.CanFocus = true;
 			this.timerbutton.Name = "timerbutton";
 			// Container child timerbutton.Gtk.Container+ContainerChild
-			this.timerimage = new global::Gtk.Image ();
+			this.timerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.timerimage.Name = "timerimage";
 			this.timerimage.Xpad = 5;
 			this.timerimage.Ypad = 5;
@@ -362,7 +362,7 @@ namespace LongoMatch.Gui.Panel
 			this.categoryheaderimagealignment.RightPadding = ((uint)(24));
 			this.categoryheaderimagealignment.BottomPadding = ((uint)(14));
 			// Container child categoryheaderimagealignment.Gtk.Container+ContainerChild
-			this.categoryheaderimage = new global::Gtk.Image ();
+			this.categoryheaderimage = new global::VAS.UI.Helpers.ImageView ();
 			this.categoryheaderimage.Name = "categoryheaderimage";
 			this.categoryheaderimage.Yalign = 1F;
 			this.categoryheaderimagealignment.Add (this.categoryheaderimage);

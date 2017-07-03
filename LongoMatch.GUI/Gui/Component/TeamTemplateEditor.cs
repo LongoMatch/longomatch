@@ -16,12 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
@@ -30,7 +27,6 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
-using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using VAS.UI.UI.Component;
 using Color = VAS.Core.Common.Color;
@@ -59,8 +55,12 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
+			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-apply", StyleConf.ButtonDialogIconSize);
+
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
-			shieldimage.HeightRequest = shieldvbox.WidthRequest = SHIELD_SIZE;
+			shieldvbox.WidthRequest = SHIELD_SIZE;
+			shieldimage.SetSize (SHIELD_SIZE);
+			playerimage.SetSize (PLAYER_SIZE);
 			colorbutton1.Color = Misc.ToGdkColor (Color.Red1);
 			colorbutton1.ColorSet += HandleColorSet;
 			colorbutton2.Color = Misc.ToGdkColor (Color.Green1);
@@ -92,9 +92,9 @@ namespace LongoMatch.Gui.Component
 				template = value;
 				ignoreChanges = true;
 				if (template.Shield != null) {
-					shieldimage.Pixbuf = template.Shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
+					shieldimage.Image = template.Shield;
 				} else {
-					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-default-shield", SHIELD_SIZE);
+					shieldimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", SHIELD_SIZE);
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
@@ -232,7 +232,7 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Text = p.Nationality ?? "";
 			bdaydatepicker.Date = p.Birthday;
 			mailentry.Text = p.Mail ?? "";
-			playerimage.Pixbuf = PlayerPhoto (p);
+			playerimage.Image = PlayerPhoto (p);
 
 			playerframe.Sensitive = true;
 
@@ -257,7 +257,7 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Text = "";
 			bdaydatepicker.Date = new DateTime ();
 			mailentry.Text = "";
-			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
+			playerimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-player-pic", PLAYER_SIZE);
 
 			ignoreChanges = false;
 		}
@@ -274,14 +274,14 @@ namespace LongoMatch.Gui.Component
 			FillFormation ();
 		}
 
-		Pixbuf PlayerPhoto (LMPlayer p)
+		Image PlayerPhoto (LMPlayer p)
 		{
-			Pixbuf playerImage;
+			Image playerImage;
 
 			if (p.Photo != null) {
-				playerImage = p.Photo.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
+				playerImage = p.Photo;
 			} else {
-				playerImage = Misc.LoadIcon ("lm-player-pic", PLAYER_SIZE, IconLookupFlags.ForceSvg);
+				playerImage = App.Current.ResourcesLocator.LoadIcon ("lm-player-pic", PLAYER_SIZE);
 			}
 			return playerImage;
 		}
@@ -321,38 +321,32 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayerButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
-			Image player;
-			Pixbuf pix = Helpers.Misc.OpenImage (this);
+			Image newPlayerImage = Helpers.Misc.OpenImage (this);
 
-			if (pix == null) {
+			if (newPlayerImage == null) {
 				return;
 			}
 
-			player = new Image (pix);
-			player.ScaleInplace (Constants.MAX_PLAYER_ICON_SIZE,
-				Constants.MAX_PLAYER_ICON_SIZE);
-			if (player != null && loadedPlayer != null) {
-				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
-				loadedPlayer.Photo = player;
+			newPlayerImage.ScaleInplace (Constants.MAX_PLAYER_ICON_SIZE, Constants.MAX_PLAYER_ICON_SIZE);
+			if (newPlayerImage != null && loadedPlayer != null) {
+				playerimage.Image = newPlayerImage;
+				loadedPlayer.Photo = newPlayerImage;
 				Edited = true;
 			}
 		}
 
 		void HandleShieldButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
-			Image shield;
-			Pixbuf pix = Helpers.Misc.OpenImage (this);
+			Image shield = Helpers.Misc.OpenImage (this);
 
-			if (pix == null) {
+			if (shield == null) {
 				return;
 			}
 
-			shield = new Image (pix);
 			if (shield != null) {
-				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
-					Constants.MAX_SHIELD_ICON_SIZE);
+				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE, Constants.MAX_SHIELD_ICON_SIZE);
 				template.Shield = shield;
-				shieldimage.Pixbuf = shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
+				shieldimage.Image = shield;
 				Edited = true;
 			}
 		}

@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.HBox descbox;
 
-		private global::Gtk.Image homeimage;
+		private global::VAS.UI.Helpers.ImageView homeimage;
 
 		private global::Gtk.VSeparator vseparator1;
 
@@ -24,7 +24,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.VSeparator vseparator2;
 
-		private global::Gtk.Image awayimage;
+		private global::VAS.UI.Helpers.ImageView awayimage;
 
 		protected virtual void Build ()
 		{
@@ -37,8 +37,10 @@ namespace LongoMatch.Gui.Component
 			this.descbox.Name = "descbox";
 			this.descbox.Spacing = 6;
 			// Container child descbox.Gtk.Box+BoxChild
-			this.homeimage = new global::Gtk.Image ();
+			this.homeimage = new global::VAS.UI.Helpers.ImageView ();
+			this.homeimage.WidthRequest = 0;
 			this.homeimage.Name = "homeimage";
+			this.homeimage.WidthRequest = 0;
 			this.descbox.Add (this.homeimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.descbox [this.homeimage]));
 			w1.Position = 0;
@@ -103,8 +105,10 @@ namespace LongoMatch.Gui.Component
 			w9.Expand = false;
 			w9.Fill = false;
 			// Container child descbox.Gtk.Box+BoxChild
-			this.awayimage = new global::Gtk.Image ();
+			this.awayimage = new global::VAS.UI.Helpers.ImageView ();
+			this.awayimage.WidthRequest = 0;
 			this.awayimage.Name = "awayimage";
+			this.awayimage.WidthRequest = 0;
 			this.descbox.Add (this.awayimage);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.descbox [this.awayimage]));
 			w10.Position = 7;

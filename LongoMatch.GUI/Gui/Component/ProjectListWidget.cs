@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			selectedProjects = new List<LMProject> ();
-			
+
 			CreateStore ();
 			CreateViews ();
 
@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Component
 				viewMode = value;
 				treeviewscrolledwindow.Visible = value != ProjectListViewMode.Icons;
 				icoscrolledwindow.Visible = value == ProjectListViewMode.Icons;
-				checkCell.Visible = value == ProjectListViewMode.ListWithCheck; 
+				checkCell.Visible = value == ProjectListViewMode.ListWithCheck;
 			}
 			get {
 				return viewMode;
@@ -126,7 +126,7 @@ namespace LongoMatch.Gui.Component
 				} else {
 					awayShield = Misc.LoadIcon ("vas-default-shield", 50);
 				}
-				
+
 				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, p, false);
 			}
 			swallowSignals = false;
@@ -204,10 +204,10 @@ namespace LongoMatch.Gui.Component
 		static string FormatDesc (ProjectDescription pdesc)
 		{
 			string desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
-				              pdesc.LocalName, pdesc.VisitorName, pdesc.LocalGoals,
-				              pdesc.VisitorGoals, Catalog.GetString ("Date"),
-				              pdesc.MatchDate.ToShortDateString (), Catalog.GetString ("Competition"),
-				              pdesc.Competition, Catalog.GetString ("Season"), pdesc.Season);
+							  pdesc.LocalName, pdesc.VisitorName, pdesc.LocalGoals,
+							  pdesc.VisitorGoals, Catalog.GetString ("Date"),
+							  pdesc.MatchDate.ToShortDateString (), Catalog.GetString ("Competition"),
+							  pdesc.Competition, Catalog.GetString ("Season"), pdesc.Season);
 			return desc;
 		}
 
@@ -248,9 +248,9 @@ namespace LongoMatch.Gui.Component
 
 		ListStore CreateStore ()
 		{
-			store = new ListStore (typeof(string), typeof(Pixbuf), typeof(Pixbuf),
-				typeof(Pixbuf), typeof(Project), typeof(bool));
-			
+			store = new ListStore (typeof (string), typeof (Pixbuf), typeof (Pixbuf),
+				typeof (Pixbuf), typeof (Project), typeof (bool));
+
 			filter = new TreeModelFilter (store, null);
 			filter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterTree);
 			sort = new TreeModelSort (filter);
@@ -285,7 +285,7 @@ namespace LongoMatch.Gui.Component
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
 			LMProject p1, p2;
-			
+
 			p1 = (LMProject)model.GetValue (a, COL_PROJECT);
 			p2 = (LMProject)model.GetValue (b, COL_PROJECT);
 
@@ -312,11 +312,11 @@ namespace LongoMatch.Gui.Component
 
 			if (project == null)
 				return true;
-			
+
 			return project.Description.Search (filterEntry.Text);
 		}
 
-		void HandleSelectionChanged (TreeModel model, TreePath[] selectedItems)
+		void HandleSelectionChanged (TreeModel model, TreePath [] selectedItems)
 		{
 			TreeIter iter;
 
@@ -355,10 +355,10 @@ namespace LongoMatch.Gui.Component
 		{
 			TreeIter iter;
 			LMProject project;
-			
+
 			if (swallowSignals)
 				return;
-				
+
 			if (ProjectSelected != null) {
 				iconview.Model.GetIter (out iter, args.Path);
 				project = iconview.Model.GetValue (iter, COL_PROJECT) as LMProject;

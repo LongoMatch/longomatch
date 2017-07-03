@@ -21,51 +21,51 @@ using Gtk;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
+using VAS.Core;
+using VAS.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public class TeamsComboBox: Gtk.ComboBox
+	public class TeamsComboBox : Gtk.ComboBox
 	{
 		ListStore store;
-		CellRendererPixbuf pixrender;
+		CellRendererImage imageRenderer;
 		CellRendererText texrender;
-
-		public TeamsComboBox ()
-		{
-		}
 
 		public void Load (List<LMTeam> teams)
 		{
 			Clear ();
-			pixrender = new CellRendererPixbuf ();
+			imageRenderer = new CellRendererImage ();
+			imageRenderer.Width = StyleConf.NewTeamsIconSize;
+			imageRenderer.Height = StyleConf.NewTeamsIconSize;
 			texrender = new CellRendererText ();
 			texrender.Font = App.Current.Style.Font + " " + StyleConf.NewTeamsFontSize;
 			texrender.Alignment = Pango.Alignment.Center;
 
 			if (Direction == TextDirection.Ltr) {
-				PackStart (pixrender, false);
+				PackStart (imageRenderer, false);
 				PackEnd (texrender, true);
 			} else {
-				PackEnd (pixrender, false);
+				PackEnd (imageRenderer, false);
 				PackStart (texrender, true);
 			}
-			
-			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(LMTeam));
+
+			store = new ListStore (typeof (Image), typeof (string), typeof (LMTeam));
 			foreach (LMTeam t in teams) {
-				Pixbuf shield;
-				int size = StyleConf.NewTeamsIconSize;
+				Image shield;
 
 				if (t.Shield == null) {
-					shield = Helpers.Misc.LoadIcon ("vas-default-shield", size);
+					shield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", StyleConf.NewTeamsIconSize);
 				} else {
-					shield = t.Shield.Scale (size, size).Value;
+					shield = t.Shield;
 				}
 				store.AppendValues (shield, t.Name, t);
 			}
 			SetAttributes (texrender, "text", 1);
-			SetAttributes (pixrender, "pixbuf", 0);
+			SetAttributes (imageRenderer, "Image", 0);
 			Model = store;
 		}
 
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public class HomeTeamsComboBox: TeamsComboBox
+	public class HomeTeamsComboBox : TeamsComboBox
 	{
 		public HomeTeamsComboBox ()
 		{
@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Component
 
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public class AwayTeamsComboBox: TeamsComboBox
+	public class AwayTeamsComboBox : TeamsComboBox
 	{
 		public AwayTeamsComboBox ()
 		{

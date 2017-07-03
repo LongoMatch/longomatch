@@ -69,9 +69,8 @@ namespace LongoMatch.Gui.Menus
 
 		void AddImage (IPlaylistElement element, bool prepend)
 		{
-			Pixbuf pix = Helpers.Misc.OpenImage (widget);
-			if (pix != null) {
-				var image = new Image (pix);
+			Image image = Helpers.Misc.OpenImage (widget);
+			if (image != null) {
 				PlaylistImage plimage = new PlaylistImage (image, new Time (5000));
 				int index = playlist.Elements.IndexOf (element);
 				if (!prepend) {

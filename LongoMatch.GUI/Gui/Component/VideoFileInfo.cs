@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			eventbox3.ButtonPressEvent += HandleButtonPressEvent;
 			HeightRequest = 100;
+			snapshotimage.SetSize (100);
 			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 		}
 
@@ -63,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			namelabel.Text = mediaFile.Name;
 			if (mediaFile.IsFakeCapture) {
 				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
-				snapshotimage.Pixbuf = Misc.LoadIcon ("lm-video-device-fake", PREVIEW_SIZE);
+				snapshotimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-video-device-fake", PREVIEW_SIZE);
 				table1.Visible = false;
 				disableChanges = true;
 				return;
@@ -71,9 +72,9 @@ namespace LongoMatch.Gui.Component
 			table1.Visible = true;
 			filelabel.Text = mediaFile.FilePath;
 			if (mediaFile.Preview != null) {
-				snapshotimage.Pixbuf = mediaFile.Preview.Scale (PREVIEW_SIZE, PREVIEW_SIZE).Value;
+				snapshotimage.Image = mediaFile.Preview;
 			} else {
-				snapshotimage.Pixbuf = Misc.LoadIcon ("lm-video-file", PREVIEW_SIZE);
+				snapshotimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-file", PREVIEW_SIZE);
 			}
 			if (mediaFile.Duration != null) {
 				durationlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Duration"),
