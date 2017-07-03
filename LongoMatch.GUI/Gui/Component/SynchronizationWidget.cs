@@ -56,8 +56,8 @@ namespace LongoMatch.Gui.Component
 			zoomscale.Adjustment.Lower = 0;
 			zoomscale.Adjustment.Upper = 100;
 
-			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-zoom-out", 14);
-			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-zoom-in", 14);
+			zoomoutimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-zoom-out", 14);
+			zoominimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-zoom-in", 14);
 
 			timerule = new Timerule (new WidgetWrapper (timerulearea));
 			timerule.AutoUpdate = true;

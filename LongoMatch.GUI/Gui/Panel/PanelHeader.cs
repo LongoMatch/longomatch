@@ -42,12 +42,9 @@ namespace LongoMatch.Gui.Panel
 					BackClicked (this, null);
 				}
 			};
-			logoimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-longomatch", 45,
-				IconLookupFlags.ForceSvg);
-			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-back", 40,
-				IconLookupFlags.ForceSvg);
-			applyroundedbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-apply", 40,
-				IconLookupFlags.ForceSvg);
+			logoimage.Image = App.Current.ResourcesLocator.LoadIcon (App.Current.SoftwareIconName, 45);
+			backrectbuttonimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-back", 40);
+			applyroundedbuttonimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", 40);
 			headerhbox.HeightRequest = StyleConf.HeaderHeight;
 		}
 

@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 				sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
 				App.Current.Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
 			};
-			focusimage.Pixbuf = Misc.LoadIcon ("vas-search", 27);
+			focusimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-search", 27);
 			ViewMode = ProjectListViewMode.List;
 		}
 

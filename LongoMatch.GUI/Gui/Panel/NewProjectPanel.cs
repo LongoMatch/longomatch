@@ -200,14 +200,11 @@ namespace LongoMatch.Gui.Panel
 
 		void LoadIcons ()
 		{
-			int s = StyleConf.ProjectTypeIconSize;
-			IconLookupFlags f = IconLookupFlags.ForceSvg;
-
-			fileimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-file", s, f);
-			captureimage.Pixbuf = Helpers.Misc.LoadIcon ("vas-video-device", s, f);
-			fakeimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-device-fake", s, f);
-			ipimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-video-device-ip", s, f);
-			vsimage.Pixbuf = Helpers.Misc.LoadIcon ("lm-vs", 50, f);
+			fileimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-file", StyleConf.ProjectTypeIconSize);
+			captureimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-video-device", StyleConf.ProjectTypeIconSize);
+			fakeimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-fake", StyleConf.ProjectTypeIconSize);
+			ipimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-ip", StyleConf.ProjectTypeIconSize);
+			vsimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-vs", 50);
 
 			filebutton.Clicked += HandleProjectTypeSet;
 			capturebutton.Clicked += HandleProjectTypeSet;

@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-apply", StyleConf.ButtonDialogIconSize);
+			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", StyleConf.ButtonDialogIconSize);
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			shieldvbox.WidthRequest = SHIELD_SIZE;
