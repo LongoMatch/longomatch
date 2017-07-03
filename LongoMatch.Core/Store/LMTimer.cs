@@ -22,8 +22,8 @@ using VAS.Core.Store;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
-	public class LMTimer: Timer
+	[PropertyChanged.AddINotifyPropertyChangedInterface]
+	public class LMTimer : Timer
 	{
 		public LMTimer ()
 		{

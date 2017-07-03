@@ -41,13 +41,13 @@
 		<Reference Include="System" />
 		<Reference Include="Mono.Posix" />
 		<Reference Include="PropertyChanged">
-			<HintPath>$(SolutionDir)\packages\PropertyChanged.Fody.1.50.3\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+			<HintPath>$(SolutionDir)\packages\PropertyChanged.Fody.2.1.2\Lib\netstandard1.0\PropertyChanged.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
 	<Import Project="LongoMatch.Core.projitems" Label="Shared" Condition="Exists('LongoMatch.Core.projitems')" />
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="$(SolutionDir)\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" />
+	<Import Project="$(SolutionDir)\packages\Fody.2.1.0\build\portable-net+sl+win+wpa+wp\Fody.targets" />
 	<ItemGroup>
 		<ProjectReference Include="$(SolutionDir)\VAS\Weavers\Weavers.csproj">
 			<Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>

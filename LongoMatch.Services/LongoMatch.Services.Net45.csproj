@@ -45,7 +45,7 @@
 		</Reference>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="PropertyChanged">
-			<HintPath>$(SolutionDir)\packages\PropertyChanged.Fody.1.50.3\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+			<HintPath>$(SolutionDir)\packages\PropertyChanged.Fody.2.1.2\Lib\netstandard1.0\PropertyChanged.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
@@ -80,7 +80,7 @@
 	</ItemGroup>
 	<Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="$(SolutionDir)\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" />
+	<Import Project="$(SolutionDir)\packages\Fody.2.1.0\build\portable-net+sl+win+wpa+wp\Fody.targets" />
 	<ItemGroup>
 		<None Include="packages.config" />
 	</ItemGroup>
