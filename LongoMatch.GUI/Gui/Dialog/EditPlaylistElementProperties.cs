@@ -27,8 +27,8 @@ using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Dialog
 {
-	// FIXME: Change the view to not use the model, create a VM and use it
-	[ViewAttribute (EditPlaylistState.NAME)]
+	// FIXME: This is migrated to VAS, but we need to let this stay here
+	// because Presentations are not still migrated to MVVM and is using this Dialog directly
 	public partial class EditPlaylistElementProperties : Gtk.Dialog, IPanel
 	{
 		SizeGroup sizegroupLeft, sizegroupRight;
