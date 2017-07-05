@@ -19,7 +19,7 @@ namespace LongoMatch.Core.ViewModel
 			if (vm.Model is PlaylistPlayElement) {
 				var timelineEvent = vm.Model as PlaylistPlayElement;
 				if (timelineEvent.Play is LMTimelineEvent) {
-					return new LMTimelineEventVM { Model = timelineEvent.Play as LMTimelineEvent, Selected = vm.Selected };
+					return new LMTimelineEventVM { Model = timelineEvent.Play as LMTimelineEvent };
 				}
 			}
 			return null;

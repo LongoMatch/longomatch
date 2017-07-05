@@ -323,11 +323,11 @@ namespace LongoMatch.Drawing
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
-				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, p.Playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is IPlaylistElement) {
 				IPlaylistElement p = item as IPlaylistElement;
-				RenderPlay (App.Current.Style.PaletteActive, p.Miniature, null, null, p.Selected, p.Description,
+				RenderPlay (App.Current.Style.PaletteActive, p.Miniature, null, null, p.Playing, p.Description,
 					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType ());
