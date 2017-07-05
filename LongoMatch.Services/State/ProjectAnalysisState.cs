@@ -86,6 +86,7 @@ namespace LongoMatch.Services.State
 			ViewModel = new LMProjectAnalysisVM ();
 			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
+			ViewModel.VideoPlayer.ShowCenterPlayHeadButton = false;
 			ViewModel.VideoPlayer.ViewMode = PlayerViewOperationMode.Analysis;
 		}
 
