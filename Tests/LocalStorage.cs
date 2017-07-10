@@ -18,12 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
 using LongoMatch;
+using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
-using VAS.Core.Filters;
 
 namespace Tests
 {
@@ -71,6 +69,13 @@ namespace Tests
 		public void Delete<T> (T t) where T : IStorable
 		{
 			projects.Remove (t.ID);
+		}
+
+		public void Delete<T> (IEnumerable<T> storables) where T : IStorable
+		{
+			foreach (var storable in storables) {
+				Delete (storable);
+			}
 		}
 
 		public void Reset ()
