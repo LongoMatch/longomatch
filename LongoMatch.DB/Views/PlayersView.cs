@@ -21,7 +21,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.DB.Views
 {
-	public class PlayersView: GenericView <LMPlayer>
+	public class PlayersView : GenericView<LMPlayer>
 	{
 		public PlayersView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
@@ -30,7 +30,7 @@ namespace LongoMatch.DB.Views
 
 		protected override string ViewVersion {
 			get {
-				return "1";
+				return LMPlayer.VERSION.ToString ();
 			}
 		}
 	}

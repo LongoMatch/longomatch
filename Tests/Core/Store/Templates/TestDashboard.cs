@@ -56,8 +56,8 @@ namespace Tests.Core.Store.Templates
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (Constants.DB_VERSION, new LMDashboard ().Version);
-			Assert.AreEqual (Constants.DB_VERSION, (LMDashboard.DefaultTemplate (1)).Version);
+			Assert.AreEqual (1, new LMDashboard ().Version);
+			Assert.AreEqual (1, (LMDashboard.DefaultTemplate (1)).Version);
 		}
 
 		[Test ()]

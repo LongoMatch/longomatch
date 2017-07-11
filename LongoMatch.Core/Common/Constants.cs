@@ -129,5 +129,7 @@ Xavier Queralt Mateu (ca)";
 		public const uint SLOW_SCROLL_PIXELS = 10;
 
 		public const string LICENSE_CODE_URL = "https://longomatch.com/profile/register_personal/";
+		public const int DB_VERSION_MAJOR = 1;
+		public const int DB_VERSION_MINOR = 0;
 	}
 }

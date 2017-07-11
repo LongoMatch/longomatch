@@ -29,8 +29,14 @@ namespace LongoMatch.Core.Store.Templates
 	[Serializable]
 	public class LMDashboard : Dashboard, ITemplate<DashboardButton>
 	{
+		public const int VERSION = 1;
 		new const int MIN_WIDTH = 320;
 		new const int MIN_HEIGHT = 240;
+
+		public LMDashboard ()
+		{
+			Version = VERSION;
+		}
 
 		/// <summary>
 		/// Creates a new dashboard with a default set of buttons

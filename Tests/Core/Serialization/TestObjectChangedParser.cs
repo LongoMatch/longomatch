@@ -25,7 +25,7 @@ using VAS.Core.Serialization;
 
 namespace Tests.Core.Serialization
 {
-	public class TestObjectBase: IStorable
+	public class TestObjectBase : IStorable
 	{
 		public Guid ID { get; set; }
 
@@ -44,27 +44,29 @@ namespace Tests.Core.Serialization
 		public string DocumentID { get; set; }
 
 		public Guid ParentID { get; set; }
+
+		public int Version { get; set; }
 	}
 
-	public class TestObject1: TestObjectBase
+	public class TestObject1 : TestObjectBase
 	{
 		public string Name { get; set; }
 
 		public int Idx { get; set; }
 
-		public TestObject2 Storable{ get; set; }
+		public TestObject2 Storable { get; set; }
 
 		[JsonIgnore]
-		public TestObject2 Ignored{ get; set; }
+		public TestObject2 Ignored { get; set; }
 
-		public List<TestObject2> StorableList{ get; set; }
+		public List<TestObject2> StorableList { get; set; }
 
-		public Dictionary<string,TestObject2> StorableDict { get; set; }
+		public Dictionary<string, TestObject2> StorableDict { get; set; }
 
 		public List<TestObject3> NotStorableList { get; set; }
 	}
 
-	public class TestObject2: TestObjectBase
+	public class TestObject2 : TestObjectBase
 	{
 		public TestObject3 NotStorable { get; set; }
 
@@ -82,7 +84,7 @@ namespace Tests.Core.Serialization
 		public bool IsChanged { get; set; }
 	}
 
-	public class TestObject4: TestObjectBase
+	public class TestObject4 : TestObjectBase
 	{
 		public long Idx;
 
