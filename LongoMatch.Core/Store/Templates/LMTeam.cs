@@ -32,6 +32,7 @@ namespace LongoMatch.Core.Store.Templates
 	[Serializable]
 	public class LMTeam : Team
 	{
+		public const int VERSION = 1;
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
 
@@ -48,6 +49,7 @@ namespace LongoMatch.Core.Store.Templates
 			Colors = new Color [2];
 			Colors [0] = Color.Blue1;
 			Colors [1] = Color.Red1;
+			Version = VERSION;
 		}
 
 		[PropertyIndex (1)]

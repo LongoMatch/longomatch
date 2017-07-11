@@ -21,9 +21,9 @@ using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
-	public class DataBaseManager: IService
+	public class DataBaseManager : IService
 	{
-		const int SUPPORTED_MAJOR_VERSION = Constants.DB_VERSION;
+		const int SUPPORTED_MAJOR_VERSION = 1;
 
 		public IStorageManager Manager {
 			get;

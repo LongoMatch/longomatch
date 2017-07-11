@@ -63,8 +63,8 @@ namespace Tests.Core.Store.Templates
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (Constants.DB_VERSION, new LMTeam ().Version);
-			Assert.AreEqual (Constants.DB_VERSION, LMTeam.DefaultTemplate (1).Version);
+			Assert.AreEqual (1, new LMTeam ().Version);
+			Assert.AreEqual (1, LMTeam.DefaultTemplate (1).Version);
 		}
 
 		[Test ()]

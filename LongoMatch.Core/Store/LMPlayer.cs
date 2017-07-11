@@ -24,6 +24,13 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class LMPlayer : Player
 	{
+		public const int VERSION = 1;
+
+		public LMPlayer ()
+		{
+			Version = VERSION;
+		}
+
 		/// <summary>
 		/// My position in the field
 		/// </summary>

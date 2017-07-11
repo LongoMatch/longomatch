@@ -31,7 +31,7 @@ namespace LongoMatch.DB.Views
 
 		protected override string ViewVersion {
 			get {
-				return "1";
+				return LMTeam.VERSION.ToString ();
 			}
 		}
 	}

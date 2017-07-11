@@ -23,6 +23,8 @@ using VAS.DB;
 using LongoMatch.DB.Views;
 using VAS.Core.Store.Playlists;
 using VAS.Core.Store.Templates;
+using System;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.DB
 {
@@ -44,6 +46,11 @@ namespace LongoMatch.DB
 		{
 		}
 
+		protected override Version Version {
+			get {
+				return new Version (Constants.DB_VERSION_MAJOR, Constants.DB_VERSION_MINOR);
+			}
+		}
 
 		protected override void InitializeViews ()
 		{
