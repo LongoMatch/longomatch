@@ -55,7 +55,9 @@ namespace LongoMatch.Gui.Panel
 
 		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
-		ImageView logoImage;
+		Gtk.Image logoImage;
+		Gtk.Image textImage;
+		HBox logoBox;
 		SizeGroup sizegroup;
 
 		public WelcomePanel ()
@@ -126,11 +128,20 @@ namespace LongoMatch.Gui.Panel
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
 
 			// Our logo
-			logoImage = new ImageView (App.Current.Background);
-			logoImage.SetSize (StyleConf.WelcomeLogoWidth, StyleConf.WelcomeLogoHeight);
+			logoImage = new Gtk.Image ();
+			Image logo = App.Current.ResourcesLocator.LoadImage (App.Current.SoftwareIconName);
+			logoImage.Pixbuf = logo.Value;
+
+			textImage = new Gtk.Image ();
+			Image text = App.Current.ResourcesLocator.LoadImage ("images/logo/lm-text.svg");
+			textImage.Pixbuf = text.Value;
+
+			logoBox = new HBox ();
+			logoBox.Add (logoImage);
+			logoBox.Add (textImage);
 
 			//Adding the title
-			vbox2.Add (logoImage);
+			vbox2.Add (logoBox);
 
 			//Create necessary Hboxes for all icons
 			List<HBox> hboxList = new List<HBox> ();
@@ -200,6 +211,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void OnLoad ()
 		{
+			var kk = 0;
 		}
 
 		public void OnUnload ()
