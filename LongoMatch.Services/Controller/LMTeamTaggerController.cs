@@ -1,9 +1,9 @@
 //
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
@@ -120,9 +120,9 @@ namespace LongoMatch.Services.Controller
 			}
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.Subscribe<TagPlayerEvent> (HandleTagPlayerEvent);
 			App.Current.EventsBroker.Subscribe<UpdateLineup> (HandleUpdateLineup);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
@@ -132,9 +132,9 @@ namespace LongoMatch.Services.Controller
 			UpdateLineup ();
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<TagPlayerEvent> (HandleTagPlayerEvent);
 			App.Current.EventsBroker.Unsubscribe<UpdateLineup> (HandleUpdateLineup);
 			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);

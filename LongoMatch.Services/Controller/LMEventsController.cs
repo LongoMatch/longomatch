@@ -19,7 +19,7 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
@@ -27,7 +27,6 @@ using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
@@ -43,22 +42,22 @@ namespace LongoMatch.Services
 	{
 		LMProjectAnalysisVM viewModel;
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
 			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
-			base.Stop ();
+			await base.Stop ();
 		}
 
 		public override void SetViewModel (IViewModel viewModel)

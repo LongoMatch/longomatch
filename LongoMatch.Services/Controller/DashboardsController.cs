@@ -15,10 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;

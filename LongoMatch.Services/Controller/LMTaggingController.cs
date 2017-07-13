@@ -17,24 +17,20 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
-using VKeyAction = VAS.Core.Hotkeys.KeyAction;
-using LKeyAction = LongoMatch.Core.Common.KeyAction;
-using VAS.Core.Hotkeys;
-using LongoMatch.Core.ViewModel;
-using System.Linq;
-using LongoMatch.Services.ViewModel;
-using LongoMatch.Services.Interfaces;
-using VAS.Core.Interfaces.MVVMC;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Events;
 using Constants = VAS.Core.Common.Constants;
-using VAS.Core.Events;
+using LKeyAction = LongoMatch.Core.Common.KeyAction;
+using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Services.Controller
 {

@@ -1,8 +1,8 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
@@ -26,15 +26,15 @@ namespace LongoMatch.Services.Controller
 			teamTagger = playEditorVM.TeamTagger;
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			teamTagger.PropertyChanged += HandleTeamTaggerPropertyChanged;
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			teamTagger.PropertyChanged -= HandleTeamTaggerPropertyChanged;
 		}
 

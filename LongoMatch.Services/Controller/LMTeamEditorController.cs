@@ -1,8 +1,8 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
@@ -30,16 +30,16 @@ namespace LongoMatch.Services.Controller
 			teamEditor = ((ILMTeamEditorDealer)viewModel).TeamEditor;
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.Subscribe<CreateEvent<LMPlayer>> (HandleCreatePlayer);
 			App.Current.EventsBroker.Subscribe<DeleteEvent<LMPlayer>> (HandleDeletePlayers);
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.Subscribe<CreateEvent<LMPlayer>> (HandleCreatePlayer);
 			App.Current.EventsBroker.Subscribe<DeleteEvent<LMPlayer>> (HandleDeletePlayers);
 		}

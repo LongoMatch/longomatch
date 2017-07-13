@@ -91,9 +91,9 @@ namespace LongoMatch.Services
 			return actions;
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.SubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.SubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Subscribe<CaptureErrorEvent> (HandleCaptureError);
@@ -101,9 +101,9 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Subscribe<MultimediaErrorEvent> (HandleMultimediaError);
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
 			App.Current.EventsBroker.UnsubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Unsubscribe<CaptureErrorEvent> (HandleCaptureError);

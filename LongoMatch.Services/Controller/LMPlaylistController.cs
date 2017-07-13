@@ -15,13 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System.Threading.Tasks;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
-using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services
@@ -39,17 +39,17 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.Subscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Subscribe<NextPlaylistElementEvent> (HandleNext);
 			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
 			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);

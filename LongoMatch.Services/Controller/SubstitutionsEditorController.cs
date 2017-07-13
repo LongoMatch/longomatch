@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
@@ -23,9 +24,9 @@ namespace LongoMatch.Services.Controller
 		SubstitutionsEditorVM substitutionEditor;
 		LMPlayerVM taggedPlayer;
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.Subscribe<UpdateEvent<SubstitutionEvent>> (HandleSaveSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<UpdateEvent<LineupEvent>> (HandleSaveLineupEvent);
 			if (substitutionEditor != null) {
@@ -33,9 +34,9 @@ namespace LongoMatch.Services.Controller
 			}
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<UpdateEvent<SubstitutionEvent>> (HandleSaveSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<UpdateEvent<LineupEvent>> (HandleSaveLineupEvent);
 			if (substitutionEditor != null) {

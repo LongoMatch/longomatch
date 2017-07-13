@@ -16,7 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
+using LongoMatch.Core.Store;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
@@ -24,7 +24,6 @@ using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 using VAS.Services.State;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.Services.Controller
 {

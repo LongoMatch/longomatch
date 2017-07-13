@@ -42,15 +42,15 @@ namespace LongoMatch.Services.Controller
 			project = ((IProjectDealer)viewModel).Project;
 		}
 
-		public override void Start ()
+		public override async Task Start ()
 		{
-			base.Start ();
+			await base.Start ();
 			App.Current.EventsBroker.SubscribeAsync<EditEventEvent> (HandleEditEvent);
 		}
 
-		public override void Stop ()
+		public override async Task Stop ()
 		{
-			base.Stop ();
+			await base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<EditEventEvent> (HandleEditEvent);
 		}
 
