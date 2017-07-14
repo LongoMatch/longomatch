@@ -17,17 +17,20 @@
 //
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers;
+using VAS.UI.Helpers.Bindings;
 using Action = System.Action;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
@@ -36,29 +39,31 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (HomeState.NAME)]
-	public partial class WelcomePanel : Gtk.Bin, IPanel
+	public partial class WelcomePanel : Gtk.Bin, IPanel<HomeViewModel>
 	{
 		static WelcomeButton [] default_buttons = {
 			new WelcomeButton ("lm-project-new", Catalog.GetString ("New"),
 							   new Action (() => App.Current.StateController.MoveTo (NewProjectState.NAME, null))),
 			new WelcomeButton ("vas-open", Catalog.GetString ("Open"),
-							   new Action (() => (App.Current.StateController.MoveTo (OpenProjectState.NAME, null)))),
+							   new Action (() => App.Current.StateController.MoveTo (OpenProjectState.NAME, null))),
 			new WelcomeButton ("vas-import", Catalog.GetString ("Import"),
-							   new Action (() => (App.Current.EventsBroker.Publish (new ImportProjectEvent ())))),
+							   new Action (() => App.Current.EventsBroker.Publish (new ImportProjectEvent ()))),
 			new WelcomeButton ("lm-project", Catalog.GetString ("Projects"),
-							   new Action (() => (App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null)))),
+							   new Action (() => App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null))),
 			new WelcomeButton ("lm-team-config", Catalog.GetString ("Teams"),
-							   new Action (() => (App.Current.StateController.MoveTo (TeamsManagerState.NAME, null)))),
+							   new Action (() => App.Current.StateController.MoveTo (TeamsManagerState.NAME, null))),
 			new WelcomeButton ("lm-template-config", Catalog.GetString ("Analysis Dashboards"),
-							   new Action (() => (App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null)))),
+							   new Action (() => App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null))),
 		};
 
 		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
-		Gtk.Image logoImage;
-		Gtk.Image textImage;
+		ImageView logoImage;
+		ImageView textImage;
 		HBox logoBox;
 		SizeGroup sizegroup;
+		BindingContext ctx;
+		HomeViewModel viewModel;
 
 		public WelcomePanel ()
 		{
@@ -73,6 +78,8 @@ namespace LongoMatch.Gui.Panel
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 
 			Create ();
+
+			Bind ();
 		}
 
 		uint NRows {
@@ -85,6 +92,25 @@ namespace LongoMatch.Gui.Panel
 			get {
 				return App.Current.SoftwareName;
 			}
+		}
+
+		public HomeViewModel ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				if (viewModel != null) {
+					ctx.UpdateViewModel (viewModel);
+				}
+			}
+		}
+
+		void Bind ()
+		{
+			ctx = new BindingContext ();
+			ctx.Add (logoImage.Bind (vm => ((HomeViewModel)vm).LogoIcon));
+
 		}
 
 		void HandlePreferencesClicked (object sender, EventArgs e)
@@ -128,13 +154,10 @@ namespace LongoMatch.Gui.Panel
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
 
 			// Our logo
-			logoImage = new Gtk.Image ();
-			Image logo = App.Current.ResourcesLocator.LoadIcon (App.Current.SoftwareIconName);
-			logoImage.Pixbuf = logo.Value;
+			logoImage = new ImageView ();
 
-			textImage = new Gtk.Image ();
 			Image text = App.Current.ResourcesLocator.LoadImage ("images/logo/lm-text.svg");
-			textImage.Pixbuf = text.Value;
+			textImage = new ImageView (text);
 
 			logoBox = new HBox ();
 			logoBox.Add (logoImage);
@@ -211,7 +234,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void OnLoad ()
 		{
-			var kk = 0;
+			logoImage.Image = ViewModel.LogoIcon;
 		}
 
 		public void OnUnload ()
@@ -220,6 +243,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
+			ViewModel = (HomeViewModel)viewModel;
 		}
 
 		public KeyContext GetKeyContext ()
