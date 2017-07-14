@@ -129,7 +129,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Our logo
 			logoImage = new Gtk.Image ();
-			Image logo = App.Current.ResourcesLocator.LoadImage (App.Current.SoftwareIconName);
+			Image logo = App.Current.ResourcesLocator.LoadIcon (App.Current.SoftwareIconName);
 			logoImage.Pixbuf = logo.Value;
 
 			textImage = new Gtk.Image ();
