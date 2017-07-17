@@ -21,11 +21,10 @@ using System.Linq;
 using System.Reflection;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using VAS.Core.Serialization;
-using VAS.Core.Store;
-using LongoMatch.Core.Store;
 
 namespace Tests.Core.Migration
 {
