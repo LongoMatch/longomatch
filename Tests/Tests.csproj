@@ -146,6 +146,7 @@
 		<Compile Include="Controller\TestLMEventsController.cs" />
 		<Compile Include="Drawing\Objects\TestLocationView.cs" />
 		<Compile Include="State\TestLMStateHelper.cs" />
+		<Compile Include="Controller\TestHomeController.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Core\vas-dibujo.svg">
@@ -246,6 +247,14 @@
 		<ProjectReference Include="..\..\fluVAS\FluVAS.Multimedia\FluVAS.Multimedia.Net45.csproj">
 		  <Project>{D36B4DD8-1893-427F-B702-293AEFF9BF9A}</Project>
 		  <Name>FluVAS.Multimedia.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\LongoMatch.License\LongoMatch.License.csproj">
+		  <Project>{D5670B4A-285D-4FC5-80DC-AE71469DD124}</Project>
+		  <Name>LongoMatch.License</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\fluVAS\FluVAS.License\FluVAS.License.csproj">
+		  <Project>{B96D5D49-BB1C-4C7B-AC7E-CE4B7161EF85}</Project>
+		  <Name>FluVAS.License</Name>
 		</ProjectReference>
 	</ItemGroup>
 </Project>
