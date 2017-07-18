@@ -27,6 +27,7 @@ using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -77,6 +78,8 @@ namespace LongoMatch.Gui.Component
 			};
 			focusimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-search", 27);
 			ViewMode = ProjectListViewMode.List;
+
+			limitationWidget.SetViewModel (App.Current.LicenseLimitationsService.Get<CountLimitationVM> ("Projects"));
 		}
 
 		public SelectionMode SelectionMode {
@@ -89,7 +92,7 @@ namespace LongoMatch.Gui.Component
 		public ProjectListViewMode ViewMode {
 			set {
 				viewMode = value;
-				treeviewscrolledwindow.Visible = value != ProjectListViewMode.Icons;
+				treeviewscrolledwindow.Visible = limitationWidget.Visible = value != ProjectListViewMode.Icons;
 				icoscrolledwindow.Visible = value == ProjectListViewMode.Icons;
 				checkCell.Visible = value == ProjectListViewMode.ListWithCheck;
 			}
