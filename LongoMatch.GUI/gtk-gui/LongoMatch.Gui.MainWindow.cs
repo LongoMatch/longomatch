@@ -211,6 +211,7 @@ namespace LongoMatch.Gui
 			}
 			this.DefaultWidth = 938;
 			this.DefaultHeight = 604;
+			this.renderingstatebarview1.Hide ();
 			this.Show ();
 			this.AboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 			this.HelpAction1.Activated += new global::System.EventHandler (this.OnHelpAction1Activated);

@@ -1195,6 +1195,7 @@ Sort by competition</property>
         <child>
           <widget class="VAS.UI.Component.RenderingStateBarView" id="renderingstatebarview1">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
