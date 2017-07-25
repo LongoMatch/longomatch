@@ -142,6 +142,8 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker = new EventsBroker ();
 			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuitApplicationEvent);
 
+			RegisterService (App.Current.LicenseLimitationsService);
+
 			/* Start DB services */
 			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);

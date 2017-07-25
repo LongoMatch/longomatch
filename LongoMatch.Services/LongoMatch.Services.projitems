@@ -64,6 +64,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\LMDrawingToolState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\HomeController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\HomeViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LMLicenseLimitationsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
