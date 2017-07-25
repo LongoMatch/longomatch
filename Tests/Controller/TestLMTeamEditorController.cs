@@ -25,6 +25,7 @@ using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core;
+using VAS.Core.Interfaces.GUI;
 
 namespace Tests.Controller
 {
@@ -44,6 +45,9 @@ namespace Tests.Controller
 			mockToolkit.Setup (g => g.QuestionMessage (It.IsAny<string> (), null, null)
 							  ).Returns (AsyncHelpers.Return<bool> (true));
 			App.Current.Dialogs = mockToolkit.Object;
+			Mock<IGUIToolkit> mockGui = new Mock<IGUIToolkit> ();
+			mockGui.SetupGet (g => g.DeviceScaleFactor).Returns (1);
+			App.Current.GUIToolkit = mockGui.Object;
 		}
 
 		[TestFixtureTearDown]

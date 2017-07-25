@@ -69,6 +69,7 @@ namespace Tests
 			App.Current.StateController.Register (SubstitutionsEditorState.NAME, () => CreateScreenState ());
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 			App.Current.ResourcesLocator = new DummyResourcesLocator ();
+			App.Current.FileSystemManager = new FileSystemManager ();
 		}
 
 		static IScreenState CreateScreenState ()

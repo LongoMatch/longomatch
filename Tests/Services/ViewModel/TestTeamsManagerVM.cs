@@ -16,10 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
 
 namespace Tests.Services.ViewModel
 {
@@ -27,6 +30,14 @@ namespace Tests.Services.ViewModel
 	public class TestTeamsManagerVM
 	{
 		TeamsManagerVM viewModel;
+
+		[TestFixtureSetUp]
+		public void TestFixtureSetUp ()
+		{
+			Mock<IGUIToolkit> mockGui = new Mock<IGUIToolkit> ();
+			mockGui.SetupGet (g => g.DeviceScaleFactor).Returns (1);
+			App.Current.GUIToolkit = mockGui.Object;
+		}
 
 		[SetUp]
 		public void SetUp ()
