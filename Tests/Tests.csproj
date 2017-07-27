@@ -147,6 +147,7 @@
 		<Compile Include="Drawing\Objects\TestLocationView.cs" />
 		<Compile Include="State\TestLMStateHelper.cs" />
 		<Compile Include="Controller\TestHomeController.cs" />
+		<Compile Include="Services\TestLMLicenseLimitationsService.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Core\vas-dibujo.svg">
