@@ -62,6 +62,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\PlayEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDrawingToolVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMDrawingToolState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\HomeController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
