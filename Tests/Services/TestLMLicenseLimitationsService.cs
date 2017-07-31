@@ -40,10 +40,10 @@ namespace Tests.Services
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 
 			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (Constants.DATABASE_MANAGER_FEATURE, featureLimitation.LimitationName);
+			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
 			Assert.IsFalse (featureLimitation.Enabled);
 		}
 
@@ -54,10 +54,10 @@ namespace Tests.Services
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 
 			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (Constants.DATABASE_MANAGER_FEATURE, featureLimitation.LimitationName);
+			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
 			Assert.IsFalse (featureLimitation.Enabled);
 		}
 
@@ -68,10 +68,10 @@ namespace Tests.Services
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 
 			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (Constants.DATABASE_MANAGER_FEATURE, featureLimitation.LimitationName);
+			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
 			Assert.IsTrue (featureLimitation.Enabled);
 		}
 
@@ -83,7 +83,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 			Assert.IsTrue (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
@@ -103,7 +103,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 			Assert.IsTrue (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
@@ -123,7 +123,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (Constants.DATABASE_MANAGER_FEATURE);
+			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
 			Assert.IsFalse (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);

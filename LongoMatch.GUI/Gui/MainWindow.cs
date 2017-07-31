@@ -23,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Dialog;
@@ -69,7 +70,7 @@ namespace LongoMatch.Gui
 			if (Utils.OS == OperatingSystemID.OSX) {
 				this.Move (monitor_geometry.Width * 10 / 100, monitor_geometry.Height * 10 / 100);
 			}
-			DatabaseManagerCommand = new LimitationCommand (Constants.DATABASE_MANAGER_FEATURE, () => {
+			DatabaseManagerCommand = new LimitationCommand (LongoMatchFeature.DatabaseManager.ToString (), () => {
 				App.Current.StateController.MoveToModal (DatabasesManagerState.NAME, null, true);
 			});
 		}

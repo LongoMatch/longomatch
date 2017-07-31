@@ -68,4 +68,9 @@ namespace LongoMatch.Core.Common
 		TemporalExclusion,
 		Exclusion,
 	}
+
+	public enum LongoMatchFeature
+	{
+		DatabaseManager
+	}
 }
