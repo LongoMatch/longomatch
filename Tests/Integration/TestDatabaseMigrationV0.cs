@@ -25,6 +25,7 @@ using Moq;
 using NUnit.Framework;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.License;
 using VAS.Core.Interfaces.Multimedia;
 
 namespace Tests.Integration
@@ -35,6 +36,11 @@ namespace Tests.Integration
 		Mock<IGUIToolkit> guiToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
 		Mock<IVideoPlayer> player;
+		Mock<ILicenseManager> mockLicenseManager;
+		Mock<ILicenseStatus> mockLicenseStatus;
+		Mock<ILicenseLimitationsService> mockLicenseLimitationService;
+		ILicenseManager currentLicenseManager;
+		ILicenseLimitationsService currentLimitationService;
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
@@ -43,6 +49,24 @@ namespace Tests.Integration
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			player = new Mock<IVideoPlayer> ();
 			multimediaToolkitMock.Setup (g => g.GetPlayer ()).Returns (player.Object);
+			currentLicenseManager = App.Current.LicenseManager;
+			currentLimitationService = App.Current.LicenseLimitationsService;
+		}
+
+		[TestFixtureTearDown]
+		public void TestFixtureTearDown ()
+		{
+			App.Current.LicenseManager = currentLicenseManager;
+			App.Current.LicenseLimitationsService = currentLimitationService;
+		}
+
+		[SetUp]
+		public void SetUp ()
+		{
+			mockLicenseManager = new Mock<ILicenseManager> ();
+			mockLicenseStatus = new Mock<ILicenseStatus> ();
+			mockLicenseManager.SetupGet ((lm) => lm.LicenseStatus).Returns (mockLicenseStatus.Object);
+			mockLicenseLimitationService = new Mock<ILicenseLimitationsService> ();
 		}
 
 		[TearDown]
@@ -85,6 +109,8 @@ namespace Tests.Integration
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
 			App.Init ();
 			CoreServices.Init ();
+			App.Current.LicenseManager = mockLicenseManager.Object;
+			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
@@ -124,6 +150,8 @@ namespace Tests.Integration
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
 			App.Init ();
 			CoreServices.Init ();
+			App.Current.LicenseManager = mockLicenseManager.Object;
+			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
