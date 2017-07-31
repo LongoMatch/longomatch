@@ -23,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Dialog;
@@ -32,6 +33,8 @@ using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
 
@@ -43,6 +46,7 @@ namespace LongoMatch.Gui
 	{
 		IGUIToolkit guiToolKit;
 		Widget currentPanel;
+		LimitationCommand DatabaseManagerCommand;
 
 		#region Constructors
 
@@ -66,6 +70,9 @@ namespace LongoMatch.Gui
 			if (Utils.OS == OperatingSystemID.OSX) {
 				this.Move (monitor_geometry.Width * 10 / 100, monitor_geometry.Height * 10 / 100);
 			}
+			DatabaseManagerCommand = new LimitationCommand (LongoMatchFeature.DatabaseManager.ToString (), () => {
+				App.Current.StateController.MoveToModal (DatabasesManagerState.NAME, null, true);
+			});
 		}
 
 		#endregion
@@ -180,7 +187,7 @@ namespace LongoMatch.Gui
 					itemAction.Sensitive = true;
 					itemAction.ShortLabel = tool.MenubarLabel;
 					itemAction.Activated += async (sender, e) => {
-						App.Current.StateController.MoveTo (tool.UIFlow.First ().Key, null);
+						await App.Current.StateController.MoveTo (tool.UIFlow.First ().Key, null);
 					};
 
 					this.UIManager.AddUi (mergeId, "/menubar1/ToolsAction", actionName, actionName, UIManagerItemType.Menuitem, false);
@@ -237,8 +244,9 @@ namespace LongoMatch.Gui
 			ProjectsManagerAction.Activated += (o, e) => {
 				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null, true);
 			};
+			//FIXME: this should be done by binding the LimitationCommand to the MenuItem
 			DatabasesManagerAction.Activated += (o, e) => {
-				App.Current.StateController.MoveTo (DatabasesManagerState.NAME, null, true);
+				DatabaseManagerCommand.Execute ();
 			};
 			PreferencesAction.Activated += (sender, e) => {
 				App.Current.StateController.MoveTo (PreferencesState.NAME, null);

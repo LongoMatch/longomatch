@@ -134,5 +134,9 @@ Xavier Queralt Mateu (ca)";
 		public const string LICENSE_CODE_URL = "https://longomatch.com/profile/register_personal/";
 		public const int DB_VERSION_MAJOR = 1;
 		public const int DB_VERSION_MINOR = 0;
+
+		//FIXME: still undecided Upgrade and OtherPlans URL's
+		public const string UPGRADE_URL = "https://longomatch.com";
+		public const string OTHER_PLANS_URL = "https://longomatch.com";
 	}
 }

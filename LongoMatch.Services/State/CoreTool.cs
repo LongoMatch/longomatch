@@ -41,7 +41,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (NewProjectState.NAME, () => new NewProjectState ());
 			uiFlow.Add (ProjectsManagerState.NAME, () => new ProjectsManagerState ());
 			uiFlow.Add (OpenProjectState.NAME, () => new OpenProjectState ());
-			uiFlow.Add (LMDrawingToolState.NAME, () => new LMDrawingToolState ());
+			uiFlow.Add (DrawingToolState.NAME, () => new LMDrawingToolState ());
 			uiFlow.Add (JobsManagerState.NAME, () => new JobsManagerState ());
 			uiFlow.Add (ProjectAnalysisState.NAME, () => new ProjectAnalysisState ());
 			uiFlow.Add (LiveProjectAnalysisState.NAME, () => new LiveProjectAnalysisState ());
@@ -52,6 +52,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (CameraSynchronizationState.NAME, () => new CameraSynchronizationState ());
 			uiFlow.Add (CameraSynchronizationEditorState.NAME, () => new CameraSynchronizationEditorState ());
 			uiFlow.Add (EditPlaylistElementState.NAME, () => new EditPlaylistElementState ());
+			uiFlow.Add (UpgradeLimitationState.NAME, () => new LMUpgradeLimitationState ());
 		}
 
 		#region ITool implementation

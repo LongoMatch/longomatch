@@ -46,8 +46,9 @@ namespace Tests.Controller
 		[Test]
 		public async Task HomeController_StartController_SetsCorrectIcon ()
 		{
-			wibuManager = new LMDummyWibuManager (LMLicenseType.STARTER);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
+			await App.Current.LicenseManager.Init ();
 			await controller.Start ();
 			Assert.AreEqual (Constants.LOGO_STARTER_ICON, App.Current.SoftwareIconName);
 		}
@@ -55,11 +56,13 @@ namespace Tests.Controller
 		[Test]
 		public async Task HomeController_LicenseChangeEvent_ControllerChangesIcon ()
 		{
-			wibuManager = new LMDummyWibuManager (LMLicenseType.NONE);
+			wibuManager = new LMDummyWibuManager ("");
 			App.Current.LicenseManager = wibuManager;
+			await App.Current.LicenseManager.Init ();
 			await controller.Start ();
-			wibuManager = new LMDummyWibuManager (LMLicenseType.PRO);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
+			await App.Current.LicenseManager.Init ();
 
 			Assert.AreEqual (Constants.LOGO_ICON, App.Current.SoftwareIconName);
 			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
