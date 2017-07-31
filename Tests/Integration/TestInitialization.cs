@@ -18,15 +18,16 @@
 using System;
 using System.IO;
 using LongoMatch;
-using VAS.Core.Interfaces.Drawing;
+using LongoMatch.Addins;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
-using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.GUI;
-using LongoMatch.Services;
-using LongoMatch.Addins;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using VAS.Core.Interfaces.License;
+using VAS.Core.Interfaces.Multimedia;
 
 namespace Tests.Integration
 {
@@ -36,7 +37,26 @@ namespace Tests.Integration
 		Mock<IDrawingToolkit> drawingToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
 		Mock<IGUIToolkit> guiToolkitMock;
+		Mock<ILicenseManager> mockLicenseManager;
+		Mock<ILicenseStatus> mockLicenseStatus;
+		Mock<ILicenseLimitationsService> mockLicenseLimitationService;
 		string tmpPath, homePath;
+		ILicenseManager currentLicenseManager;
+		ILicenseLimitationsService currentLimitationService;
+
+		[TestFixtureSetUp]
+		public void FixtureSetup ()
+		{
+			currentLicenseManager = App.Current.LicenseManager;
+			currentLimitationService = App.Current.LicenseLimitationsService;
+		}
+
+		[TestFixtureTearDown]
+		public void TestFixtureTearDown ()
+		{
+			App.Current.LicenseManager = currentLicenseManager;
+			App.Current.LicenseLimitationsService = currentLimitationService;
+		}
 
 		[SetUp]
 		public void Init ()
@@ -49,6 +69,10 @@ namespace Tests.Integration
 			drawingToolkitMock = new Mock<IDrawingToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			guiToolkitMock = new Mock<IGUIToolkit> ();
+			mockLicenseManager = new Mock<ILicenseManager> ();
+			mockLicenseStatus = new Mock<ILicenseStatus> ();
+			mockLicenseManager.SetupGet ((lm) => lm.LicenseStatus).Returns (mockLicenseStatus.Object);
+			mockLicenseLimitationService = new Mock<ILicenseLimitationsService> ();
 		}
 
 		[TearDown]
@@ -82,6 +106,8 @@ namespace Tests.Integration
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
 			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 			App.Current.GUIToolkit = guiToolkitMock.Object;
+			App.Current.LicenseManager = mockLicenseManager.Object;
+			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
 
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 

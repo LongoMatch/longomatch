@@ -36,10 +36,10 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.License;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -58,9 +58,14 @@ namespace Tests.Integration
 		Mock<IFramesCapturer> capturerMock;
 		Mock<IVideoPlayer> playerMock;
 		Mock<IDialogs> mockDialogs;
+		Mock<ILicenseManager> mockLicenseManager;
+		Mock<ILicenseStatus> mockLicenseStatus;
+		Mock<ILicenseLimitationsService> mockLicenseLimitationService;
 		string tmpPath, homePath;
 		EventsController eventsController;
 		ToolsManager toolsManager;
+		ILicenseManager currentLicenseManager;
+		ILicenseLimitationsService currentLimitationService;
 
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
@@ -68,6 +73,15 @@ namespace Tests.Integration
 			// Register the events manager
 			eventsController = new EventsController ();
 			toolsManager = new ToolsManager ();
+			currentLicenseManager = App.Current.LicenseManager;
+			currentLimitationService = App.Current.LicenseLimitationsService;
+		}
+
+		[TestFixtureTearDown]
+		public void TestFixtureTearDown ()
+		{
+			App.Current.LicenseManager = currentLicenseManager;
+			App.Current.LicenseLimitationsService = currentLimitationService;
 		}
 
 		[SetUp]
@@ -98,6 +112,10 @@ namespace Tests.Integration
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
+			mockLicenseManager = new Mock<ILicenseManager> ();
+			mockLicenseStatus = new Mock<ILicenseStatus> ();
+			mockLicenseManager.SetupGet ((lm) => lm.LicenseStatus).Returns (mockLicenseStatus.Object);
+			mockLicenseLimitationService = new Mock<ILicenseLimitationsService> ();
 		}
 
 		[TearDown]
@@ -128,6 +146,8 @@ namespace Tests.Integration
 			App.Current.GUIToolkit = guiToolkitMock.Object;
 			App.Current.Dialogs = mockDialogs.Object;
 			App.Current.Config.AutoSave = true;
+			App.Current.LicenseManager = mockLicenseManager.Object;
+			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 
 			// Start importing templates
