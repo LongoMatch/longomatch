@@ -150,6 +150,8 @@
 		<Compile Include="Controller\TestHomeController.cs" />
 		<Compile Include="Services\TestLMLicenseLimitationsService.cs" />
 		<Compile Include="State\TestLMUpgradeLimitationState.cs" />
+		<Compile Include="Plugins\Exporters\TestCsvExporter.cs" />
+		<Compile Include="Plugins\Exporters\TestLongoMatchExporter.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Core\vas-dibujo.svg">
@@ -194,6 +196,7 @@
 		<Folder Include="State\" />
 		<Folder Include="Core\ViewModel\" />
 		<Folder Include="Services\ViewModel\" />
+		<Folder Include="Plugins\Exporters\" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="packages.config" />

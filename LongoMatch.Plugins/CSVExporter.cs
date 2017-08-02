@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
@@ -54,10 +55,11 @@ namespace LongoMatch.Plugins
 			}
 		}
 
-		protected override void ExportProject (Project project, string filename)
+		protected override async Task ExportProject (Project project, string filename)
 		{
 			ProjectToCSV exporter = new ProjectToCSV (project as LMProject, filename);
-			exporter.Export ();
+			await Task.Run (() => exporter.Export ());
+			ExportDone = true;
 		}
 	}
 

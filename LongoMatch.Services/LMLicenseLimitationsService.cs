@@ -33,6 +33,10 @@ namespace LongoMatch.Services
 			string conversionLimitation = LongoMatchFeature.VideoConverter.ToString ();
 			var converterFeature = Get<FeatureLimitationVM> (conversionLimitation);
 			converterFeature.Model.Enabled = status.Limitations.Contains (conversionLimitation);
+
+			string excelExportLimitation = LongoMatchFeature.ExcelExport.ToString ();
+			var excelExportFeature = Get<FeatureLimitationVM> (excelExportLimitation);
+			excelExportFeature.Model.Enabled = status.Limitations.Contains (excelExportLimitation);
 		}
 
 		void CreateLimitations ()
@@ -48,6 +52,11 @@ namespace LongoMatch.Services
 				RegisterName = LongoMatchFeature.VideoConverter.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.VideoConverter.ToString ()),
 				FeatureName = Catalog.GetString ("Video Converter")
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = LongoMatchFeature.ExcelExport.ToString (),
+				Enabled = status.Limitations.Contains (LongoMatchFeature.ExcelExport.ToString ()),
+				FeatureName = "Excel Export"
 			});
 		}
 	}
