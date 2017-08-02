@@ -23,6 +23,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Gui.Component;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -37,6 +38,7 @@ namespace LongoMatch.Gui.Dialog
 		uint maxHeight;
 		VideoStandard selectedVideoStandard;
 		VideoStandard [] supportedVideoStandards;
+		LimitationCommand conversionCommand;
 
 		public VideoConversionTool ()
 		{
@@ -52,12 +54,14 @@ namespace LongoMatch.Gui.Dialog
 			FillStandards ();
 			FillBitrates ();
 			addbutton1.Clicked += OnAddbuttonClicked;
-			buttonOk.Clicked += OnButtonOkClicked;
 			convertimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-converter-big", 64);
 			addimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.ButtonNormalSize);
 			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
 			addbutton1.CanFocus = false;
 			scrolledwindow1.Visible = false;
+			conversionCommand = new LimitationCommand (LongoMatchFeature.VideoConverter.ToString (), ExecuteConversion);
+			// FIXME: port to viewmodel this view and do the proper bindings
+			buttonOk.BindManually (conversionCommand);
 		}
 
 		public List<MediaFile> Files {
@@ -169,7 +173,7 @@ namespace LongoMatch.Gui.Dialog
 			CheckStatus ();
 		}
 
-		protected void OnButtonOkClicked (object sender, System.EventArgs e)
+		void ExecuteConversion ()
 		{
 			EncodingSettings encSettings;
 			EncodingQuality qual;
@@ -201,6 +205,10 @@ namespace LongoMatch.Gui.Dialog
 				mediafilechooser1.CurrentPath, true, false, 0, null);
 
 			EncodingSettings = encSettings;
+
+			ConversionJob job = new ConversionJob (Files, EncodingSettings);
+			App.Current.JobsManager.Add (job);
+
 			Respond (ResponseType.Ok);
 		}
 	}

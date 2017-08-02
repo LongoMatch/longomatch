@@ -2,6 +2,7 @@
 //  Copyright (C) 2017 Fluendo S.A.
 using System;
 using System.Linq;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.License;
 using VAS.Core.License;
@@ -24,17 +25,29 @@ namespace LongoMatch.Services
 		protected override void UpdateFeatureLimitations ()
 		{
 			LMLicenseStatus status = (LMLicenseStatus)App.Current.LicenseManager.LicenseStatus;
-			var databaseManagerFeature = Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-			databaseManagerFeature.Model.Enabled = status.Limitations.Contains (LongoMatchFeature.DatabaseManager.ToString ());
+
+			string databaseLimitation = LongoMatchFeature.DatabaseManager.ToString ();
+			var databaseManagerFeature = Get<FeatureLimitationVM> (databaseLimitation);
+			databaseManagerFeature.Model.Enabled = status.Limitations.Contains (databaseLimitation);
+
+			string conversionLimitation = LongoMatchFeature.VideoConverter.ToString ();
+			var converterFeature = Get<FeatureLimitationVM> (conversionLimitation);
+			converterFeature.Model.Enabled = status.Limitations.Contains (conversionLimitation);
 		}
 
 		void CreateLimitations ()
 		{
 			LMLicenseStatus status = (LMLicenseStatus)App.Current.LicenseManager.LicenseStatus;
+
 			Add (new FeatureLicenseLimitation {
 				RegisterName = LongoMatchFeature.DatabaseManager.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.DatabaseManager.ToString ()),
-				FeatureName = "Database Manager"
+				FeatureName = Catalog.GetString ("Database Manager")
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = LongoMatchFeature.VideoConverter.ToString (),
+				Enabled = status.Limitations.Contains (LongoMatchFeature.VideoConverter.ToString ()),
+				FeatureName = Catalog.GetString ("Video Converter")
 			});
 		}
 	}

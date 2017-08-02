@@ -299,10 +299,6 @@ namespace LongoMatch.Gui
 			VideoConversionTool converter = new VideoConversionTool ();
 			res = converter.Run ();
 			converter.Destroy ();
-			if (res == (int)ResponseType.Ok) {
-				ConversionJob job = new ConversionJob (converter.Files, converter.EncodingSettings);
-				App.Current.JobsManager.Add (job);
-			}
 		}
 
 		protected virtual void OnHelpAction1Activated (object sender, System.EventArgs e)
