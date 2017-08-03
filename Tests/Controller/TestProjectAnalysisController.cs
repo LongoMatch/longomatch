@@ -31,6 +31,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
@@ -84,6 +85,7 @@ namespace Tests.Controller
 			mockList.Add (mtkMock);
 
 			gtkMock = new Mock<IGUIToolkit> ();
+			gtkMock.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
 			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
 			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
 				.Returns (() => settings.EncodingSettings.OutputFile)

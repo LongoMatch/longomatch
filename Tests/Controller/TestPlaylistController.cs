@@ -51,6 +51,7 @@ namespace Tests.Controller
 		public void FixtureSetup ()
 		{
 			mockGuiToolkit = new Mock<IGUIToolkit> ();
+			mockGuiToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
 
 			storageManagerMock = new Mock<IStorageManager> ();
 			storageManagerMock.SetupAllProperties ();
