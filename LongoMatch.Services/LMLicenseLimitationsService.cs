@@ -37,6 +37,10 @@ namespace LongoMatch.Services
 			string excelExportLimitation = LongoMatchFeature.ExcelExport.ToString ();
 			var excelExportFeature = Get<FeatureLimitationVM> (excelExportLimitation);
 			excelExportFeature.Model.Enabled = status.Limitations.Contains (excelExportLimitation);
+
+			string xmlLimitation = LongoMatchFeature.XMlImportExport.ToString ();
+			var xmlFeature = Get<FeatureLimitationVM> (xmlLimitation);
+			xmlFeature.Model.Enabled = status.Limitations.Contains (xmlLimitation);
 		}
 
 		void CreateLimitations ()
@@ -57,6 +61,11 @@ namespace LongoMatch.Services
 				RegisterName = LongoMatchFeature.ExcelExport.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.ExcelExport.ToString ()),
 				FeatureName = "Excel Export"
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = LongoMatchFeature.XMlImportExport.ToString (),
+				Enabled = status.Limitations.Contains (LongoMatchFeature.XMlImportExport.ToString ()),
+				FeatureName = "XML Import/Export"
 			});
 		}
 	}
