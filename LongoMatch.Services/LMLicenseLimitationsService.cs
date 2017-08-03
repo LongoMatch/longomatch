@@ -5,6 +5,7 @@ using System.Linq;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.License;
+using VAS.Core.Common;
 using VAS.Core.License;
 using VAS.Core.ViewModel;
 using VAS.Services;
@@ -41,6 +42,10 @@ namespace LongoMatch.Services
 			string xmlLimitation = LongoMatchFeature.XMlImportExport.ToString ();
 			var xmlFeature = Get<FeatureLimitationVM> (xmlLimitation);
 			xmlFeature.Model.Enabled = status.Limitations.Contains (xmlLimitation);
+			
+            string zoomLimitation = VASFeature.Zoom.ToString ();
+			var zoomFeature = Get<FeatureLimitationVM> (zoomLimitation);
+			zoomFeature.Model.Enabled = status.Limitations.Contains (zoomLimitation);
 		}
 
 		void CreateLimitations ()
@@ -66,6 +71,11 @@ namespace LongoMatch.Services
 				RegisterName = LongoMatchFeature.XMlImportExport.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.XMlImportExport.ToString ()),
 				FeatureName = "XML Import/Export"
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = VASFeature.Zoom.ToString (),
+				Enabled = status.Limitations.Contains (VASFeature.Zoom.ToString ()),
+				FeatureName = Catalog.GetString ("Zoom")
 			});
 		}
 	}
