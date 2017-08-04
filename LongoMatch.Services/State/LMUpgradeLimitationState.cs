@@ -23,17 +23,17 @@ namespace LongoMatch.Services.State
 			LimitationVM limitation = (LimitationVM)data.limitationVM;
 			if (data.limitationVM is FeatureLimitationVM) {
 				FeatureLimitationVM featureLimitation = (FeatureLimitationVM)limitation;
-				string featureMessage = (string.IsNullOrEmpty (featureLimitation.DetailInfo)) ? featureLimitation.FeatureName : featureLimitation.DetailInfo;
+				string featureMessage = (string.IsNullOrEmpty (featureLimitation.DetailInfo)) ? featureLimitation.DisplayName : featureLimitation.DetailInfo;
 				if (!string.IsNullOrEmpty (featureLimitation.DetailInfo)) {
 					ViewModel.Header = $"{Catalog.GetString (featureLimitation.DetailInfo)}";
 				} else {
-					ViewModel.Header = $"{Catalog.GetString ("The")} {featureLimitation.FeatureName} " +
+					ViewModel.Header = $"{Catalog.GetString ("The")} {featureLimitation.DisplayName} " +
 						$"{Catalog.GetString ("is not available in the")} {App.Current.LicenseManager.LicenseStatus.PlanName} " +
 						$"{Catalog.GetString ("plan")}";
 				}
 			} else if (limitation is CountLimitationVM) {
 				ViewModel.Header = Catalog.GetString ("You have reached the limit of") +
-					$" {((CountLimitationVM)limitation).RegisterName} available for your plan";
+					$" {limitation.DisplayName} available for your plan";
 			} else {
 				ViewModel.Header = Catalog.GetString ("Unlock your team's potential with LongoMatch PRO");
 			}

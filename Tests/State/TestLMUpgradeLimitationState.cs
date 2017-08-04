@@ -42,22 +42,51 @@ namespace Tests.State
 		}
 
 		[Test]
-		public void StateLoad_FeatureLimitation_ConfiguredWithFeatureName ()
+		public void StateLoad_FeatureLimitation_ConfiguredWithDisplayName ()
 		{
 			dynamic properties = new ExpandoObject ();
 			var limitation = new FeatureLicenseLimitation ();
-			limitation.FeatureName = "test";
+			limitation.DisplayName = "test";
 			limitation.RegisterName = "register_name";
 			properties.limitationVM = new FeatureLimitationVM {
 				Model = limitation
 			};
 			state.LoadState (properties);
 
-			Assert.IsTrue (state.ViewModel.Header.Contains (limitation.FeatureName));
+			Assert.IsTrue (state.ViewModel.Header.Contains (limitation.DisplayName));
 		}
 
 		[Test]
-		public void StateLoad_FeatureLimitation_ConfiguredWithCountLimitation ()
+		public void StateLoad_FeatureLimitationNoDisplay_ConfiguredWithRegisterName ()
+		{
+			dynamic properties = new ExpandoObject ();
+			var limitation = new FeatureLicenseLimitation ();
+			limitation.RegisterName = "register_name";
+			properties.limitationVM = new FeatureLimitationVM {
+				Model = limitation
+			};
+			state.LoadState (properties);
+
+			Assert.IsTrue (state.ViewModel.Header.Contains (limitation.RegisterName));
+		}
+
+		[Test]
+		public void StateLoad_CountLimitation_ConfiguredWithDisplayName ()
+		{
+			dynamic properties = new ExpandoObject ();
+			var limitation = new CountLicenseLimitation ();
+			limitation.DisplayName = "test";
+			limitation.RegisterName = "register_name";
+			properties.limitationVM = new CountLimitationVM {
+				Model = limitation
+			};
+			state.LoadState (properties);
+
+			Assert.IsTrue (state.ViewModel.Header.Contains (limitation.DisplayName));
+		}
+
+		[Test]
+		public void StateLoad_CountLimitationNoDisplay_ConfiguredWithRegisterName ()
 		{
 			dynamic properties = new ExpandoObject ();
 			var limitation = new CountLicenseLimitation ();
@@ -65,6 +94,31 @@ namespace Tests.State
 			properties.limitationVM = new CountLimitationVM {
 				Model = limitation
 			};
+			state.LoadState (properties);
+
+			Assert.IsTrue (state.ViewModel.Header.Contains (limitation.RegisterName));
+		}
+
+		[Test]
+		public void StateLoad_Limitation_ConfiguredWithGenericMessage ()
+		{
+			dynamic properties = new ExpandoObject ();
+			var limitation = new LicenseLimitation ();
+			limitation.DisplayName = "test";
+			limitation.RegisterName = "register_name";
+			properties.limitationVM = new LimitationVM {
+				Model = limitation
+			};
+			state.LoadState (properties);
+
+			Assert.IsTrue (state.ViewModel.Header == Catalog.GetString ("Unlock your team's potential with LongoMatch PRO"));
+		}
+
+		[Test]
+		public void StateLoad_NoLimitation_ConfiguredWithGenericMessage ()
+		{
+			dynamic properties = new ExpandoObject ();
+			properties.limitationVM = null;
 			state.LoadState (properties);
 
 			Assert.IsTrue (state.ViewModel.Header == Catalog.GetString ("Unlock your team's potential with LongoMatch PRO"));

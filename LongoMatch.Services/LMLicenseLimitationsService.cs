@@ -88,43 +88,44 @@ namespace LongoMatch.Services
 			Add (new FeatureLicenseLimitation {
 				RegisterName = LongoMatchFeature.DatabaseManager.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.DatabaseManager.ToString ()),
-				FeatureName = Catalog.GetString ("Database Manager")
+				DisplayName = Catalog.GetString ("Database Manager")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = LongoMatchFeature.VideoConverter.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.VideoConverter.ToString ()),
-				FeatureName = Catalog.GetString ("Video Converter")
+				DisplayName = Catalog.GetString ("Video Converter")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = LongoMatchFeature.ExcelExport.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.ExcelExport.ToString ()),
-				FeatureName = "Excel Export"
+				DisplayName = Catalog.GetString ("Excel Export")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = LongoMatchFeature.XMlImportExport.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchFeature.XMlImportExport.ToString ()),
-				FeatureName = "XML Import/Export"
+				DisplayName = Catalog.GetString ("XML Import/Export")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = VASFeature.Zoom.ToString (),
 				Enabled = status.Limitations.Contains (VASFeature.Zoom.ToString ()),
-				FeatureName = Catalog.GetString ("Zoom")
+				DisplayName = Catalog.GetString ("Zoom")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = VASFeature.OpenMultiCamera.ToString (),
 				Enabled = status.Limitations.Contains (VASFeature.OpenMultiCamera.ToString ()),
-				FeatureName = Catalog.GetString ("Multi-Camera"),
+				DisplayName = Catalog.GetString ("Multi-Camera"),
 				DetailInfo = Catalog.GetString ("The project you are trying to use uses the Multi-Camera feature, which is not available in the " +
 											   status.PlanName + " plan")
 			});
 			Add (new FeatureLicenseLimitation {
 				RegisterName = VASFeature.CreateMultiCamera.ToString (),
 				Enabled = status.Limitations.Contains (VASFeature.CreateMultiCamera.ToString ()),
-				FeatureName = Catalog.GetString ("Multi-Camera")
+				DisplayName = Catalog.GetString ("Multi-Camera")
 			});
 			Add (new CountLicenseLimitation {
 				RegisterName = LongoMatchCountLimitedObjects.Projects.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchCountLimitedObjects.Projects.ToString ()),
+				DisplayName = Catalog.GetString ("Projects"),
 				Maximum = 5,
 			}, new Command (() => Utils.OpenURL (Constants.WEBSITE, "Limitation_Projects")));
 		}
