@@ -70,6 +70,10 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.VBox teamsvbox;
 
+		private global::Gtk.Alignment limitationAlignment;
+
+		private global::LongoMatch.Gui.Component.LMLimitationWidget limitationWidget;
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 
 		private global::Gtk.TreeView teamseditortreeview;
@@ -325,6 +329,19 @@ namespace LongoMatch.Gui.Panel
 			this.teamsvbox.Name = "teamsvbox";
 			this.teamsvbox.Spacing = 6;
 			// Container child teamsvbox.Gtk.Box+BoxChild
+			this.limitationAlignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.limitationAlignment.Name = "limitationAlignment";
+			// Container child limitationAlignment.Gtk.Container+ContainerChild
+			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget ();
+			this.limitationWidget.Events = ((global::Gdk.EventMask)(256));
+			this.limitationWidget.Name = "limitationWidget";
+			this.limitationAlignment.Add (this.limitationWidget);
+			this.teamsvbox.Add (this.limitationAlignment);
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.teamsvbox [this.limitationAlignment]));
+			w30.Position = 0;
+			w30.Expand = false;
+			w30.Fill = false;
+			// Container child teamsvbox.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -334,28 +351,28 @@ namespace LongoMatch.Gui.Panel
 			this.teamseditortreeview.Name = "teamseditortreeview";
 			this.GtkScrolledWindow1.Add (this.teamseditortreeview);
 			this.teamsvbox.Add (this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.teamsvbox [this.GtkScrolledWindow1]));
-			w30.Position = 0;
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.teamsvbox [this.GtkScrolledWindow1]));
+			w32.Position = 1;
 			this.hbox1.Add (this.teamsvbox);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamsvbox]));
-			w31.Position = 0;
-			w31.Expand = false;
-			w31.Fill = false;
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamsvbox]));
+			w33.Position = 0;
+			w33.Expand = false;
+			w33.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.teamtemplateeditor1 = new global::LongoMatch.Gui.Component.TeamTemplateEditor ();
 			this.teamtemplateeditor1.Events = ((global::Gdk.EventMask)(256));
 			this.teamtemplateeditor1.Name = "teamtemplateeditor1";
 			this.teamtemplateeditor1.Edited = false;
 			this.hbox1.Add (this.teamtemplateeditor1);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamtemplateeditor1]));
-			w32.Position = 1;
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamtemplateeditor1]));
+			w34.Position = 1;
 			this.contentvbox.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
-			w33.Position = 1;
+			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w35.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
 			this.teameditorvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.contentalignment]));
-			w35.Position = 1;
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.contentalignment]));
+			w37.Position = 1;
 			this.Add (this.teameditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

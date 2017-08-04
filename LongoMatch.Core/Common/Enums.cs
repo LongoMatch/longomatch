@@ -81,5 +81,7 @@ namespace LongoMatch.Core.Common
 	public enum LongoMatchCountLimitedObjects
 	{
 		Projects,
+		Team,
+		Dashboard
 	}
 }

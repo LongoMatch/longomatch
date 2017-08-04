@@ -31,7 +31,7 @@ namespace LongoMatch.Services.Controller
 	{
 		public DashboardsController ()
 		{
-			TemplateName = "Dashboard";
+			TemplateName = LongoMatchCountLimitedObjects.Dashboard.ToString ();
 			Extension = Constants.CAT_TEMPLATE_EXT;
 			Provider = App.Current.CategoriesTemplatesProvider;
 

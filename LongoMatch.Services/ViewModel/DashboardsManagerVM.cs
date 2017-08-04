@@ -16,21 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.ViewModel;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Services.ViewModel;
-using VAS.Core.MVVMC;
-using VAS.Core;
-using VAS.Core.Common;
-using VAS.Core.Interfaces.MVVMC;
-using System;
 
 namespace LongoMatch.Services.ViewModel
 {
 	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
-
 		public DashboardsManagerVM ()
 		{
 			AddButton = LoadedTemplate.AddButton;
@@ -39,6 +36,10 @@ namespace LongoMatch.Services.ViewModel
 			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", StyleConf.TemplatesIconSize);
+			if (LimitationChart != null) {
+				LimitationChart.Dispose ();
+				LimitationChart = null;
+			}
 		}
 
 		public Command<string> AddButton {
@@ -50,6 +51,14 @@ namespace LongoMatch.Services.ViewModel
 			get {
 				return LoadedTemplate;
 			}
+		}
+
+		/// <summary>
+		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
+		/// </summary>
+		public CountLimitationBarChartVM LimitationChart {
+			get;
+			set;
 		}
 	}
 }

@@ -6233,6 +6233,23 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="WidthRequest">280</property>
                         <property name="Spacing">6</property>
                         <child>
+                          <widget class="Gtk.Alignment" id="limitationAlignment">
+                            <property name="MemberName" />
+                            <child>
+                              <widget class="LongoMatch.Gui.Component.LMLimitationWidget" id="limitationWidget">
+                                <property name="MemberName" />
+                                <property name="Events">ButtonPressMask</property>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
                           <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
@@ -6245,7 +6262,7 @@ You can continue with the current capture, cancel it or save your project.
                             </child>
                           </widget>
                           <packing>
-                            <property name="Position">0</property>
+                            <property name="Position">1</property>
                             <property name="AutoSize">True</property>
                           </packing>
                         </child>
@@ -8134,6 +8151,23 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="WidthRequest">280</property>
                         <property name="Spacing">6</property>
                         <child>
+                          <widget class="Gtk.Alignment" id="limitationAlignment">
+                            <property name="MemberName" />
+                            <child>
+                              <widget class="LongoMatch.Gui.Component.LMLimitationWidget" id="limitationWidget">
+                                <property name="MemberName" />
+                                <property name="Events">ButtonPressMask</property>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
                           <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
@@ -8146,7 +8180,7 @@ You can continue with the current capture, cancel it or save your project.
                             </child>
                           </widget>
                           <packing>
-                            <property name="Position">0</property>
+                            <property name="Position">1</property>
                             <property name="AutoSize">False</property>
                           </packing>
                         </child>

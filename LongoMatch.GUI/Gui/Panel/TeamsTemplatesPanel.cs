@@ -19,6 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
@@ -144,6 +145,7 @@ namespace LongoMatch.Gui.Panel
 				}
 				viewModel = value;
 				ctx.UpdateViewModel (viewModel);
+				limitationWidget.SetViewModel (viewModel.LimitationChart);
 				if (viewModel != null) {
 					foreach (LMTeamVM team in viewModel.ViewModels) {
 						Add (team);

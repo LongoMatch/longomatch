@@ -35,7 +35,7 @@ namespace LongoMatch.Services.Controller
 	{
 		public TeamsController ()
 		{
-			TemplateName = "Team";
+			TemplateName = LongoMatchCountLimitedObjects.Team.ToString ();
 			Extension = Constants.TEAMS_TEMPLATE_EXT;
 			Provider = App.Current.TeamTemplatesProvider;
 
