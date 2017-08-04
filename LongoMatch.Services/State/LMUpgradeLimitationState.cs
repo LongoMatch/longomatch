@@ -31,10 +31,17 @@ namespace LongoMatch.Services.State
 						$"{Catalog.GetString ("is not available in the")} {App.Current.LicenseManager.LicenseStatus.PlanName} " +
 						$"{Catalog.GetString ("plan")}";
 				}
+			} else if (limitation is CountLimitationVM) {
+				ViewModel.Header = Catalog.GetString ("You have reached the limit of") +
+					$" {((CountLimitationVM)limitation).RegisterName} available for your plan";
 			} else {
 				ViewModel.Header = Catalog.GetString ("Unlock your team's potential with LongoMatch PRO");
 			}
-			ViewModel.FeaturesHeader = Catalog.GetString ("Upgrade to get access to the following features");
+			if (limitation != null) {
+				ViewModel.FeaturesHeader = Catalog.GetString ("Upgrade to LongoMatch PRO and unlock your team's potential");
+			} else {
+				ViewModel.FeaturesHeader = Catalog.GetString ("Upgrade to get access to the following features");
+			}
 			//FIXME: still undecided Features
 			ViewModel.Features = new RangeObservableCollection<string> {
 				Catalog.GetString("Unlimited projects"),
