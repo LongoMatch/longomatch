@@ -76,4 +76,9 @@ namespace LongoMatch.Core.Common
 		ExcelExport,
 		XMlImportExport
 	}
+
+	public enum LongoMatchCountLimitedObjects
+	{
+		Projects,
+	}
 }
