@@ -24,10 +24,10 @@ namespace Tests.Services
 		LMLicenseLimitationsService service;
 		ILicenseManager currentLicenseManager;
 		LMDummyWibuManager wibuManager;
+
 		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ())
 													 .Concat (Enum.GetValues (typeof (VASFeature)).Cast<VASFeature> ().Select (e => e.ToString ())).ToList ();
-
-		//static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
+		static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
 		static IEnumerable<string> basicLimitations = new List<string> { };
 		static IEnumerable<string> starterLimitations = new List<string> {
@@ -57,7 +57,7 @@ namespace Tests.Services
 
 		static IEnumerable<string> GetAllLimitations ()
 		{
-			foreach (var limitation in featureList/*.Union (countList)*/) {
+			foreach (var limitation in featureList.Union (countList)) {
 				yield return limitation;
 			}
 		}
