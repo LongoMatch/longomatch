@@ -26,8 +26,10 @@ namespace Tests.Services
 		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ()).ToList ();
 		//static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
-		static IEnumerable<string> starterLimitations = new List<string> { LongoMatchFeature.ExcelExport.ToString () };
 		static IEnumerable<string> basicLimitations = new List<string> { };
+		static IEnumerable<string> starterLimitations = new List<string> { 
+			LongoMatchFeature.ExcelExport.ToString (), 
+			LongoMatchFeature.XMlImportExport.ToString ()  };
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()

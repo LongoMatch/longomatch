@@ -73,6 +73,7 @@ namespace LongoMatch.Core.Common
 	{
 		DatabaseManager,
 		VideoConverter,
-		ExcelExport
+		ExcelExport,
+		XMlImportExport
 	}
 }
