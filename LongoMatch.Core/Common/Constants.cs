@@ -139,5 +139,8 @@ Xavier Queralt Mateu (ca)";
 		//FIXME: still undecided Upgrade and OtherPlans URL's
 		public const string UPGRADE_URL = "https://longomatch.com";
 		public const string OTHER_PLANS_URL = "https://longomatch.com";
+
+		public const int PROJECT_CELL_WIDTH = 310;
+		public const int PROJECT_CELL_HEIGHT = 70;
 	}
 }

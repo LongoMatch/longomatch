@@ -82,8 +82,7 @@ namespace Stetic
 			{
 				return res;
 			}
-			else
-			{
+			else {
 				int sz;
 				int sy;
 				global::Gtk.Icon.SizeLookup(size, out sz, out sy);
@@ -97,8 +96,7 @@ namespace Stetic
 					{
 						return Stetic.IconLoader.LoadIcon(widget, "gtk-missing-image", size);
 					}
-					else
-					{
+					else {
 						Gdk.Pixmap pmap = new Gdk.Pixmap(Gdk.Screen.Default.RootWindow, sz, sz);
 						Gdk.GC gc = new Gdk.GC(pmap);
 						gc.RgbFgColor = new Gdk.Color(255, 255, 255);

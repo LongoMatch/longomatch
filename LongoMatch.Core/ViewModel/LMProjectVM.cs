@@ -44,6 +44,9 @@ namespace LongoMatch.Core.ViewModel
 			get {
 				return Model.Description.Description;
 			}
+			set {
+				Model.Description.Description = value;
+			}
 		}
 
 		/// <summary>
@@ -124,6 +127,9 @@ namespace LongoMatch.Core.ViewModel
 			get {
 				return Model.Description.MatchDate;
 			}
+			set {
+				Model.Description.MatchDate = value;
+			}
 		}
 
 		/// <summary>
@@ -149,6 +155,16 @@ namespace LongoMatch.Core.ViewModel
 			}
 			set {
 				Model.Description.Competition = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets the title.
+		/// </summary>
+		/// <value>The title.</value>
+		public string Title {
+			get {
+				return Model.Description.Competition;
 			}
 		}
 

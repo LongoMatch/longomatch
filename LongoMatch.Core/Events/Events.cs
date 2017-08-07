@@ -85,5 +85,7 @@ namespace LongoMatch.Core.Events
 	public class UpdateLineup : Event
 	{
 	}
+
+	public class ResyncEvent : Event { }
 }
 

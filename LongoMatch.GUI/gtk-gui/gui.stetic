@@ -86,7 +86,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectListWidget" design-size="572 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectsIconWidget" design-size="572 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -193,6 +193,83 @@ Sort by competition</property>
           <packing>
             <property name="Position">3</property>
             <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectListWidget" design-size="572 300">
+    <property name="MemberName" />
+    <child>
+      <widget class="Gtk.VBox" id="vbox2">
+        <property name="MemberName" />
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="VAS.UI.Helpers.ImageView" id="focusimage">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Entry" id="filterEntry">
+                <property name="MemberName" />
+                <property name="WidthRequest">100</property>
+                <property name="CanFocus">True</property>
+                <property name="IsEditable">True</property>
+                <property name="InvisibleChar">●</property>
+                <signal name="Changed" handler="OnFilterentryChanged" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ComboBox" id="sortcombobox">
+                <property name="MemberName" />
+                <property name="WidthRequest">150</property>
+                <property name="IsTextCombo">True</property>
+                <property name="Items" translatable="yes">Sort by name
+Sort by date
+Sort by modification date
+Sort by season
+Sort by competition</property>
+                <property name="Active">0</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+            <property name="Padding">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="LongoMatch.Gui.Component.LMLimitationWidget" id="limitationWidget">
+            <property name="MemberName" />
+            <property name="Events">ButtonPressMask</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -4602,7 +4679,7 @@ You can continue with the current capture, cancel it or save your project.
             <property name="LeftPadding">12</property>
             <property name="RightPadding">12</property>
             <child>
-              <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget">
+              <widget class="LongoMatch.Gui.Component.ProjectsIconWidget" id="projectlistwidget">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
               </widget>
@@ -7295,7 +7372,7 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>
@@ -7321,7 +7398,6 @@ You can continue with the current capture, cancel it or save your project.
                             <child>
                               <widget class="Gtk.VBox" id="projectbox">
                                 <property name="MemberName" />
-                                <property name="Visible">False</property>
                                 <child>
                                   <widget class="LongoMatch.Gui.Component.GameDescriptionHeader" id="gamedescriptionheader1">
                                     <property name="MemberName" />
@@ -10120,7 +10196,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget1">
+          <widget class="LongoMatch.Gui.Component.ProjectsIconWidget" id="projectlistwidget1">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
           </widget>

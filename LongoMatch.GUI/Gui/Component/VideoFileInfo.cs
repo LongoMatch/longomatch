@@ -24,6 +24,7 @@ using Misc = VAS.UI.Helpers.Misc;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
+	//FIXME: Migrate to MVVM
 	public partial class VideoFileInfo : Gtk.Bin
 	{
 		public event EventHandler Changed;

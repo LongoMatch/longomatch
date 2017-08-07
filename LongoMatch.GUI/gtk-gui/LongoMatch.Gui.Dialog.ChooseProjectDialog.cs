@@ -4,7 +4,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class ChooseProjectDialog
 	{
-		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
+		private global::LongoMatch.Gui.Component.ProjectsIconWidget projectlistwidget1;
 
 		private global::Gtk.Button buttonCancel;
 
@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.projectlistwidget1 = new global::LongoMatch.Gui.Component.ProjectListWidget ();
+			this.projectlistwidget1 = new global::LongoMatch.Gui.Component.ProjectsIconWidget ();
 			this.projectlistwidget1.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget1.Name = "projectlistwidget1";
 			w1.Add (this.projectlistwidget1);
