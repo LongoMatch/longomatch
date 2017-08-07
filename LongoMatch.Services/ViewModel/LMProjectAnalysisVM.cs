@@ -1,6 +1,7 @@
 ﻿//
 //  Copyright (C) 2016 Fluendo S.A.
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
@@ -29,6 +30,8 @@ namespace LongoMatch.Services.ViewModel
 			ShowStatsCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = Project.Model }));
 			CloseCommand = new AsyncCommand (Close);
+			ShowWarningLimitation = new LimitationCommand (VASFeature.OpenMultiCamera.ToString (), () => { });
+			ShowWarningLimitation.LimitationCondition = () => Project.FileSet.Count () > 1;
 		}
 
 		protected override void DisposeManagedResources ()
@@ -79,6 +82,12 @@ namespace LongoMatch.Services.ViewModel
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Gets or sets the show warning limitation command.
+		/// </summary>
+		/// <value>The show warning limitation command.</value>
+		public LimitationCommand ShowWarningLimitation { get; }
 
 		async Task Close ()
 		{

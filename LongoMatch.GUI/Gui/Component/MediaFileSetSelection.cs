@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 
-			MediaFileChooser chooser = new MediaFileChooser (name);
+			MediaFileChooser chooser = new MediaFileChooser (name, fileChoosers.Count + 1);
 
 			chooser.ChangedEvent += HandleFileChangedEvent;
 

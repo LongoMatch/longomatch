@@ -56,6 +56,9 @@ namespace Tests.Controller
 
 		List<Mock> mockList;
 
+		Mock<ILicenseLimitationsService> mockLimitationService;
+		ILicenseLimitationsService currentService;
+
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
 		{
@@ -104,13 +107,14 @@ namespace Tests.Controller
 			videoPlayerVM = new VideoPlayerVM ();
 			videoPlayerVM.Player = player;
 			player.SetViewModel (videoPlayerVM);
+
+			currentService = App.Current.LicenseLimitationsService;
 		}
 
 		[SetUp ()]
 		public void Setup ()
 		{
 			settings.EncodingSettings.OutputFile = Path.GetTempFileName ();
-
 			App.Current.DatabaseManager = new LocalDatabaseManager ();
 
 			project = Utils.CreateProject ();
@@ -128,6 +132,8 @@ namespace Tests.Controller
 				context.AddAction (action);
 			}
 			App.Current.KeyContextManager.NewKeyContexts (new List<KeyContext> { context });
+			mockLimitationService = new Mock<ILicenseLimitationsService> ();
+			App.Current.LicenseLimitationsService = mockLimitationService.Object;
 		}
 
 		[TearDown ()]
@@ -145,6 +151,8 @@ namespace Tests.Controller
 			foreach (Mock mock in mockList) {
 				mock.ResetCalls ();
 			}
+
+			App.Current.LicenseLimitationsService = currentService;
 		}
 
 		[Test ()]
@@ -328,6 +336,46 @@ namespace Tests.Controller
 			App.Current.KeyContextManager.HandleKeyPressed (App.Current.Keyboard.ParseName ("<Primary>+w"));
 
 			Assert.IsTrue (closeCalled);
+		}
+
+		[Test]
+		public void NavigationEvent_LimitationEnabled_ShowWarningLimitation ()
+		{
+			// Arrange
+			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
+
+			// Act
+			App.Current.EventsBroker.Publish (new NavigationEvent { Name = "ProjectAnalysis", IsModal = false });
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (VASFeature.OpenMultiCamera.ToString ()), Times.Once);
+		}
+
+		[Test]
+		public void NavigationEvent_NoLimitationCanExecuteFeature_DoNothing ()
+		{
+			// Arrange
+			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (true);
+
+			// Act
+			App.Current.EventsBroker.Publish (new NavigationEvent { Name = "ProjectAnalysis", IsModal = false });
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (VASFeature.OpenMultiCamera.ToString ()), Times.Never);
+		}
+
+		[Test]
+		public void NavigationEvent_LimitationEnabledOnlyOneVideoFile_DoNothing ()
+		{
+			// Arrange
+			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
+			project.FileSet.RemoveAt (0);
+
+			// Act
+			App.Current.EventsBroker.Publish (new NavigationEvent { Name = "ProjectAnalysis", IsModal = false });
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (VASFeature.OpenMultiCamera.ToString ()), Times.Never);
 		}
 	}
 }

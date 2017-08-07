@@ -99,6 +99,7 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Subscribe<CaptureErrorEvent> (HandleCaptureError);
 			App.Current.EventsBroker.Subscribe<CaptureFinishedEvent> (HandleCaptureFinished);
 			App.Current.EventsBroker.Subscribe<MultimediaErrorEvent> (HandleMultimediaError);
+			App.Current.EventsBroker.Subscribe<NavigationEvent> (HandleNavigation);
 		}
 
 		public override async Task Stop ()
@@ -109,6 +110,7 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Unsubscribe<CaptureErrorEvent> (HandleCaptureError);
 			App.Current.EventsBroker.Unsubscribe<CaptureFinishedEvent> (HandleCaptureFinished);
 			App.Current.EventsBroker.Unsubscribe<MultimediaErrorEvent> (HandleMultimediaError);
+			App.Current.EventsBroker.Unsubscribe<NavigationEvent> (HandleNavigation);
 		}
 
 		protected Task HandleSave (SaveEvent<LMProjectVM> e)
@@ -357,7 +359,7 @@ namespace LongoMatch.Services
 		async void HandleCaptureFinished (CaptureFinishedEvent e)
 		{
 			Project.CloseHandled = true;
-			bool reopen = Project.ProjectType == ProjectType.FakeCaptureProject ? false : e.Reopen;	
+			bool reopen = Project.ProjectType == ProjectType.FakeCaptureProject ? false : e.Reopen;
 			await CaptureFinished (e.Cancel, e.Cancel, reopen);
 		}
 
@@ -366,6 +368,15 @@ namespace LongoMatch.Services
 			App.Current.Dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + e.Message);
 			await CaptureFinished (true, false, false);
+		}
+
+		// Fixme: This event only is raised at the moment when the state is created but it will be better
+		// if it is only related with the open operation itself.
+		void HandleNavigation (NavigationEvent e)
+		{
+			if (e.Name == ProjectAnalysisState.NAME) {
+				ViewModel.ShowWarningLimitation.Execute ();
+			}
 		}
 	}
 }

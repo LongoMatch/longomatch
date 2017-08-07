@@ -34,8 +34,8 @@ using VAS.Core.MVVMC;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Services.State;
+using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
-using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -81,7 +81,10 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Changed += HandleChanged;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
-			resyncbutton.Clicked += HandleResyncClicked;
+
+			LimitationCommand syncLimitationCmd = new LimitationCommand (VASFeature.OpenMultiCamera.ToString (), () => HandleResyncClicked (null, null));
+			resyncbutton.BindManually (syncLimitationCmd);
+
 			deletebutton.Clicked += HandleDeleteClicked;
 			openbutton.Clicked += HandleOpenClicked;
 			datepicker.ValueChanged += HandleDateChanged;
@@ -336,7 +339,7 @@ namespace LongoMatch.Gui.Panel
 			foreach (LMProject selectedProject in selectedProjects) {
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
 							 selectedProject.Description.Title;
-				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
+				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;

@@ -46,6 +46,14 @@ namespace LongoMatch.Services
             string zoomLimitation = VASFeature.Zoom.ToString ();
 			var zoomFeature = Get<FeatureLimitationVM> (zoomLimitation);
 			zoomFeature.Model.Enabled = status.Limitations.Contains (zoomLimitation);
+			
+			string openMultiCameraLimitation = VASFeature.OpenMultiCamera.ToString ();
+			var openMultiCameraFeature = Get<FeatureLimitationVM> (openMultiCameraLimitation);
+			openMultiCameraFeature.Model.Enabled = status.Limitations.Contains (openMultiCameraLimitation);
+
+			string createMultiCameraLimitation = VASFeature.CreateMultiCamera.ToString ();
+			var createMultiCameraFeature = Get<FeatureLimitationVM> (createMultiCameraLimitation);
+			createMultiCameraFeature.Model.Enabled = status.Limitations.Contains (createMultiCameraLimitation);
 		}
 
 		void CreateLimitations ()
@@ -76,6 +84,18 @@ namespace LongoMatch.Services
 				RegisterName = VASFeature.Zoom.ToString (),
 				Enabled = status.Limitations.Contains (VASFeature.Zoom.ToString ()),
 				FeatureName = Catalog.GetString ("Zoom")
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = VASFeature.OpenMultiCamera.ToString (),
+				Enabled = status.Limitations.Contains (VASFeature.OpenMultiCamera.ToString ()),
+				FeatureName = Catalog.GetString ("Multi-Camera"),
+				DetailInfo = Catalog.GetString ("The project you are trying to use uses the Multi-Camera feature, which is not available in the " +
+											   status.PlanName + " plan")
+			});
+			Add (new FeatureLicenseLimitation {
+				RegisterName = VASFeature.CreateMultiCamera.ToString (),
+				Enabled = status.Limitations.Contains (VASFeature.CreateMultiCamera.ToString ()),
+				FeatureName = Catalog.GetString ("Multi-Camera")
 			});
 		}
 	}
