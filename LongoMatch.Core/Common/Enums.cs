@@ -72,6 +72,7 @@ namespace LongoMatch.Core.Common
 	public enum LongoMatchFeature
 	{
 		DatabaseManager,
-		VideoConverter
+		VideoConverter,
+		ExcelExport
 	}
 }

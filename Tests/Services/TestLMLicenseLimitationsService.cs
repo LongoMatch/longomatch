@@ -26,6 +26,9 @@ namespace Tests.Services
 		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ()).ToList ();
 		//static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
+		static IEnumerable<string> starterLimitations = new List<string> { LongoMatchFeature.ExcelExport.ToString () };
+		static IEnumerable<string> basicLimitations = new List<string> { };
+
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
 		{
@@ -45,16 +48,29 @@ namespace Tests.Services
 
 		static IEnumerable<string> GetAllLimitations ()
 		{
-			// FIXME: When we start adding limitations to starter
-			// 		  this should be splitted in 3 methods (one for each plan) that query the actual WibuManager
 			foreach (var limitation in featureList/*.Union (countList)*/) {
+				yield return limitation;
+			}
+		}
+
+		static IEnumerable<string> GetStarterLimitations ()
+		{
+			foreach (var limitation in starterLimitations) {
+				yield return limitation;
+			}
+		}
+
+		static IEnumerable<string> GetBasicLimitations ()
+		{
+			basicLimitations = GetAllLimitations ().Except (GetStarterLimitations ());
+			foreach (var limitation in basicLimitations) {
 				yield return limitation;
 			}
 		}
 
 		[Test, Combinatorial]
 		public async Task LMLicenseLimitationsService_ProPlanInitialized_AllLimitationsDisabled (
-			[Values (LMDummyWibuManager.PRO_PRODUCT_TEXT, LMDummyWibuManager.STARTER_PRODUCT_TEXT)] string productText,
+			[Values (LMDummyWibuManager.PRO_PRODUCT_TEXT)] string productText,
 			[ValueSource ("GetAllLimitations")]string limitationName)
 		{
 			wibuManager = new LMDummyWibuManager (productText);
@@ -65,6 +81,40 @@ namespace Tests.Services
 
 			Assert.IsNotNull (limitation);
 			Assert.AreEqual (limitationName, limitation.RegisterName);
+			Assert.IsFalse (limitation.Enabled);
+		}
+
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_StarterPlanInitialized_StarterLimitationsEnabled (
+			[Values (LMDummyWibuManager.STARTER_PRODUCT_TEXT)] string productText,
+			[ValueSource ("GetStarterLimitations")]string limitationName)
+		{
+			wibuManager = new LMDummyWibuManager (productText);
+			App.Current.LicenseManager = wibuManager;
+			await App.Current.LicenseManager.Init ();
+			service = new LMLicenseLimitationsService ();
+			var limitation = service.Get<LimitationVM> (limitationName);
+
+			Assert.IsNotNull (limitation);
+			Assert.AreEqual (limitationName, limitation.RegisterName);
+
+			Assert.IsTrue (limitation.Enabled);
+		}
+
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_StarterPlanInitialized_BasicLimitationsDisabled (
+			[Values (LMDummyWibuManager.STARTER_PRODUCT_TEXT)] string productText,
+			[ValueSource ("GetBasicLimitations")]string limitationName)
+		{
+			wibuManager = new LMDummyWibuManager (productText);
+			App.Current.LicenseManager = wibuManager;
+			await App.Current.LicenseManager.Init ();
+			service = new LMLicenseLimitationsService ();
+			var limitation = service.Get<LimitationVM> (limitationName);
+
+			Assert.IsNotNull (limitation);
+			Assert.AreEqual (limitationName, limitation.RegisterName);
+
 			Assert.IsFalse (limitation.Enabled);
 		}
 
@@ -84,56 +134,59 @@ namespace Tests.Services
 			Assert.IsTrue (limitation.Enabled);
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventPro_DatabaseManagerLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_LicenseChangeEventProToBasic_AllLimitationsEnabled (
+			[ValueSource ("GetAllLimitations")]string limitationName)
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-			Assert.IsTrue (featureLimitation.Enabled);
+			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			Assert.IsFalse (featureLimitation.Enabled);
 
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
 
-			Assert.IsFalse (featureLimitation.Enabled);
+			Assert.IsTrue (featureLimitation.Enabled);
 			service.Stop ();
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventPro_ConversionLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_LicenseChangeEventProToStarter_AllStarterLimitationsEnabled (
+			[ValueSource ("GetStarterLimitations")]string limitationName)
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
-			Assert.IsTrue (featureLimitation.Enabled);
+			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			Assert.IsFalse (featureLimitation.Enabled);
 
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
 
-			Assert.IsFalse (featureLimitation.Enabled);
+			Assert.IsTrue (featureLimitation.Enabled);
 			service.Stop ();
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventStarter_DatabaseManagerLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_LicenseChangeEventProToStarter_AllBasicLimitationsDisabled (
+			[ValueSource ("GetBasicLimitations")]string limitationName)
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-			Assert.IsTrue (featureLimitation.Enabled);
+			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			Assert.IsFalse (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
@@ -144,63 +197,24 @@ namespace Tests.Services
 			service.Stop ();
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventStarter_VideoConverterLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_LicenseChangeEventBasicToPro_AllLimitationsDisabled (
+			[ValueSource ("GetAllLimitations")]string limitationName)
 		{
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
+			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
 			Assert.IsTrue (featureLimitation.Enabled);
 
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
-
-			Assert.IsFalse (featureLimitation.Enabled);
-			service.Stop ();
-		}
-
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventBasic_DatabaseManagerLimitationDisabled ()
-		{
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-			Assert.IsFalse (featureLimitation.Enabled);
-
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
 			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
 
-			Assert.IsTrue (featureLimitation.Enabled);
-			service.Stop ();
-		}
-
-		[Test]
-		public async Task LMLicenseLimitationsService_LicenseChangeEventBasic_ConversionLimitationDisabled ()
-		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
 			Assert.IsFalse (featureLimitation.Enabled);
-
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			await App.Current.EventsBroker.Publish (new LicenseChangeEvent ());
-
-			Assert.IsTrue (featureLimitation.Enabled);
 			service.Stop ();
 		}
 	}

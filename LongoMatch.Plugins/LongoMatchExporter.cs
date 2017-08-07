@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Threading.Tasks;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
 using VAS.Core.Serialization;
@@ -49,9 +50,12 @@ namespace LongoMatch.Plugins
 			}
 		}
 
-		protected override void ExportProject (Project project, string filename)
+		protected override async Task ExportProject (Project project, string filename)
 		{
-			Serializer.Instance.Save (project, filename);
+			await Task.Run (() => {
+				Serializer.Instance.Save (project, filename);
+				ExportDone = true;
+			});
 		}
 	}
 }
