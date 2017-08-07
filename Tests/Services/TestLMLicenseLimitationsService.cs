@@ -1,6 +1,8 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Common;
@@ -9,6 +11,7 @@ using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Events;
+using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.License;
 using VAS.Core.ViewModel;
 
@@ -20,11 +23,18 @@ namespace Tests.Services
 		LMLicenseLimitationsService service;
 		ILicenseManager currentLicenseManager;
 		LMDummyWibuManager wibuManager;
+		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ()).ToList ();
+		//static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
 		{
 			currentLicenseManager = App.Current.LicenseManager;
+
+			var dbManager = new Mock<IStorageManager> ();
+			var activeDbMock = new Mock<IStorage> ();
+			dbManager.Setup (x => x.ActiveDB).Returns (activeDbMock.Object);
+			App.Current.DatabaseManager = dbManager.Object;
 		}
 
 		[TestFixtureTearDown]
@@ -33,88 +43,45 @@ namespace Tests.Services
 			App.Current.LicenseManager = currentLicenseManager;
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_ProPlanInitialized_DatabaseManagerLimitationDisabled ()
+		static IEnumerable<string> GetAllLimitations ()
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
-			Assert.IsFalse (featureLimitation.Enabled);
+			// FIXME: When we start adding limitations to starter
+			// 		  this should be splitted in 3 methods (one for each plan) that query the actual WibuManager
+			foreach (var limitation in featureList/*.Union (countList)*/) {
+				yield return limitation;
+			}
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_ProPlanInitialized_ConversionLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_ProPlanInitialized_AllLimitationsDisabled (
+			[Values (LMDummyWibuManager.PRO_PRODUCT_TEXT, LMDummyWibuManager.STARTER_PRODUCT_TEXT)] string productText,
+			[ValueSource ("GetAllLimitations")]string limitationName)
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (productText);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
+			var limitation = service.Get<LimitationVM> (limitationName);
 
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.VideoConverter.ToString (), featureLimitation.RegisterName);
-			Assert.IsFalse (featureLimitation.Enabled);
+			Assert.IsNotNull (limitation);
+			Assert.AreEqual (limitationName, limitation.RegisterName);
+			Assert.IsFalse (limitation.Enabled);
 		}
 
-		[Test]
-		public async Task LMLicenseLimitationsService_StarterPlanInitialized_DatabaseManagerLimitationDisabled ()
+		[Test, Combinatorial]
+		public async Task LMLicenseLimitationsService_BasicPlanInitialized_AllLimitationsEnabled (
+			[Values (LMDummyWibuManager.BASIC_PRODUCT_TEXT)] string productText,
+			[ValueSource ("GetAllLimitations")]string limitationName)
 		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
+			wibuManager = new LMDummyWibuManager (productText);
 			App.Current.LicenseManager = wibuManager;
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
+			var limitation = service.Get<LimitationVM> (limitationName);
 
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
-			Assert.IsFalse (featureLimitation.Enabled);
-		}
-
-		[Test]
-		public async Task LMLicenseLimitationsService_StarterPlanInitialized_ConversionLimitationDisabled ()
-		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
-
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.VideoConverter.ToString (), featureLimitation.RegisterName);
-			Assert.IsFalse (featureLimitation.Enabled);
-		}
-
-		[Test]
-		public async Task LMLicenseLimitationsService_BasicPlanInitialized_DatabaseManagerLimitationEnabled ()
-		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.DatabaseManager.ToString ());
-
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.DatabaseManager.ToString (), featureLimitation.RegisterName);
-			Assert.IsTrue (featureLimitation.Enabled);
-		}
-
-		[Test]
-		public async Task LMLicenseLimitationsService_BasicPlanInitialized_ConversionLimitationEnabled ()
-		{
-			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
-			App.Current.LicenseManager = wibuManager;
-			await App.Current.LicenseManager.Init ();
-			service = new LMLicenseLimitationsService ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (LongoMatchFeature.VideoConverter.ToString ());
-
-			Assert.IsNotNull (featureLimitation);
-			Assert.AreEqual (LongoMatchFeature.VideoConverter.ToString (), featureLimitation.RegisterName);
-			Assert.IsTrue (featureLimitation.Enabled);
+			Assert.IsNotNull (limitation);
+			Assert.AreEqual (limitationName, limitation.RegisterName);
+			Assert.IsTrue (limitation.Enabled);
 		}
 
 		[Test]
