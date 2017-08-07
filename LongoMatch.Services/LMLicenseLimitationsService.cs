@@ -47,32 +47,36 @@ namespace LongoMatch.Services
 			LMLicenseStatus status = (LMLicenseStatus)App.Current.LicenseManager.LicenseStatus;
 
 			string databaseLimitation = LongoMatchFeature.DatabaseManager.ToString ();
-			var databaseManagerFeature = Get<FeatureLimitationVM> (databaseLimitation);
+			var databaseManagerFeature = Get<LimitationVM> (databaseLimitation);
 			databaseManagerFeature.Model.Enabled = status.Limitations.Contains (databaseLimitation);
 
 			string conversionLimitation = LongoMatchFeature.VideoConverter.ToString ();
-			var converterFeature = Get<FeatureLimitationVM> (conversionLimitation);
+			var converterFeature = Get<LimitationVM> (conversionLimitation);
 			converterFeature.Model.Enabled = status.Limitations.Contains (conversionLimitation);
 
 			string excelExportLimitation = LongoMatchFeature.ExcelExport.ToString ();
-			var excelExportFeature = Get<FeatureLimitationVM> (excelExportLimitation);
+			var excelExportFeature = Get<LimitationVM> (excelExportLimitation);
 			excelExportFeature.Model.Enabled = status.Limitations.Contains (excelExportLimitation);
 
 			string xmlLimitation = LongoMatchFeature.XMlImportExport.ToString ();
-			var xmlFeature = Get<FeatureLimitationVM> (xmlLimitation);
+			var xmlFeature = Get<LimitationVM> (xmlLimitation);
 			xmlFeature.Model.Enabled = status.Limitations.Contains (xmlLimitation);
 			
             string zoomLimitation = VASFeature.Zoom.ToString ();
-			var zoomFeature = Get<FeatureLimitationVM> (zoomLimitation);
+			var zoomFeature = Get<LimitationVM> (zoomLimitation);
 			zoomFeature.Model.Enabled = status.Limitations.Contains (zoomLimitation);
 			
 			string openMultiCameraLimitation = VASFeature.OpenMultiCamera.ToString ();
-			var openMultiCameraFeature = Get<FeatureLimitationVM> (openMultiCameraLimitation);
+			var openMultiCameraFeature = Get<LimitationVM> (openMultiCameraLimitation);
 			openMultiCameraFeature.Model.Enabled = status.Limitations.Contains (openMultiCameraLimitation);
 
 			string createMultiCameraLimitation = VASFeature.CreateMultiCamera.ToString ();
-			var createMultiCameraFeature = Get<FeatureLimitationVM> (createMultiCameraLimitation);
+			var createMultiCameraFeature = Get<LimitationVM> (createMultiCameraLimitation);
 			createMultiCameraFeature.Model.Enabled = status.Limitations.Contains (createMultiCameraLimitation);
+
+			string projectLimitation = LongoMatchCountLimitedObjects.Projects.ToString ();
+			var projectFeature = Get<LimitationVM> (projectLimitation);
+			projectFeature.Model.Enabled = status.Limitations.Contains (projectLimitation);
 		}
 
 		void UpdateLicenseLimitationsCounters ()

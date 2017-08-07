@@ -152,7 +152,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			var featureLimitation = service.Get<LimitationVM> (limitationName);
 			Assert.IsFalse (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.BASIC_PRODUCT_TEXT);
@@ -173,7 +173,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			var featureLimitation = service.Get<LimitationVM> (limitationName);
 			Assert.IsFalse (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
@@ -194,7 +194,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			var featureLimitation = service.Get<LimitationVM> (limitationName);
 			Assert.IsFalse (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.STARTER_PRODUCT_TEXT);
@@ -215,7 +215,7 @@ namespace Tests.Services
 			await App.Current.LicenseManager.Init ();
 			service = new LMLicenseLimitationsService ();
 			service.Start ();
-			var featureLimitation = service.Get<FeatureLimitationVM> (limitationName);
+			var featureLimitation = service.Get<LimitationVM> (limitationName);
 			Assert.IsTrue (featureLimitation.Enabled);
 
 			wibuManager = new LMDummyWibuManager (LMDummyWibuManager.PRO_PRODUCT_TEXT);
