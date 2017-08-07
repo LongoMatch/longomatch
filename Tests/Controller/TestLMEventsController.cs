@@ -24,6 +24,7 @@ using Moq;
 using NUnit.Framework;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
@@ -38,10 +39,15 @@ namespace Tests.Controller
 		TimelineEventVM evVM1, evVM2;
 		LMProjectVM projectVM;
 		VideoPlayerVM videoPlayer;
+		Mock<IGUIToolkit> mockToolkit;
 
 		[SetUp]
 		public void SetUp ()
 		{
+			mockToolkit = new Mock<IGUIToolkit> ();
+			mockToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
+			App.Current.GUIToolkit = mockToolkit.Object;
+
 			controller = new LMEventsController ();
 			playerController = new Mock<IVideoPlayerController> ();
 			videoPlayer = new VideoPlayerVM {

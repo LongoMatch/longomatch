@@ -45,7 +45,8 @@ namespace Tests.State
 			var capturerMock = new Mock<IFramesCapturer> ();
 			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
-			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), true)).Returns (new MediaFile());
+			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), true)).Returns (new MediaFile ());
+			gtkMock.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
 			App.Current.MultimediaToolkit = mtkMock.Object;
 			App.Current.HotkeysService = hotkeysMock.Object;
 			App.Current.GUIToolkit = gtkMock.Object;

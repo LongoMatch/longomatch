@@ -53,6 +53,10 @@ namespace Tests.Controller
 		[SetUp]
 		public void Setup ()
 		{
+			mockToolkit = new Mock<IGUIToolkit> ();
+			mockToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
+			App.Current.GUIToolkit = mockToolkit.Object;
+
 			VideoPlayerVM videoPlayer = new VideoPlayerVM {
 				CamerasConfig = new ObservableCollection<CameraConfig> ()
 			};
@@ -74,8 +78,6 @@ namespace Tests.Controller
 			controller.SetViewModel (new ProjectAnalysisVM<LMProjectVM> { VideoPlayer = videoPlayer, Project = projectVM });
 			controller.Start ();
 
-			mockToolkit = new Mock<IGUIToolkit> ();
-			App.Current.GUIToolkit = mockToolkit.Object;
 			timer = new Mock<ITimer> ();
 			App.Current.DependencyRegistry.Register<ITimer> (timer.Object, 1);
 		}

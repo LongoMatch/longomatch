@@ -10,6 +10,7 @@ using LongoMatch.License;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.License;
@@ -23,13 +24,17 @@ namespace Tests.Services
 		LMLicenseLimitationsService service;
 		ILicenseManager currentLicenseManager;
 		LMDummyWibuManager wibuManager;
-		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ()).ToList ();
+		static IEnumerable<string> featureList = Enum.GetValues (typeof (LongoMatchFeature)).Cast<LongoMatchFeature> ().Select (e => e.ToString ())
+													 .Concat (Enum.GetValues (typeof (VASFeature)).Cast<VASFeature> ().Select (e => e.ToString ())).ToList ();
+
 		//static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
 		static IEnumerable<string> basicLimitations = new List<string> { };
-		static IEnumerable<string> starterLimitations = new List<string> { 
-			LongoMatchFeature.ExcelExport.ToString (), 
-			LongoMatchFeature.XMlImportExport.ToString ()  };
+		static IEnumerable<string> starterLimitations = new List<string> {
+			LongoMatchFeature.ExcelExport.ToString (),
+			LongoMatchFeature.XMlImportExport.ToString (),
+			VASFeature.Zoom.ToString()
+		};
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
