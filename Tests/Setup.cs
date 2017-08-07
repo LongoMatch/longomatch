@@ -30,6 +30,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.DB;
 using VAS.Tests;
 using LMDB = LongoMatch.DB;
+using Timer = VAS.Core.Common.Timer;
 
 namespace Tests
 {
@@ -51,7 +52,7 @@ namespace Tests
 			App.InitDependencies ();
 			App.Current.Config = new Config ();
 			App.InitConstants ();
-			App.Current.DependencyRegistry.Register<ITimer, VAS.Core.Common.Timer> (1);
+			App.Current.DependencyRegistry.Register<ITimer, Timer> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;

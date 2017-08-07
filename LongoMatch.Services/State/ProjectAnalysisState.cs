@@ -17,11 +17,13 @@
 //
 //
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services;
 using VAS.Services.Controller;
@@ -71,7 +73,14 @@ namespace LongoMatch.Services.State
 			project.Model.UpdateEventTypesAndTimers ();
 
 			try {
-				ViewModel.VideoPlayer.OpenFileSet (project.FileSet);
+				if (ViewModel.VideoPlayer.SupportsMultipleCameras) {
+					ViewModel.VideoPlayer.OpenFileSet (project.FileSet);
+				} else {
+					MediaFileSetVM limitedSet = new MediaFileSetVM ();
+					limitedSet.Model = new MediaFileSet ();
+					limitedSet.Model.Add (project.FileSet.Model.First ());
+					ViewModel.VideoPlayer.OpenFileSet (limitedSet);
+				}
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);

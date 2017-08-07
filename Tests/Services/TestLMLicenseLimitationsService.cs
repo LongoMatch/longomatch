@@ -33,7 +33,9 @@ namespace Tests.Services
 		static IEnumerable<string> starterLimitations = new List<string> {
 			LongoMatchFeature.ExcelExport.ToString (),
 			LongoMatchFeature.XMlImportExport.ToString (),
-			VASFeature.Zoom.ToString()
+			VASFeature.Zoom.ToString(),
+			VASFeature.OpenMultiCamera.ToString(),
+			VASFeature.CreateMultiCamera.ToString()
 		};
 
 		[TestFixtureSetUp]
