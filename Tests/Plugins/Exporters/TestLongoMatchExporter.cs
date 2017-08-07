@@ -29,7 +29,7 @@ using VAS.Core.Store;
 
 namespace Tests.Plugins.Exporters
 {
-	public class TestCsvExporter
+	public class TestLongoMatchExporter
 	{
 		[Test]
 		public async Task ExportProject_NoLimitation_ExportFinishedOk ()
@@ -43,7 +43,7 @@ namespace Tests.Plugins.Exporters
 
 			try {
 				p = Utils.CreateProject (false);
-				DummyCsvExporterExporter exporter = new DummyCsvExporterExporter ();
+				DummyLongoMAtchExporterExporter exporter = new DummyLongoMAtchExporterExporter ();
 
 				// Act
 				await exporter.Export (p, tmp);
@@ -61,7 +61,7 @@ namespace Tests.Plugins.Exporters
 		}
 	}
 
-	class DummyCsvExporterExporter : CSVExporter
+	class DummyLongoMAtchExporterExporter : LongoMatchExporter
 	{
 		public async Task Export (Project project, string filename)
 		{
