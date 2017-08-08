@@ -41,20 +41,34 @@ namespace LongoMatch.Gui.Panel
 	[ViewAttribute (HomeState.NAME)]
 	public partial class WelcomePanel : Gtk.Bin, IPanel<HomeViewModel>
 	{
-		static WelcomeButton [] default_buttons = {
-			new WelcomeButton ("lm-project-new", Catalog.GetString ("New"),
-							   new Action (() => App.Current.StateController.MoveTo (NewProjectState.NAME, null))),
-			new WelcomeButton ("vas-open", Catalog.GetString ("Open"),
-							   new Action (() => App.Current.StateController.MoveTo (OpenProjectState.NAME, null))),
-			new WelcomeButton ("vas-import", Catalog.GetString ("Import"),
-							   new Action (() => App.Current.EventsBroker.Publish (new ImportProjectEvent ()))),
-			new WelcomeButton ("lm-project", Catalog.GetString ("Projects"),
-							   new Action (() => App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null))),
-			new WelcomeButton ("lm-team-config", Catalog.GetString ("Teams"),
-							   new Action (() => App.Current.StateController.MoveTo (TeamsManagerState.NAME, null))),
-			new WelcomeButton ("lm-template-config", Catalog.GetString ("Analysis Dashboards"),
-							   new Action (() => App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null))),
-		};
+		static LimitationAsyncCommand newProjectCommand;
+		static LimitationAsyncCommand importCommand;
+		static WelcomeButton [] default_buttons;
+
+		static WelcomePanel ()
+		{
+			newProjectCommand = new LimitationAsyncCommand ("Projects", async () => {
+				await App.Current.StateController.MoveTo (NewProjectState.NAME, null, true);
+			});
+			importCommand = new LimitationAsyncCommand ("Projects", async () => {
+				await App.Current.EventsBroker.Publish (new ImportProjectEvent ());
+			});
+
+			default_buttons = new WelcomeButton []{
+				new WelcomeButton ("lm-project-new", Catalog.GetString ("New"),
+								   async () => await newProjectCommand.ExecuteAsync()),
+				new WelcomeButton ("vas-open", Catalog.GetString ("Open"),
+								   new Action (() => App.Current.StateController.MoveTo (OpenProjectState.NAME, null))),
+				new WelcomeButton ("vas-import", Catalog.GetString ("Import"),
+								   async () => await importCommand.ExecuteAsync()),
+				new WelcomeButton ("lm-project", Catalog.GetString ("Projects"),
+								   new Action (() => App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null))),
+				new WelcomeButton ("lm-team-config", Catalog.GetString ("Teams"),
+								   new Action (() => App.Current.StateController.MoveTo (TeamsManagerState.NAME, null))),
+				new WelcomeButton ("lm-template-config", Catalog.GetString ("Analysis Dashboards"),
+								   new Action (() => App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null))),
+			};
+		}
 
 		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
