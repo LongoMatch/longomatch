@@ -76,6 +76,10 @@ namespace LongoMatch.Services
 			string projectLimitation = LongoMatchCountLimitedObjects.Projects.ToString ();
 			var projectFeature = Get<LimitationVM> (projectLimitation);
 			projectFeature.Model.Enabled = status.Limitations.Contains (projectLimitation);
+
+			string linkingLimitation = VASFeature.LinkingButtons.ToString ();
+			var linkingFeature = Get<FeatureLimitationVM> (linkingLimitation);
+			linkingFeature.Model.Enabled = status.Limitations.Contains (linkingLimitation);
 		}
 
 		void UpdateLicenseLimitationsCounters ()
@@ -125,6 +129,13 @@ namespace LongoMatch.Services
 				Enabled = status.Limitations.Contains (VASFeature.CreateMultiCamera.ToString ()),
 				DisplayName = Catalog.GetString ("Multi-Camera")
 			});
+
+			Add (new FeatureLicenseLimitation {
+				RegisterName = VASFeature.LinkingButtons.ToString (),
+				Enabled = status.Limitations.Contains (VASFeature.LinkingButtons.ToString ()),
+				DisplayName = Catalog.GetString ("Linking Buttons")
+			});
+
 			Add (new CountLicenseLimitation {
 				RegisterName = LongoMatchCountLimitedObjects.Projects.ToString (),
 				Enabled = status.Limitations.Contains (LongoMatchCountLimitedObjects.Projects.ToString ()),

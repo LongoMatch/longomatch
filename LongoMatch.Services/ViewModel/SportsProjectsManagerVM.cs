@@ -29,8 +29,10 @@ namespace LongoMatch.Services.ViewModel
 		protected override void DisposeManagedResources ()
 		{
 			base.DisposeManagedResources ();
-			LimitationChart.Dispose ();
-			LimitationChart = null;
+			if (LimitationChart != null) {
+				LimitationChart.Dispose ();
+				LimitationChart = null;
+			}
 		}
 
 		/// <summary>

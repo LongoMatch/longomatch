@@ -35,7 +35,8 @@ namespace Tests.Services
 			LongoMatchFeature.XMlImportExport.ToString (),
 			VASFeature.Zoom.ToString(),
 			VASFeature.OpenMultiCamera.ToString(),
-			VASFeature.CreateMultiCamera.ToString()
+			VASFeature.CreateMultiCamera.ToString(),
+			VASFeature.LinkingButtons.ToString ()
 		};
 
 		[TestFixtureSetUp]
