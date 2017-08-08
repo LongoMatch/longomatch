@@ -61,11 +61,11 @@ namespace LongoMatch.Services
 			string xmlLimitation = LongoMatchFeature.XMlImportExport.ToString ();
 			var xmlFeature = Get<LimitationVM> (xmlLimitation);
 			xmlFeature.Model.Enabled = status.Limitations.Contains (xmlLimitation);
-			
-            string zoomLimitation = VASFeature.Zoom.ToString ();
+
+			string zoomLimitation = VASFeature.Zoom.ToString ();
 			var zoomFeature = Get<LimitationVM> (zoomLimitation);
 			zoomFeature.Model.Enabled = status.Limitations.Contains (zoomLimitation);
-			
+
 			string openMultiCameraLimitation = VASFeature.OpenMultiCamera.ToString ();
 			var openMultiCameraFeature = Get<LimitationVM> (openMultiCameraLimitation);
 			openMultiCameraFeature.Model.Enabled = status.Limitations.Contains (openMultiCameraLimitation);
@@ -131,7 +131,7 @@ namespace LongoMatch.Services
 				Enabled = status.Limitations.Contains (LongoMatchCountLimitedObjects.Projects.ToString ()),
 				DisplayName = Catalog.GetString ("Projects"),
 				Maximum = 5,
-			}, new Command (() => Utils.OpenURL (Constants.WEBSITE, "Limitation_Projects")));
+			}, new Command (() => Utils.OpenURL (Core.Common.Constants.WEBSITE, "Limitation_Projects")));
 		}
 
 		void HandleProjectCreated (StorageAddedEvent<LMProject> obj)
