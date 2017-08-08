@@ -80,6 +80,10 @@ namespace LongoMatch.Services
 			string linkingLimitation = VASFeature.LinkingButtons.ToString ();
 			var linkingFeature = Get<FeatureLimitationVM> (linkingLimitation);
 			linkingFeature.Model.Enabled = status.Limitations.Contains (linkingLimitation);
+
+			string ipCameraLimitation = LongoMatchFeature.IpCameras.ToString ();
+			var ipCameraFeature = Get<FeatureLimitationVM> (ipCameraLimitation);
+			ipCameraFeature.Model.Enabled = status.Limitations.Contains (ipCameraLimitation);
 		}
 
 		void UpdateLicenseLimitationsCounters ()
@@ -142,6 +146,12 @@ namespace LongoMatch.Services
 				DisplayName = Catalog.GetString ("Projects"),
 				Maximum = 5,
 			}, new Command (() => Utils.OpenURL (Core.Common.Constants.WEBSITE, "Limitation_Projects")));
+
+			Add (new FeatureLicenseLimitation {
+				RegisterName = LongoMatchFeature.IpCameras.ToString (),
+				Enabled = status.Limitations.Contains (LongoMatchFeature.IpCameras.ToString ()),
+				DisplayName = Catalog.GetString ("Ip camera")
+			});
 		}
 
 		void HandleProjectCreated (StorageAddedEvent<LMProject> obj)

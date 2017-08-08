@@ -29,7 +29,8 @@ namespace Tests.Services
 													 .Concat (Enum.GetValues (typeof (VASFeature)).Cast<VASFeature> ().Select (e => e.ToString ())).ToList ();
 		static IEnumerable<string> countList = Enum.GetValues (typeof (LongoMatchCountLimitedObjects)).Cast<LongoMatchCountLimitedObjects> ().Select (e => e.ToString ()).ToList ();
 
-		static IEnumerable<string> basicLimitations = new List<string> { };
+		static IEnumerable<string> basicLimitations = new List<string> ();
+
 		static IEnumerable<string> starterLimitations = new List<string> {
 			LongoMatchFeature.ExcelExport.ToString (),
 			LongoMatchFeature.XMlImportExport.ToString (),

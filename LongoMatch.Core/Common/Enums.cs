@@ -74,7 +74,8 @@ namespace LongoMatch.Core.Common
 		DatabaseManager,
 		VideoConverter,
 		ExcelExport,
-		XMlImportExport
+		XMlImportExport,
+		IpCameras
 	}
 
 	public enum LongoMatchCountLimitedObjects
