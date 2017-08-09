@@ -123,6 +123,7 @@ namespace LongoMatch.Gui.Component
 
 		void SetBarViewModel ()
 		{
+			// FIXME: Move this to the ViewModel
 			if (ViewModel.Limitation.Remaining == 0) {
 				ViewModel.BarChart.RightSerie.Color = Color.Red;
 				countLabel.Markup = $"Oops! <b>No {ViewModel.Limitation.RegisterName.ToLower ()}</b> left in your plan!";
