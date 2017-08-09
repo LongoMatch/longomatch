@@ -182,6 +182,8 @@
 		<Compile Include="ProjectToolsMenuLoader.cs" />
 		<Compile Include="Gui\Panel\CameraSynchronizationPanel.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.CameraSynchronizationPanel.cs" />
+		<Compile Include="Gui\Component\LMLimitationWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.LMLimitationWidget.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">

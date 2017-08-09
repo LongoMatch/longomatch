@@ -20,6 +20,7 @@ using VAS.Services.State;
 using LongoMatch.Services.ViewModel;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Services.State
 {
@@ -38,6 +39,8 @@ namespace LongoMatch.Services.State
 			ViewModel = new SportsProjectsManagerVM ();
 			ViewModel.Model = new RangeObservableCollection<LMProject> (
 				App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ());
+			ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+				LongoMatchCountLimitedObjects.Projects.ToString ());
 		}
 	}
 }

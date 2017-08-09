@@ -5,6 +5,8 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
+    <widget-library name="../../../bin/LongoMatch.Drawing.dll" />
+    <widget-library name="../../../bin/LongoMatch.Services.dll" />
     <widget-library name="../../../bin/VAS.Drawing.Cairo.dll" />
     <widget-library name="../../../bin/VAS.UI.dll" />
     <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />
@@ -89,7 +91,6 @@
     <child>
       <widget class="Gtk.VBox" id="vbox2">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
         <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
@@ -144,6 +145,19 @@ Sort by competition</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
+            <property name="Padding">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="LongoMatch.Gui.Component.LMLimitationWidget" id="limitationWidget">
+            <property name="MemberName" />
+            <property name="Events">ButtonPressMask</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
         <child>
@@ -159,7 +173,7 @@ Sort by competition</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -177,7 +191,7 @@ Sort by competition</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">3</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -10671,6 +10685,80 @@ Invert</property>
             <property name="Position">1</property>
             <property name="AutoSize">True</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.LMLimitationWidget" design-size="406 70">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.EventBox" id="backgroundBox">
+        <property name="MemberName" />
+        <property name="HeightRequest">70</property>
+        <child>
+          <widget class="Gtk.VBox" id="vbox4">
+            <property name="MemberName" />
+            <property name="HeightRequest">70</property>
+            <child>
+              <widget class="Gtk.DrawingArea" id="barDrawingArea">
+                <property name="MemberName" />
+                <property name="HeightRequest">10</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="hbox3">
+                <property name="MemberName" />
+                <property name="HeightRequest">60</property>
+                <property name="BorderWidth">5</property>
+                <child>
+                  <widget class="Gtk.Label" id="countLabel">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">200</property>
+                    <property name="HeightRequest">40</property>
+                    <property name="LabelProp" translatable="yes">Only &lt;b&gt;# projects&lt;/b&gt; left in your plan!</property>
+                    <property name="UseMarkup">True</property>
+                    <property name="Wrap">True</property>
+                    <property name="Justify">Center</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="upgradeButton">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">95</property>
+                    <property name="HeightRequest">50</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes">UPGRADE</property>
+                    <property name="FocusOnClick">False</property>
+                  </widget>
+                  <packing>
+                    <property name="PackType">End</property>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
         </child>
       </widget>
     </child>

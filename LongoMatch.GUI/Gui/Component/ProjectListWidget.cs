@@ -22,11 +22,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -89,13 +91,17 @@ namespace LongoMatch.Gui.Component
 		public ProjectListViewMode ViewMode {
 			set {
 				viewMode = value;
-				treeviewscrolledwindow.Visible = value != ProjectListViewMode.Icons;
+				treeviewscrolledwindow.Visible = limitationWidget.Visible = value != ProjectListViewMode.Icons;
 				icoscrolledwindow.Visible = value == ProjectListViewMode.Icons;
 				checkCell.Visible = value == ProjectListViewMode.ListWithCheck;
 			}
 			get {
 				return viewMode;
 			}
+		}
+
+		public LMLimitationWidget LimitationWidget {
+			get { return limitationWidget; }
 		}
 
 		public void Fill (List<LMProject> projects)

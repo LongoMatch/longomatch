@@ -342,7 +342,7 @@ namespace Tests.Controller
 		public void NavigationEvent_LimitationEnabled_ShowWarningLimitation ()
 		{
 			// Arrange
-			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
+			mockLimitationService.Setup (sim => sim.CanExecute (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
 
 			// Act
 			App.Current.EventsBroker.Publish (new NavigationEvent { Name = "ProjectAnalysis", IsModal = false });
@@ -355,7 +355,7 @@ namespace Tests.Controller
 		public void NavigationEvent_NoLimitationCanExecuteFeature_DoNothing ()
 		{
 			// Arrange
-			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (true);
+			mockLimitationService.Setup (sim => sim.CanExecute (VASFeature.OpenMultiCamera.ToString ())).Returns (true);
 
 			// Act
 			App.Current.EventsBroker.Publish (new NavigationEvent { Name = "ProjectAnalysis", IsModal = false });
@@ -368,7 +368,7 @@ namespace Tests.Controller
 		public void NavigationEvent_LimitationEnabledOnlyOneVideoFile_DoNothing ()
 		{
 			// Arrange
-			mockLimitationService.Setup (sim => sim.CanExecuteFeature (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
+			mockLimitationService.Setup (sim => sim.CanExecute (VASFeature.OpenMultiCamera.ToString ())).Returns (false);
 			project.FileSet.RemoveAt (0);
 
 			// Act

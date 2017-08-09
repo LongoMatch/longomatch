@@ -18,6 +18,7 @@
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
@@ -25,6 +26,20 @@ namespace LongoMatch.Services.ViewModel
 	[ViewAttribute ("ProjectsManager")]
 	public class SportsProjectsManagerVM : ProjectsManagerVM<LMProject, LMProjectVM>
 	{
+		protected override void DisposeManagedResources ()
+		{
+			base.DisposeManagedResources ();
+			LimitationChart.Dispose ();
+			LimitationChart = null;
+		}
+
+		/// <summary>
+		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
+		/// </summary>
+		public CountLimitationBarChartVM LimitationChart {
+			get;
+			set;
+		}
 	}
 }
 
