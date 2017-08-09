@@ -22,12 +22,12 @@ namespace LongoMatch.Gui.Component
 	/// It shows a "progress bar" with the number of remaining/current elements limited.
 	/// </summary>
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class LMLimitationWidget : Gtk.Bin, IView<CountLimitationVM>
+	public partial class LMLimitationWidget : Gtk.Bin, IView<CountLimitationBarChartVM>
 	{
 		const int UPGRADE_BUTTON_WIDTH = 95;
 		const int UPGRADE_BUTTON_HEIGHT = 50;
 
-		CountLimitationVM viewModel;
+		CountLimitationBarChartVM viewModel;
 		BindingContext ctx;
 		BarChartView barView;
 		Canvas barCanvas;
@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Component
 		/// Gets or sets the view model.
 		/// </summary>
 		/// <value>The view model.</value>
-		public CountLimitationVM ViewModel {
+		public CountLimitationBarChartVM ViewModel {
 			get {
 				return viewModel;
 			}
@@ -93,8 +93,9 @@ namespace LongoMatch.Gui.Component
 					viewModel.PropertyChanged -= HandlePropertyChangedEventHandler;
 				}
 				viewModel = value;
-				Visible = viewModel != null && viewModel.Enabled;
+				Visible = viewModel != null && viewModel.Limitation.Enabled;
 				ctx?.UpdateViewModel (viewModel);
+				barView.SetViewModel (viewModel?.BarChart);
 				if (viewModel != null) {
 					viewModel.PropertyChanged += HandlePropertyChangedEventHandler;
 					viewModel.Sync ();
@@ -104,46 +105,31 @@ namespace LongoMatch.Gui.Component
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (CountLimitationVM)viewModel;
+			ViewModel = (CountLimitationBarChartVM)viewModel;
 		}
 
 		void Bind ()
 		{
 			ctx = this.GetBindingContext ();
-			ctx.Add (upgradeButton.Bind (vm => ((CountLimitationVM)vm).UpgradeCommand));
+			ctx.Add (upgradeButton.Bind (vm => ((CountLimitationBarChartVM)vm).Limitation.UpgradeCommand));
 		}
 
 		void HandlePropertyChangedEventHandler (object sender, PropertyChangedEventArgs e)
 		{
-			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Count))) {
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Limitation.Count))) {
 				SetBarViewModel ();
 			}
 		}
 
 		void SetBarViewModel ()
 		{
-			SeriesVM currentSeries = new SeriesVM ("Current", ViewModel.Count, Color.Transparent);
-			if (ViewModel.Remaining == 0) {
-				currentSeries.Color = Color.Red;
-				countLabel.Markup = $"Oops! <b>No {ViewModel.RegisterName.ToLower ()}</b> left in your plan!";
+			if (ViewModel.Limitation.Remaining == 0) {
+				ViewModel.BarChart.RightSerie.Color = Color.Red;
+				countLabel.Markup = $"Oops! <b>No {ViewModel.Limitation.RegisterName.ToLower ()}</b> left in your plan!";
 			} else {
-				countLabel.Markup = $"Only <b>{ViewModel.Remaining} {ViewModel.RegisterName.ToLower ()}</b> left in your plan!";
-
+				ViewModel.BarChart.RightSerie.Color = Color.Transparent;
+				countLabel.Markup = $"Only <b>{ViewModel.Limitation.Remaining} {ViewModel.Limitation.RegisterName.ToLower ()}</b> left in your plan!";
 			}
-
-			barView.SetViewModel (new BarChartVM {
-				Height = 10,
-				Series = new SeriesCollectionVM {
-					ViewModels = {
-						new SeriesVM("Remaining", ViewModel.Remaining, Color.Green1),
-						currentSeries
-					}
-				},
-				Background = new ImageCanvasObject {
-					Image = App.Current.ResourcesLocator.LoadImage ("images/lm-widget-full-bar" + Constants.IMAGE_EXT),
-					Mode = ScaleMode.Fill
-				}
-			});
 		}
 	}
 }

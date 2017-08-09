@@ -102,17 +102,36 @@ namespace LongoMatch.Gui.Panel
 			SetStyle ();
 		}
 
-		protected override void OnDestroyed ()
-		{
-			OnUnload ();
-			base.OnDestroyed ();
-		}
-
 		public override void Dispose ()
 		{
-			Destroy ();
+			Dispose (true);
 			base.Dispose ();
 		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			Log.Verbose ($"Destroying {GetType ()}");
+
+			ViewModel.Dispose ();
+			ViewModel = null;
+
+			base.OnDestroyed ();
+
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
 
 		public string Title {
 			get {
@@ -123,7 +142,10 @@ namespace LongoMatch.Gui.Panel
 		public SportsProjectsManagerVM ViewModel {
 			set {
 				viewModel = value;
-				projectlistwidget1.Fill (viewModel.Model.ToList ());
+				if (viewModel != null) {
+					projectlistwidget1.Fill (viewModel.Model.ToList ());
+					projectlistwidget1.LimitationWidget.SetViewModel (viewModel.LimitationChart);
+				}
 			}
 			get {
 				return viewModel;

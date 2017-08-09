@@ -1,6 +1,5 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System.Diagnostics;
 using System.Linq;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;

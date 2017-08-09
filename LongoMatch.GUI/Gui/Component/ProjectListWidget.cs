@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using VAS.Core;
@@ -78,8 +79,6 @@ namespace LongoMatch.Gui.Component
 			};
 			focusimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-search", 27);
 			ViewMode = ProjectListViewMode.List;
-
-			limitationWidget.SetViewModel (App.Current.LicenseLimitationsService.Get<CountLimitationVM> ("Projects"));
 		}
 
 		public SelectionMode SelectionMode {
@@ -99,6 +98,10 @@ namespace LongoMatch.Gui.Component
 			get {
 				return viewMode;
 			}
+		}
+
+		public LMLimitationWidget LimitationWidget {
+			get { return limitationWidget; }
 		}
 
 		public void Fill (List<LMProject> projects)
