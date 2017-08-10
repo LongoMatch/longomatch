@@ -21,13 +21,14 @@
 		<ConsolePause>false</ConsolePause>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<Optimize>false</Optimize>
+		<Optimize>true</Optimize>
 		<OutputPath>..\..\bin</OutputPath>
 		<DefineConstants>HAVE_GTK</DefineConstants>
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
 		<ConsolePause>false</ConsolePause>
 		<DebugSymbols>true</DebugSymbols>
+		<DebugType>pdbonly</DebugType>
 	</PropertyGroup>
 	<ItemGroup>
 		<Folder Include="..\" />
