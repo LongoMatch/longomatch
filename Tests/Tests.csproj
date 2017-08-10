@@ -147,8 +147,6 @@
 		<Compile Include="Controller\TestLMEventsController.cs" />
 		<Compile Include="Drawing\Objects\TestLocationView.cs" />
 		<Compile Include="State\TestLMStateHelper.cs" />
-		<Compile Include="Controller\TestHomeController.cs" />
-		<Compile Include="Services\TestLMLicenseLimitationsService.cs" />
 		<Compile Include="State\TestLMUpgradeLimitationState.cs" />
 		<Compile Include="Plugins\Exporters\TestLongoMatchExporter.cs" />
 		<Compile Include="Plugins\Exporters\TestCsvExporter.cs" />

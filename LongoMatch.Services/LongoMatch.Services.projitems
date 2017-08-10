@@ -62,9 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\PlayEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDrawingToolVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMDrawingToolState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controller\HomeController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\HomeViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LMLicenseLimitationsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMUpgradeLimitationState.cs" />
   </ItemGroup>
   <ItemGroup>

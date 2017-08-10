@@ -23,7 +23,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
@@ -40,7 +39,6 @@ using VAS.Services.State;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Device = VAS.Core.Common.Device;
-using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -68,6 +66,7 @@ namespace LongoMatch.Gui.Panel
 		CameraSynchronizationEditorState cameraSynchronizationState;
 		NewProjectVM viewModel;
 		bool resyncEvents;
+		LimitationCommand ipCameraCommand;
 
 		public NewProjectPanel ()
 		{
@@ -79,6 +78,8 @@ namespace LongoMatch.Gui.Panel
 				DateTime.Now.ToShortDateString ());
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
+
+			ipCameraCommand = new LimitationCommand (LongoMatchFeature.IpCameras.ToString (), () => HandleNextClicked (this, null));
 
 			LoadIcons ();
 			GroupLabels ();
@@ -592,7 +593,11 @@ namespace LongoMatch.Gui.Panel
 			} else if (sender == ipbutton) {
 				projectType = ProjectType.URICaptureProject;
 			}
-			HandleNextClicked (this, e);
+			if (projectType == ProjectType.URICaptureProject) {
+				ipCameraCommand.Execute ();
+			} else {
+				HandleNextClicked (this, e);
+			}
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
