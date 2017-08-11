@@ -219,7 +219,7 @@ namespace LongoMatch.Gui.Panel
 			image.SetSize (StyleConf.WelcomeIconImageSize, StyleConf.WelcomeIconImageSize);
 
 			button = new Button ();
-			button.Clicked += (sender, e) => (b.Func ());
+			button.Clicked += (sender, e) => b.Func ();
 			button.HeightRequest = StyleConf.WelcomeIconSize;
 			button.WidthRequest = StyleConf.WelcomeIconSize;
 			button.Add (image);

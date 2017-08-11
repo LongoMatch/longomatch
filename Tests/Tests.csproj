@@ -22,7 +22,8 @@
 		<ConsolePause>false</ConsolePause>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>full</DebugType>
+	  <DebugSymbols>true</DebugSymbols>
+		<DebugType>pdbonly</DebugType>
 		<Optimize>true</Optimize>
 		<OutputPath>..\..\bin</OutputPath>
 		<ErrorReport>prompt</ErrorReport>

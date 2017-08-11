@@ -79,7 +79,7 @@ namespace LongoMatch.Gui
 		void AddExportEntry (MenuItem parent, string name, Func<Project, bool, Task> exportAction, LMProjectAnalysisVM viewModel)
 		{
 			MenuItem item = new MenuItem (name) { Visible = true };
-			item.Activated += (sender, e) => (exportAction (viewModel.Project.Model, false));
+			item.Activated += (sender, e) => exportAction (viewModel.Project.Model, false);
 			(parent.Submenu as Menu).Append (item);
 		}
 	}
