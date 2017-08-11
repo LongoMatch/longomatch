@@ -1,99 +1,131 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<RootNamespace>LongoMatch.Services</RootNamespace>
-		<AssemblyName>LongoMatch.Services</AssemblyName>
-		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-		<ProductVersion>8.0.30703</ProductVersion>
-		<SchemaVersion>2.0</SchemaVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<Optimize>false</Optimize>
-		<OutputPath>..\..\bin</OutputPath>
-		<DefineConstants>DEBUG; HAVE_GTK</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<ConsolePause>false</ConsolePause>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<Optimize>true</Optimize>
-		<OutputPath>..\..\bin</OutputPath>
-		<DefineConstants>HAVE_GTK</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<ConsolePause>false</ConsolePause>
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>pdbonly</DebugType>
-	</PropertyGroup>
-	<ItemGroup>
-		<Folder Include="..\" />
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-		<Reference Include="Newtonsoft.Json">
-			<HintPath>$(SolutionDir)\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-			<Package>newtonsoft-json</Package>
-		</Reference>
-		<Reference Include="ICSharpCode.SharpZipLib.Portable">
-			<HintPath>$(SolutionDir)\packages\SharpZipLib.Portable.0.86.0.0003\lib\portable-net45+netcore45+wp8+win8+wpa81+MonoTouch+MonoAndroid+Xamarin.iOS10\ICSharpCode.SharpZipLib.Portable.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="PropertyChanged">
-			<HintPath>$(SolutionDir)\packages\PropertyChanged.Fody.2.1.3\Lib\netstandard1.0\PropertyChanged.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-			<Name>LongoMatch.Core.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
-			<Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
-			<Name>LongoMatch.DB.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\VAS\Weavers\Weavers.csproj">
-			<Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
-			<Name>Weavers</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
-			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-			<Name>VAS.Core.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\VAS\VAS.DB\VAS.DB.Net45.csproj">
-			<Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
-			<Name>VAS.DB.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
-			<Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
-			<Name>VAS.Drawing.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="$(SolutionDir)\VAS\VAS.Services\VAS.Services.Net45.csproj">
-			<Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
-			<Name>VAS.Services.Net45</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\..\LongoMatch.License\LongoMatch.License.csproj">
-		  <Project>{D5670B4A-285D-4FC5-80DC-AE71469DD124}</Project>
-		  <Name>LongoMatch.License</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\..\fluVAS\FluVAS.License\FluVAS.License.csproj">
-		  <Project>{B96D5D49-BB1C-4C7B-AC7E-CE4B7161EF85}</Project>
-		  <Name>FluVAS.License</Name>
-		</ProjectReference>
-	</ItemGroup>
-	<Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
-	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="$(SolutionDir)\packages\Fody.2.1.0\build\portable-net+sl+win+wpa+wp\Fody.targets" />
-	<ItemGroup>
-		<None Include="packages.config" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="FodyWeavers.xml" />
-	</ItemGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>LongoMatch.Services</RootNamespace>
+    <AssemblyName>LongoMatch.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>DEBUG; HAVE_GTK</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>HAVE_GTK</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="..\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\longomatch-core\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
+      <Name>LongoMatch.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\VAS\Weavers\Weavers.csproj">
+      <Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
+      <Name>Weavers</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\VAS\VAS.DB\VAS.DB.Net45.csproj">
+      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Name>VAS.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+      <Name>VAS.Drawing.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LongoMatch.License\LongoMatch.License.csproj">
+      <Project>{D5670B4A-285D-4FC5-80DC-AE71469DD124}</Project>
+      <Name>LongoMatch.License</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\fluVAS\FluVAS.License\FluVAS.License.csproj">
+      <Project>{B96D5D49-BB1C-4C7B-AC7E-CE4B7161EF85}</Project>
+      <Name>FluVAS.License</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+      <PropertyGroup>
+        <__paket__Fody_targets>netstandard1.0\Fody</__paket__Fody_targets>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <None Include="paket.references" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml">
+      <Paket>True</Paket>
+    </Content>
+  </ItemGroup>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+      <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+      <ItemGroup>
+        <Reference Include="PropertyChanged">
+          <HintPath>..\..\packages\PropertyChanged.Fody\lib\netstandard1.0\PropertyChanged.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+      <ItemGroup>
+        <Reference Include="ICSharpCode.SharpZipLib.Portable">
+          <HintPath>..\..\packages\SharpZipLib.Portable\lib\portable-net45+netcore45+wp8+win8+wpa81+MonoTouch+MonoAndroid+Xamarin.iOS10\ICSharpCode.SharpZipLib.Portable.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\packages\Fody\build\$(__paket__Fody_targets).targets" Condition="Exists('..\..\packages\Fody\build\$(__paket__Fody_targets).targets')" Label="Paket" />
 </Project>
