@@ -126,10 +126,10 @@ namespace LongoMatch.Gui.Component
 			// FIXME: Move this to the ViewModel
 			if (ViewModel.Limitation.Remaining == 0) {
 				ViewModel.BarChart.RightSerie.Color = Color.Red;
-				countLabel.Markup = $"Oops! <b>No {ViewModel.Limitation.RegisterName.ToLower ()}</b> left in your plan!";
+				countLabel.Markup = $"Oops! <b>No {ViewModel.Limitation.DisplayName.ToLower ()}</b> left in your plan!";
 			} else {
 				ViewModel.BarChart.RightSerie.Color = Color.Transparent;
-				countLabel.Markup = $"Only <b>{ViewModel.Limitation.Remaining} {ViewModel.Limitation.RegisterName.ToLower ()}</b> left in your plan!";
+				countLabel.Markup = $"Only <b>{ViewModel.Limitation.Remaining} {ViewModel.Limitation.DisplayName.ToLower ()}</b> left in your plan!";
 			}
 		}
 	}
