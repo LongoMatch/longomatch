@@ -19,6 +19,7 @@ using System.ComponentModel;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Services.ViewModel;
+using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -35,7 +36,10 @@ namespace LongoMatch.Services.Controller
 	{
 		public TeamsController ()
 		{
-			TemplateName = "Team";
+			TemplateName = LongoMatchCountLimitedObjects.Team.ToString ();
+			newTemplateCommand = new LimitationAsyncCommand<CreateEvent<Team>> (TemplateName, New);
+			importTemplateCommand = new LimitationAsyncCommand<ImportEvent<Team>> (TemplateName, Import);
+
 			Extension = Constants.TEAMS_TEMPLATE_EXT;
 			Provider = App.Current.TeamTemplatesProvider;
 

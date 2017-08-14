@@ -49,6 +49,10 @@ namespace LongoMatch.Services.ViewModel
 			TeamEditor = new LMTeamEditorVM ();
 			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
 			TeamEditor.Team.TemplateEditorMode = true;
+			if (LimitationChart != null) {
+				LimitationChart.Dispose ();
+				LimitationChart = null;
+			}
 		}
 
 		/// <summary>
@@ -70,6 +74,14 @@ namespace LongoMatch.Services.ViewModel
 		protected override TeamVM CreateInstance (Team model)
 		{
 			return new LMTeamVM { Model = (LMTeam)model };
+		}
+
+		/// <summary>
+		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
+		/// </summary>
+		public CountLimitationBarChartVM LimitationChart {
+			get;
+			set;
 		}
 	}
 }

@@ -82,6 +82,10 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.VBox templatesvbox;
 
+		private global::Gtk.Alignment limitationAlignment;
+
+		private global::LongoMatch.Gui.Component.LMLimitationWidget limitationWidget;
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 
 		private global::Gtk.TreeView dashboardseditortreeview;
@@ -380,9 +384,22 @@ namespace LongoMatch.Gui.Panel
 			this.hbox1.Spacing = 15;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.templatesvbox = new global::Gtk.VBox ();
-			this.templatesvbox.WidthRequest = 280;
+			this.templatesvbox.WidthRequest = 320;
 			this.templatesvbox.Name = "templatesvbox";
 			this.templatesvbox.Spacing = 6;
+			// Container child templatesvbox.Gtk.Box+BoxChild
+			this.limitationAlignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.limitationAlignment.Name = "limitationAlignment";
+			// Container child limitationAlignment.Gtk.Container+ContainerChild
+			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget ();
+			this.limitationWidget.Events = ((global::Gdk.EventMask)(256));
+			this.limitationWidget.Name = "limitationWidget";
+			this.limitationAlignment.Add (this.limitationWidget);
+			this.templatesvbox.Add (this.limitationAlignment);
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.limitationAlignment]));
+			w36.Position = 0;
+			w36.Expand = false;
+			w36.Fill = false;
 			// Container child templatesvbox.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
@@ -393,13 +410,13 @@ namespace LongoMatch.Gui.Panel
 			this.dashboardseditortreeview.Name = "dashboardseditortreeview";
 			this.GtkScrolledWindow1.Add (this.dashboardseditortreeview);
 			this.templatesvbox.Add (this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
-			w36.Position = 0;
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
+			w38.Position = 1;
 			this.hbox1.Add (this.templatesvbox);
-			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
-			w37.Position = 0;
-			w37.Expand = false;
-			w37.Fill = false;
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
+			w39.Position = 0;
+			w39.Expand = false;
+			w39.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox4 = new global::Gtk.VBox ();
 			this.vbox4.Name = "vbox4";
@@ -409,18 +426,18 @@ namespace LongoMatch.Gui.Panel
 			this.dashboardwidget.Events = ((global::Gdk.EventMask)(256));
 			this.dashboardwidget.Name = "dashboardwidget";
 			this.vbox4.Add (this.dashboardwidget);
-			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.dashboardwidget]));
-			w38.Position = 0;
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.dashboardwidget]));
+			w40.Position = 0;
 			this.hbox1.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
-			w39.Position = 1;
+			global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
+			w41.Position = 1;
 			this.contentvbox.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
-			w40.Position = 1;
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w42.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
 			this.dashboardeditorvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
-			w42.Position = 1;
+			global::Gtk.Box.BoxChild w44 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
+			w44.Position = 1;
 			this.Add (this.dashboardeditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

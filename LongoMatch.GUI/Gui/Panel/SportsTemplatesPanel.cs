@@ -31,6 +31,8 @@ using VAS.Core.MVVMC;
 using VAS.UI.Helpers.Bindings;
 using Image = VAS.Core.Common.Image;
 using Helpers = VAS.UI.Helpers;
+using VAS.Core.ViewModel;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -98,8 +100,6 @@ namespace LongoMatch.Gui.Panel
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 
-			templatesvbox.WidthRequest = 160;
-
 			dashboardwidget.Sensitive = false;
 			dashboardwidget.CodingDashboardMode = false;
 			newtemplatebutton.Visible = true;
@@ -142,6 +142,7 @@ namespace LongoMatch.Gui.Panel
 				}
 				viewModel = value;
 				ctx.UpdateViewModel (viewModel);
+				limitationWidget.SetViewModel (viewModel.LimitationChart);
 				if (viewModel != null) {
 					foreach (LMDashboardVM dashboard in viewModel.ViewModels) {
 						Add (dashboard);

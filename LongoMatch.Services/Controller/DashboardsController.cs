@@ -18,6 +18,7 @@
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
+using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -31,7 +32,9 @@ namespace LongoMatch.Services.Controller
 	{
 		public DashboardsController ()
 		{
-			TemplateName = "Dashboard";
+			TemplateName = LongoMatchCountLimitedObjects.Dashboard.ToString ();
+			newTemplateCommand = new LimitationAsyncCommand<CreateEvent<Dashboard>> (TemplateName, New);
+			importTemplateCommand = new LimitationAsyncCommand<ImportEvent<Dashboard>> (TemplateName, Import);
 			Extension = Constants.CAT_TEMPLATE_EXT;
 			Provider = App.Current.CategoriesTemplatesProvider;
 

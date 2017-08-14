@@ -19,6 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
@@ -92,8 +93,6 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
 
-			teamsvbox.WidthRequest = 280;
-
 			teamtemplateeditor1.VisibleButtons = false;
 
 			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
@@ -144,6 +143,7 @@ namespace LongoMatch.Gui.Panel
 				}
 				viewModel = value;
 				ctx.UpdateViewModel (viewModel);
+				limitationWidget.SetViewModel (viewModel.LimitationChart);
 				if (viewModel != null) {
 					foreach (LMTeamVM team in viewModel.ViewModels) {
 						Add (team);
