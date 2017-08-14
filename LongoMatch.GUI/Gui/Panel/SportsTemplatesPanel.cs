@@ -100,8 +100,6 @@ namespace LongoMatch.Gui.Panel
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 
-			templatesvbox.WidthRequest = 160;
-
 			dashboardwidget.Sensitive = false;
 			dashboardwidget.CodingDashboardMode = false;
 			newtemplatebutton.Visible = true;

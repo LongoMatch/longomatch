@@ -384,7 +384,7 @@ namespace LongoMatch.Gui.Panel
 			this.hbox1.Spacing = 15;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.templatesvbox = new global::Gtk.VBox ();
-			this.templatesvbox.WidthRequest = 280;
+			this.templatesvbox.WidthRequest = 320;
 			this.templatesvbox.Name = "templatesvbox";
 			this.templatesvbox.Spacing = 6;
 			// Container child templatesvbox.Gtk.Box+BoxChild

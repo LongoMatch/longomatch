@@ -93,8 +93,6 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
 
-			teamsvbox.WidthRequest = 280;
-
 			teamtemplateeditor1.VisibleButtons = false;
 
 			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));

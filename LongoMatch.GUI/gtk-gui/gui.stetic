@@ -6230,7 +6230,7 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.VBox" id="teamsvbox">
                         <property name="MemberName" />
-                        <property name="WidthRequest">280</property>
+                        <property name="WidthRequest">320</property>
                         <property name="Spacing">6</property>
                         <child>
                           <widget class="Gtk.Alignment" id="limitationAlignment">
@@ -8148,7 +8148,7 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.VBox" id="templatesvbox">
                         <property name="MemberName" />
-                        <property name="WidthRequest">280</property>
+                        <property name="WidthRequest">320</property>
                         <property name="Spacing">6</property>
                         <child>
                           <widget class="Gtk.Alignment" id="limitationAlignment">
