@@ -37,7 +37,7 @@ namespace LongoMatch.Services.Controller
 		public TeamsController ()
 		{
 			TemplateName = LongoMatchCountLimitedObjects.Team.ToString ();
-			newTemplateCommand = new LimitationAsyncCommand<CreateEvent<Team>> (TemplateName, New);
+			newTemplateCommand = new LimitationAsyncCommand<CreateEvent<Team>> (TemplateName, HandleNew);
 			importTemplateCommand = new LimitationAsyncCommand<ImportEvent<Team>> (TemplateName, Import);
 
 			Extension = Constants.TEAMS_TEMPLATE_EXT;
