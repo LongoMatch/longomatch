@@ -43,9 +43,7 @@
     </When>
   </Choose>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml">
-      <Paket>True</Paket>
-    </Content>
+    <Content Include="FodyWeavers.xml" />
     <None Include="paket.references" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
@@ -64,9 +62,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModuleInitializer.cs">
-      <Paket>True</Paket>
-    </Compile>
+    <Compile Include="ModuleInitializer.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">

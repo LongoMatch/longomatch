@@ -58,17 +58,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml">
-      <Paket>True</Paket>
-    </Content>
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModuleInitializer.cs">
-      <Paket>True</Paket>
-    </Compile>
+    <Compile Include="ModuleInitializer.cs" />
     <Compile Include="Catalog.cs" />
   </ItemGroup>
   <Choose>
