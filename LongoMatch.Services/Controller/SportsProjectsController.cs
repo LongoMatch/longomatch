@@ -3,11 +3,13 @@
 //
 //
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
+using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Services.Controller;
@@ -53,7 +55,10 @@ namespace LongoMatch.Services.Controller
 		void HandleOpen (OpenEvent<LMProject> arg)
 		{
 			if (ViewModel.LoadedProject != null) {
-				LMStateHelper.OpenProject (ViewModel.LoadedProject);
+				// We get the selection instead of LoadedProject because it can be modified without saving.
+				// Also we don't use the selected VM directly because it's disposed on unload
+				LMProjectVM selectedVM = new LMProjectVM {Model = ViewModel.Selection.First ().Model};
+				LMStateHelper.OpenProject (selectedVM);
 			}
 		}
 	}
