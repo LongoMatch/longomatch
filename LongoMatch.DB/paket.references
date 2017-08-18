@@ -1,11 +1,2 @@
 Couchbase.Lite.LM
-Couchbase.Lite.Storage.SystemSQLite.LM
-Fody
 ModuleInit.Fody
-Newtonsoft.Json
-SharpZipLib.Portable
-SQLitePCL.native.sqlite3.v110_xp
-SQLitePCL.plugin.sqlite3.net45
-SQLitePCL.raw
-SQLitePCL.ugly
-Stateless
