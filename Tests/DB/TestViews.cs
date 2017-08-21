@@ -76,7 +76,7 @@ namespace Tests.DB
 		CouchbaseStorageLongoMatch storage;
 		Database db;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void InitDB ()
 		{
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
@@ -92,7 +92,7 @@ namespace Tests.DB
 			db = storage.Database;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void DeleteDB ()
 		{
 			Directory.Delete (db.Manager.Directory, true);

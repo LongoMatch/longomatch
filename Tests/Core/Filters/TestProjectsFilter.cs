@@ -29,7 +29,7 @@ namespace Tests.Core.Filters
 		List<LMProject> projects;
 		ProjectsFilter projectsFilter;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FillProjects ()
 		{
 			projects = new List<LMProject> ();

@@ -44,14 +44,15 @@ namespace Tests.Integration
 		ILicenseManager currentLicenseManager;
 		ILicenseLimitationsService currentLimitationService;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup ()
 		{
+			Directory.SetCurrentDirectory (TestContext.CurrentContext.TestDirectory);
 			currentLicenseManager = App.Current.LicenseManager;
 			currentLimitationService = App.Current.LicenseLimitationsService;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown ()
 		{
 			App.Current.LicenseManager = currentLicenseManager;
@@ -86,7 +87,7 @@ namespace Tests.Integration
 			} catch {
 			}
 			CoreServices.Stop ();
-			SetupClass.Initialize ();
+			SetupClass.SetUp ();
 		}
 
 		[Test]

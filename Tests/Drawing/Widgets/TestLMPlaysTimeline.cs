@@ -41,7 +41,7 @@ namespace Tests.Drawing.Widgets
 		LMProjectVM projectVM;
 		Mock<IWidget> widgetMock;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init ()
 		{
 			App.Current.DrawingToolkit = new Mock<IDrawingToolkit> ().Object;

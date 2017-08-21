@@ -44,7 +44,7 @@ namespace Tests.Drawing.Objects
 	{
 		Mock<IDrawingToolkit> tkMock;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetUpOnce ()
 		{
 			tkMock = new Mock<IDrawingToolkit> ();

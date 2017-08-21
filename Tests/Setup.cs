@@ -37,17 +37,13 @@ namespace Tests
 	[SetUpFixture]
 	public class SetupClass
 	{
-		[SetUp]
-		public void Setup ()
+		[OneTimeSetUp]
+		public static void SetUp ()
 		{
 			// Initialize LongoMath.Core by using a type, this will call the module initialization
 			var st = new LMTeam ();
 			VFS.SetCurrent (new FileSystem ());
-			Initialize ();
-		}
 
-		public static void Initialize ()
-		{
 			VAS.App.Current = App.Current = new App ();
 			App.InitDependencies ();
 			App.Current.Config = new Config ();

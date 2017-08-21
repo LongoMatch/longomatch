@@ -21,13 +21,13 @@ namespace Tests.State
 		LMUpgradeLimitationState state;
 		ILicenseManager currentLicenseManager;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetUp ()
 		{
 			currentLicenseManager = App.Current.LicenseManager;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown ()
 		{
 			App.Current.LicenseManager = currentLicenseManager;
