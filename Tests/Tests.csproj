@@ -115,6 +115,7 @@
     <Compile Include="Plugins\Exporters\TestCsvExporter.cs" />
     <Compile Include="Services\Controller\TestTeamsController.cs" />
     <Compile Include="Services\Controller\TestDashboardsController.cs" />
+    <Compile Include="Core\ViewModel\TestLMProjectVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">

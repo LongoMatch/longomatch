@@ -3,12 +3,14 @@
 //
 //
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
@@ -24,6 +26,15 @@ namespace LongoMatch.Services.Controller
 	[ControllerAttribute (ProjectsManagerState.NAME)]
 	public class SportsProjectsController : ProjectsController<LMProject, LMProjectVM>
 	{
+		public new SportsProjectsManagerVM ViewModel {
+			get {
+				return (SportsProjectsManagerVM)base.ViewModel;
+			}
+			set {
+				base.ViewModel = value;
+			}
+		}
+
 		public override async Task Start ()
 		{
 			await base.Start ();
@@ -36,6 +47,12 @@ namespace LongoMatch.Services.Controller
 			await base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<ResyncEvent> (HandleResync);
 			App.Current.EventsBroker.Unsubscribe<OpenEvent<LMProject>> (HandleOpen);
+		}
+
+		protected override void HandleSelectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			base.HandleSelectionChanged (sender, e);
+			ViewModel.ResyncCommand.EmitCanExecuteChanged ();
 		}
 
 		async Task HandleResync (ResyncEvent ev)

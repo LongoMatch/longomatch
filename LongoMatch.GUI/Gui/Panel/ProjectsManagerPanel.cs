@@ -32,6 +32,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers.Bindings;
+using VAS.UI.UI.Bindings;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -43,6 +44,7 @@ namespace LongoMatch.Gui.Panel
 		SportsProjectsManagerVM viewModel;
 		List<VideoFileInfo> videoFileInfos;
 		BindingContext ctx;
+		BindingContext detailCtx;
 
 		public ProjectsManagerPanel ()
 		{
@@ -62,12 +64,6 @@ namespace LongoMatch.Gui.Panel
 			exportbutton.TooltipMarkup = Catalog.GetString ("Export");
 			openbutton.TooltipMarkup = Catalog.GetString ("Open");
 			deletebutton.TooltipMarkup = Catalog.GetString ("Delete");
-
-			seasonentry.Changed += HandleChanged;
-			competitionentry.Changed += HandleChanged;
-
-			datepicker.ValueChanged += HandleDateChanged;
-			desctextview.Buffer.Changed += HandleChanged;
 
 			panelheader1.Title = Title;
 			panelheader1.ApplyVisible = false;
@@ -170,7 +166,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof (ViewModel.LoadedProject.Model) && sender == ViewModel.LoadedProject) {
+			if (e.PropertyName == nameof (ViewModel.LoadedProject) && sender == ViewModel) {
 				LoadProject (ViewModel.LoadedProject);
 			}
 		}
@@ -183,27 +179,14 @@ namespace LongoMatch.Gui.Panel
 		void LoadProject (LMProjectVM project)
 		{
 			gamedescriptionheader1.ViewModel = project;
-			seasonentry.Text = project.Season;
-			competitionentry.Text = project.Competition;
-			datepicker.Date = project.MatchDate;
-			templatelabel.Text = project.DashboardText;
-			desctextview.Buffer.Clear ();
-			desctextview.Buffer.InsertAtCursor (project.Description ?? "");
+			detailCtx.UpdateViewModel (project);
 
 			foreach (VideoFileInfo vfi in videoFileInfos) {
 				videofileinfo_vbox.Remove (vfi);
 			}
 			videoFileInfos.Clear ();
 
-			resyncbutton.Sensitive = project.FileSet.Count () > 1;
-
-			int max = project.FileSet.Count ();
-			// Cap to one media file for non multi camera version
-			if (!App.Current.SupportsMultiCamera) {
-				max = Math.Min (max, 1);
-			}
-
-			foreach (var mf in project.FileSet.Take (max)) {
+			foreach (var mf in project.FileSet) {
 				VideoFileInfo vfi = new VideoFileInfo ();
 
 				vfi.SetMediaFileSet (project.FileSet.Model, mf.Model);
@@ -226,37 +209,28 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleChanged (object sender, EventArgs e)
 		{
-			if (ViewModel.LoadedProject == null)
+			if (ViewModel.LoadedProject == null) {
 				return;
-
-			if (sender == competitionentry) {
-				ViewModel.LoadedProject.Competition = (sender as Entry).Text;
-			} else if (sender == seasonentry) {
-				ViewModel.LoadedProject.Season = (sender as Entry).Text;
-			} else if (sender == desctextview.Buffer) {
-				ViewModel.LoadedProject.Description =
-					desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
-					desctextview.Buffer.EndIter, true);
 			}
+
 			ViewModel.SaveCommand.EmitCanExecuteChanged ();
 		}
 
-		void HandleDateChanged (object sender, EventArgs e)
-		{
-			if (ViewModel.LoadedProject == null)
-				return;
-
-			ViewModel.LoadedProject.MatchDate = datepicker.Date;
-		}
 
 		void Bind ()
 		{
 			ctx = this.GetBindingContext ();
+			detailCtx = new BindingContext ();
 			ctx.Add (deletebutton.Bind (vm => ((SportsProjectsManagerVM)vm).DeleteCommand));
 			ctx.Add (openbutton.Bind (vm => ((SportsProjectsManagerVM)vm).OpenCommand));
 			ctx.Add (exportbutton.Bind (vm => ((SportsProjectsManagerVM)vm).ExportCommand));
 			ctx.Add (savebutton.Bind (vm => ((SportsProjectsManagerVM)vm).SaveCommand));
 			ctx.Add (resyncbutton.Bind (vm => ((SportsProjectsManagerVM)vm).ResyncCommand));
+			detailCtx.Add (seasonentry.Bind (vm => ((LMProjectVM)vm).Season));
+			detailCtx.Add (competitionentry.Bind (vm => ((LMProjectVM)vm).Competition));
+			detailCtx.Add (datepicker.Bind (vm => ((LMProjectVM)vm).MatchDate));
+			detailCtx.Add (templatelabel.Bind (vm => ((LMProjectVM)vm).DashboardText));
+			detailCtx.Add (desctextview.Bind (vm => ((LMProjectVM)vm).Description));
 		}
 	}
 }

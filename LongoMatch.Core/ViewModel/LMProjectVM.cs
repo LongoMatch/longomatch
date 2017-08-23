@@ -28,6 +28,11 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMProjectVM : ProjectVM<LMProject>
 	{
+		string description;
+		DateTime matchDate;
+		string season;
+		string competition;
+
 		public LMProjectVM ()
 		{
 			HomeTeam = new LMTeamVM ();
@@ -42,10 +47,18 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The description.</value>
 		public string Description {
 			get {
-				return Model.Description.Description;
+				if (Stateful && description != null) {
+					return description;
+				} else {
+					return Model.Description.Description;
+				}
 			}
 			set {
-				Model.Description.Description = value;
+				if (Stateful) {
+					description = value;
+				} else {
+					Model.Description.Description = value;
+				}
 			}
 		}
 
@@ -125,10 +138,18 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The match date.</value>
 		public DateTime MatchDate {
 			get {
-				return Model.Description.MatchDate;
+				if (Stateful && matchDate != default (DateTime)) {
+					return matchDate;
+				} else {
+					return Model.Description.MatchDate;
+				}
 			}
 			set {
-				Model.Description.MatchDate = value;
+				if (Stateful) {
+					matchDate = value;
+				} else {
+					Model.Description.MatchDate = value;
+				}
 			}
 		}
 
@@ -138,10 +159,18 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The season.</value>
 		public string Season {
 			get {
-				return Model.Description.Season;
+				if (Stateful && season != null) {
+					return season;
+				} else {
+					return Model.Description.Season;
+				}
 			}
 			set {
-				Model.Description.Season = value;
+				if (Stateful) {
+					season = value;
+				} else {
+					Model.Description.Season = value;
+				}
 			}
 		}
 
@@ -151,10 +180,18 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The competition.</value>
 		public string Competition {
 			get {
-				return Model.Description.Competition;
+				if (Stateful && competition != null) {
+					return competition;
+				} else {
+					return Model.Description.Competition;
+				}
 			}
 			set {
-				Model.Description.Competition = value;
+				if (Stateful) {
+					competition = value;
+				} else {
+					Model.Description.Competition = value;
+				}
 			}
 		}
 
@@ -164,7 +201,7 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The title.</value>
 		public string Title {
 			get {
-				return Model.Description.Competition;
+				return Competition;
 			}
 		}
 
@@ -198,6 +235,18 @@ namespace LongoMatch.Core.ViewModel
 		/// </summary>
 		/// <value><c>true</c> if close has been handled; otherwise, <c>false</c>.</value>
 		public bool CloseHandled { get; set; }
+
+		public override void CommitState ()
+		{
+			Model.Description.Description = description;
+			description = null;
+			Model.Description.Season = season;
+			season = null;
+			Model.Description.Competition = competition;
+			competition = null;
+			Model.Description.MatchDate = matchDate;
+			matchDate = default (DateTime);
+		}
 
 		protected override void SyncLoadedModel ()
 		{
