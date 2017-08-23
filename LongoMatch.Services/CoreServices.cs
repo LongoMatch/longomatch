@@ -32,7 +32,6 @@ using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
-//using VAS.Services.AppUpdater;
 using VAS.Services.ViewModel;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -176,13 +175,6 @@ namespace LongoMatch.Services
 			PlaybackHotkeys.RegisterDefaultHotkeys ();
 			DrawingToolHotkeys.RegisterDefaultHotkeys ();
 			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
-
-#if DEVEL
-			//AppUpdater notifier = new AppUpdater ("Fluendo", "http://sparkle.fluendo.lan:8080/longomatch.xml");
-#else
-			//AppUpdater notifier = new AppUpdater ("Fluendo", "https://s3.amazonaws.com/oneplay-files/longomatch.xml");
-#endif
-			//RegisterService (notifier);
 		}
 
 		public static void StartServices ()
