@@ -109,6 +109,7 @@ Xavier Queralt Mateu (ca)";
 		public const string PROJECT_EXT = ".lgm";
 		public const string PROJECT_ENCRYPTED_EXT = ".lgmx";
 
+		public const string BACKGROUND = "images/vas-dark-bg" + IMAGE_EXT;
 		public const string LOGO_ICON = "lm-any";
 		public const string LOGO_BASIC_ICON = "lm-basic";
 		public const string LOGO_STARTER_ICON = "lm-starter";
