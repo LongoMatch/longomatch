@@ -1,4 +1,4 @@
 Couchbase.Lite.LM
 Moq
 NUnit
-NUnit.Runners
+NUnit.Console
