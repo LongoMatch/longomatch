@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
@@ -60,6 +61,8 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				if (viewModel != null) {
 					viewModel.VideoPlayer.PropertyChanged -= HandlePropertyChanged;
+					viewModel.Project.Periods.GetNotifyCollection ().CollectionChanged
+							 -= HandlePeriodsCollectionChanged;
 				}
 				viewModel = value;
 				timelines = new List<TimelineView> ();
@@ -67,6 +70,8 @@ namespace LongoMatch.Drawing.Widgets
 				FillCanvas ();
 				if (viewModel != null) {
 					viewModel.VideoPlayer.PropertyChanged += HandlePropertyChanged;
+					viewModel.Project.Periods.GetNotifyCollection ().CollectionChanged
+							 += HandlePeriodsCollectionChanged;
 				}
 				widget?.ReDraw ();
 			}
@@ -216,6 +221,15 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (e.PropertyName == nameof (VideoPlayerVM.CurrentTime)) {
 				CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+			}
+		}
+
+		void HandlePeriodsCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Remove) {
+				foreach (var timerVM in e.OldItems.OfType<TimerVM> ()) {
+					Selections.RemoveAll (s => (s.Drawable as TimerTimeNodeView).Timer == timerVM);
+				}
 			}
 		}
 	}
