@@ -69,7 +69,6 @@
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
     <Compile Include="Integration\TestPostGameAnalysis.cs" />
-    <Compile Include="DummyBusyDialog.cs" />
     <Compile Include="DB\TestQueries.cs" />
     <Compile Include="Core\Common\TestExtensions.cs" />
     <Compile Include="Core\Filters\TestProjectsFilter.cs" />

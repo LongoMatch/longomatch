@@ -45,6 +45,7 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
+using VAS.Tests;
 
 namespace Tests.Integration
 {
