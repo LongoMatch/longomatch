@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -67,9 +67,10 @@ namespace Tests.Integration
 		ILicenseManager currentLicenseManager;
 		ILicenseLimitationsService currentLimitationService;
 
-		[TestFixtureSetUp ()]
+		[OneTimeSetUp]
 		public void FixtureSetup ()
 		{
+			Directory.SetCurrentDirectory (TestContext.CurrentContext.TestDirectory);
 			// Register the events manager
 			eventsController = new EventsController ();
 			toolsManager = new ToolsManager ();
@@ -77,7 +78,7 @@ namespace Tests.Integration
 			currentLimitationService = App.Current.LicenseLimitationsService;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown ()
 		{
 			App.Current.LicenseManager = currentLicenseManager;
@@ -129,7 +130,7 @@ namespace Tests.Integration
 			} catch {
 			}
 			CoreServices.Stop ();
-			SetupClass.Initialize ();
+			SetupClass.SetUp ();
 		}
 
 		[Test ()]

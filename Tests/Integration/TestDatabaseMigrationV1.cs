@@ -35,7 +35,7 @@ namespace Tests.Integration
 		[TearDown]
 		public void Reset ()
 		{
-			SetupClass.Initialize ();
+			SetupClass.SetUp ();
 		}
 
 		[Test]

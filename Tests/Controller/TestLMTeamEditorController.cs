@@ -37,7 +37,7 @@ namespace Tests.Controller
 		Mock<IDialogs> mockToolkit;
 		IDialogs dialogs;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetUpFixture ()
 		{
 			dialogs = App.Current.Dialogs;
@@ -50,7 +50,7 @@ namespace Tests.Controller
 			App.Current.GUIToolkit = mockGui.Object;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown ()
 		{
 			App.Current.Dialogs = dialogs;

@@ -24,7 +24,7 @@ namespace Tests.Plugins.Importers
 		Mock<IGUIToolkit> mockGUI;
 		Mock<IDialogs> mockDialog;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetUp ()
 		{
 			importer = new LongoMatchImporter ();
@@ -34,7 +34,7 @@ namespace Tests.Plugins.Importers
 
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void FixtureTearDown ()
 		{
 		}

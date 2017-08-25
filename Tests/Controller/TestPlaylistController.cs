@@ -47,7 +47,7 @@ namespace Tests.Controller
 		PlaylistCollectionVM playlistCollectionVM;
 		LMProjectVM projectVM;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup ()
 		{
 			mockGuiToolkit = new Mock<IGUIToolkit> ();

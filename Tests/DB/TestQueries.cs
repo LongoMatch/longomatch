@@ -40,7 +40,7 @@ namespace Tests.DB
 		CouchbaseStorage storage;
 		Database db;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void InitDB ()
 		{
 			string dbPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
@@ -55,7 +55,7 @@ namespace Tests.DB
 			db = storage.Database;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void DeleteDB ()
 		{
 			Directory.Delete (db.Manager.Directory, true);

@@ -59,7 +59,7 @@ namespace Tests.Controller
 		Mock<ILicenseLimitationsService> mockLimitationService;
 		ILicenseLimitationsService currentService;
 
-		[TestFixtureSetUp ()]
+		[OneTimeSetUp]
 		public void FixtureSetup ()
 		{
 			mockList = new List<Mock> ();

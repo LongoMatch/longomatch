@@ -42,9 +42,10 @@ namespace Tests.Integration
 		ILicenseManager currentLicenseManager;
 		ILicenseLimitationsService currentLimitationService;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetUp ()
 		{
+			Directory.SetCurrentDirectory (TestContext.CurrentContext.TestDirectory);
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			player = new Mock<IVideoPlayer> ();
@@ -53,7 +54,7 @@ namespace Tests.Integration
 			currentLimitationService = App.Current.LicenseLimitationsService;
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown ()
 		{
 			App.Current.LicenseManager = currentLicenseManager;
@@ -72,7 +73,7 @@ namespace Tests.Integration
 		[TearDown]
 		public void Reset ()
 		{
-			SetupClass.Initialize ();
+			SetupClass.SetUp ();
 			try {
 				CoreServices.Stop ();
 			} catch {

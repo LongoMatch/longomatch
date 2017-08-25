@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
@@ -40,7 +41,7 @@ namespace Tests.State
 		LMProjectVM projectVM;
 		LMProjectAnalysisVM analysisVM;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetupOnce ()
 		{
 			var hotkeysMock = new Mock<IHotkeysService> ();
@@ -67,7 +68,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_AllGood_TransitionOK ()
+		public async Task LoadState_AllGood_TransitionOK ()
 		{
 			// Act
 			bool ret = await state.LoadState (analysisVM);
@@ -80,7 +81,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_VideoPlayerException_TransitionCancelled ()
+		public async Task LoadState_VideoPlayerException_TransitionCancelled ()
 		{
 			capturerMock.Setup (p => p.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ())).
 						Throws<Exception> ();

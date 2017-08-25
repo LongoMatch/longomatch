@@ -34,7 +34,7 @@ namespace Tests.Services.Controller
 		TeamsController controller;
 		CountLimitationVM countLimitationVM;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetUp ()
 		{
 			DummyTeam team = new DummyTeam { Name = "Team 1" };

@@ -31,7 +31,7 @@ namespace Tests.Services.ViewModel
 	{
 		TeamsManagerVM viewModel;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetUp ()
 		{
 			Mock<IGUIToolkit> mockGui = new Mock<IGUIToolkit> ();

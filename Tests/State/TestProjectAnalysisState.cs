@@ -10,6 +10,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 using System;
+using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
@@ -35,7 +36,7 @@ namespace Tests.State
 		LMProjectVM projectVM;
 		LMProjectAnalysisVM analysisVM;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetupOnce ()
 		{
 			var hotkeysMock = new Mock<IHotkeysService> ();
@@ -73,7 +74,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_ProjectFileWithNullDuration_DiscoverFileOk ()
+		public async Task LoadState_ProjectFileWithNullDuration_DiscoverFileOk ()
 		{
 			// Arrange
 			Assert.Greater (project.Description.FileSet.Count, 0);
@@ -90,7 +91,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_AllGood_TransitionOK ()
+		public async Task LoadState_AllGood_TransitionOK ()
 		{
 			// Act
 			bool ret = await state.LoadState (analysisVM);
@@ -102,7 +103,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_FilesMissingNotAdded_TransitionCancelled ()
+		public async Task LoadState_FilesMissingNotAdded_TransitionCancelled ()
 		{
 			// Arrange
 			Utils.DeleteProject (project);
@@ -116,7 +117,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_FilesMissingAdded_TransitionOK ()
+		public async Task LoadState_FilesMissingAdded_TransitionOK ()
 		{
 			// Arrange
 			Utils.DeleteProject (project);
@@ -130,7 +131,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async void LoadState_VideoPlayerException_TransitionCancelled ()
+		public async Task LoadState_VideoPlayerException_TransitionCancelled ()
 		{
 			playerMock.Setup (p => p.Open (It.IsAny<MediaFile> ())).Throws<Exception> ();
 

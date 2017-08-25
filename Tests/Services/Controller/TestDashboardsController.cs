@@ -33,7 +33,7 @@ namespace Tests.Services.Controller
 		DashboardsController controller;
 		CountLimitationVM countLimitationVM;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetUp ()
 		{
 			DashboardDummy dashboard = new DashboardDummy { Name = "Dashboard 1" };

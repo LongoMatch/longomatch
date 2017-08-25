@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2015 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -103,7 +103,7 @@ namespace Tests.DB
 		Database db;
 		IStorage storage;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void InitDB ()
 		{
 			string tmpPath = Path.GetTempPath ();
@@ -126,7 +126,7 @@ namespace Tests.DB
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void DeleteDB ()
 		{
 			Directory.Delete (db.Manager.Directory, true);
