@@ -25,6 +25,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
@@ -139,7 +140,8 @@ namespace LongoMatch.Gui.Dialog
 				CheckStatus ();
 			};
 			fileinfo = new VideoFileInfo ();
-			fileinfo.SetMediaFile (file);
+			// FIXME: Migrate this to MVVM correctly
+			fileinfo.SetMediaFile (new MediaFileVM { Model = file });
 			box.PackStart (fileinfo, true, true, 0);
 			box.PackStart (delButton, false, false, 0);
 			box.ShowAll ();

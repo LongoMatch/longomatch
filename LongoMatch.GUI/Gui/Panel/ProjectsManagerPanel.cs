@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Panel
 			foreach (var mf in project.FileSet) {
 				VideoFileInfo vfi = new VideoFileInfo ();
 
-				vfi.SetMediaFileSet (project.FileSet.Model, mf.Model);
+				vfi.SetMediaFileSet (project.FileSet, mf);
 				vfi.Changed += HandleChanged;
 
 				vfi.ShowAll ();

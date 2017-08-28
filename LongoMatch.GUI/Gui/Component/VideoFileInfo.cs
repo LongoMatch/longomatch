@@ -18,20 +18,22 @@
 using System;
 using Gtk;
 using VAS.Core;
+using VAS.Core.Events;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	//FIXME: Migrate to MVVM
-	public partial class VideoFileInfo : Gtk.Bin
+	public partial class VideoFileInfo : Gtk.Bin, IView<MediaFileSetVM>
 	{
 		public event EventHandler Changed;
 
 		const int PREVIEW_SIZE = 80;
-		MediaFileSet fileSet;
-		MediaFile mediaFile;
+		MediaFileSetVM viewModel;
+		MediaFileVM mediaFile;
 		bool disableChanges;
 
 		public VideoFileInfo ()
@@ -43,13 +45,27 @@ namespace LongoMatch.Gui.Component
 			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 		}
 
-		public void SetMediaFileSet (MediaFileSet files, MediaFile file)
+		public MediaFileSetVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+			}
+		}
+
+		public void SetViewModel (object viewModel)
 		{
-			fileSet = files;
+			ViewModel = (MediaFileSetVM)viewModel;
+		}
+
+		public void SetMediaFileSet (MediaFileSetVM files, MediaFileVM file)
+		{
+			viewModel = files;
 			SetMediaFile (file, true);
 		}
 
-		public void SetMediaFile (MediaFile file, bool editable = false)
+		public void SetMediaFile (MediaFileVM file, bool editable = false)
 		{
 			mediaFile = file;
 			disableChanges = !editable;
@@ -58,7 +74,7 @@ namespace LongoMatch.Gui.Component
 
 		void UpdateMediaFile ()
 		{
-			if (mediaFile == null) {
+			if (mediaFile == null || mediaFile.Model == null) {
 				Visible = false;
 				return;
 			}
@@ -96,22 +112,19 @@ namespace LongoMatch.Gui.Component
 				mediaFile.Offset.ToMSecondsString ());
 		}
 
-		void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
+		async void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
 			if (args.Event.Button != 1 || disableChanges) {
 				return;
 			}
-			MediaFile file = Misc.OpenFile (this);
-			if (file != null) {
-				if (mediaFile != null) {
-					file.Offset = mediaFile.Offset;
-				}
-				fileSet.Replace (mediaFile, file);
-				mediaFile = file;
-				UpdateMediaFile ();
-				if (Changed != null) {
-					Changed (this, new EventArgs ());
-				}
+			MediaFileVM file = await App.Current.EventsBroker.PublishWithReturn<ReplaceMediaFileEvent, MediaFileVM> (new ReplaceMediaFileEvent {
+				OldFileSet = ViewModel,
+				OldFile = mediaFile
+			});
+			mediaFile = file;
+			UpdateMediaFile ();
+			if (Changed != null) {
+				Changed (this, new EventArgs ());
 			}
 		}
 	}
