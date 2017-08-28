@@ -32,6 +32,7 @@ namespace LongoMatch.Services.Controller
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	[Controller (SubstitutionsEditorState.NAME)]
+	[Controller (LightLiveProjectState.NAME)]
 	[Controller (PlayEditorState.NAME)]
 	[Controller (LMDrawingToolState.NAME)]
 	public class LMTeamTaggerController : ControllerBase

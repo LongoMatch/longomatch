@@ -38,6 +38,7 @@ namespace LongoMatch.Services
 	[Controller (ProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
+	[Controller (LightLiveProjectState.NAME)]
 	public class LMEventsController : EventsController
 	{
 		LMProjectAnalysisVM viewModel;

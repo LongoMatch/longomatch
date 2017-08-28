@@ -33,13 +33,11 @@ namespace LongoMatch.Services.Controller
 	[Controller (ProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
-	public class EventEditorController : ControllerBase
+	public class EventEditorController : ControllerBase<ProjectVM>
 	{
-		ProjectVM project;
-
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			project = ((IProjectDealer)viewModel).Project;
+			ViewModel = ((IProjectDealer)viewModel).Project;
 		}
 
 		public override async Task Start ()
@@ -60,22 +58,27 @@ namespace LongoMatch.Services.Controller
 				EditTags = true, EditNotes = true, EditPlayers = true, EditPositions = true
 			};
 
-			dynamic properties = new ExpandoObject ();
-			properties.project = project;
-			properties.play = e.TimelineEvent;
-
-			if (e.TimelineEvent is StatEvent) {
-				await App.Current.StateController.MoveToModal (SubstitutionsEditorState.NAME, properties, true);
-			} else {
-				properties.settings = settings;
-				await App.Current.StateController.MoveToModal (PlayEditorState.NAME, properties, true);
-			}
+			await ShowEditionView (settings, e);
 
 			await App.Current.EventsBroker.Publish (
 				new EventEditedEvent {
 					TimelineEvent = e.TimelineEvent
 				}
 			);
+		}
+
+		protected virtual async Task ShowEditionView(PlayEventEditionSettings settings, EditEventEvent ev)
+		{
+			dynamic properties = new ExpandoObject ();
+			properties.project = ViewModel;
+			properties.play = ev.TimelineEvent;
+
+			if (ev.TimelineEvent is StatEvent) {
+				await App.Current.StateController.MoveToModal (SubstitutionsEditorState.NAME, properties, true);
+			} else {
+				properties.settings = settings;
+				await App.Current.StateController.MoveToModal (PlayEditorState.NAME, properties, true);
+			}
 		}
 	}
 }
