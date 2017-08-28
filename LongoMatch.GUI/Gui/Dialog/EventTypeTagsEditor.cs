@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string msg = Catalog.GetString ("Do you want to remove this subcategory and all its tags?");
 			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-				EventType.Tags.RemoveAll (g.tags.Contains);
+				EventType.Tags.RemoveRange (g.tags);
 				mainvbox.Remove (g.container);
 			}
 		}
