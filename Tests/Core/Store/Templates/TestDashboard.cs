@@ -111,7 +111,7 @@ namespace Tests.Core.Store.Templates
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (1, b1.ActionLinks.Count);
 
-			b1.ActionLinks [0].DestinationTags = new ObservableCollection<Tag> { b2.AnalysisEventType.Tags [0] };
+			b1.ActionLinks [0].DestinationTags = new RangeObservableCollection<Tag> { b2.AnalysisEventType.Tags [0] };
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (1, b1.ActionLinks.Count);
 

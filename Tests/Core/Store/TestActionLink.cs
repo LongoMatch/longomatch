@@ -30,9 +30,9 @@ namespace Tests.Core.Store
 		{
 			ActionLink link = new ActionLink ();
 			link.SourceButton = new DashboardButton ();
-			link.SourceTags = new ObservableCollection<Tag> { new Tag ("tag1") };
+			link.SourceTags = new RangeObservableCollection<Tag> { new Tag ("tag1") };
 			link.DestinationButton = new DashboardButton ();
-			link.DestinationTags = new ObservableCollection<Tag> { new Tag ("tag2") };
+			link.DestinationTags = new RangeObservableCollection<Tag> { new Tag ("tag2") };
 			link.Action = LinkAction.Toggle;
 			link.TeamAction = TeamLinkAction.Invert;
 			link.KeepGenericTags = false;
@@ -69,9 +69,9 @@ namespace Tests.Core.Store
 			Assert.AreNotEqual (link, link2);
 			link2.DestinationButton = link.DestinationButton;
 			Assert.AreNotEqual (link, link2);
-			link2.SourceTags = new ObservableCollection<Tag> { new Tag ("tag1") }; 
+			link2.SourceTags = new RangeObservableCollection<Tag> { new Tag ("tag1") };
 			Assert.AreNotEqual (link, link2);
-			link2.DestinationTags = new ObservableCollection<Tag> { new Tag ("tag2") }; 
+			link2.DestinationTags = new RangeObservableCollection<Tag> { new Tag ("tag2") };
 			Assert.IsTrue (link == link2);
 			Assert.IsTrue (link.Equals (link2));
 		}
