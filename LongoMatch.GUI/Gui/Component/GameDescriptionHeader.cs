@@ -17,6 +17,7 @@
 //
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using Misc = VAS.UI.Helpers.Misc;
 
@@ -41,23 +42,23 @@ namespace LongoMatch.Gui.Component
 			awayimage.SetSize (100, 50);
 		}
 
-		public ProjectDescription ProjectDescription {
+		public LMProjectVM ViewModel {
 			set {
-				if (value.LocalShield != null) {
-					homeimage.Image = value.LocalShield;
+				if (value.HomeTeamShield != null) {
+					homeimage.Image = value.HomeTeamShield;
 				} else {
 					homeimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", 50);
 				}
-				homenamelabel.Text = value.LocalName;
-				homescorelabel.Text = value.LocalGoals.ToString ();
+				homenamelabel.Text = value.HomeTeamText;
+				homescorelabel.Text = value.LocalScore.ToString ();
 
-				if (value.VisitorShield != null) {
-					awayimage.Image = value.VisitorShield;
+				if (value.AwayTeamShield != null) {
+					awayimage.Image = value.AwayTeamShield;
 				} else {
 					awayimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", 50);
 				}
-				awaynamelabel.Text = value.VisitorName;
-				awayscorelabel.Text = value.VisitorGoals.ToString ();
+				awaynamelabel.Text = value.AwayTeamText;
+				awayscorelabel.Text = value.AwayScore.ToString ();
 			}
 		}
 

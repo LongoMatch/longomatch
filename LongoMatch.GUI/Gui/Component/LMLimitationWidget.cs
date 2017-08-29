@@ -116,20 +116,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePropertyChangedEventHandler (object sender, PropertyChangedEventArgs e)
 		{
-			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Limitation.Count))) {
-				SetBarViewModel ();
-			}
-		}
-
-		void SetBarViewModel ()
-		{
-			// FIXME: Move this to the ViewModel
-			if (ViewModel.Limitation.Remaining == 0) {
-				ViewModel.BarChart.RightSerie.Color = Color.Red;
-				countLabel.Markup = $"Oops! <b>No {ViewModel.Limitation.DisplayName.ToLower ()}</b> left in your plan!";
-			} else {
-				ViewModel.BarChart.RightSerie.Color = Color.Transparent;
-				countLabel.Markup = $"Only <b>{ViewModel.Limitation.Remaining} {ViewModel.Limitation.DisplayName.ToLower ()}</b> left in your plan!";
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Text))) {
+				countLabel.Markup = ViewModel.Text;
 			}
 		}
 	}

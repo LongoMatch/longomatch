@@ -14,6 +14,7 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using VAS.Tests;
 
 namespace Tests.Plugins.Importers
 {

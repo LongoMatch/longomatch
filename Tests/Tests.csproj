@@ -69,7 +69,6 @@
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
     <Compile Include="Integration\TestPostGameAnalysis.cs" />
-    <Compile Include="DummyBusyDialog.cs" />
     <Compile Include="DB\TestQueries.cs" />
     <Compile Include="Core\Common\TestExtensions.cs" />
     <Compile Include="Core\Filters\TestProjectsFilter.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="Plugins\Exporters\TestCsvExporter.cs" />
     <Compile Include="Services\Controller\TestTeamsController.cs" />
     <Compile Include="Services\Controller\TestDashboardsController.cs" />
+    <Compile Include="Core\ViewModel\TestLMProjectVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">

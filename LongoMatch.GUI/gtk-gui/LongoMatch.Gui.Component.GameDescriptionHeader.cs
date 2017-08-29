@@ -38,9 +38,7 @@ namespace LongoMatch.Gui.Component
 			this.descbox.Spacing = 6;
 			// Container child descbox.Gtk.Box+BoxChild
 			this.homeimage = new global::VAS.UI.Helpers.ImageView ();
-			this.homeimage.WidthRequest = 0;
 			this.homeimage.Name = "homeimage";
-			this.homeimage.WidthRequest = 0;
 			this.descbox.Add (this.homeimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.descbox [this.homeimage]));
 			w1.Position = 0;
@@ -106,9 +104,7 @@ namespace LongoMatch.Gui.Component
 			w9.Fill = false;
 			// Container child descbox.Gtk.Box+BoxChild
 			this.awayimage = new global::VAS.UI.Helpers.ImageView ();
-			this.awayimage.WidthRequest = 0;
 			this.awayimage.Name = "awayimage";
-			this.awayimage.WidthRequest = 0;
 			this.descbox.Add (this.awayimage);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.descbox [this.awayimage]));
 			w10.Position = 7;

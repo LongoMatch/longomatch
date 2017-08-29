@@ -16,14 +16,6 @@ namespace LongoMatch.Gui.Component
 
 		private global::LongoMatch.Gui.Component.LMLimitationWidget limitationWidget;
 
-		private global::Gtk.ScrolledWindow icoscrolledwindow;
-
-		private global::Gtk.IconView iconview;
-
-		private global::Gtk.ScrolledWindow treeviewscrolledwindow;
-
-		private global::Gtk.TreeView treeview;
-
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -85,36 +77,10 @@ namespace LongoMatch.Gui.Component
 			w5.Position = 1;
 			w5.Expand = false;
 			w5.Fill = false;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.icoscrolledwindow = new global::Gtk.ScrolledWindow ();
-			this.icoscrolledwindow.CanFocus = true;
-			this.icoscrolledwindow.Name = "icoscrolledwindow";
-			// Container child icoscrolledwindow.Gtk.Container+ContainerChild
-			this.iconview = new global::Gtk.IconView ();
-			this.iconview.CanFocus = true;
-			this.iconview.Name = "iconview";
-			this.icoscrolledwindow.Add (this.iconview);
-			this.vbox2.Add (this.icoscrolledwindow);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.icoscrolledwindow]));
-			w7.Position = 2;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.treeviewscrolledwindow = new global::Gtk.ScrolledWindow ();
-			this.treeviewscrolledwindow.Name = "treeviewscrolledwindow";
-			// Container child treeviewscrolledwindow.Gtk.Container+ContainerChild
-			this.treeview = new global::Gtk.TreeView ();
-			this.treeview.CanFocus = true;
-			this.treeview.Name = "treeview";
-			this.treeview.HeadersVisible = false;
-			this.treeviewscrolledwindow.Add (this.treeview);
-			this.vbox2.Add (this.treeviewscrolledwindow);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.treeviewscrolledwindow]));
-			w9.Position = 3;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.icoscrolledwindow.Hide ();
-			this.treeviewscrolledwindow.Hide ();
 			this.Show ();
 			this.filterEntry.Changed += new global::System.EventHandler (this.OnFilterentryChanged);
 		}

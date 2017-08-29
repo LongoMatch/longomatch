@@ -17,9 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
@@ -28,14 +29,10 @@ using Pango;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Hotkeys;
-using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
-using VAS.Core.Serialization;
-using VAS.Core.Store;
-using VAS.Services.State;
-using VAS.UI.Helpers;
-using Constants = LongoMatch.Core.Common.Constants;
+using VAS.UI.Helpers.Bindings;
+using VAS.UI.UI.Bindings;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -45,17 +42,12 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel<SportsProjectsManagerVM>
 	{
 		SportsProjectsManagerVM viewModel;
-		LMProject loadedProject;
-		List<LMProject> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
-		IStorage DB;
-		IGUIToolkit gkit;
-		bool edited;
+		BindingContext ctx;
+		BindingContext detailCtx;
 
 		public ProjectsManagerPanel ()
 		{
-			this.DB = App.Current.DatabaseManager.ActiveDB;
-			this.gkit = App.Current.GUIToolkit;
 			this.Build ();
 
 			this.videoFileInfos = new List<VideoFileInfo> ();
@@ -73,33 +65,15 @@ namespace LongoMatch.Gui.Panel
 			openbutton.TooltipMarkup = Catalog.GetString ("Open");
 			deletebutton.TooltipMarkup = Catalog.GetString ("Delete");
 
-			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
-			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
-			projectlistwidget1.ProjectSelected += HandleProjectSelected;
-
-			seasonentry.Changed += HandleChanged;
-			competitionentry.Changed += HandleChanged;
-			savebutton.Clicked += HandleSaveClicked;
-			exportbutton.Clicked += HandleExportClicked;
-
-			LimitationCommand syncLimitationCmd = new LimitationCommand (VASFeature.OpenMultiCamera.ToString (), () => HandleResyncClicked (null, null));
-			resyncbutton.BindManually (syncLimitationCmd);
-
-			deletebutton.Clicked += HandleDeleteClicked;
-			openbutton.Clicked += HandleOpenClicked;
-			datepicker.ValueChanged += HandleDateChanged;
-			desctextview.Buffer.Changed += HandleChanged;
-
 			panelheader1.Title = Title;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
-
-			projectlistwidget1.ViewMode = ProjectListViewMode.List;
 
 			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
 			resyncbutton.Visible = App.Current.SupportsMultiCamera;
 
 			SetStyle ();
+			Bind ();
 		}
 
 		public override void Dispose ()
@@ -123,8 +97,9 @@ namespace LongoMatch.Gui.Panel
 		{
 			Log.Verbose ($"Destroying {GetType ()}");
 
-			ViewModel.Dispose ();
 			ViewModel = null;
+			ctx.Dispose ();
+			ctx = null;
 
 			base.OnDestroyed ();
 
@@ -141,10 +116,16 @@ namespace LongoMatch.Gui.Panel
 
 		public SportsProjectsManagerVM ViewModel {
 			set {
-				viewModel = value;
 				if (viewModel != null) {
-					projectlistwidget1.Fill (viewModel.Model.ToList ());
-					projectlistwidget1.LimitationWidget.SetViewModel (viewModel.LimitationChart);
+					viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
+					viewModel.ViewModels.CollectionChanged -= HandleViewModelsCollectionChanged;
+				}
+				viewModel = value;
+				projectlistwidget1.SetViewModel (viewModel);
+				ctx.UpdateViewModel (viewModel);
+				if (viewModel != null) {
+					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+					viewModel.ViewModels.CollectionChanged += HandleViewModelsCollectionChanged;
 				}
 			}
 			get {
@@ -183,64 +164,32 @@ namespace LongoMatch.Gui.Panel
 			videoslabel.ModifyFont (desc);
 		}
 
-		void SaveLoadedProject (bool force)
+		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (loadedProject != null) {
-				bool save = edited;
-
-				if (edited && !force) {
-					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-						save = false;
-					}
-				}
-				if (save) {
-					try {
-						IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.Store<LMProject> (loadedProject));
-						projectlistwidget1.UpdateProject (loadedProject);
-						edited = false;
-					} catch (Exception ex) {
-						Log.Exception (ex);
-						App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
-						return;
-					}
-				}
+			if (e.PropertyName == nameof (ViewModel.LoadedProject) && sender == ViewModel) {
+				LoadProject (ViewModel.LoadedProject);
 			}
 		}
 
-		void LoadProject (LMProject project)
+		void HandleViewModelsCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
-			ProjectDescription pd = project.Description;
+			rbox.Visible = ViewModel.ViewModels.Any ();
+		}
 
-			loadedProject = null;
-			gamedescriptionheader1.ProjectDescription = pd;
-			seasonentry.Text = pd.Season;
-			competitionentry.Text = pd.Competition;
-			datepicker.Date = pd.MatchDate;
-			templatelabel.Text = pd.DashboardName;
-			desctextview.Buffer.Clear ();
-			desctextview.Buffer.InsertAtCursor (pd.Description ?? "");
-			loadedProject = project;
+		void LoadProject (LMProjectVM project)
+		{
+			gamedescriptionheader1.ViewModel = project;
+			detailCtx.UpdateViewModel (project);
 
 			foreach (VideoFileInfo vfi in videoFileInfos) {
 				videofileinfo_vbox.Remove (vfi);
 			}
 			videoFileInfos.Clear ();
 
-			resyncbutton.Sensitive = project.Description.FileSet.Count > 1;
-
-			int max = project.Description.FileSet.Count;
-			// Cap to one media file for non multi camera version
-			if (!App.Current.SupportsMultiCamera) {
-				max = Math.Min (max, 1);
-			}
-
-			for (int i = 0; i < max; i++) {
-				MediaFile mf = project.Description.FileSet [i];
+			foreach (var mf in project.FileSet) {
 				VideoFileInfo vfi = new VideoFileInfo ();
 
-				vfi.SetMediaFileSet (project.Description.FileSet, mf);
+				vfi.SetMediaFileSet (project.FileSet, mf);
 				vfi.Changed += HandleChanged;
 
 				vfi.ShowAll ();
@@ -250,8 +199,7 @@ namespace LongoMatch.Gui.Panel
 				videofileinfo_vbox.PackStart (vfi, true, true, 0);
 			}
 
-			projectbox.Visible = true;
-			edited = false;
+			rbox.Visible = true;
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
@@ -261,135 +209,28 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleChanged (object sender, EventArgs e)
 		{
-			if (loadedProject == null)
+			if (ViewModel.LoadedProject == null) {
 				return;
-
-			if (sender == competitionentry) {
-				loadedProject.Description.Competition = (sender as Entry).Text;
-			} else if (sender == seasonentry) {
-				loadedProject.Description.Season = (sender as Entry).Text;
-			} else if (sender == desctextview.Buffer) {
-				loadedProject.Description.Description =
-					desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
-					desctextview.Buffer.EndIter, true);
-			}
-			edited = true;
-		}
-
-		void HandleProjectSelected (LMProject project)
-		{
-			SaveLoadedProject (false);
-			if (project != null) {
-				LMStateHelper.OpenProject (new LMProjectVM { Model = project });
-			}
-		}
-
-		void HandleProjectsSelected (List<LMProject> projects)
-		{
-			SaveLoadedProject (false);
-			rbox.Visible = true;
-			savebutton.Sensitive = projects.Count == 1;
-			exportbutton.Sensitive = projects.Count == 1;
-			openbutton.Sensitive = projects.Count == 1;
-			deletebutton.Sensitive = projects.Count != 0;
-			projectbox.Sensitive = projects.Count == 1;
-			resyncbutton.Sensitive = projects.Count == 1;
-
-			selectedProjects = projects;
-			if (projects.Count == 1) {
-				try {
-					LoadProject (projects [0]);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					App.Current.Dialogs.ErrorMessage (ex.Message, this);
-				}
-			}
-		}
-
-		void HandleResyncClicked (object sender, EventArgs e)
-		{
-			if (!loadedProject.Description.FileSet.CheckFiles ()) {
-				// Show message in order to load video.
-				if (!gkit.SelectMediaFiles (loadedProject.Description.FileSet)) {
-					return;
-				}
 			}
 
-			loadedProject.Load ();
-			App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME,
-												new LMProjectVM { Model = loadedProject });
-			edited = true;
+			ViewModel.SaveCommand.EmitCanExecuteChanged ();
 		}
 
-		void HandleSaveClicked (object sender, EventArgs e)
+
+		void Bind ()
 		{
-			SaveLoadedProject (true);
-		}
-
-		void HandleExportClicked (object sender, EventArgs e)
-		{
-			if (loadedProject != null) {
-				string filename = App.Current.Dialogs.SaveFile (
-									  Catalog.GetString ("Export project"),
-									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-									  App.Current.HomeDir, Constants.PROJECT_NAME,
-									  new string [] { Constants.PROJECT_EXT });
-				if (filename != null) {
-					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
-					Serializer.Instance.Save (loadedProject, filename);
-				}
-			}
-		}
-
-		void HandleDateChanged (object sender, EventArgs e)
-		{
-			if (loadedProject == null)
-				return;
-
-			loadedProject.Description.MatchDate = datepicker.Date;
-			edited = true;
-		}
-
-		void HandleDeleteClicked (object sender, EventArgs e)
-		{
-			List<LMProject> deletedProjects;
-
-			if (selectedProjects == null)
-				return;
-
-			deletedProjects = new List<LMProject> ();
-			foreach (LMProject selectedProject in selectedProjects) {
-				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-							 selectedProject.Description.Title;
-				if (MessagesHelpers.QuestionMessage (this, msg)) {
-					// Unload first
-					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
-						loadedProject = null;
-					}
-					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Deleting project..."), null);
-					busy.ShowSync (() => {
-						try {
-							DB.Delete<LMProject> (selectedProject);
-						} catch (StorageException ex) {
-							App.Current.Dialogs.ErrorMessage (ex.Message);
-						}
-					});
-					deletedProjects.Add (selectedProject);
-				}
-			}
-			projectlistwidget1.RemoveProjects (deletedProjects);
-
-			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<LMProject> () == 0) {
-				rbox.Visible = false;
-			}
-		}
-
-		void HandleOpenClicked (object sender, EventArgs e)
-		{
-			if (loadedProject != null) {
-				LMStateHelper.OpenProject (new LMProjectVM { Model = loadedProject });
-			}
+			ctx = this.GetBindingContext ();
+			detailCtx = new BindingContext ();
+			ctx.Add (deletebutton.Bind (vm => ((SportsProjectsManagerVM)vm).DeleteCommand));
+			ctx.Add (openbutton.Bind (vm => ((SportsProjectsManagerVM)vm).OpenCommand));
+			ctx.Add (exportbutton.Bind (vm => ((SportsProjectsManagerVM)vm).ExportCommand));
+			ctx.Add (savebutton.Bind (vm => ((SportsProjectsManagerVM)vm).SaveCommand));
+			ctx.Add (resyncbutton.Bind (vm => ((SportsProjectsManagerVM)vm).ResyncCommand));
+			detailCtx.Add (seasonentry.Bind (vm => ((LMProjectVM)vm).Season));
+			detailCtx.Add (competitionentry.Bind (vm => ((LMProjectVM)vm).Competition));
+			detailCtx.Add (datepicker.Bind (vm => ((LMProjectVM)vm).MatchDate));
+			detailCtx.Add (templatelabel.Bind (vm => ((LMProjectVM)vm).DashboardText));
+			detailCtx.Add (desctextview.Bind (vm => ((LMProjectVM)vm).Description));
 		}
 	}
 }

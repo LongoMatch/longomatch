@@ -10,7 +10,7 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Alignment contentalignment;
 
-		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget;
+		private global::LongoMatch.Gui.Component.ProjectsIconWidget projectlistwidget;
 
 		protected virtual void Build ()
 		{
@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Panel
 			this.contentalignment.LeftPadding = ((uint)(12));
 			this.contentalignment.RightPadding = ((uint)(12));
 			// Container child contentalignment.Gtk.Container+ContainerChild
-			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectListWidget ();
+			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectsIconWidget ();
 			this.projectlistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget.Name = "projectlistwidget";
 			this.contentalignment.Add (this.projectlistwidget);

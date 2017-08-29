@@ -58,14 +58,13 @@
     <Compile Include="Gui\TreeView\PlaysTreeView.cs" />
     <Compile Include="Gui\Dialog\SnapshotsDialog.cs" />
     <Compile Include="Gui\Dialog\UpdateDialog.cs" />
+    <Compile Include="Gui\Component\ProjectsIconWidget.cs" />
     <Compile Include="Gui\Component\PlayersListTreeWidget.cs" />
     <Compile Include="Gui\Component\PlayListWidget.cs" />
-    <Compile Include="Gui\Component\ProjectListWidget.cs" />
     <Compile Include="Gui\Component\CategoryProperties.cs" />
     <Compile Include="Gui\Component\PlaysListTreeWidget.cs" />
     <Compile Include="Gui\Dialog\EndCaptureDialog.cs" />
     <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CategoryProperties.cs" />
@@ -185,6 +184,11 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.CameraSynchronizationPanel.cs" />
     <Compile Include="Gui\Component\LMLimitationWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.LMLimitationWidget.cs" />
+    <Compile Include="Gui\Component\LMProjectTreeView.cs" />
+    <Compile Include="Gui\Component\LMProjectCellRenderer.cs" />
+    <Compile Include="Gui\Component\ProjectListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectsIconWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

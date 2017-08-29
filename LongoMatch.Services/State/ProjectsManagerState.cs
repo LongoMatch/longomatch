@@ -21,6 +21,7 @@ using LongoMatch.Services.ViewModel;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using LongoMatch.Core.Common;
+using VAS.Services.Controller;
 
 namespace LongoMatch.Services.State
 {
@@ -41,6 +42,11 @@ namespace LongoMatch.Services.State
 				App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ());
 			ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 				LongoMatchCountLimitedObjects.Projects.ToString ());
+		}
+
+		protected override void CreateControllers (dynamic data)
+		{
+			Controllers.Add (new MediaFileSetController ());
 		}
 	}
 }
