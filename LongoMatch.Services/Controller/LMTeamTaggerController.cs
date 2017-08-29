@@ -154,7 +154,7 @@ namespace LongoMatch.Services.Controller
 					e.Player.Tagged = true;
 					EmitSubstitutionEvent (e.Player as LMPlayerVM, substitutionPlayer.Key as LMPlayerVM, e.Team as LMTeamVM);
 				}
-			} else {
+			} else if (teamTagger.SelectionMode != MultiSelectionMode.None){
 				if (teamTagger.SelectionMode != MultiSelectionMode.Multiple &&
 					(teamTagger.SelectionMode == MultiSelectionMode.Single || e.Modifier == ButtonModifier.None)) {
 					ClearSelection ();
