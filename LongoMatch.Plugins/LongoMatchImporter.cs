@@ -17,6 +17,7 @@
 //
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using VAS.Addins.ExtensionPoints;
 using VAS.Core;
@@ -59,6 +60,7 @@ namespace LongoMatch.Plugins
 			busy.ShowSync (() => {
 				project = Project.Import (filename) as LMProject;
 			});
+			ProjectMigration.Migrate (project as LMProject);
 			return project;
 		}
 
