@@ -46,8 +46,11 @@ namespace LongoMatch.Services.States
 			ViewModel = new DashboardsManagerVM ();
 			var templates = App.Current.CategoriesTemplatesProvider.Templates;
 			ViewModel.Model = new RangeObservableCollection<Dashboard> (App.Current.CategoriesTemplatesProvider.Templates);
-			ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+			if (App.Current.LicenseLimitationsService != null)
+			{
+				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 				LongoMatchCountLimitedObjects.Dashboard.ToString ());
+			}
 		}
 
 	}

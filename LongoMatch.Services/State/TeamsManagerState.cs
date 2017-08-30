@@ -45,8 +45,12 @@ namespace LongoMatch.Services.States
 		{
 			ViewModel = new TeamsManagerVM ();
 			ViewModel.Model = new RangeObservableCollection<Team> (App.Current.TeamTemplatesProvider.Templates);
-			ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+			if (App.Current.LicenseLimitationsService != null)
+			{
+				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 					LongoMatchCountLimitedObjects.Team.ToString ());
+			}
+
 		}
 	}
 }

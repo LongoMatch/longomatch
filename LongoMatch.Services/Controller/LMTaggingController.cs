@@ -37,6 +37,7 @@ namespace LongoMatch.Services.Controller
 	[Controller (ProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
+	[Controller (LightLiveProjectState.NAME)]
 	public class LMTaggingController : TaggingController
 	{
 		public override void SetViewModel (IViewModel viewModel)

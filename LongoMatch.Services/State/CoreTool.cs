@@ -53,6 +53,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (CameraSynchronizationEditorState.NAME, () => new CameraSynchronizationEditorState ());
 			uiFlow.Add (EditPlaylistElementState.NAME, () => new EditPlaylistElementState ());
 			uiFlow.Add (UpgradeLimitationState.NAME, () => new LMUpgradeLimitationState ());
+			uiFlow.Add (LightLiveProjectState.NAME, () => new LightLiveProjectState ());
 		}
 
 		#region ITool implementation

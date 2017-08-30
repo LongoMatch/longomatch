@@ -40,8 +40,10 @@ namespace LongoMatch.Services.State
 			ViewModel = new SportsProjectsManagerVM ();
 			ViewModel.Model = new RangeObservableCollection<LMProject> (
 				App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ());
-			ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
-				LongoMatchCountLimitedObjects.Projects.ToString ());
+			if (App.Current.LicenseLimitationsService != null) {
+				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+					LongoMatchCountLimitedObjects.Projects.ToString ());
+			}
 		}
 
 		protected override void CreateControllers (dynamic data)
