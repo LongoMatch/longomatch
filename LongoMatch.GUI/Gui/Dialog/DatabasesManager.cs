@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Dialog
 			this.manager = App.Current.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
+			buttonOk.Clicked += HandleButtonOkClicked;
 		}
 
 		IStorage ActiveDB {
@@ -215,6 +216,11 @@ namespace LongoMatch.Gui.Dialog
 			delbutton.Sensitive = selected;
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
+		}
+
+		void HandleButtonOkClicked (object sender, System.EventArgs e)
+		{
+			App.Current.StateController.MoveBack ();
 		}
 	}
 }
