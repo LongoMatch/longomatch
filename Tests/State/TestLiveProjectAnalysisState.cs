@@ -29,6 +29,8 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using System.Linq;
+using VAS.Services.Controller;
 
 namespace Tests.State
 {
@@ -44,6 +46,9 @@ namespace Tests.State
 		[OneTimeSetUp]
 		public void SetupOnce ()
 		{
+			var mockToolkit = new Mock<IGUIToolkit> ();
+			mockToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
+			App.Current.GUIToolkit = mockToolkit.Object;
 			var hotkeysMock = new Mock<IHotkeysService> ();
 			var playerMock = new Mock<IVideoPlayer> ();
 			mtkMock = new Mock<IMultimediaToolkit> ();
@@ -78,6 +83,27 @@ namespace Tests.State
 			Assert.AreNotEqual (projectVM, state.ViewModel.Project);
 			Assert.AreEqual (project, state.ViewModel.Project.Model);
 			Assert.IsTrue (ret);
+		}
+
+		[Test]
+		public async Task LoadState_AllGood_VideoPlayerOK ()
+		{
+			// Act
+			bool ret = await state.LoadState (analysisVM);
+
+			// Assert
+			Assert.AreEqual (PlayerViewOperationMode.LiveAnalysisReview, state.ViewModel.VideoPlayer.ViewMode);
+			Assert.IsFalse (state.ViewModel.VideoPlayer.ShowDetachButton);
+			Assert.IsFalse (state.ViewModel.VideoPlayer.ShowCenterPlayHeadButton);
+		}
+
+		[Test]
+		public async Task LoadState_AllGood_CoreEventsControllerOK ()
+		{
+			// Act
+			bool ret = await state.LoadState (analysisVM);
+			var coreEventsController = state.Controllers.OfType<CoreEventsController> ();
+			Assert.AreEqual (1, coreEventsController.Count ());
 		}
 
 		[Test]

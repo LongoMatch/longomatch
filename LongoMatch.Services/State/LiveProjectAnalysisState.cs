@@ -26,6 +26,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.ViewModel;
 using VAS.Services;
 using VAS.Core;
+using VAS.Services.Controller;
 
 namespace LongoMatch.Services.State
 {
@@ -60,6 +61,9 @@ namespace LongoMatch.Services.State
 			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.CaptureSettings = data.CaptureSettings;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
+			ViewModel.VideoPlayer.ViewMode = PlayerViewOperationMode.LiveAnalysisReview;
+			ViewModel.VideoPlayer.ShowDetachButton = false;
+			ViewModel.VideoPlayer.ShowCenterPlayHeadButton = false;
 			// FIXME: use this hack until the capturer uses a controller
 			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
 		}
@@ -69,6 +73,7 @@ namespace LongoMatch.Services.State
 			var playerController = new VideoPlayerController ();
 			playerController.SetViewModel (ViewModel.VideoPlayer);
 			Controllers.Add (playerController);
+			Controllers.Add (new CoreEventsController ());
 		}
 	}
 }
