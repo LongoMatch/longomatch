@@ -98,7 +98,7 @@ namespace Tests.Controller
 			HotKey key = App.Current.Keyboard.ParseName ("h");
 			HotKey subkey = App.Current.Keyboard.ParseName ("t");
 			projectVM.Dashboard.ViewModels [0].HotKey.Model = key;
-			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).Tags.First ().HotKey = subkey;
+			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).Tags.First ().HotKey.Model = subkey;
 			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).CurrentTime = new Time ();
 
 			AutoResetEvent resetEvent = new AutoResetEvent (false);
@@ -112,7 +112,7 @@ namespace Tests.Controller
 			bool newTagEventCreated = false;
 			App.Current.EventsBroker.Subscribe<NewTagEvent> ((x) => {
 				newTagEventCreated = true;
-				taggedElements = x.Tags.Count;
+				taggedElements = x.Tags.Count ();
 			});
 
 			// Act
