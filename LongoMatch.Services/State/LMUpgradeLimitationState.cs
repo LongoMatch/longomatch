@@ -42,12 +42,11 @@ namespace LongoMatch.Services.State
 			} else {
 				ViewModel.FeaturesHeader = Catalog.GetString ("Upgrade to get access to the following features");
 			}
-			//FIXME: still undecided Features
 			ViewModel.Features = new RangeObservableCollection<string> {
 				Catalog.GetString("Unlimited projects"),
-				Catalog.GetString("Another awesome thing"),
-				Catalog.GetString("Some other cool thing"),
-				Catalog.GetString("Some more features")
+				Catalog.GetString("5x Zoom-in factor"),
+				Catalog.GetString("Multicamera Analysis"),
+				Catalog.GetString("SportsCode & XML Import and Export")
 			};
 			ViewModel.FeaturesCaption = Catalog.GetString ("... and much more");
 			//FIXME: still undecided UpgradeURL
