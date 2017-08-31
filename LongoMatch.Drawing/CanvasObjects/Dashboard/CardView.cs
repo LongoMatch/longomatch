@@ -94,6 +94,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 			tk.End ();
 		}
+
+		protected override void CreateClickEvent ()
+		{
+			ViewModel.Click ();
+		}
 	}
 }
 

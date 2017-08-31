@@ -63,6 +63,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			ViewModel = (ScoreButtonVM)viewModel;
 		}
+
+		protected override void CreateClickEvent ()
+		{
+			ViewModel.Click ();
+		}
 	}
 }
 
