@@ -86,7 +86,17 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Fill, 0, 0);
 			addWatermark.CanFocus = false;
 			addWatermark.Show ();
-			addWatermark.Active = App.Current.Config.AddWatermark;
+
+			if (App.Current.LicenseManager != null) {
+				bool canRemoveWatermark = App.Current.LicenseLimitationsService.CanExecute (VASFeature.Watermark.ToString ());
+				addWatermark.Sensitive = canRemoveWatermark;
+				if (!canRemoveWatermark) {
+					addWatermark.Active = true;
+				} else {
+					addWatermark.Active = App.Current.Config.AddWatermark;
+				}
+			}
+
 			addWatermark.Toggled += (sender, e) => {
 				App.Current.Config.AddWatermark = addWatermark.Active;
 			};
