@@ -588,7 +588,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Background), sender, ViewModel)) {
-				SetFieldBackground ();
+				LoadTeams ();
 				ReDraw ();
 			}
 
