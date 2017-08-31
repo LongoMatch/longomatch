@@ -116,6 +116,7 @@
     <Compile Include="Services\Controller\TestDashboardsController.cs" />
     <Compile Include="Core\ViewModel\TestLMProjectVM.cs" />
     <Compile Include="Drawing\Widgets\TestCamerasTimelineView.cs" />
+    <Compile Include="State\TestProjectsManagerState.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">
