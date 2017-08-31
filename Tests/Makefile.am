@@ -2,7 +2,7 @@ ASSEMBLY_FILE=$(top_builddir)/bin/Tests.dll
 
 if ENABLE_TESTS
 check:
-	$(MONO) --debug $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
+	-$(MONO) --debug $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
 
 if HAVE_COVEM
 do-coverage:
