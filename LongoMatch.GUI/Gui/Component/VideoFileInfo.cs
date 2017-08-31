@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 			namelabel.Text = mediaFile.Name;
 			if (mediaFile.IsFakeCapture) {
 				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
-				snapshotimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-video-device-fake", PREVIEW_SIZE);
+				snapshotimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-fake", PREVIEW_SIZE);
 				table1.Visible = false;
 				disableChanges = true;
 				return;
