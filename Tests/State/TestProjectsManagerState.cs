@@ -21,6 +21,7 @@ namespace Tests.State
 		ProjectsManagerState state;
 		LMProject pastProject, nowProject, futureProject;
 		Mock<IStorage> storageMock;
+		List<LMProject> projectList;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp ()
@@ -32,7 +33,7 @@ namespace Tests.State
 			nowProject = Utils.CreateProject ();
 			nowProject.CreationDate = DateTime.Now;
 
-			var projectList = new List<LMProject>{
+			projectList = new List<LMProject>{
 				futureProject,
 				pastProject,
 				nowProject
@@ -41,7 +42,6 @@ namespace Tests.State
 
 
 			storageMock = new Mock<IStorage> ();
-			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
 			App.Current.DatabaseManager = Mock.Of<IStorageManager> ();
 			App.Current.DatabaseManager.ActiveDB = storageMock.Object;
 		}
@@ -63,6 +63,7 @@ namespace Tests.State
 		[Test]
 		public async Task LoadState_WithProjects_ProjectsLoadedInCreationOrder ()
 		{
+			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
 			var sortedProjectList = new RangeObservableCollection<LMProject>{
 				futureProject,
 				nowProject,
@@ -77,12 +78,12 @@ namespace Tests.State
 		[Test]
 		public async Task ShowState_WithProjects_FirstSelected ()
 		{
+			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
 			await state.LoadState (null);
 
 			await state.ShowState ();
 
 			Assert.AreEqual (futureProject, state.ViewModel.Selection.First ().Model);
-			Assert.AreEqual (futureProject, state.ViewModel.LoadedProject.Model);
 		}
 
 		[Test]
@@ -94,7 +95,6 @@ namespace Tests.State
 			await state.ShowState ();
 
 			Assert.IsFalse (state.ViewModel.Selection.Any ());
-			Assert.IsNull (state.ViewModel.LoadedProject.Model);
 		}
 	}
 }
