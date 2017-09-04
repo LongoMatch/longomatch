@@ -627,7 +627,11 @@ namespace LongoMatch.Gui.Panel
 					StartProject ();
 					return;
 				}
-				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, viewModel.Project);
+				dynamic data = new System.Dynamic.ExpandoObject ();
+
+				data.ProjectVM = ViewModel.Project;
+				data.ResynchronizeEvents = resyncEvents;
+				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, data);
 			}
 		}
 

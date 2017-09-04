@@ -64,8 +64,12 @@ namespace LongoMatch.Services.Controller
 				}
 			}
 
+			dynamic data = new System.Dynamic.ExpandoObject ();
+
 			ViewModel.LoadedProject.Model.Load ();
-			await App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME, ViewModel.LoadedProject);
+			data.ProjectVM = ViewModel.LoadedProject;
+			data.ResynchronizeEvents = false;
+			await App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME, data);
 			ViewModel.SaveCommand.EmitCanExecuteChanged ();
 		}
 
