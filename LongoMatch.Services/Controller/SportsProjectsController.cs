@@ -68,7 +68,7 @@ namespace LongoMatch.Services.Controller
 
 			ViewModel.LoadedProject.Model.Load ();
 			data.ProjectVM = ViewModel.LoadedProject;
-			data.ResynchronizeEvents = false;
+			data.SynchronizeEventsWithPeriods = false;
 			await App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME, data);
 			ViewModel.SaveCommand.EmitCanExecuteChanged ();
 		}

@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Panel
 		SizeGroup sg;
 		CameraSynchronizationEditorState cameraSynchronizationState;
 		NewProjectVM viewModel;
-		bool resyncEvents;
+		bool syncEventsWithPeriods;
 		LimitationCommand ipCameraCommand;
 
 		public NewProjectPanel ()
@@ -124,7 +124,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					notebook1.Page = firstPage = 1;
 					projectType = ProjectType.EditProject;
-					resyncEvents = true;
+					syncEventsWithPeriods = true;
 					SetProjectType ();
 					FillProjectDetails ();
 				}
@@ -630,7 +630,7 @@ namespace LongoMatch.Gui.Panel
 				dynamic data = new System.Dynamic.ExpandoObject ();
 
 				data.ProjectVM = ViewModel.Project;
-				data.ResynchronizeEvents = resyncEvents;
+				data.SynchronizeEventsWithPeriods = syncEventsWithPeriods;
 				App.Current.StateController.MoveTo (CameraSynchronizationState.NAME, data);
 			}
 		}
