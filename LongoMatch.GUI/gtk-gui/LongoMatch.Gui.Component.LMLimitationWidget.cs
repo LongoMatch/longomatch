@@ -55,8 +55,6 @@ namespace LongoMatch.Gui.Component
 			this.hbox3.Add(this.countLabel);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.countLabel]));
 			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.upgradeButton = new global::Gtk.Button();
 			this.upgradeButton.WidthRequest = 95;
