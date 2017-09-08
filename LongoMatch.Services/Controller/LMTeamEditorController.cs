@@ -49,7 +49,7 @@ namespace LongoMatch.Services.Controller
 			LMTeam model = teamEditor.Team.Model;
 			var player = model.AddDefaultItem (model.List.Count);
 			var playerVM = teamEditor.Team.ViewModels.FirstOrDefault (p => p.Model == player);
-			teamEditor.Team.SelectionReplace (new List<PlayerVM> { playerVM });
+			teamEditor.Team.Selection.Replace (new List<PlayerVM> { playerVM });
 			foreach (var p in teamEditor.Team.ViewModels) {
 				p.Tagged = false;
 			}
