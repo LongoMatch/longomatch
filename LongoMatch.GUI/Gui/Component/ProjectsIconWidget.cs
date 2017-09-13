@@ -91,7 +91,10 @@ namespace LongoMatch.Gui.Component
 		public ProjectListViewMode ViewMode {
 			set {
 				viewMode = value;
-				treeviewscrolledwindow.Visible = limitationWidget.Visible = value != ProjectListViewMode.Icons;
+				// Fixme: Pending to decide when limitation must be active for the presentations feature and
+				// this should be decided by the state
+				limitationWidget.Visible = false;
+				treeviewscrolledwindow.Visible = value != ProjectListViewMode.Icons;
 				icoscrolledwindow.Visible = value == ProjectListViewMode.Icons;
 				checkCell.Visible = value == ProjectListViewMode.ListWithCheck;
 			}
