@@ -16,12 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
 using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
@@ -40,9 +46,10 @@ namespace Tests.Controller
 		LMProjectVM projectVM;
 		VideoPlayerVM videoPlayer;
 		Mock<IGUIToolkit> mockToolkit;
+		Mock<ILicenseLimitationsService> mockLimitationService;
 
 		[SetUp]
-		public void SetUp ()
+		public async Task SetUp ()
 		{
 			mockToolkit = new Mock<IGUIToolkit> ();
 			mockToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
@@ -57,18 +64,27 @@ namespace Tests.Controller
 			Mock<IVideoPlayer> playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
 
-			projectVM = new LMProjectVM { Model = Utils.CreateProject (true) };
+			projectVM = new LMProjectVM { Model = Utils.CreateProject (true, true) };
 			controller.SetViewModel (new LMProjectAnalysisVM {
 				Project = projectVM,
 				VideoPlayer = videoPlayer
 			});
 
+			mockLimitationService = new Mock<ILicenseLimitationsService> ();
+			mockLimitationService.Setup (ls => ls.CanExecute (It.IsAny<string> ())).Returns (true);
+			App.Current.LicenseLimitationsService = mockLimitationService.Object;
+
 			var mtkMock = new Mock<IMultimediaToolkit> ();
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			App.Current.MultimediaToolkit = mtkMock.Object;
 
-			controller.Start ();
+			await controller.Start ();
+		}
 
+		[TearDown]
+		public async Task TearDown ()
+		{
+			await controller.Stop ();
 		}
 
 		[Test]
@@ -86,6 +102,48 @@ namespace Tests.Controller
 				);
 
 			playerController.Verify (p => p.LoadEvent (ev1, ev1.Start, true));
+		}
+
+		[Test]
+		public void PlayerSubstitutionEvent_LimitationNotEnabled_AddsEvent ()
+		{
+			int currentCount = projectVM.Timeline.FullTimeline.Count ();
+
+			App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
+				Team = projectVM.Model.LocalTeamTemplate,
+				Player1 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
+				Player2 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
+				Time = new Time (200),
+				SubstitutionReason = SubstitutionReason.PlayersSubstitution
+			});
+
+			Assert.AreEqual (currentCount + 1, projectVM.Timeline.FullTimeline.Count ());
+			Assert.AreSame (projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
+			                ((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).In);
+			Assert.AreSame (projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
+			                ((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).Out);
+			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
+										  Times.Never);
+		}
+
+		[Test]
+		public void PlayerSubstitutionEvent_LimitationEnabled_MovesToUpgradeDialog ()
+		{
+			mockLimitationService.Setup (ls => ls.CanExecute (VASCountLimitedObjects.TimelineEvents.ToString ()))
+								 .Returns (false);
+			int currentCount = projectVM.Timeline.FullTimeline.Count ();
+
+			App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
+				Team = projectVM.Model.LocalTeamTemplate,
+				Player1 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
+				Player2 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
+				Time = new Time (200),
+				SubstitutionReason = SubstitutionReason.PlayersSubstitution
+			});
+
+			Assert.AreEqual (currentCount, projectVM.Timeline.FullTimeline.Count ());
+			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
+			                              Times.Once);
 		}
 	}
 }

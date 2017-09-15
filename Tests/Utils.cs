@@ -117,7 +117,7 @@ namespace Tests
 		}
 
 		//Specific LongoMatch objects
-		public static LMProject CreateProject (bool withEvents = true)
+		public static LMProject CreateProject (bool withEvents = true, bool withLineupEvent = false)
 		{
 			LMTimelineEvent pl;
 			LMProject p = new LMProject ();
@@ -134,6 +134,10 @@ namespace Tests
 				"aac", 320, 240, 1.3, null, "Test asset 2"));
 			p.Description = pd;
 			p.UpdateEventTypesAndTimers ();
+
+			if (withLineupEvent) {
+				p.CreateLineupEvent ();
+			}
 
 			if (withEvents) {
 				AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
