@@ -196,11 +196,11 @@ namespace LongoMatch.Core.Store
 			homeTeam = new LMTeam {
 				Formation = LocalTeamTemplate.Formation,
 			};
-			homeTeam.List.Replace (homeTeamPlayers);
+			homeTeam.List.Reset (homeTeamPlayers);
 			awayTeam = new LMTeam {
 				Formation = VisitorTeamTemplate.Formation,
 			};
-			awayTeam.List.Replace (awayTeamPlayers);
+			awayTeam.List.Reset (awayTeamPlayers);
 
 			homeFieldPlayers = homeTeam.StartingPlayersList;
 			homeBenchPlayers = homeTeam.BenchPlayersList;

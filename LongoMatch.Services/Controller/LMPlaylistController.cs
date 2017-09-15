@@ -22,6 +22,7 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 
 namespace LongoMatch.Services
@@ -45,6 +46,7 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Subscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Subscribe<NextPlaylistElementEvent> (HandleNext);
 			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			App.Current.EventsBroker.Subscribe<MoveElementsEvent<PlaylistVM>> (HandleMovePlaylistEvent);
 		}
 
 		public override async Task Stop ()
@@ -53,6 +55,7 @@ namespace LongoMatch.Services
 			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
 			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			App.Current.EventsBroker.Unsubscribe<MoveElementsEvent<PlaylistVM>> (HandleMovePlaylistEvent);
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
@@ -88,6 +91,14 @@ namespace LongoMatch.Services
 				return;
 			}
 			base.HandleLoadPlayEvent (e);
+		}
+
+		void HandleMovePlaylistEvent (MoveElementsEvent<PlaylistVM> e)
+		{
+			int realIndex = e.Index;
+			realIndex -= ViewModel.ViewModels.IndexOf (e.ElementToMove) < e.Index ? 1 : 0;
+			ViewModel.ViewModels.Remove (e.ElementToMove);
+			ViewModel.ViewModels.Insert (realIndex, e.ElementToMove);
 		}
 	}
 }

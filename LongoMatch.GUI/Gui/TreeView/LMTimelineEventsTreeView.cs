@@ -24,6 +24,7 @@ using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
@@ -37,6 +38,7 @@ namespace LongoMatch.Gui.Component
 	{
 		SportsPlaysMenu menu;
 		EventTypeMenu eventTypeMenu;
+		EventTypeTimelineVM categoryToMove;
 
 		public LMTimelineEventsTreeView ()
 		{
@@ -49,11 +51,44 @@ namespace LongoMatch.Gui.Component
 			eventTypeMenu.EditProperties += (cat) => OnEditProperties (cat);
 			ShowExpanders = false;
 			eventTypeMenu.SortEvent += (sender, e) => sort.SetSortFunc (0, HandleSort);
+			CreateDragDest (new [] { new TargetEntry (Constants.EventElementsDND, TargetFlags.App, 0) });
+			CreateDragSource (new [] { new TargetEntry (Constants.EventElementsDND, TargetFlags.App, 0) });
 		}
 
 		public LMProjectVM Project {
 			get;
 			set;
+		}
+
+		protected override bool AllowDrag (IViewModel source)
+		{
+			EventTypeTimelineVM vm = source as EventTypeTimelineVM;
+			if (vm != null)
+			{
+				categoryToMove = vm;
+				return true;
+			}
+
+			return false;
+		}
+
+
+		protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time_)
+		{
+			TreeViewColumn column;
+			int cellX, cellY;
+
+			EventTypeTimelineVM srcVm = (EventTypeTimelineVM)GetViewModelAtPosition ((int)dragStart.X, (int)dragStart.Y, out column, out cellX, out cellY);
+			EventTypeTimelineVM dstVm = (EventTypeTimelineVM)GetViewModelAtPosition (x, y, out column, out cellX, out cellY);
+			int index = ViewModel.EventTypesTimeline.ViewModels.IndexOf (dstVm);
+
+			ViewModel.EventTypesTimeline.ViewModels.Remove (srcVm);
+			Project.Model.EventTypes.Remove (srcVm.EventTypeVM.Model);
+
+			ViewModel.EventTypesTimeline.ViewModels.Insert (index, srcVm);
+			Project.Model.EventTypes.Insert (index, srcVm.EventTypeVM.Model);
+
+			return true;
 		}
 
 		protected override CellRenderer CreateCellRenderer ()
