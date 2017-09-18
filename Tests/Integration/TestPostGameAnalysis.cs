@@ -71,6 +71,7 @@ namespace Tests.Integration
 		[OneTimeSetUp]
 		public void FixtureSetup ()
 		{
+			SetupClass.SetUp ();
 			Directory.SetCurrentDirectory (TestContext.CurrentContext.TestDirectory);
 			// Register the events manager
 			eventsController = new EventsController ();
@@ -118,6 +119,7 @@ namespace Tests.Integration
 			mockLicenseStatus = new Mock<ILicenseStatus> ();
 			mockLicenseManager.SetupGet ((lm) => lm.LicenseStatus).Returns (mockLicenseStatus.Object);
 			mockLicenseLimitationService = new Mock<ILicenseLimitationsService> ();
+			mockLicenseLimitationService.Setup (s => s.CanExecute (VASCountLimitedObjects.TimelineEvents.ToString ())).Returns (true);
 		}
 
 		[TearDown]
