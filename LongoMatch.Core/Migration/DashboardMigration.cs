@@ -77,8 +77,10 @@ namespace LongoMatch.Core.Migration
 				if (!scoreNameToID.TryGetValue (score.Name, out id)) {
 					scoreNameToID [score.Name] = id = Guid.NewGuid ();
 				}
-				button.EventType = button.EventType.Clone ();
-				button.EventType.ID = id;
+
+				var toAdd = button.EventType.Clone ();
+				toAdd.ID = id;
+				button.EventType = toAdd;
 				button.ScoreEventType.Score = score;
 			}
 
@@ -88,8 +90,11 @@ namespace LongoMatch.Core.Migration
 				if (!penaltyNameToID.TryGetValue (penalty.Name, out id)) {
 					penaltyNameToID [penalty.Name] = id = Guid.NewGuid ();
 				}
-				button.EventType = button.EventType.Clone ();
-				button.EventType.ID = id;
+
+				var toAdd = button.EventType.Clone ();
+				toAdd.ID = id;
+
+				button.EventType = toAdd;
 				button.PenaltyCardEventType.PenaltyCard = penalty;
 			}
 			dashboard.Version = 1;

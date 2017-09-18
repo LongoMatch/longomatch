@@ -72,6 +72,12 @@ namespace Tests.State
 			state.Panel = panel.Object;
 		}
 
+		[TearDown]
+		public void TearDown()
+		{
+			capturerMock.ResetCalls ();
+		}
+
 		[Test]
 		public async Task LoadState_AllGood_TransitionOK ()
 		{
