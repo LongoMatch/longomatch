@@ -58,20 +58,8 @@ namespace LongoMatch.Core.Stats
 			VisitorTeamCount = awayEvents.Count;
 			SubcategoriesStats = new List<SubCategoryStat> ();
 			if (eventType is AnalysisEventType) {
-				var tagsByGroup = (eventType as AnalysisEventType).TagsByGroup;
-				foreach (string grp in tagsByGroup.Keys) {
-					SubCategoryStat substat = new SubCategoryStat (grp);
-					foreach (Tag t in tagsByGroup[grp]) {
-						int count, localTeamCount, visitorTeamCount;
-						count = events.Count (e => e.Tags.Contains (t));
-						localTeamCount = homeEvents.Count (e => e.Tags.Contains (t));
-						visitorTeamCount = awayEvents.Count (e => e.Tags.Contains (t));
-						PercentualStat pStat = new PercentualStat (t.Value, count, localTeamCount,
-							                       visitorTeamCount, TotalCount);
-						substat.OptionStats.Add (pStat);
-					}
-					SubcategoriesStats.Add (substat);
-				}
+				CreateGroupStats ((eventType as AnalysisEventType).TagsByGroup);
+				CreateGroupStats (project.Dashboard.CommonTagsByGroup, false);
 			}
 		}
 
@@ -122,6 +110,25 @@ namespace LongoMatch.Core.Stats
 				break;
 			}
 			return evts;
+		}
+
+		void CreateGroupStats (Dictionary<string, List<Tag>> tagsByGroup, bool forceInclude = true)
+		{
+			foreach (string grp in tagsByGroup.Keys) {
+				bool hasData = false;
+				SubCategoryStat substat = new SubCategoryStat (grp);
+				foreach (Tag t in tagsByGroup [grp]) {
+					int count, localTeamCount, visitorTeamCount;
+					count = events.Count (e => e.Tags.Contains (t));
+					localTeamCount = homeEvents.Count (e => e.Tags.Contains (t));
+					visitorTeamCount = awayEvents.Count (e => e.Tags.Contains (t));
+					PercentualStat pStat = new PercentualStat (t.Value, count, localTeamCount, visitorTeamCount, TotalCount);
+					substat.OptionStats.Add (pStat);
+					hasData |= count > 0;
+				}
+				if (forceInclude || hasData)
+					SubcategoriesStats.Add (substat);
+			}
 		}
 	}
 }
