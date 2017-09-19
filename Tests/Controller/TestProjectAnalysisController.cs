@@ -201,7 +201,7 @@ namespace Tests.Controller
 			Assert.AreEqual (project, projectsManager.Project.Model); // SP-Remark: check that project is null has no sense here 
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			capturerBinMock.ResetCalls ();
-			Assert.AreEqual ("Home", App.Current.StateController.Current); // replaced previous line for this one
+			Assert.AreEqual ("Home", App.Current.StateController.Current.Name); // replaced previous line for this one
 			gtkMock.ResetCalls ();
 			Utils.DeleteProject (project);
 
@@ -224,7 +224,7 @@ namespace Tests.Controller
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
-			Assert.AreEqual ("Home", App.Current.StateController.Current);
+			Assert.AreEqual ("Home", App.Current.StateController.Current.Name);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.Project.Model);
 			/*Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);

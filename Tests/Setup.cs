@@ -57,20 +57,27 @@ namespace Tests
 			navigation.Setup (x => x.PushModal (It.IsAny<IPanel> (), It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
 			navigation.Setup (x => x.PopModal (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
 			App.Current.Navigation = navigation.Object;
-			App.Current.StateController.Register (HomeState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (NewProjectState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (TeamsManagerState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (PreferencesState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (ProjectsManagerState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (OpenProjectState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (PlayEditorState.NAME, () => CreateScreenState ());
-			App.Current.StateController.Register (SubstitutionsEditorState.NAME, () => CreateScreenState ());
+			RegisterScreenState (HomeState.NAME);
+
+			RegisterScreenState (HomeState.NAME);
+			RegisterScreenState (NewProjectState.NAME);
+			RegisterScreenState (TeamsManagerState.NAME);
+			RegisterScreenState (PreferencesState.NAME);
+			RegisterScreenState (ProjectsManagerState.NAME);
+			RegisterScreenState (OpenProjectState.NAME);
+			RegisterScreenState (PlayEditorState.NAME);
+			RegisterScreenState (SubstitutionsEditorState.NAME);
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 			App.Current.ResourcesLocator = new DummyResourcesLocator ();
 			App.Current.FileSystemManager = new FileSystemManager ();
 		}
 
-		static IScreenState CreateScreenState ()
+		static void RegisterScreenState (string name)
+		{
+			App.Current.StateController.Register (name, () => CreateScreenState (name));
+		}
+
+		static IScreenState CreateScreenState (string name)
 		{
 			var screenStateMock = new Mock<IScreenState> ();
 			screenStateMock.Setup (x => x.LoadState (It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
@@ -78,6 +85,7 @@ namespace Tests
 			screenStateMock.Setup (x => x.UnloadState ()).Returns (AsyncHelpers.Return (true));
 			screenStateMock.Setup (x => x.HideState ()).Returns (AsyncHelpers.Return (true));
 			screenStateMock.Setup (x => x.Panel).Returns (new Mock<IPanel> ().Object);
+			screenStateMock.SetupGet (x => x.Name).Returns (name);
 
 			return screenStateMock.Object;
 		}
