@@ -47,7 +47,7 @@ namespace LongoMatch.Plugins.Stats
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Game stats");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Game stats");
 			this.notebook1.SetTabLabel (this.gameviewer, this.label2);
 			this.label2.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
@@ -60,7 +60,7 @@ namespace LongoMatch.Plugins.Stats
 			// Notebook tab
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Categories stats");
+			this.label4.LabelProp = global::VAS.Core.Catalog.GetString ("Categories stats");
 			this.notebook1.SetTabLabel (this.categoriesviewer, this.label4);
 			this.label4.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
@@ -73,7 +73,7 @@ namespace LongoMatch.Plugins.Stats
 			// Notebook tab
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Players stats");
+			this.label5.LabelProp = global::VAS.Core.Catalog.GetString ("Players stats");
 			this.notebook1.SetTabLabel (this.playersviewer, this.label5);
 			this.label5.ShowAll ();
 			w1.Add (this.notebook1);

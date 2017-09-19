@@ -1,13 +1,12 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
 using System.Dynamic;
 using LongoMatch;
-using LongoMatch.Core;
 using LongoMatch.License;
 using LongoMatch.Services.State;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.License;
 using VAS.Core.License;

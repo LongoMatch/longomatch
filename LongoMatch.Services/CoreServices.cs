@@ -23,6 +23,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Hotkeys;
 using LongoMatch.DB;
 using LongoMatch.Services.States;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
@@ -33,7 +34,6 @@ using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
 using VAS.Services.ViewModel;
-using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMFileStorage = LongoMatch.DB.FileStorage;
 

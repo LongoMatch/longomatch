@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;

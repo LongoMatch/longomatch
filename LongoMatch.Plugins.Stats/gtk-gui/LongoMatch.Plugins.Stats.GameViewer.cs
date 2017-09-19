@@ -56,7 +56,7 @@ namespace LongoMatch.Plugins.Stats
 			this.subcatscheckbutton = new global::Gtk.CheckButton ();
 			this.subcatscheckbutton.CanFocus = true;
 			this.subcatscheckbutton.Name = "subcatscheckbutton";
-			this.subcatscheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Sub categories");
+			this.subcatscheckbutton.Label = global::VAS.Core.Catalog.GetString ("Sub categories");
 			this.subcatscheckbutton.DrawIndicator = true;
 			this.subcatscheckbutton.UseUnderline = true;
 			this.topbox.Add (this.subcatscheckbutton);

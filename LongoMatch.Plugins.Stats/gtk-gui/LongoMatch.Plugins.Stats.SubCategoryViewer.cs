@@ -60,7 +60,7 @@ namespace LongoMatch.Plugins.Stats
 			this.frame2.Add (this.GtkAlignment);
 			this.gtkframe = new global::Gtk.Label ();
 			this.gtkframe.Name = "gtkframe";
-			this.gtkframe.LabelProp = global::Mono.Unix.Catalog.GetString ("<b></b>");
+			this.gtkframe.LabelProp = global::VAS.Core.Catalog.GetString ("<b></b>");
 			this.gtkframe.UseMarkup = true;
 			this.frame2.LabelWidget = this.gtkframe;
 			this.Add (this.frame2);

@@ -68,7 +68,7 @@ namespace LongoMatch.Plugins.Stats
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.nodatalabel = new global::Gtk.Label ();
 			this.nodatalabel.Name = "nodatalabel";
-			this.nodatalabel.LabelProp = global::Mono.Unix.Catalog.GetString ("No data available");
+			this.nodatalabel.LabelProp = global::VAS.Core.Catalog.GetString ("No data available");
 			this.nodatalabel.Justify = ((global::Gtk.Justification)(2));
 			this.vbox1.Add (this.nodatalabel);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.nodatalabel]));
@@ -77,7 +77,7 @@ namespace LongoMatch.Plugins.Stats
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Statistics");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("Statistics");
 			this.notebook1.SetTabLabel (this.vbox1, this.label1);
 			this.label1.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
@@ -101,7 +101,7 @@ namespace LongoMatch.Plugins.Stats
 			this.allframe.Add (this.GtkAlignment2);
 			this.GtkLabel2 = new global::Gtk.Label ();
 			this.GtkLabel2.Name = "GtkLabel2";
-			this.GtkLabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>All</b>");
+			this.GtkLabel2.LabelProp = global::VAS.Core.Catalog.GetString ("<b>All</b>");
 			this.GtkLabel2.UseMarkup = true;
 			this.allframe.LabelWidget = this.GtkLabel2;
 			this.vbox2.Add (this.allframe);
@@ -124,7 +124,7 @@ namespace LongoMatch.Plugins.Stats
 			this.homeframe.Add (this.GtkAlignment);
 			this.homeLabel = new global::Gtk.Label ();
 			this.homeLabel.Name = "homeLabel";
-			this.homeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Home</b>");
+			this.homeLabel.LabelProp = global::VAS.Core.Catalog.GetString ("<b>Home</b>");
 			this.homeLabel.UseMarkup = true;
 			this.homeframe.LabelWidget = this.homeLabel;
 			this.vbox2.Add (this.homeframe);
@@ -147,7 +147,7 @@ namespace LongoMatch.Plugins.Stats
 			this.awayframe.Add (this.GtkAlignment1);
 			this.awayLabel = new global::Gtk.Label ();
 			this.awayLabel.Name = "awayLabel";
-			this.awayLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Away</b>");
+			this.awayLabel.LabelProp = global::VAS.Core.Catalog.GetString ("<b>Away</b>");
 			this.awayLabel.UseMarkup = true;
 			this.awayframe.LabelWidget = this.awayLabel;
 			this.vbox2.Add (this.awayframe);
@@ -159,7 +159,7 @@ namespace LongoMatch.Plugins.Stats
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Zonal tagging");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Zonal tagging");
 			this.notebook1.SetTabLabel (this.vbox2, this.label2);
 			this.label2.ShowAll ();
 			w1.Add (this.notebook1);

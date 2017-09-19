@@ -23,6 +23,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Serialization;
 using VAS.Core.Store;

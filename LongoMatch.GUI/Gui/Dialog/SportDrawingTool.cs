@@ -17,11 +17,11 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;

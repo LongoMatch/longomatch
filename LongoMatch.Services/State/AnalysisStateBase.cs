@@ -24,7 +24,6 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Services.State;
-using Catalog = LongoMatch.Core.Catalog;
 
 namespace LongoMatch.Services.State
 {

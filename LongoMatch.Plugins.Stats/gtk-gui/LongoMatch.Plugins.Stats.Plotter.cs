@@ -35,7 +35,7 @@ namespace LongoMatch.Plugins.Stats
 			this.hbox4.Name = "hbox4";
 			this.hbox4.Spacing = 6;
 			// Container child hbox4.Gtk.Box+BoxChild
-			this.historadiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("Histogram"));
+			this.historadiobutton = new global::Gtk.RadioButton (global::VAS.Core.Catalog.GetString ("Histogram"));
 			this.historadiobutton.CanFocus = true;
 			this.historadiobutton.Name = "historadiobutton";
 			this.historadiobutton.Active = true;
@@ -46,7 +46,7 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.historadiobutton]));
 			w1.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
-			this.pieradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("Pie chart"));
+			this.pieradiobutton = new global::Gtk.RadioButton (global::VAS.Core.Catalog.GetString ("Pie chart"));
 			this.pieradiobutton.CanFocus = true;
 			this.pieradiobutton.Name = "pieradiobutton";
 			this.pieradiobutton.DrawIndicator = true;

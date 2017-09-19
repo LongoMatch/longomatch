@@ -10,6 +10,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services.Interfaces;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
