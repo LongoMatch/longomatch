@@ -164,18 +164,39 @@ namespace LongoMatch.Gui.Component
 			} else if (objecta is LMTimelineEventVM && objectb is LMTimelineEventVM) {
 				tna = objecta as LMTimelineEventVM;
 				tnb = objectb as LMTimelineEventVM;
+				int ret;
 				switch (tna.Model.EventType.SortMethod) {
 				case (SortMethodType.SortByName):
-					return String.Compare (tna.Name, tnb.Name);
+					ret = String.Compare (tna.Name, tnb.Name);
+					if (ret == 0) {
+						ret = (tna.Duration - tnb.Duration).MSeconds;
+					}
+					break;
 				case (SortMethodType.SortByStartTime):
-					return (tna.Start - tnb.Start).MSeconds;
+					ret = (tna.Start - tnb.Start).MSeconds;
+					if (ret == 0) {
+						ret = String.Compare (tna.Name, tnb.Name);
+					}
+					break;
 				case (SortMethodType.SortByStopTime):
-					return (tna.Stop - tnb.Stop).MSeconds;
+					ret = (tna.Stop - tnb.Stop).MSeconds;
+					if (ret == 0) {
+						ret = String.Compare (tna.Name, tnb.Name);
+					}
+					break;
 				case (SortMethodType.SortByDuration):
-					return (tna.Duration - tnb.Duration).MSeconds;
+					ret = (tna.Duration - tnb.Duration).MSeconds;
+					if (ret == 0) {
+						ret = String.Compare (tna.Name, tnb.Name);
+					}
+					break;
 				default:
 					return 0;
 				}
+				if (ret == 0) {
+					ret = tnb.GetHashCode () - tna.GetHashCode ();
+				}
+				return ret;
 			} else {
 				return 0;
 			}
