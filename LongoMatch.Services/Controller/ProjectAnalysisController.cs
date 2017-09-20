@@ -195,7 +195,7 @@ namespace LongoMatch.Services
 
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = App.Current.MultimediaToolkit.DiscoverFile (filePath);
-				project.Periods.Replace (Capturer.Periods);
+				project.Periods.Reset (Capturer.Periods);
 				App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
 				return true;
 			} catch (Exception ex) {
@@ -302,7 +302,7 @@ namespace LongoMatch.Services
 			if (Project.ProjectType == ProjectType.FileProject) {
 				return UpdateProject (project);
 			} else if (Project.ProjectType == ProjectType.FakeCaptureProject) {
-				project.Periods.Replace (Capturer.Periods);
+				project.Periods.Reset (Capturer.Periods);
 				return UpdateProject (project);
 			} else if (Project.ProjectType == ProjectType.CaptureProject ||
 					   Project.ProjectType == ProjectType.URICaptureProject) {

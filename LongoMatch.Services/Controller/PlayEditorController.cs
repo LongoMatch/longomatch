@@ -42,7 +42,7 @@ namespace LongoMatch.Services.Controller
 		{
 			if (teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.HomeTeam) ||
 				teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.AwayTeam)) {
-				playEditorVM.Play.Players.Replace (teamTagger.HomeTeam.Selection.Select (p => p.Model)
+				playEditorVM.Play.Players.Reset (teamTagger.HomeTeam.Selection.Select (p => p.Model)
 												   .Concat (teamTagger.AwayTeam.Selection.Select (p => p.Model)));
 			}
 

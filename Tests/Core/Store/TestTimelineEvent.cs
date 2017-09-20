@@ -110,7 +110,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.TagsDescription (), "test");
 			evt.Tags.Add (new Tag ("test2"));
 			Assert.AreEqual (evt.TagsDescription (), "test-test2");
-			evt.Tags.Replace (new ObservableCollection<Tag> ());
+			evt.Tags.Reset (new ObservableCollection<Tag> ());
 			Assert.AreEqual (evt.TagsDescription (), "");
 		}
 
