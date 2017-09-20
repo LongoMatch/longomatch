@@ -142,5 +142,11 @@ Xavier Queralt Mateu (ca)";
 
 		public const int PROJECT_CELL_WIDTH = 310;
 		public const int PROJECT_CELL_HEIGHT = 70;
+
+#if DEVEL
+		public const string APPCAST_URL = "http://sparkle.fluendo.lan:8080/longomatch.xml";
+#else
+		public const string APPCAST_URL = "https://s3.amazonaws.com/oneplay-files/longomatch.xml";
+#endif
 	}
 }
