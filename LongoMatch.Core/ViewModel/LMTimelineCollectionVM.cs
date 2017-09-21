@@ -13,6 +13,9 @@ namespace LongoMatch.Core.ViewModel
 {
 	public class LMTimelineCollectionVM : LimitedCollectionViewModel<TimelineEvent, TimelineEventVM>
 	{
+		public LMTimelineCollectionVM() : base (false)
+		{
+		}
 		protected override TimelineEventVM CreateInstance (TimelineEvent model)
 		{
 			var viewModel = new LMTimelineEventVM { Model = (LMTimelineEvent)model };
