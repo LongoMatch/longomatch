@@ -20,6 +20,7 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
@@ -64,14 +65,6 @@ namespace LongoMatch.Gui.Component
 				Destroy ();
 			}
 			Disposed = true;
-		}
-
-		public override void Destroy ()
-		{
-			if (detachedPlayer) {
-				DetachPlayer ();
-			}
-			base.Destroy ();
 		}
 
 		protected override void OnDestroyed ()
@@ -167,17 +160,19 @@ namespace LongoMatch.Gui.Component
 
 		public void OnLoad ()
 		{
+			App.Current.EventsBroker.Subscribe<DetachEvent> (DetachPlayer);
 			fileMenuLoader.LoadMenu (viewModel);
 			toolsMenuLoader.LoadMenu (viewModel);
 		}
 
 		public void OnUnload ()
 		{
+			App.Current.EventsBroker.Unsubscribe<DetachEvent> (DetachPlayer);
 			fileMenuLoader.UnloadMenu ();
 			toolsMenuLoader.UnloadMenu ();
 		}
 
-		public void DetachPlayer ()
+		void DetachPlayer (DetachEvent evt)
 		{
 			bool isPlaying = ViewModel.VideoPlayer.Playing;
 
@@ -193,7 +188,7 @@ namespace LongoMatch.Gui.Component
 				int player_width = playercapturer.Allocation.Width;
 				int player_height = playercapturer.Allocation.Height;
 				playerWindow.SetDefaultSize (player_width, player_height);
-				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
+				playerWindow.DeleteEvent += (o, args) => DetachPlayer (new DetachEvent ());
 				playerWindow.Show ();
 				playercapturer.Reparent (playerWindow.Box);
 				// Hack to reposition video window in widget for OSX
@@ -217,7 +212,7 @@ namespace LongoMatch.Gui.Component
 		public void CloseOpenedProject ()
 		{
 			if (detachedPlayer)
-				DetachPlayer ();
+				DetachPlayer (new DetachEvent ());
 		}
 	}
 }
