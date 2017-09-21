@@ -49,17 +49,31 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
 		protected override void OnDestroyed ()
 		{
 			OnUnload ();
 			base.OnDestroyed ();
+			Disposed = true;
 		}
 
-		public override void Dispose ()
-		{
-			Destroy ();
-			base.Dispose ();
-		}
+		protected bool Disposed { get; private set; } = false;
 
 		public SportsProjectsManagerVM ViewModel {
 			set {

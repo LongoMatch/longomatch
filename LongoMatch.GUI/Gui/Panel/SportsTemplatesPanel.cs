@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx.Dispose ();
 			OnUnload ();
-			dashboardwidget.Destroy ();
+			dashboardwidget.Dispose ();
 			base.OnDestroyed ();
 		}
 

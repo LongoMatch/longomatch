@@ -54,11 +54,32 @@ namespace LongoMatch.Gui.Component
 			hbox3.NoShowAll = true;
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
 		protected override void OnDestroyed ()
 		{
-			eventslistwidget.Destroy ();
-			playlistwidget.Destroy ();
+			ViewModel = null;
+			eventslistwidget.Dispose ();
+			playlistwidget.Dispose ();
 			base.OnDestroyed ();
+			Disposed = true;
 		}
 
 		public bool ExpandTabs {

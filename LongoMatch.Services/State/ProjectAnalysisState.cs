@@ -97,6 +97,7 @@ namespace LongoMatch.Services.State
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			ViewModel.VideoPlayer.ShowCenterPlayHeadButton = false;
 			ViewModel.VideoPlayer.ViewMode = PlayerViewOperationMode.Analysis;
+			CreateLimitation ();
 		}
 
 		protected override void CreateControllers (dynamic data)

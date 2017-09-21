@@ -86,5 +86,16 @@ namespace LongoMatch.Services.State
 		{
 			return AsyncHelpers.Return (true);
 		}
+
+		/// <summary>
+		/// Creates the limitation view Model
+		/// </summary>
+		protected void CreateLimitation ()
+		{
+			if (App.Current.LicenseLimitationsService != null) {
+				ViewModel.Timeline.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+					VASCountLimitedObjects.TimelineEvents.ToString (), 9, App.Current.Style.PaletteBackground);
+			}
+		}
 	}
 }

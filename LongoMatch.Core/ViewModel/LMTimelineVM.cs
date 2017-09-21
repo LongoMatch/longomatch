@@ -2,6 +2,7 @@
 //  Copyright (C) 2016 Fluendo S.A.
 using System.Linq;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
 using VAS.Core.Filters;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
@@ -67,7 +68,7 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
-		protected override CollectionViewModel<TimelineEvent, TimelineEventVM> CreateFullTimeline ()
+		protected override LimitedCollectionViewModel<TimelineEvent, TimelineEventVM> CreateFullTimeline ()
 		{
 			return new LMTimelineCollectionVM ();
 		}

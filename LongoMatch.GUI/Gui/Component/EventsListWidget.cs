@@ -50,13 +50,32 @@ namespace LongoMatch.Gui.Component
 			awayscrolledwindow.Add (awayTeamTreeView);
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
 		protected override void OnDestroyed ()
 		{
-			playsList.ViewModel = null;
-			homeTeamTreeView.ViewModel = null;
-			awayTeamTreeView.ViewModel = null;
-			playsList1.Destroy ();
+			ViewModel = null;
+			playsList1.Dispose ();
+			limitationWidget.Dispose ();
 			base.OnDestroyed ();
+			Disposed = true;
 		}
 
 		public LMProjectVM ViewModel {
@@ -65,13 +84,16 @@ namespace LongoMatch.Gui.Component
 			}
 			set {
 				viewModel = value;
-				playsList.ViewModel = viewModel.Timeline;
+				playsList.ViewModel = viewModel?.Timeline;
 				playsList.Project = viewModel;
-				homeTeamTreeView.ViewModel = viewModel.Timeline;
+				homeTeamTreeView.ViewModel = viewModel?.Timeline;
 				homeTeamTreeView.Project = viewModel;
-				awayTeamTreeView.ViewModel = viewModel.Timeline;
+				awayTeamTreeView.ViewModel = viewModel?.Timeline;
 				awayTeamTreeView.Project = viewModel;
-				LoadIcons ();
+				limitationWidget.ViewModel = viewModel?.Timeline?.LimitationChart;
+				if (viewModel != null) {
+					LoadIcons ();
+				}
 			}
 		}
 

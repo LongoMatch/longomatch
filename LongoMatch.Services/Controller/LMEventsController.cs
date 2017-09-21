@@ -75,6 +75,9 @@ namespace LongoMatch.Services
 
 		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)
 		{
+			if (CheckTimelineEventsLimitation ()) {
+				return;
+			}
 			LMTimelineEvent evt;
 
 			try {

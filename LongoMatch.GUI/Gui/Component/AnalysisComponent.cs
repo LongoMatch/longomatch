@@ -73,7 +73,8 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
-			playercapturer.Destroy ();
+			playercapturer.Dispose ();
+			playsSelection.Dispose ();
 			base.OnDestroyed ();
 		}
 

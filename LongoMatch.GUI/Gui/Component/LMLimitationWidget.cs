@@ -38,8 +38,6 @@ namespace LongoMatch.Gui.Component
 			countLabel.UseMarkup = true;
 			countLabel.ModifyFont (Pango.FontDescription.FromString (App.Current.Style.Font + " 16px"));
 
-			// FIXME: This color is bg_dark_color from gtkrc, it should be set in the color scheme, styleconf, whatever...
-			backgroundBox.ModifyBg (Gtk.StateType.Normal, Misc.ToGdkColor (Color.Parse ("#151a20")));
 			barCanvas = new Canvas (new WidgetWrapper (barDrawingArea));
 			barView = new BarChartView ();
 			barCanvas.AddObject (barView);
@@ -93,12 +91,13 @@ namespace LongoMatch.Gui.Component
 					viewModel.PropertyChanged -= HandlePropertyChangedEventHandler;
 				}
 				viewModel = value;
-				Visible = viewModel != null && viewModel.Limitation.Enabled;
-				ctx?.UpdateViewModel (viewModel);
+				Visible = viewModel != null && viewModel.Visible;
 				barView.SetViewModel (viewModel?.BarChart);
 				if (viewModel != null) {
+					backgroundBox.ModifyBg (Gtk.StateType.Normal, Misc.ToGdkColor (viewModel.BackgroundColor));
 					viewModel.PropertyChanged += HandlePropertyChangedEventHandler;
 					viewModel.Sync ();
+					ctx?.UpdateViewModel (viewModel);
 				}
 			}
 		}
@@ -118,6 +117,9 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Text))) {
 				countLabel.Markup = ViewModel.Text;
+			}
+			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.Visible))) {
+				Visible = viewModel.Visible;
 			}
 		}
 	}

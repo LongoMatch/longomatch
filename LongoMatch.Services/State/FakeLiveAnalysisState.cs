@@ -62,6 +62,7 @@ namespace LongoMatch.Services.State
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			// FIXME: use this hack until the capturer uses a controller
 			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
+			CreateLimitation ();
 		}
 
 		protected override void CreateControllers (dynamic data)
