@@ -72,8 +72,8 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			ViewModel = null;
-			playsList1.Destroy ();
-			limitationWidget.Destroy ();
+			playsList1.Dispose ();
+			limitationWidget.Dispose ();
 			base.OnDestroyed ();
 			Disposed = true;
 		}

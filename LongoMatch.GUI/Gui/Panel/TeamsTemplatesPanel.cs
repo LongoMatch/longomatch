@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Panel
 
 		public override void Destroy ()
 		{
-			teamtemplateeditor1.Destroy ();
+			teamtemplateeditor1.Dispose ();
 			base.Destroy ();
 		}
 

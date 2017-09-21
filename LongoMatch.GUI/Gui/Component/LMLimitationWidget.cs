@@ -92,12 +92,12 @@ namespace LongoMatch.Gui.Component
 				}
 				viewModel = value;
 				Visible = viewModel != null && viewModel.Visible;
-				ctx?.UpdateViewModel (viewModel);
 				barView.SetViewModel (viewModel?.BarChart);
 				if (viewModel != null) {
 					backgroundBox.ModifyBg (Gtk.StateType.Normal, Misc.ToGdkColor (viewModel.BackgroundColor));
 					viewModel.PropertyChanged += HandlePropertyChangedEventHandler;
 					viewModel.Sync ();
+					ctx?.UpdateViewModel (viewModel);
 				}
 			}
 		}
