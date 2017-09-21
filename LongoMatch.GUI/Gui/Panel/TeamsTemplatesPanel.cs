@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
@@ -47,11 +48,13 @@ namespace LongoMatch.Gui.Panel
 		ListStore teamsStore;
 		TeamsManagerVM viewModel;
 		BindingContext ctx;
+		List<TeamVM> teams;
 
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
 
+			teams = new List<TeamVM> ();
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
@@ -204,6 +207,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			teamsStore.AppendValues (teamVM, teamVM.Editable);
 			teamVM.PropertyChanged += HandleTeamPropertyChanged;
+			teams.Add (teamVM);
 		}
 
 		void Remove (TeamVM teamVM)
@@ -212,6 +216,18 @@ namespace LongoMatch.Gui.Panel
 			if (GetIterFromTeam (teamVM, out iter)) {
 				teamsStore.Remove (ref iter);
 				teamVM.PropertyChanged -= HandleTeamPropertyChanged;
+				teams.Remove (teamVM);
+			}
+		}
+
+		void Reset ()
+		{
+			foreach (LMTeamVM teamVM in teams) {
+				teamVM.PropertyChanged -= HandleTeamPropertyChanged;
+			}
+			teamsStore.Clear ();
+			foreach (LMTeamVM teamVM in viewModel.ViewModels) {
+				Add (teamVM);
 			}
 		}
 
@@ -281,6 +297,9 @@ namespace LongoMatch.Gui.Panel
 				foreach (LMTeamVM teamVM in e.OldItems) {
 					Remove (teamVM);
 				}
+				break;
+			case NotifyCollectionChangedAction.Reset:
+				Reset (); 
 				break;
 			case NotifyCollectionChangedAction.Replace:
 				QueueDraw ();

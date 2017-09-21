@@ -33,6 +33,8 @@ namespace LongoMatch.Services.ViewModel
 	/// </summary>
 	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerDealer, ILMTeamEditorDealer
 	{
+		CountLimitationBarChartVM chartVM;
+
 		public TeamsManagerVM ()
 		{
 			LoadedTemplate = new LMTeamVM ();
@@ -73,15 +75,23 @@ namespace LongoMatch.Services.ViewModel
 
 		protected override TeamVM CreateInstance (Team model)
 		{
-			return new LMTeamVM { Model = (LMTeam)model };
+			LMTeamVM lMTeamVM = new LMTeamVM { Model = (LMTeam)model };
+			if (model.Static) {
+				StaticViewModels.Add (lMTeamVM);
+			}
+
+			return lMTeamVM;
 		}
 
 		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
 		/// </summary>
 		public CountLimitationBarChartVM LimitationChart {
-			get;
-			set;
+			get { return chartVM; }
+			set {
+				chartVM = value;
+				Limitation = chartVM?.Limitation;
+			}
 		}
 	}
 }
