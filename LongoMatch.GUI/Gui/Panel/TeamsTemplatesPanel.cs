@@ -42,11 +42,6 @@ namespace LongoMatch.Gui.Panel
 	[ViewAttribute (TeamsManagerState.NAME)]
 	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel<TeamsManagerVM>
 	{
-		void HandlePropertyChangedEventHandler (object sender, PropertyChangedEventArgs e)
-		{
-
-		}
-
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
 		const int SHIELD_SIZE = 50;
