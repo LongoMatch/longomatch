@@ -50,7 +50,6 @@ namespace LongoMatch.Services.States
 				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 					LongoMatchCountLimitedObjects.Team.ToString ());
 			}
-
 		}
 	}
 }

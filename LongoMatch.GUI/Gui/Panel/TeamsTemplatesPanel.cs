@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
@@ -215,6 +216,21 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void Reset ()
+		{
+			TreeIter iter;
+			teamsStore.GetIterFirst (out iter);
+			while (teamsStore.IterIsValid (iter)) {
+				(teamsStore.GetValue (iter, COL_TEAM) as TeamVM).PropertyChanged -= HandleTeamPropertyChanged;
+				teamsStore.IterNext (ref iter);
+			}
+
+			teamsStore.Clear ();
+			foreach (LMTeamVM teamVM in viewModel.ViewModels) {
+				Add (teamVM);
+			}
+		}
+
 		void Select (TeamVM teamVM)
 		{
 			TreeIter iter;
@@ -281,6 +297,9 @@ namespace LongoMatch.Gui.Panel
 				foreach (LMTeamVM teamVM in e.OldItems) {
 					Remove (teamVM);
 				}
+				break;
+			case NotifyCollectionChangedAction.Reset:
+				Reset (); 
 				break;
 			case NotifyCollectionChangedAction.Replace:
 				QueueDraw ();

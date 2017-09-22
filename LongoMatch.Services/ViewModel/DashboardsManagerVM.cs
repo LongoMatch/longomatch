@@ -28,6 +28,8 @@ namespace LongoMatch.Services.ViewModel
 {
 	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
+		CountLimitationBarChartVM chartVM;
+
 		public DashboardsManagerVM ()
 		{
 			AddButton = LoadedTemplate.AddButton;
@@ -57,8 +59,21 @@ namespace LongoMatch.Services.ViewModel
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
 		/// </summary>
 		public CountLimitationBarChartVM LimitationChart {
-			get;
-			set;
+			get { return chartVM; }
+			set {
+				chartVM = value;
+				Limitation = chartVM?.Limitation;
+			}
+		}
+
+		protected override LMDashboardVM CreateInstance (Dashboard model)
+		{
+			LMDashboardVM vm = new LMDashboardVM { Model = model };
+			if (model.Static) {
+				StaticViewModels.Add (vm);
+			}
+
+			return vm;
 		}
 	}
 }
