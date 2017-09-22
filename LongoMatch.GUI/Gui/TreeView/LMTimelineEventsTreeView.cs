@@ -141,7 +141,6 @@ namespace LongoMatch.Gui.Component
 		protected override int HandleSort (TreeModel model, TreeIter a, TreeIter b)
 		{
 			object objecta, objectb;
-			LMTimelineEventVM tna, tnb;
 
 			if (model == null)
 				return 0;
@@ -162,20 +161,7 @@ namespace LongoMatch.Gui.Component
 				return int.Parse (model.GetPath (a).ToString ())
 				- int.Parse (model.GetPath (b).ToString ());
 			} else if (objecta is LMTimelineEventVM && objectb is LMTimelineEventVM) {
-				tna = objecta as LMTimelineEventVM;
-				tnb = objectb as LMTimelineEventVM;
-				switch (tna.Model.EventType.SortMethod) {
-				case (SortMethodType.SortByName):
-					return String.Compare (tna.Name, tnb.Name);
-				case (SortMethodType.SortByStartTime):
-					return (tna.Start - tnb.Start).MSeconds;
-				case (SortMethodType.SortByStopTime):
-					return (tna.Stop - tnb.Stop).MSeconds;
-				case (SortMethodType.SortByDuration):
-					return (tna.Duration - tnb.Duration).MSeconds;
-				default:
-					return 0;
-				}
+				return (objecta as LMTimelineEventVM).CompareTo (objectb as LMTimelineEventVM);
 			} else {
 				return 0;
 			}
