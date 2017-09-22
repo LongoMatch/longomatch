@@ -141,7 +141,6 @@ namespace LongoMatch.Gui.Component
 		protected override int HandleSort (TreeModel model, TreeIter a, TreeIter b)
 		{
 			object objecta, objectb;
-			LMTimelineEventVM tna, tnb;
 
 			if (model == null)
 				return 0;
@@ -162,41 +161,7 @@ namespace LongoMatch.Gui.Component
 				return int.Parse (model.GetPath (a).ToString ())
 				- int.Parse (model.GetPath (b).ToString ());
 			} else if (objecta is LMTimelineEventVM && objectb is LMTimelineEventVM) {
-				tna = objecta as LMTimelineEventVM;
-				tnb = objectb as LMTimelineEventVM;
-				int ret;
-				switch (tna.Model.EventType.SortMethod) {
-				case (SortMethodType.SortByName):
-					ret = String.Compare (tna.Name, tnb.Name);
-					if (ret == 0) {
-						ret = (tna.Duration - tnb.Duration).MSeconds;
-					}
-					break;
-				case (SortMethodType.SortByStartTime):
-					ret = (tna.Start - tnb.Start).MSeconds;
-					if (ret == 0) {
-						ret = String.Compare (tna.Name, tnb.Name);
-					}
-					break;
-				case (SortMethodType.SortByStopTime):
-					ret = (tna.Stop - tnb.Stop).MSeconds;
-					if (ret == 0) {
-						ret = String.Compare (tna.Name, tnb.Name);
-					}
-					break;
-				case (SortMethodType.SortByDuration):
-					ret = (tna.Duration - tnb.Duration).MSeconds;
-					if (ret == 0) {
-						ret = String.Compare (tna.Name, tnb.Name);
-					}
-					break;
-				default:
-					return 0;
-				}
-				if (ret == 0) {
-					ret = tnb.GetHashCode () - tna.GetHashCode ();
-				}
-				return ret;
+				return (objecta as LMTimelineEventVM).CompareTo (objectb as LMTimelineEventVM);
 			} else {
 				return 0;
 			}
