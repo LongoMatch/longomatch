@@ -42,19 +42,22 @@ namespace LongoMatch.Gui.Panel
 	[ViewAttribute (TeamsManagerState.NAME)]
 	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel<TeamsManagerVM>
 	{
+		void HandlePropertyChangedEventHandler (object sender, PropertyChangedEventArgs e)
+		{
+
+		}
+
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
 		const int SHIELD_SIZE = 50;
 		ListStore teamsStore;
 		TeamsManagerVM viewModel;
 		BindingContext ctx;
-		List<TeamVM> teams;
 
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
 
-			teams = new List<TeamVM> ();
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
@@ -207,7 +210,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			teamsStore.AppendValues (teamVM, teamVM.Editable);
 			teamVM.PropertyChanged += HandleTeamPropertyChanged;
-			teams.Add (teamVM);
 		}
 
 		void Remove (TeamVM teamVM)
@@ -216,15 +218,18 @@ namespace LongoMatch.Gui.Panel
 			if (GetIterFromTeam (teamVM, out iter)) {
 				teamsStore.Remove (ref iter);
 				teamVM.PropertyChanged -= HandleTeamPropertyChanged;
-				teams.Remove (teamVM);
 			}
 		}
 
 		void Reset ()
 		{
-			foreach (LMTeamVM teamVM in teams) {
-				teamVM.PropertyChanged -= HandleTeamPropertyChanged;
+			TreeIter iter;
+			teamsStore.GetIterFirst (out iter);
+			while (teamsStore.IterIsValid (iter)) {
+				(teamsStore.GetValue (iter, COL_TEAM) as TeamVM).PropertyChanged -= HandleTeamPropertyChanged;
+				teamsStore.IterNext (ref iter);
 			}
+
 			teamsStore.Clear ();
 			foreach (LMTeamVM teamVM in viewModel.ViewModels) {
 				Add (teamVM);
