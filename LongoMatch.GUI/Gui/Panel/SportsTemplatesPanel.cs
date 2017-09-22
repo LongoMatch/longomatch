@@ -232,6 +232,15 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void Reset ()
+		{
+			dashboardsStore.Clear ();
+			foreach (LMDashboardVM vm in viewModel.ViewModels)
+			{
+				Add (vm); 
+			}
+		}
+
 		void Select (LMDashboardVM dashboardVM)
 		{
 			TreeIter iter;
@@ -298,6 +307,9 @@ namespace LongoMatch.Gui.Panel
 				foreach (LMDashboardVM dashboardVM in e.OldItems) {
 					Remove (dashboardVM);
 				}
+				break;
+			case NotifyCollectionChangedAction.Reset:
+				Reset ();
 				break;
 			case NotifyCollectionChangedAction.Replace:
 				QueueDraw ();
