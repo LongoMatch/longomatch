@@ -20,13 +20,12 @@ using System.IO;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-
 using LongoMatch.Core.Stats;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using VAS.Core;
 
 namespace LongoMatch.Plugins.Stats
 {

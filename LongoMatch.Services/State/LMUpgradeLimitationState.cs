@@ -1,7 +1,6 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-using System;
-using LongoMatch.Core;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
@@ -23,17 +22,17 @@ namespace LongoMatch.Services.State
 			LimitationVM limitation = (LimitationVM)data.limitationVM;
 			if (data.limitationVM is FeatureLimitationVM) {
 				FeatureLimitationVM featureLimitation = (FeatureLimitationVM)limitation;
-				string featureMessage = (string.IsNullOrEmpty (featureLimitation.DetailInfo)) ? featureLimitation.DisplayName : featureLimitation.DetailInfo;
+				string featureMessage = (string.IsNullOrEmpty (featureLimitation.DetailInfo)) ?
+					featureLimitation.DisplayName : featureLimitation.DetailInfo;
 				if (!string.IsNullOrEmpty (featureLimitation.DetailInfo)) {
-					ViewModel.Header = $"{Catalog.GetString (featureLimitation.DetailInfo)}";
+					ViewModel.Header = featureLimitation.DetailInfo;
 				} else {
-					ViewModel.Header = $"{Catalog.GetString ("The")} {featureLimitation.DisplayName} " +
-						$"{Catalog.GetString ("is not available in the")} {App.Current.LicenseManager.LicenseStatus.PlanName} " +
-						$"{Catalog.GetString ("plan")}";
+					ViewModel.Header = Catalog.GetString (
+						$"The {featureLimitation.DisplayName} is not available in the {App.Current.LicenseManager.LicenseStatus.PlanName} plan");
 				}
 			} else if (limitation is CountLimitationVM) {
-				ViewModel.Header = Catalog.GetString ("You have reached the limit of") +
-					$" {limitation.DisplayName} available for your plan";
+				ViewModel.Header = Catalog.GetString (
+					$"You have reached the limit of {limitation.DisplayName} available for your plan");
 			} else {
 				ViewModel.Header = Catalog.GetString ("Unlock your team's potential with LongoMatch PRO");
 			}
@@ -43,19 +42,17 @@ namespace LongoMatch.Services.State
 				ViewModel.FeaturesHeader = Catalog.GetString ("Upgrade to get access to the following features");
 			}
 			ViewModel.Features = new RangeObservableCollection<string> {
-				Catalog.GetString("Unlimited projects"),
-				Catalog.GetString("5x Zoom-in factor"),
+				Catalog.GetString("Unlimited projects, dashboards and teams"),
+				Catalog.GetString("4x Zoom-in factor"),
 				Catalog.GetString("Multicamera Analysis"),
 				Catalog.GetString("SportsCode & XML Import and Export")
 			};
 			ViewModel.FeaturesCaption = Catalog.GetString ("... and much more");
-			//FIXME: still undecided UpgradeURL
 			ViewModel.UpgradeCommand = new Command (() => {
 				Utils.OpenURL (LMConstants.UPGRADE_URL, $"Limitation_{limitation.RegisterName.Replace (" ", string.Empty)}");
 			});
 			ViewModel.UpgradeCommand.Text = Catalog.GetString ("UPGRADE TO PRO");
 			ViewModel.Undecided = Catalog.GetString ("Still undecided?");
-			//FIXME: still undecided OtherPlansURL
 			ViewModel.OtherPlansURL = LMConstants.OTHER_PLANS_URL;
 		}
 	}

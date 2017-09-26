@@ -18,8 +18,8 @@
 using System;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;

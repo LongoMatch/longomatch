@@ -17,7 +17,7 @@
 //
 using System.Threading.Tasks;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core;
+using VAS.Core;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Plugins;

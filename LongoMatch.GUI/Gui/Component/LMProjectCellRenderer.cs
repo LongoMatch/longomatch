@@ -3,9 +3,8 @@
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.ViewModel;
-using VAS.Core.Common;
+using VAS.Core;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.ViewModel;

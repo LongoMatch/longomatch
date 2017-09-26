@@ -18,6 +18,7 @@
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
+using VAS.Core;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
