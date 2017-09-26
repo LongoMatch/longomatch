@@ -122,10 +122,18 @@ namespace Tests.Services.Controller
 			await eventsFilterController.Start ();
 
 			// Assert
-			// We have the default dashboard
-			// The CategoriesPredicate filter should contain:
-			//   - One AndPredicate for each EventType with subcategories
-			//   - One Predicate for each EventType without subcategories
+			// We have the default dashboard, with a subcategory "Position" added to the first event type, with values "Left", "Center" and "Right"
+			// The ParentEventsPredicate filter should contain:
+			//   - One OrPredicate for Periods, with:
+			//     - One Predicate for each period
+			//   - One OrPredicate for Timers, with:
+			//     - One Predicate for each timer
+			//   - One OrPredicate for Common tags, with:
+			//     - One OrPredicate for each tag group, with:
+			//       - One Predicate for each tag
+			//   - One OrPredicate for EventTypes, with:
+			//     - One AndPredicate for each EventType with subcategories
+			//     - One Predicate for each EventType without subcategories
 			Assert.AreEqual (2, timelineVM.Filters.Count);
 			Assert.AreEqual (timelineVM.ParentEventsPredicate, timelineVM.Filters.Elements [0]);
 			Assert.AreEqual (4, timelineVM.ParentEventsPredicate.Count);
@@ -591,7 +599,7 @@ namespace Tests.Services.Controller
 		}
 
 		[Test]
-		public void ApplyTimersFilter_NoTimers_OneVisible ()
+		public void ApplyTimersFilter_NoTimers_TwoVisible ()
 		{
 			// Arrange
 			timelineVM.Filters.Active = false;
@@ -600,12 +608,13 @@ namespace Tests.Services.Controller
 			timelineVM.TimersPredicate.Elements [0].Active = true;
 
 			// Assert
-			Assert.AreEqual (1, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.AreEqual (2, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (3).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (5).Visible);
 		}
 
 		[Test]
-		public void ApplyTimersFilter_FirstTimer_FiveVisible ()
+		public void ApplyTimersFilter_FirstTimer_FourVisible ()
 		{
 			// Arrange
 			timelineVM.Filters.Active = false;
@@ -614,10 +623,9 @@ namespace Tests.Services.Controller
 			timelineVM.TimersPredicate.Elements [1].Active = true;
 
 			// Assert
-			Assert.AreEqual (5, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.AreEqual (4, timelineVM.FullTimeline.Count (e => e.Visible));
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (0).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (2).Visible);
-			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (3).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (4).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (6).Visible);
 		}
@@ -640,7 +648,7 @@ namespace Tests.Services.Controller
 		}
 
 		[Test]
-		public void ApplyTimersFilter_FirstAndSecondTimer_SixVisible ()
+		public void ApplyTimersFilter_FirstAndSecondTimer_FiveVisible ()
 		{
 			// Arrange
 			timelineVM.Filters.Active = false;
@@ -650,11 +658,10 @@ namespace Tests.Services.Controller
 			timelineVM.TimersPredicate.Elements [2].Active = true;
 
 			// Assert
-			Assert.AreEqual (6, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.AreEqual (5, timelineVM.FullTimeline.Count (e => e.Visible));
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (0).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (1).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (2).Visible);
-			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (3).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (4).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (6).Visible);
 		}

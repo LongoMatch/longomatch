@@ -109,8 +109,8 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				eventslistwidget.ViewModel = value;
 				playlistwidget.ViewModel = value?.Playlists;
-				categoriesfilter.Predicate = (value?.Timeline as LMTimelineVM)?.CategoriesPredicate;
-				playersfilter.Predicate = (value?.Timeline as LMTimelineVM)?.TeamsPredicate;
+				categoriesfilter.Predicate = value?.Timeline?.ParentEventsPredicate;
+				playersfilter.Predicate = value?.Timeline?.TeamsPredicate;
 			}
 		}
 
