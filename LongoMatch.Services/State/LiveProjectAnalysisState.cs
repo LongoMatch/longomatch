@@ -75,6 +75,7 @@ namespace LongoMatch.Services.State
 			playerController.SetViewModel (ViewModel.VideoPlayer);
 			Controllers.Add (playerController);
 			Controllers.Add (new CoreEventsController ());
+			Controllers.Add (new DrawingsController ());
 		}
 	}
 }

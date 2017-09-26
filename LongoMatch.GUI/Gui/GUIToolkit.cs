@@ -72,7 +72,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public override void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
+		public override void ExportFrameSeries (TimelineEvent play, string snapshotsDir)
 		{
 			SnapshotsDialog sd;
 			uint interval;
@@ -88,8 +88,7 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (((LMProject)openedProject).Description.FileSet, play,
-							  interval, outDir);
+				var fsc = new FramesSeriesCapturer (play.FileSet, play, interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, MainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
