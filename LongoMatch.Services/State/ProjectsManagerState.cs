@@ -58,7 +58,9 @@ namespace LongoMatch.Services.State
 			if (!await base.ShowState ()) {
 				return false;
 			}
-			ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());
+			if (ViewModel.Selection.Count == 0) {
+				ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());
+			}
 			return true;
 		}
 	}
