@@ -113,5 +113,13 @@ namespace LongoMatch.Gui.Component
 				base.RemoveSubViewModel (subViewModel);
 			}
 		}
+
+		protected override void HandleViewModelPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Collection_" + nameof (ViewModel.Selection) && Selection.CountSelectedRows () > 0) {
+				Selection.UnselectAll ();
+			}
+			base.HandleViewModelPropertyChanged (sender, e);
+		}
 	}
 }
