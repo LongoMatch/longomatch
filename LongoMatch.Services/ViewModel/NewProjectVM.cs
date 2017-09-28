@@ -20,6 +20,8 @@ namespace LongoMatch.Services.ViewModel
 			TeamTagger.ShowSubstitutionButtons = false;
 			TeamTagger.SubstitutionMode = true;
 			Project = new LMProjectVM ();
+			Dashboards = new DashboardsManagerVM ();
+			Teams = new TeamsManagerVM ();
 		}
 
 		/// <summary>
@@ -43,6 +45,22 @@ namespace LongoMatch.Services.ViewModel
 		/// </summary>
 		/// <value>The team tagger.</value>
 		public LMTeamTaggerVM TeamTagger {
+			get;
+		}
+
+		/// <summary>
+		/// Gets the dashboards.
+		/// </summary>
+		/// <value>The dashboards.</value>
+		public DashboardsManagerVM Dashboards {
+			get;
+		}
+
+		/// <summary>
+		/// Gets the teams.
+		/// </summary>
+		/// <value>The teams.</value>
+		public TeamsManagerVM Teams {
 			get;
 		}
 	}
