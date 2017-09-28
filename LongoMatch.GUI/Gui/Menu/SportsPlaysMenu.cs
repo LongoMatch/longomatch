@@ -121,12 +121,12 @@ namespace LongoMatch.Gui.Menus
 					drawingMenu.Append (editItem);
 					drawingMenu.Append (deleteItem);
 					editItem.Activated += (sender, e) => {
-						App.Current.EventsBroker.Publish<DrawFrameEvent> (
+						var play = plays.FirstOrDefault ();
+						App.Current.EventsBroker.Publish (
 							new DrawFrameEvent {
-								Play = plays.FirstOrDefault (),
+								Play = play,
 								DrawingIndex = index,
-								CamConfig = plays.FirstOrDefault ().Drawings [index].CameraConfig,
-								Current = false
+								CamConfig = play.Drawings [index].CameraConfig,
 							}
 						);
 					};
