@@ -326,11 +326,6 @@ namespace LongoMatch.Gui
 			about.Destroy ();
 		}
 
-		protected void OnMigrationToolActionActivated (object sender, EventArgs e)
-		{
-			App.Current.EventsBroker.Publish<MigrateDBEvent> ();
-		}
-
 		#endregion
 
 		void HandleOpened (OpenedProjectEvent e)

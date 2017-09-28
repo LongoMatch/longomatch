@@ -204,7 +204,6 @@ namespace LongoMatch.Services
 				this.openedProject = e.Project as LMProject;
 			});
 
-			App.Current.EventsBroker.Subscribe<MigrateDBEvent> (HandleMigrateDB);
 			App.Current.EventsBroker.Subscribe<ExportProjectEvent> (ExportProject);
 			App.Current.EventsBroker.Subscribe<ImportProjectEvent> (ImportProject);
 
@@ -213,7 +212,6 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
-			App.Current.EventsBroker.Unsubscribe<MigrateDBEvent> (HandleMigrateDB);
 			App.Current.EventsBroker.Unsubscribe<ExportProjectEvent> (ExportProject);
 			App.Current.EventsBroker.Unsubscribe<ImportProjectEvent> (ImportProject);
 
