@@ -16,10 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
 
 namespace Tests.Services.ViewModel
 {
@@ -27,6 +30,15 @@ namespace Tests.Services.ViewModel
 	public class TestNewProjectVM
 	{
 		NewProjectVM viewModel;
+
+		[OneTimeSetUp]
+		public void OneTimeSetUp ()
+		{
+			SetupClass.SetUp ();
+			Mock<IGUIToolkit> mockGui = new Mock<IGUIToolkit> ();
+			mockGui.SetupGet (g => g.DeviceScaleFactor).Returns (1);
+			App.Current.GUIToolkit = mockGui.Object;
+		}
 
 		[SetUp]
 		public void SetUp ()
@@ -53,6 +65,13 @@ namespace Tests.Services.ViewModel
 			Assert.AreSame (viewModel.TeamTagger.AwayTeam, viewModel.Project.AwayTeam);
 			Assert.AreSame (viewModel.TeamTagger.HomeTeam, viewModel.Project.HomeTeam);
 			Assert.AreSame (viewModel.TeamTagger.Background, lmProject.Dashboard.FieldBackground);
+		}
+
+		[Test]
+		public void CreateInstance_DashboardsAndTeamsNotNull ()
+		{
+			Assert.IsNotNull (viewModel.Dashboards);
+			Assert.IsNotNull (viewModel.Teams);
 		}
 	}
 }

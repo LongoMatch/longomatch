@@ -16,9 +16,12 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Threading.Tasks;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store.Templates;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
@@ -38,6 +41,16 @@ namespace LongoMatch.Services.State
 			ViewModel = new NewProjectVM ();
 			if (data != null) {
 				ViewModel.Project = data;
+			}
+
+			ViewModel.Dashboards.Model = new RangeObservableCollection<Dashboard> (App.Current.CategoriesTemplatesProvider.Templates);
+			ViewModel.Teams.Model = new RangeObservableCollection<Team> (App.Current.TeamTemplatesProvider.Templates);
+
+			if (App.Current.LicenseLimitationsService != null) {
+				ViewModel.Dashboards.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+				LongoMatchCountLimitedObjects.Dashboard.ToString ());
+				ViewModel.Teams.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
+					LongoMatchCountLimitedObjects.Team.ToString ());
 			}
 		}
 

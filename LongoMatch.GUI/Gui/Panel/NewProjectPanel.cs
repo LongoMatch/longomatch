@@ -84,7 +84,6 @@ namespace LongoMatch.Gui.Panel
 			LoadIcons ();
 			GroupLabels ();
 			ConnectSignals ();
-			FillDahsboards ();
 			FillFormats ();
 			Gdk.Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
@@ -117,6 +116,7 @@ namespace LongoMatch.Gui.Panel
 				viewModel = value;
 				project = viewModel.Project.Model;
 				LoadTeams (project);
+				FillDashboards ();
 				if (project == null) {
 					notebook1.Page = firstPage = 0;
 					datepicker1.Date = DateTime.Now;
@@ -234,7 +234,7 @@ namespace LongoMatch.Gui.Panel
 			drawingarea.HeightRequest = 200;
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
-			teams = App.Current.TeamTemplatesProvider.Templates;
+			teams = ViewModel.Teams.ViewModels.Select (vm => vm.Model).ToList ();
 
 			// Fill the combobox with project values or the templates ones
 			if (project != null) {
@@ -328,13 +328,13 @@ namespace LongoMatch.Gui.Panel
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
 
-		void FillDahsboards ()
+		void FillDashboards ()
 		{
 			int i = 0;
 			int index = 0;
 
 			dashboardsList = new ListStore (typeof (string), typeof (Dashboard));
-			foreach (var dashboard in App.Current.CategoriesTemplatesProvider.Templates) {
+			foreach (var dashboard in ViewModel.Dashboards.ViewModels.Select (vm => vm.Model)) {
 				dashboardsList.AppendValues (dashboard.Name, dashboard);
 				if (dashboard.Name == App.Current.Config.DefaultTemplate)
 					index = i;
