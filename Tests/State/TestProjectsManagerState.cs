@@ -26,6 +26,7 @@ namespace Tests.State
 		[OneTimeSetUp]
 		public void OneTimeSetUp ()
 		{
+			SetupClass.SetUp ();
 			futureProject = Utils.CreateProject ();
 			futureProject.CreationDate = DateTime.Parse ("12/12/9999");
 			pastProject = Utils.CreateProject ();
