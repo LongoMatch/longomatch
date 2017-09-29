@@ -75,7 +75,8 @@ namespace LongoMatch.Core.Common
 		VideoConverter,
 		ExcelExport,
 		XMlImportExport,
-		IpCameras
+		IpCameras,
+		Sync2Desk
 	}
 
 	public enum LongoMatchCountLimitedObjects
