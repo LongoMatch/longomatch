@@ -98,6 +98,9 @@ namespace LongoMatch.Gui.Component
 
 		protected override Area GetCellRedrawArea (int cellX, int cellY, double x, double y, int width, IViewModel viewModel)
 		{
+			if (viewModel is EventTypeTimelineVM) {
+				return PlaysCellRenderer.ShouldRedraw (cellX, cellY, y, width, viewModel);
+			}
 			return null;
 		}
 
@@ -122,6 +125,18 @@ namespace LongoMatch.Gui.Component
 			renderer.Item = vm;
 			renderer.Project = Project.Model;
 			renderer.Count = Model.IterNChildren (iter);
+		}
+
+		protected override bool ProcessViewModelClicked (IViewModel viewModel, int x, int y, int cellWidth, Gdk.ModifierType state)
+		{
+			if (viewModel is EventTypeTimelineVM && state.HasFlag (Gdk.ModifierType.None)) {
+				if (PlaysCellRenderer.ClickedPlayButton (x, y, cellWidth)) {
+					((EventTypeTimelineVM)viewModel).LoadEventType ();
+					pathClicked = null;
+					return true;
+				}
+			}
+			return false;
 		}
 
 		protected override void ShowMenu ()
