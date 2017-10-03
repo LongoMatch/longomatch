@@ -70,6 +70,9 @@ namespace Tests
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 			App.Current.ResourcesLocator = new DummyResourcesLocator ();
 			App.Current.FileSystemManager = new FileSystemManager ();
+			Mock<IGUIToolkit> mockGuiToolkit = new Mock<IGUIToolkit> ();
+			mockGuiToolkit.Setup (g => g.DeviceScaleFactor).Returns (1.0f);
+			App.Current.GUIToolkit = mockGuiToolkit.Object;
 		}
 
 		static void RegisterScreenState (string name)

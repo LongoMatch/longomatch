@@ -62,6 +62,7 @@ namespace Tests.Drawing.Widgets
 		{
 			var videoPlayerVM = new VideoPlayerVM ();
 			Project project = Utils.CreateProject (false);
+			project.Periods.Clear ();
 			var period = new Period ();
 			period.Nodes.Add (new TimeNode {
 				Start = new Time (0),
