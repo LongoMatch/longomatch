@@ -120,6 +120,7 @@
     <Compile Include="Controller\TestLMPlaylistController.cs" />
     <Compile Include="Core\Stats\TestEventTypeStats.cs" />
     <Compile Include="State\TestNewProjectState.cs" />
+    <Compile Include="Services\Controller\TestLMEventsFilterController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">

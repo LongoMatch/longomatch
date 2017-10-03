@@ -133,6 +133,26 @@ namespace Tests
 			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",
 				"aac", 320, 240, 1.3, null, "Test asset 2"));
 			p.Description = pd;
+			p.Periods.Replace (new RangeObservableCollection<Period> {
+				new Period {
+					Name = "First Period",
+					Nodes = new RangeObservableCollection<TimeNode>{
+						new TimeNode {
+							Start = new Time (10),
+							Stop = new Time (50)
+						}
+					}
+				},
+				new Period {
+					Name = "Second Period",
+					Nodes = new RangeObservableCollection<TimeNode>{
+						new TimeNode {
+							Start = new Time (50),
+							Stop = new Time (90)
+						}
+					}
+				},
+			});
 			p.UpdateEventTypesAndTimers ();
 
 			if (withLineupEvent) {
@@ -146,7 +166,7 @@ namespace Tests
 				pl = new LMTimelineEvent {
 					EventType = b.EventType,
 					Start = new Time (0),
-					Stop = new Time (100),
+					Stop = new Time (50),
 					FileSet = pd.FileSet
 				};
 				p.Timeline.Add (pl);
@@ -154,8 +174,8 @@ namespace Tests
 				b = p.Dashboard.List [1] as AnalysisEventButton;
 				pl = new LMTimelineEvent {
 					EventType = b.EventType,
-					Start = new Time (0),
-					Stop = new Time (100),
+					Start = new Time (20),
+					Stop = new Time (60),
 					FileSet = pd.FileSet
 				};
 				pl.Tags.Add (b.AnalysisEventType.Tags [0]);
@@ -164,7 +184,7 @@ namespace Tests
 				b = p.Dashboard.List [2] as AnalysisEventButton;
 				pl = new LMTimelineEvent {
 					EventType = b.EventType,
-					Start = new Time (0),
+					Start = new Time (70),
 					Stop = new Time (100),
 					FileSet = pd.FileSet
 				};
