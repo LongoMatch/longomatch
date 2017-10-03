@@ -24,6 +24,18 @@ namespace LongoMatch.Services.Controller
 	/// </summary>
 	public class LMEventsFilterController : EventsFilterController
 	{
+		protected override void UpdatePredicates ()
+		{
+			ViewModel.Filters.IgnoreEvents = true;
+			UpdateTeamsPredicates ();
+			UpdatePeriodsPredicates ();
+			UpdateTimersPredicates ();
+			UpdateCommonTagsPredicates ();
+			UpdateEventTypesPredicates ();
+			ViewModel.Filters.IgnoreEvents = false;
+			ViewModel.Filters.EmitPredicateChanged ();
+		}
+
 		protected override void UpdateTeamsPredicates ()
 		{
 			ViewModel.Filters.IgnoreEvents = true;
