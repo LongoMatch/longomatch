@@ -192,7 +192,7 @@ namespace LongoMatch.Gui.Panel
 				App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Tag"));
 			ctx.Add (cardbutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.TemplatesIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-tag-card", StyleConf.TemplatesIconSize),
 				vm => ((DashboardsManagerVM)vm).AddButton, "Card"));
 
 			ctx.Add (deletetemplatebutton.Bind (vm => ((DashboardsManagerVM)vm).DeleteCommand));
