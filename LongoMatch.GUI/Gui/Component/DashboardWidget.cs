@@ -69,9 +69,12 @@ namespace LongoMatch.Gui.Component
 			tagger.ActionLinksSelectedEvent += HandleActionLinksSelectedEvent;
 			tagger.ActionLinkCreatedEvent += HandleActionLinkCreatedEvent;
 			drawingarea.CanFocus = true;
-			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
-			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
-			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
+			fieldSelector.Title = Catalog.GetString ("Field");
+			fieldSelector.ImageButtonPressEvent += HandleFieldButtonPressEvent;
+			hfieldSelector.Title = Catalog.GetString ("Half Field");
+			hfieldSelector.ImageButtonPressEvent += HandleFieldButtonPressEvent;
+			goalSelector.Title = Catalog.GetString ("Goal");
+			goalSelector.ImageButtonPressEvent += HandleFieldButtonPressEvent;
 			applybutton.Clicked += HandleApplyClicked;
 
 			positionsbox.NoShowAll = true;
@@ -148,9 +151,9 @@ namespace LongoMatch.Gui.Component
 		{
 			ctx = this.GetBindingContext ();
 
-			ctx.Add (fieldimage.Bind (vm => ((DashboardVM)vm).FieldBackground, 50, 50));
-			ctx.Add (hfieldimage.Bind (vm => ((DashboardVM)vm).HalfFieldBackground, 50, 50));
-			ctx.Add (goalimage.Bind (vm => ((DashboardVM)vm).GoalBackground, 50, 50));
+			ctx.Add (fieldSelector.ImageView.Bind (vm => ((DashboardVM)vm).FieldBackground, 50, 50));
+			ctx.Add (hfieldSelector.ImageView.Bind (vm => ((DashboardVM)vm).HalfFieldBackground, 50, 50));
+			ctx.Add (goalSelector.ImageView.Bind (vm => ((DashboardVM)vm).GoalBackground, 50, 50));
 
 			ctx.Add (addcatbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("lm-tag-category", App.Current.Style.IconSmallWidth),
 												vm => ((DashboardVM)vm).AddButton, "Category"));
@@ -163,9 +166,9 @@ namespace LongoMatch.Gui.Component
 			ctx.Add (addtagbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", App.Current.Style.IconSmallWidth),
 												   vm => ((DashboardVM)vm).AddButton, "Tag"));
 
-			ctx.Add (resetfieldbutton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Field));
-			ctx.Add (resethfieldbutton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.HalfField));
-			ctx.Add (resetgoalbutton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Goal));
+			ctx.Add (fieldSelector.ResetButton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Field));
+			ctx.Add (hfieldSelector.ResetButton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.HalfField));
+			ctx.Add (goalSelector.ResetButton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Goal));
 
 			ctx.Add (editbutton.Bind (vm => ((DashboardVM)vm).ChangeDashboardMode, DashboardMode.Edit, DashboardMode.Code));
 			ctx.Add (linksbutton.Bind (vm => ((DashboardVM)vm).ToggleActionLinks, true, false));
@@ -233,11 +236,11 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFieldButtonPressEvent (object sender, EventArgs e)
 		{
-			if (sender == fieldeventbox) {
+			if (sender == fieldSelector) {
 				ViewModel.ChangeField.Execute (FieldPositionType.Field);
-			} else if (sender == hfieldeventbox) {
+			} else if (sender == hfieldSelector) {
 				ViewModel.ChangeField.Execute (FieldPositionType.HalfField);
-			} else if (sender == goaleventbox) {
+			} else if (sender == goalSelector) {
 				ViewModel.ChangeField.Execute (FieldPositionType.Goal);
 			}
 		}
