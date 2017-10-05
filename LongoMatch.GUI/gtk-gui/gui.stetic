@@ -3700,13 +3700,13 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
-                <property name="LeftPadding">12</property>
+                <property name="LeftPadding">10</property>
                 <child>
                   <widget class="Gtk.Table" id="generaltable">
                     <property name="MemberName" />
                     <property name="NColumns">2</property>
                     <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
+                    <property name="ColumnSpacing">50</property>
                     <child>
                       <widget class="Gtk.ComboBox" id="fpscombobox">
                         <property name="MemberName" />
@@ -3779,14 +3779,14 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
-                <property name="LeftPadding">12</property>
+                <property name="LeftPadding">10</property>
                 <child>
                   <widget class="Gtk.Table" id="rendertable">
                     <property name="MemberName" />
-                    <property name="NRows">6</property>
+                    <property name="NRows">7</property>
                     <property name="NColumns">2</property>
                     <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
+                    <property name="ColumnSpacing">50</property>
                     <child>
                       <placeholder />
                     </child>
@@ -3978,6 +3978,48 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="YShrink">False</property>
                       </packing>
                     </child>
+                    <child>
+                      <widget class="Gtk.Label" id="watermarkLabel">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LabelProp" translatable="yes">Watermark:</property>
+                      </widget>
+                      <packing>
+                        <property name="TopAttach">6</property>
+                        <property name="BottomAttach">7</property>
+                        <property name="AutoSize">True</property>
+                        <property name="XOptions">Fill</property>
+                        <property name="YOptions">Fill</property>
+                        <property name="XExpand">False</property>
+                        <property name="XFill">True</property>
+                        <property name="XShrink">False</property>
+                        <property name="YExpand">False</property>
+                        <property name="YFill">True</property>
+                        <property name="YShrink">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="watermarkSelector">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="TopAttach">6</property>
+                        <property name="BottomAttach">7</property>
+                        <property name="LeftAttach">1</property>
+                        <property name="RightAttach">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="XOptions">Fill</property>
+                        <property name="YOptions">Fill</property>
+                        <property name="XExpand">False</property>
+                        <property name="XFill">True</property>
+                        <property name="XShrink">False</property>
+                        <property name="YExpand">False</property>
+                        <property name="YFill">True</property>
+                        <property name="YShrink">False</property>
+                      </packing>
+                    </child>
                   </widget>
                 </child>
               </widget>
@@ -4008,14 +4050,14 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
-                <property name="LeftPadding">12</property>
+                <property name="LeftPadding">10</property>
                 <child>
                   <widget class="Gtk.Table" id="capturetable">
                     <property name="MemberName" />
                     <property name="NRows">3</property>
                     <property name="NColumns">2</property>
                     <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
+                    <property name="ColumnSpacing">50</property>
                     <child>
                       <widget class="Gtk.ComboBox" id="captureenccombo">
                         <property name="MemberName" />
@@ -4143,7 +4185,7 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel1">
+              <widget class="Gtk.Label" id="CaptureLabel">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Capture&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
