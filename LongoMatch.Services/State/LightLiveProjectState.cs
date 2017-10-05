@@ -2,8 +2,14 @@
 //  Copyright (C) 2017 FLUENDO
 //
 //
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
+using VAS.Core;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.ViewModel;
 using VAS.Services.State;
 
@@ -11,6 +17,7 @@ namespace LongoMatch.Services.State
 {
 	/// <summary>
 	/// Analysis state that does not contain a video player
+	/// At this moment used only by the mobile application
 	/// </summary>
 	public class LightLiveProjectState : ScreenState<LMProjectAnalysisVM>
 	{
@@ -23,6 +30,20 @@ namespace LongoMatch.Services.State
 		public override string Name {
 			get {
 				return NAME;
+			}
+		}
+
+		public override async Task<bool> LoadState (dynamic data)
+		{
+			if (!await Initialize (data)) {
+				return false;
+			}
+
+			try {
+				ViewModel.Capturer.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
+				return true;
+			} catch {
+				return false;
 			}
 		}
 
