@@ -28,6 +28,7 @@ using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store.Templates;
 using VAS.Core.Common;
+using System.Linq;
 
 namespace Tests.Services
 {
@@ -75,6 +76,24 @@ namespace Tests.Services
 			Assert.AreEqual (2, ttp.Templates.Count);
 			// Test we dont have a template
 			Assert.IsFalse (ctp.Exists ("NonExistingTemplate"));
+		}
+
+		[Test ()]
+		public void TemplatesProvider_CopyStaticTemplate_CopyIsNotStatic ()
+		{
+			// Arrange
+			TemplatesService ts = new TemplatesService (storage);
+			ts.Start ();
+			ICategoriesTemplatesProvider ctp = ts.CategoriesTemplateProvider;
+			Dashboard dash = ctp.Templates [0];
+
+			// Action
+			ctp.Copy (dash, "NEW");
+
+			// Assert
+			Assert.IsTrue (dash.Static);
+			Dashboard dash2 = ctp.Templates.Where (t => t.Name == "NEW").First ();
+			Assert.IsFalse (dash2.Static);
 		}
 
 		[Test ()]
