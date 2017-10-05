@@ -160,7 +160,7 @@ namespace LongoMatch.Gui.Component
 												  vm => ((DashboardVM)vm).AddButton, "Timer"));
 			ctx.Add (addtagbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.NotebookTabSize),
 												   vm => ((DashboardVM)vm).AddButton, "Tag"));
-			ctx.Add (addcardbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("lm-tag-tag", StyleConf.NotebookTabSize),
+			ctx.Add (addcardbutton.BindWithIcon (App.Current.ResourcesLocator.LoadIcon ("lm-tag-card", StyleConf.NotebookTabSize),
 												 vm => ((DashboardVM)vm).AddButton, "Card"));
 
 			ctx.Add (resetfieldbutton.Bind (vm => ((DashboardVM)vm).ResetField, FieldPositionType.Field));
