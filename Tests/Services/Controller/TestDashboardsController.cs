@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.License;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
@@ -53,6 +54,8 @@ namespace Tests.Services.Controller
 												It.IsAny<string> (), It.IsAny<string []> ())).Returns ("Dashboard.lct");
 			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()))
 					   .ReturnsAsync (true);
+			mockDialogs.Setup (m => m.QueryMessage (It.IsAny<string> (), null, It.IsAny<string> (),
+													 It.IsAny<object> ())).Returns (AsyncHelpers.Return ("dashboard_copy"));
 			mockProvider.Setup (x => x.LoadFile (It.IsAny<string> ())).Returns (dashboard);
 			mockProvider.Setup (x => x.Templates).Returns (new List<Dashboard> { dashboard });
 
@@ -74,13 +77,14 @@ namespace Tests.Services.Controller
 			controller = new DashboardsController ();
 		}
 
-		// FIXME: Move to SetUp and TearDown when RA-1047 is done
+		[SetUp]
 		public async Task TestInit ()
 		{
 			await controller.Start ();
 			controller.SetViewModel (new DashboardsManagerVM ());
 		}
 
+		[TearDown]
 		public async Task TestEnd ()
 		{
 			await controller.Stop ();
@@ -91,65 +95,78 @@ namespace Tests.Services.Controller
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task NewDashboard_OneStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 1, true);
+			// Arrange
+			await SetWibuManager (version, 1, true);
 
-				// Action
-				var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsTrue (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (d1.ReturnValue);
+		}
+
+		[Test ()]
+		public async Task SaveStaticDashboard_LimitationDisabled_CanSaveCopy ()
+		{
+			// Arrange
+			mockLimitationService.Setup (s => s.CanExecute (LongoMatchCountLimitedObjects.Dashboard.ToString ())).Returns (true);
+
+			// Action
+			int i = App.Current.CategoriesTemplatesProvider.Templates.Count;
+			LMDashboard dashboard = new LMDashboard { Static = true };
+			await App.Current.EventsBroker.Publish (new UpdateEvent<Dashboard> {
+				Object = dashboard
+			});
+			i = App.Current.CategoriesTemplatesProvider.Templates.Count;
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (LongoMatchCountLimitedObjects.Dashboard.ToString ()), Times.Never);
+			mockProvider.Verify (m => m.Save (It.IsAny<Dashboard> ()), Times.Once);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
 		public async Task NewDashboard_TwoStored_CannotAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, false);
+			// Arrange
+			await SetWibuManager (version, 2, false);
 
-				// Action
-				var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsFalse (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsFalse (d1.ReturnValue);
+		}
+
+		[Test ()]
+		public async Task SaveStaticDashboard_LimitationEnabled_CannotSaveCopy ()
+		{
+			// Arrange
+			mockLimitationService.Setup (s => s.CanExecute (LongoMatchCountLimitedObjects.Dashboard.ToString ())).Returns (false);
+
+			// Action
+			LMDashboard dashboard = new LMDashboard { Static = true };
+			await App.Current.EventsBroker.Publish (new UpdateEvent<Dashboard> {
+				Object = dashboard
+			});
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (LongoMatchCountLimitedObjects.Dashboard.ToString ()), Times.Once);
 		}
 
 		[TestCase (LMDummyWibuManager.STARTER_PRODUCT_TEXT)]
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task NewDashboard_TwoStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, true);
+			// Arrange
+			await SetWibuManager (version, 2, true);
 
-				// Action
-				var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new CreateEvent<Dashboard> { Name = "Dashboard 1" };
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsTrue (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (d1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
@@ -157,65 +174,44 @@ namespace Tests.Services.Controller
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task ImportDashboard_OneStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 1, true);
+			// Arrange
+			await SetWibuManager (version, 1, true);
 
-				// Action
-				var d1 = new ImportEvent<Dashboard> ();
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new ImportEvent<Dashboard> ();
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsTrue (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (d1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
 		public async Task ImportDashboard_TwoStored_CannotAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, false);
+			// Arrange
+			await SetWibuManager (version, 2, false);
 
-				// Action
-				var d1 = new ImportEvent<Dashboard> ();
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new ImportEvent<Dashboard> ();
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsFalse (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsFalse (d1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.STARTER_PRODUCT_TEXT)]
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task ImportDashboard_TwoStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, true);
+			// Arrange
+			await SetWibuManager (version, 2, true);
 
-				// Action
-				var d1 = new ImportEvent<Dashboard> ();
-				await App.Current.EventsBroker.Publish (d1);
+			// Action
+			var d1 = new ImportEvent<Dashboard> ();
+			await App.Current.EventsBroker.Publish (d1);
 
-				// Assert
-				Assert.IsTrue (d1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (d1.ReturnValue);
 		}
 
 		async Task SetWibuManager (string version, int existingDashboards, bool canExecute)

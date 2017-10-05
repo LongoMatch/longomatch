@@ -35,6 +35,7 @@ namespace LongoMatch.Services.Controller
 		{
 			TemplateName = LongoMatchCountLimitedObjects.Dashboard.ToString ();
 			newTemplateCommand = new LimitationAsyncCommand<CreateEvent<Dashboard>> (TemplateName, HandleNew);
+			saveStaticTemplateCommand = new LimitationAsyncCommand<Dashboard> (TemplateName, HandleSaveStatic);
 			importTemplateCommand = new LimitationAsyncCommand<ImportEvent<Dashboard>> (TemplateName, Import);
 			Extension = Constants.CAT_TEMPLATE_EXT;
 			Provider = App.Current.CategoriesTemplatesProvider;
