@@ -72,12 +72,6 @@ namespace LongoMatch.Drawing.Widgets
 			i++;
 
 			base.FillCanvas (ref i);
-
-			double width = Objects.OfType<LabelView> ().Max (la => la.RequiredWidth);
-			foreach (LabelView lo in Objects.OfType<LabelView> ()) {
-				lo.Width = width;
-			}
-			WidthRequest = (int)width;
 		}
 	}
 }

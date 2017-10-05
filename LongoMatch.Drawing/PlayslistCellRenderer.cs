@@ -22,8 +22,10 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Drawing.CanvasObjects.Teams;
 
@@ -31,11 +33,73 @@ namespace LongoMatch.Drawing
 {
 	public class PlayslistCellRenderer
 	{
-
+		protected const int VERTICAL_OFFSET = 5;
+		protected const int RIGTH_OFFSET = 5;
 		public static ISurface EyeSurface = null;
 		public static ISurface ArrowRight = null;
 		public static ISurface ArrowDown = null;
+		static ISurface PlayIcon;
+		static ISurface BtnNormalBackground;
+		static ISurface BtnNormalBackgroundPrelight;
+		static ISurface BtnNormalBackgroundActive;
+		static ISurface BtnNormalBackgroundInsensitive;
 		public static Image subsImage = null;
+
+		protected static double offsetX, offsetY = 0;
+		static bool playButtonPrelighted = false;
+
+		//FIXME: this uses some resources and render methods that are similar or are the same as the EventCellRenderer in
+		//RiftAnalyst, try to reuse the code.
+		static PlayslistCellRenderer ()
+		{
+			PlayIcon = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayButton, false);
+			BtnNormalBackground = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonNormalTheme, false);
+			BtnNormalBackgroundPrelight = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonPrelightTheme, false);
+			BtnNormalBackgroundActive = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonActiveTheme, false);
+			BtnNormalBackgroundInsensitive = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonInsensititveTheme, false);
+		}
+
+		/// <summary>
+		/// Returns the Area that should redraw based on X, Y positions
+		/// </summary>
+		/// <returns>The area to be redrawn, or null otherwise</returns>
+		/// <param name="cellX">Cell x.</param>
+		/// <param name="cellY">Cell y.</param>
+		/// <param name="TotalY">Total y.</param>
+		/// <param name="width">Width.</param>
+		/// <param name="viewModel">View model.</param>
+		public static Area ShouldRedraw (double cellX, double cellY, double TotalY, int width, IViewModel viewModel)
+		{
+			Point drawingImagePoint = null;
+			double startY = VERTICAL_OFFSET + offsetY;
+			double startX = width - offsetX - RIGTH_OFFSET - App.Current.Style.ButtonNormalWidth;
+			double margin = cellY - startY;
+			//Just to know if its inside PlayButton
+			if (cellY > startY && cellY < startY + App.Current.Style.ButtonNormalHeight &&
+			    cellX > startX && cellX < startX + App.Current.Style.ButtonNormalWidth) {
+
+				drawingImagePoint = new Point (startX, TotalY - margin);
+				playButtonPrelighted = true;
+			} else if (playButtonPrelighted) {
+				playButtonPrelighted = false;
+				drawingImagePoint = new Point (startX, TotalY - margin);
+			}
+			if (drawingImagePoint == null) {
+				return null;
+			}
+			return new Area (drawingImagePoint, App.Current.Style.ButtonNormalWidth, App.Current.Style.ButtonNormalHeight);
+		}
+
+		public static bool ClickedPlayButton (double cellX, double cellY, int width)
+		{
+			double startY = VERTICAL_OFFSET + offsetY;
+			double startX = width - offsetX - RIGTH_OFFSET - App.Current.Style.ButtonNormalWidth;
+			if (cellY > startY && cellY < startY + App.Current.Style.ButtonNormalHeight &&
+			    cellX > startX && cellX < startX + App.Current.Style.ButtonNormalWidth) {
+				return true;
+			}
+			return false;
+		}
 
 		public static void RenderSeparationLine (IDrawingToolkit tk, IContext context, Area backgroundArea)
 		{
@@ -61,7 +125,7 @@ namespace LongoMatch.Drawing
 			po.Dispose ();
 		}
 
-		static void RenderTeam (IDrawingToolkit tk, VAS.Core.Store.Templates.Team team, Point imagePoint)
+		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
 			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield,
 				ScaleMode.AspectFit);
@@ -104,6 +168,20 @@ namespace LongoMatch.Drawing
 			tk.FontSize = 14;
 			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
 				2 * StyleConf.ListCountRadio, count.ToString ());
+		}
+
+		static void RenderPlayButton (IDrawingToolkit tk, Area cellArea, bool insensitive, CellState state)
+		{
+			Point p = new Point (cellArea.Right - App.Current.Style.ButtonNormalWidth - RIGTH_OFFSET,
+								cellArea.Top + VERTICAL_OFFSET);
+			ISurface background = BtnNormalBackground;
+			if (insensitive) {
+				background = BtnNormalBackgroundInsensitive;
+			} else if (state.HasFlag (CellState.Prelit) && playButtonPrelighted) {
+				background = BtnNormalBackgroundPrelight;
+			}
+			tk.DrawSurface (p, App.Current.Style.ButtonNormalWidth, App.Current.Style.ButtonNormalHeight, background, ScaleMode.AspectFit);
+			tk.DrawSurface (p, App.Current.Style.IconLargeHeight, App.Current.Style.IconLargeHeight, PlayIcon, ScaleMode.AspectFit);
 		}
 
 		static void RenderBackgroundAndText (bool isExpanded, IDrawingToolkit tk, Area backgroundArea, Point textP, double textW, string text)
@@ -163,15 +241,16 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
-												   IContext context, Area backgroundArea, Area cellArea)
+		public static void RenderAnalysisCategory (EventTypeTimelineVM vm, int count, bool isExpanded, IDrawingToolkit tk,
+		                                           IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
-			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, cat.Name);
-			RenderCount (isExpanded, cat.Color, count, tk, backgroundArea, cellArea);
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, vm.EventTypeVM.Name);
+			RenderCount (isExpanded, vm.EventTypeVM.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
+			RenderPlayButton (tk, cellArea, vm.VisibleChildrenCount == 0, state);
 			tk.End ();
 		}
 
@@ -257,7 +336,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<VAS.Core.Store.Templates.Team> teams,
+		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<Team> teams,
 									   bool selected, string desc, int count, bool isExpanded, IDrawingToolkit tk,
 									   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
@@ -290,11 +369,17 @@ namespace LongoMatch.Drawing
 		public static void Render (object item, LMProject project, int count, bool isExpanded, IDrawingToolkit tk,
 								   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
+			//Get the offset to properly calulate if needs tooltip or redraw
+			offsetX = backgroundArea.Right - cellArea.Right;
+			offsetY = cellArea.Top - backgroundArea.Top;
+
 			// HACK: to be remove when all treeviews are migrated to user VM's
 			if (item is TimelineEventVM) {
 				item = ((TimelineEventVM)item).Model;
 			} else if (item is EventTypeTimelineVM) {
-				item = ((EventTypeTimelineVM)item).Model;
+				var vm = item as EventTypeTimelineVM;
+				RenderAnalysisCategory (vm, count, isExpanded, tk,
+					context, backgroundArea, cellArea, state);
 			} else if (item is PlaylistElementVM) {
 				item = ((PlaylistElementVM)item).Model;
 			} else if (item is PlaylistVM) {
@@ -305,10 +390,7 @@ namespace LongoMatch.Drawing
 				item = ((PlayerTimelineVM)item).Model;
 			}
 
-			if (item is EventType) {
-				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
-					context, backgroundArea, cellArea);
-			} else if (item is SubstitutionEvent) {
+			if (item is SubstitutionEvent) {
 				SubstitutionEvent s = item as SubstitutionEvent;
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
