@@ -73,7 +73,11 @@ Petr Kovar (cs)
 Pop Eugen (po)
 Xavier Queralt Mateu (ca)";
 
-		public const string WEBSITE = "http://www.longomatch.com";
+#if !DEBUG
+		public const string WEBSITE = "https://longomatch.com";
+#else
+		public const string WEBSITE = "https://stage.longomatch.com";
+#endif
 
 #if DEBUG
 		public const string LATEST_VERSION_URL = "http://cdn.longomatch.com/latest-longomatch.json";
@@ -136,9 +140,8 @@ Xavier Queralt Mateu (ca)";
 		public const int DB_VERSION_MAJOR = 1;
 		public const int DB_VERSION_MINOR = 0;
 
-		//FIXME: still undecided Upgrade and OtherPlans URL's
-		public const string UPGRADE_URL = "https://longomatch.com";
-		public const string OTHER_PLANS_URL = "https://longomatch.com";
+		public const string UPGRADE_URL = WEBSITE + "/upgrade";
+		public const string OTHER_PLANS_URL = UPGRADE_URL + "?other_plans=true";
 
 		public const int PROJECT_CELL_WIDTH = 310;
 		public const int PROJECT_CELL_HEIGHT = 70;
