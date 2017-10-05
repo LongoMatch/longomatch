@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.License;
 using LongoMatch.Services.Controller;
 using Moq;
@@ -51,6 +52,8 @@ namespace Tests.Services.Controller
 																	  )).ReturnsAsync (true);
 			mockDialogs.Setup (x => x.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 												It.IsAny<string> (), It.IsAny<string []> ())).Returns ("Team.ltt");
+			mockDialogs.Setup (m => m.QueryMessage (It.IsAny<string> (), null, It.IsAny<string> (),
+													 It.IsAny<object> ())).Returns (AsyncHelpers.Return ("team_copy"));
 			mockProvider.Setup (x => x.LoadFile (It.IsAny<string> ())).Returns (team);
 			mockProvider.Setup (x => x.Templates).Returns (new List<Team> ());
 
@@ -72,17 +75,50 @@ namespace Tests.Services.Controller
 			controller = new TeamsController ();
 		}
 
-		// FIXME: Move to SetUp and TearDown when RA-1047 is done
+		[SetUp]
 		public async Task TestInit ()
 		{
 			await controller.Start ();
 			controller.SetViewModel (new DummyTeamManagerVM (new TeamVM ()));
 		}
 
-
+		[TearDown]
 		public async Task TestEnd ()
 		{
 			await controller.Stop ();
+		}
+
+		[Test ()]
+		public async Task SaveStaticTeam_LimitationDisabled_CanSaveCopy ()
+		{
+			// Arrange
+			mockLimitationService.Setup (s => s.CanExecute (LongoMatchCountLimitedObjects.Team.ToString ())).Returns (true);
+
+			// Action
+			LMTeam team = new LMTeam { Static = true };
+			await App.Current.EventsBroker.Publish (new UpdateEvent<Team> {
+				Object = team
+			});
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (LongoMatchCountLimitedObjects.Team.ToString ()), Times.Never);
+			mockProvider.Verify (m => m.Save (It.IsAny<Team> ()), Times.Once);
+		}
+
+		[Test ()]
+		public async Task SaveStaticTeam_LimitationEnabled_CannotSaveCopy ()
+		{
+			// Arrange
+			mockLimitationService.Setup (s => s.CanExecute (LongoMatchCountLimitedObjects.Team.ToString ())).Returns (false);
+
+			// Action
+			LMTeam team = new LMTeam { Static = true };
+			await App.Current.EventsBroker.Publish (new UpdateEvent<Team> {
+				Object = team
+			});
+
+			// Assert
+			mockLimitationService.Verify (s => s.MoveToUpgradeDialog (LongoMatchCountLimitedObjects.Team.ToString ()), Times.Once);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
@@ -90,65 +126,44 @@ namespace Tests.Services.Controller
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task NewTeam_TwoStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, true);
+			// Arrange
+			await SetWibuManager (version, 2, true);
 
-				// Action
-				var t1 = new CreateEvent<Team> { Name = "Team 1" };
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new CreateEvent<Team> { Name = "Team 1" };
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsTrue (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (t1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
 		public async Task NewTeam_FourStored_CannotAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 4, false);
+			// Arrange
+			await SetWibuManager (version, 4, false);
 
-				// Action
-				var t1 = new CreateEvent<Team> { Name = "Team 1" };
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new CreateEvent<Team> { Name = "Team 1" };
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsFalse (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsFalse (t1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.STARTER_PRODUCT_TEXT)]
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task NewTeam_FourStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 4, true);
+			// Arrange
+			await SetWibuManager (version, 4, true);
 
-				// Action
-				var t1 = new CreateEvent<Team> { Name = "Team 1" };
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new CreateEvent<Team> { Name = "Team 1" };
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsTrue (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (t1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
@@ -156,65 +171,44 @@ namespace Tests.Services.Controller
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task ImportTeam_TwoStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 2, true);
+			// Arrange
+			await SetWibuManager (version, 2, true);
 
-				// Action
-				var t1 = new ImportEvent<Team> ();
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new ImportEvent<Team> ();
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsTrue (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (t1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]
 		public async Task ImportTeam_FourStored_CannotAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 4, false);
+			// Arrange
+			await SetWibuManager (version, 4, false);
 
-				// Action
-				var t1 = new ImportEvent<Team> ();
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new ImportEvent<Team> ();
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsFalse (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsFalse (t1.ReturnValue);
 		}
 
 		[TestCase (LMDummyWibuManager.STARTER_PRODUCT_TEXT)]
 		[TestCase (LMDummyWibuManager.PRO_PRODUCT_TEXT)]
 		public async Task ImportTeam_FourStored_CanAdd (string version)
 		{
-			try {
-				// Arrange
-				await TestInit ();
-				await SetWibuManager (version, 4, true);
+			// Arrange
+			await SetWibuManager (version, 4, true);
 
-				// Action
-				var t1 = new ImportEvent<Team> ();
-				await App.Current.EventsBroker.Publish (t1);
+			// Action
+			var t1 = new ImportEvent<Team> ();
+			await App.Current.EventsBroker.Publish (t1);
 
-				// Assert
-				Assert.IsTrue (t1.ReturnValue);
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				await TestEnd ();
-			}
+			// Assert
+			Assert.IsTrue (t1.ReturnValue);
 		}
 
 		async Task SetWibuManager (string version, int existingTeams, bool canExecute)
