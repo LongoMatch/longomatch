@@ -88,6 +88,8 @@ namespace Tests.Services.Controller
 		public async Task TestEnd ()
 		{
 			await controller.Stop ();
+			mockLimitationService.ResetCalls ();
+			mockProvider.ResetCalls ();
 		}
 
 		[TestCase (LMDummyWibuManager.BASIC_PRODUCT_TEXT)]

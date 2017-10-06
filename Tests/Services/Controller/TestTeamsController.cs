@@ -54,6 +54,8 @@ namespace Tests.Services.Controller
 												It.IsAny<string> (), It.IsAny<string []> ())).Returns ("Team.ltt");
 			mockDialogs.Setup (m => m.QueryMessage (It.IsAny<string> (), null, It.IsAny<string> (),
 													 It.IsAny<object> ())).Returns (AsyncHelpers.Return ("team_copy"));
+			mockDialogs.Setup (x => x.QuestionMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()))
+					   .ReturnsAsync (true);
 			mockProvider.Setup (x => x.LoadFile (It.IsAny<string> ())).Returns (team);
 			mockProvider.Setup (x => x.Templates).Returns (new List<Team> ());
 
@@ -86,6 +88,8 @@ namespace Tests.Services.Controller
 		public async Task TestEnd ()
 		{
 			await controller.Stop ();
+			mockLimitationService.ResetCalls ();
+			mockProvider.ResetCalls ();
 		}
 
 		[Test ()]
