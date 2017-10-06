@@ -34,13 +34,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				return TimedButtonVM as PenaltyCardButtonVM;
 			}
 			set {
-				if (TimedButtonVM != null) {
-					TimedButtonVM.PropertyChanged -= HandlePropertyChanged;
-				}
 				TimedButtonVM = value;
-				if (TimedButtonVM != null) {
-					TimedButtonVM.PropertyChanged += HandlePropertyChanged;
-				}
 			}
 		}
 
