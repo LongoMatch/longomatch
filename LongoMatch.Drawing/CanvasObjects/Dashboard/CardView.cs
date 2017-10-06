@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.ComponentModel;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -98,6 +99,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		protected override void CreateClickEvent ()
 		{
 			ViewModel.Click ();
+		}
+
+		protected override void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			base.HandlePropertyChanged (sender, e);
+			if (sender == ViewModel && (
+				ButtonVM.NeedsSync (e, nameof (ViewModel.Model.PenaltyCard.Shape)))) {
+				ReDraw ();
+			}
 		}
 	}
 }
