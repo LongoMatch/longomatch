@@ -153,20 +153,5 @@ namespace Tests.Controller
 
 			videoPlayerController.Verify (player => player.Next (), Times.Once ());
 		}
-
-		[Test]
-		public void TestTimeNodeChanged ()
-		{
-			TimelineEvent timelineEvent = new TimelineEvent ();
-			timelineEvent.Start = new Time (10);
-			timelineEvent.Stop = new Time (20);
-			App.Current.EventsBroker.Publish (
-				new TimeNodeChangedEvent {
-					TimeNode = timelineEvent,
-					Time = new Time (5)
-				}
-			);
-			videoPlayerController.Verify (p => p.LoadEvent (timelineEvent, new Time (5), false), Times.Once);
-		}
 	}
 }
