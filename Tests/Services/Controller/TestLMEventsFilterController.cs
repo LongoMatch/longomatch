@@ -20,6 +20,7 @@ using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
+using VAS.Tests.Services;
 using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>;
 
 namespace Tests.Services.Controller
@@ -53,12 +54,14 @@ namespace Tests.Services.Controller
 		{
 			timelineVM = new LMTimelineVM (homeTeam, awayTeam);
 			timelineVM.CreateTeamsTimelines (new List<TeamVM> { homeTeam, awayTeam });
+			var dealer = new DummyProjectDealer ();
 			var projectvm = new LMProjectVM { Model = Utils.CreateProject () };
-			timelineVM.CreateEventTypeTimelines (projectvm.EventTypes);
-			timelineVM.Dashboard = projectvm.Dashboard;
 
-			timelineVM.Project = projectvm;
-			eventsFilterController.ViewModel = timelineVM;
+			timelineVM.CreateEventTypeTimelines (projectvm.EventTypes);
+			dealer.Project = projectvm;
+			dealer.Timeline = timelineVM;
+
+			eventsFilterController.SetViewModel (dealer);
 
 			CreateEvents ();
 
@@ -797,12 +800,12 @@ namespace Tests.Services.Controller
 
 		void CreateEvents ()
 		{
-			AnalysisEventType firstEventType = ((AnalysisEventType)timelineVM.Dashboard.ViewModels.OfType<EventButtonVM> ().First ().EventType.Model);
-			AnalysisEventType secondEventType = ((AnalysisEventType)timelineVM.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (1).EventType.Model);
-			AnalysisEventType thirdEventType = ((AnalysisEventType)timelineVM.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (2).EventType.Model);
-			AnalysisEventType fourthEventType = ((AnalysisEventType)timelineVM.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (3).EventType.Model);
+			AnalysisEventType firstEventType = ((AnalysisEventType)eventsFilterController.Project.Dashboard.ViewModels.OfType<EventButtonVM> ().First ().EventType.Model);
+			AnalysisEventType secondEventType = ((AnalysisEventType)eventsFilterController.Project.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (1).EventType.Model);
+			AnalysisEventType thirdEventType = ((AnalysisEventType)eventsFilterController.Project.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (2).EventType.Model);
+			AnalysisEventType fourthEventType = ((AnalysisEventType)eventsFilterController.Project.Dashboard.ViewModels.OfType<EventButtonVM> ().ElementAt (3).EventType.Model);
 
-			Dictionary<string, List<Tag>> commonTagsByGroup = timelineVM.Dashboard.Model.CommonTagsByGroup;
+			Dictionary<string, List<Tag>> commonTagsByGroup = eventsFilterController.Project.Dashboard.Model.CommonTagsByGroup;
 
 			Tag goodTag = firstEventType.TagsByGroup ["Outcome"].ElementAt (0);
 			Tag badTag = firstEventType.TagsByGroup ["Outcome"].ElementAt (1);
@@ -814,25 +817,25 @@ namespace Tests.Services.Controller
 			firstEventType.Tags.Add (rightTag);
 
 			Tag otherTag = new Tag ("tag value", "Other group");
-			timelineVM.Dashboard.SubViewModel.Model.Add (new TagButton {
+			eventsFilterController.Project.Dashboard.SubViewModel.Model.Add (new TagButton {
 				Name = "Other tag",
 				Tag = otherTag,
 			});
 
-			timelineVM.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
+			eventsFilterController.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
 				Start = new Time (0),
 				Stop = new Time (10),
 			});
-			timelineVM.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
+			eventsFilterController.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
 				Start = new Time (31),
 				Stop = new Time (60),
 			});
-			timelineVM.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
+			eventsFilterController.Project.Timers.First ().Model.Nodes.Add (new TimeNode {
 				Start = new Time (80),
 				Stop = new Time (100),
 			});
 
-			timelineVM.Project.Timers.Model.Add (new VAS.Core.Store.Timer {
+			eventsFilterController.Project.Timers.Model.Add (new VAS.Core.Store.Timer {
 				Name = "timer 2",
 				Nodes = new RangeObservableCollection<TimeNode> {
 					new TimeNode {
