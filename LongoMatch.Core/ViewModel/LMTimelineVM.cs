@@ -15,15 +15,6 @@ namespace LongoMatch.Core.ViewModel
 		{
 			homeTeamVM = homeTeam;
 			awayTeamVM = awayTeam;
-
-			Filters.IgnoreEvents = true;
-			EventsPredicate.Add (PeriodsPredicate);
-			EventsPredicate.Add (TimersPredicate);
-			EventsPredicate.Add (CommonTagsPredicate);
-			EventsPredicate.Add (EventTypesPredicate);
-			Filters.Add (EventsPredicate);
-			Filters.Add (TeamsPredicate);
-			Filters.IgnoreEvents = false;
 		}
 
 		public TeamTimelineVM HomeTeamTimelineVM {
