@@ -17,11 +17,11 @@ namespace LongoMatch.Core.ViewModel
 			awayTeamVM = awayTeam;
 
 			Filters.IgnoreEvents = true;
-			ParentEventsPredicate.Add (PeriodsPredicate);
-			ParentEventsPredicate.Add (TimersPredicate);
-			ParentEventsPredicate.Add (CommonTagsPredicate);
-			ParentEventsPredicate.Add (CategoriesPredicate);
-			Filters.Add (ParentEventsPredicate);
+			EventsPredicate.Add (PeriodsPredicate);
+			EventsPredicate.Add (TimersPredicate);
+			EventsPredicate.Add (CommonTagsPredicate);
+			EventsPredicate.Add (EventTypesPredicate);
+			Filters.Add (EventsPredicate);
 			Filters.Add (TeamsPredicate);
 			Filters.IgnoreEvents = false;
 		}

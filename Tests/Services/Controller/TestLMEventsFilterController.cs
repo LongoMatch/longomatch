@@ -135,8 +135,8 @@ namespace Tests.Services.Controller
 			//     - One AndPredicate for each EventType with subcategories
 			//     - One Predicate for each EventType without subcategories
 			Assert.AreEqual (2, timelineVM.Filters.Count);
-			Assert.AreEqual (timelineVM.ParentEventsPredicate, timelineVM.Filters.Elements [0]);
-			Assert.AreEqual (4, timelineVM.ParentEventsPredicate.Count);
+			Assert.AreEqual (timelineVM.EventsPredicate, timelineVM.Filters.Elements [0]);
+			Assert.AreEqual (4, timelineVM.EventsPredicate.Count);
 
 			Assert.AreEqual (3, timelineVM.PeriodsPredicate.Count);
 			Assert.IsTrue (timelineVM.PeriodsPredicate.All (p => p is Predicate));
@@ -150,8 +150,8 @@ namespace Tests.Services.Controller
 			Assert.IsTrue (((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).All (p => p is Predicate));
 			Assert.AreEqual (2, ((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.ElementAt (1)).Elements.Count);
 
-			Assert.AreEqual (10, timelineVM.CategoriesPredicate.Elements.OfType<AndPredicate<TimelineEventVM>> ().Count ());
-			Assert.AreEqual (5, timelineVM.CategoriesPredicate.Elements.OfType<Predicate> ().Count ());
+			Assert.AreEqual (10, timelineVM.EventTypesPredicate.Elements.OfType<AndPredicate<TimelineEventVM>> ().Count ());
+			Assert.AreEqual (5, timelineVM.EventTypesPredicate.Elements.OfType<Predicate> ().Count ());
 		}
 
 		[Test]
@@ -337,7 +337,7 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			// Act
-			timelineVM.CategoriesPredicate.Elements [0].Active = true;
+			timelineVM.EventTypesPredicate.Elements [0].Active = true;
 
 			// Assert
 			Assert.AreEqual (4, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -354,8 +354,8 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			// Act
-			timelineVM.CategoriesPredicate.Elements [0].Active = true;
-			timelineVM.CategoriesPredicate.Elements [1].Active = true;
+			timelineVM.EventTypesPredicate.Elements [0].Active = true;
+			timelineVM.EventTypesPredicate.Elements [1].Active = true;
 
 			// Assert
 			Assert.AreEqual (5, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -373,7 +373,7 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			// Act
-			foreach (CompositePredicate<TimelineEventVM> tagGroup in timelineVM.CategoriesPredicate.Elements [0] as CompositePredicate<TimelineEventVM>) {
+			foreach (CompositePredicate<TimelineEventVM> tagGroup in timelineVM.EventTypesPredicate.Elements [0] as CompositePredicate<TimelineEventVM>) {
 				tagGroup.Elements [0].Active = true;
 			}
 
@@ -388,7 +388,7 @@ namespace Tests.Services.Controller
 			// Arrange
 			timelineVM.Filters.Active = false;
 
-			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.CategoriesPredicate.Elements [0]);
+			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
 
 			// Act
@@ -406,7 +406,7 @@ namespace Tests.Services.Controller
 			// Arrange
 			timelineVM.Filters.Active = false;
 
-			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.CategoriesPredicate.Elements [0]);
+			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
 
 			// Act
@@ -426,7 +426,7 @@ namespace Tests.Services.Controller
 			// Arrange
 			timelineVM.Filters.Active = false;
 
-			CompositePredicate<TimelineEventVM> secondEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.CategoriesPredicate.Elements [1]);
+			CompositePredicate<TimelineEventVM> secondEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [1]);
 			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)secondEventTypePredicate.Elements [0]);
 
 			// Act
@@ -442,7 +442,7 @@ namespace Tests.Services.Controller
 			// Arrange
 			timelineVM.Filters.Active = false;
 
-			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.CategoriesPredicate.Elements [0]);
+			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
 			CompositePredicate<TimelineEventVM> positionPredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [1]);
 
@@ -463,8 +463,8 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			// Act
-			timelineVM.CategoriesPredicate.Elements [1].Active = true;
-			timelineVM.CategoriesPredicate.Elements [2].Active = true;
+			timelineVM.EventTypesPredicate.Elements [1].Active = true;
+			timelineVM.EventTypesPredicate.Elements [2].Active = true;
 
 			// Assert
 			Assert.AreEqual (2, timelineVM.FullTimeline.Count (e => e.Visible));

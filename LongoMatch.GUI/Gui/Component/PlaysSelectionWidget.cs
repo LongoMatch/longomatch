@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				eventslistwidget.ViewModel = value;
 				playlistwidget.ViewModel = value?.Playlists;
-				categoriesfilter.Predicate = value?.Timeline?.ParentEventsPredicate;
+				categoriesfilter.Predicate = value?.Timeline?.EventsPredicate;
 				playersfilter.Predicate = value?.Timeline?.TeamsPredicate;
 			}
 		}
