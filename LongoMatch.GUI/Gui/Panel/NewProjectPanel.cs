@@ -539,13 +539,15 @@ namespace LongoMatch.Gui.Panel
 
 		void StartProject ()
 		{
+			bool isNew = false;
 			if (projectType == ProjectType.EditProject) {
 				projectType = ProjectType.FileProject;
 				ViewModel.Project.ProjectType = projectType;
 			} else {
+				isNew = true;
 				project.CreateLineupEvent ();
 			}
-			LMStateHelper.OpenProject (ViewModel.Project, captureSettings);
+			LMStateHelper.OpenProject (ViewModel.Project, captureSettings, isNew);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)

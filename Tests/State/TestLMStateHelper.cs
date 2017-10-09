@@ -23,7 +23,9 @@ using Moq;
 using NUnit.Framework;
 using VAS;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 
 namespace Tests.State
@@ -36,6 +38,7 @@ namespace Tests.State
 		[SetUp]
 		public void SetUp ()
 		{
+			SetupClass.SetUp ();
 			stateControllerMock = new Mock<IStateController> ();
 			App.Current.StateController = stateControllerMock.Object;
 		}
@@ -95,6 +98,46 @@ namespace Tests.State
 			LMStateHelper.OpenProject (projectVM);
 
 			stateControllerMock.Verify (s => s.MoveTo (NewProjectState.NAME, projectVM, false, false));
+		}
+
+		[Test]
+		public void OpenProject_IsNew_SendsProjectCreatedEvent ()
+		{
+			bool projectCreatedEvent = false;
+
+            var project = new LMProject ();
+            var projectVM = new LMProjectVM { Model = project };
+            project.ProjectType = ProjectType.FileProject;
+            project.Description = new ProjectDescription ();
+            project.Description.FileSet = new MediaFileSet ();
+            project.Description.FileSet.Add (new MediaFile ());
+            project.Description.FileSet [0].FilePath = Constants.FAKE_PROJECT;
+
+			App.Current.EventsBroker.Subscribe<ProjectCreatedEvent> (evt => projectCreatedEvent = true);
+
+			LMStateHelper.OpenProject (projectVM, newPoject: true);
+
+			Assert.IsTrue (projectCreatedEvent);
+		}
+
+		[Test]
+		public void OpenProject_NotNew_NotSendsProjectCreatedEvent ()
+		{
+            bool projectCreatedEvent = false;
+
+            var project = new LMProject ();
+            var projectVM = new LMProjectVM { Model = project };
+            project.ProjectType = ProjectType.FileProject;
+            project.Description = new ProjectDescription ();
+            project.Description.FileSet = new MediaFileSet ();
+            project.Description.FileSet.Add (new MediaFile ());
+            project.Description.FileSet [0].FilePath = Constants.FAKE_PROJECT;
+
+            App.Current.EventsBroker.Subscribe<ProjectCreatedEvent> (evt => projectCreatedEvent = true);
+
+            LMStateHelper.OpenProject (projectVM, newPoject: false);
+
+			Assert.IsFalse (projectCreatedEvent);
 		}
 	}
 }

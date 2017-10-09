@@ -25,7 +25,7 @@ namespace LongoMatch.Services.State
 {
 	public static class LMStateHelper
 	{
-		public static void OpenProject (ProjectVM project, CaptureSettings props = null)
+		public static void OpenProject (ProjectVM project, CaptureSettings props = null, bool newPoject = false)
 		{
 			Log.Information ($"Open project {project.ProjectType}");
 			dynamic settings = new ExpandoObject ();
@@ -41,6 +41,9 @@ namespace LongoMatch.Services.State
 				App.Current.StateController.MoveTo (LiveProjectAnalysisState.NAME, settings, true);
 			}
 
+			if (newPoject) {
+				App.Current.EventsBroker.Publish (new ProjectCreatedEvent { ProjectId = project.Model.ID });
+			}
 			App.Current.EventsBroker.Publish (new OpenedProjectEvent { Project = project.Model });
 		}
 	}
