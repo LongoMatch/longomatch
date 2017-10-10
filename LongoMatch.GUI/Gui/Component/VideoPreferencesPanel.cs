@@ -17,14 +17,19 @@
 //
 using System;
 using Gtk;
-using Misc = VAS.UI.Helpers.Misc;
+using VAS.Core;
 using VAS.Core.Common;
+using Image = VAS.Core.Common.Image;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
+	//FIXME: Migrate to MVVVM
 	public partial class VideoPreferencesPanel : Gtk.Bin
 	{
+		const int RESET_BUTTON_HEIGHT = 30;
+
 		CheckButton overlayTitle, enableSound, addWatermark;
 
 		public VideoPreferencesPanel ()
@@ -87,18 +92,30 @@ namespace LongoMatch.Gui.Component
 			addWatermark.CanFocus = false;
 			addWatermark.Show ();
 
+			watermarkSelector.ResetButtonHeight = RESET_BUTTON_HEIGHT;
+			watermarkSelector.ImageButtonPressEvent += HandleChangeWatermarkClicked;
+			watermarkSelector.ResetButton.Clicked += (sender, e) => ResetWatermark ();
+			if (App.Current.Config.Watermark != null) {
+				SetWatermarkPreview ();
+			} else {
+				ResetWatermark ();
+			}
+
 			if (App.Current.LicenseManager != null) {
 				bool canRemoveWatermark = App.Current.LicenseLimitationsService.CanExecute (VASFeature.Watermark.ToString ());
 				addWatermark.Sensitive = canRemoveWatermark;
 				if (!canRemoveWatermark) {
 					addWatermark.Active = true;
+					watermarkLabel.Visible = watermarkSelector.Visible = false;
 				} else {
 					addWatermark.Active = App.Current.Config.AddWatermark;
+					watermarkLabel.Visible = watermarkSelector.Visible = addWatermark.Active;
 				}
 			}
 
 			addWatermark.Toggled += (sender, e) => {
 				App.Current.Config.AddWatermark = addWatermark.Active;
+				watermarkLabel.Visible = watermarkSelector.Visible = addWatermark.Active;
 			};
 
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
@@ -191,6 +208,32 @@ namespace LongoMatch.Gui.Component
 			else
 				App.Current.Config.CaptureEncodingProfile = enc;
 
+		}
+
+		//FIXME: all the watermark behaviour is duplicated in VideoEditionProperties
+		void HandleChangeWatermarkClicked (object o, ButtonPressEventArgs args)
+		{
+			var imageTuple = Misc.OpenImageAndFilename (this);
+			string filename = imageTuple.Item1;
+			Image image = imageTuple.Item2;
+			if (image != null) {
+				App.Current.Config.Watermark = image;
+				App.Current.Config.WatermarkName = System.IO.Path.GetFileName (filename);
+				SetWatermarkPreview ();
+			}
+		}
+
+		void SetWatermarkPreview ()
+		{
+			watermarkSelector.ImageView.Image = App.Current.Config.Watermark;
+			watermarkSelector.Title = App.Current.Config.WatermarkName;
+		}
+
+		void ResetWatermark ()
+		{
+			App.Current.Config.Watermark = null;
+			watermarkSelector.ImageView.Image = App.Current.ResourcesLocator.LoadEmbeddedImage (Constants.WATERMARK_RESOURCE_ID);
+			watermarkSelector.Title = Catalog.GetString ("Default watermark");
 		}
 	}
 }
