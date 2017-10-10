@@ -41,12 +41,15 @@ namespace LongoMatch.Services.Controller
 
 			SaveChanges (saveEvent);
 
+			bool isNew = false;
+
 			if (projectVM.ProjectType == ProjectType.EditProject) {
 				projectVM.ProjectType = ProjectType.FileProject;
 			} else {
+				isNew = true;
 				(projectVM.Model as LMProject).CreateLineupEvent ();
 			}
-			LMStateHelper.OpenProject (projectVM);
+			LMStateHelper.OpenProject (projectVM, newPoject: isNew);
 		}
 	}
 }
