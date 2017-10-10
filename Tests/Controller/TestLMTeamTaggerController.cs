@@ -17,6 +17,7 @@
 //
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
@@ -24,8 +25,11 @@ using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
@@ -40,55 +44,64 @@ namespace Tests.Controller
 		VideoPlayerVM videoPlayer;
 		LMProjectVM project;
 
-		void ControllerSetUp (IViewModel viewModel)
+		[OneTimeSetUp]
+		public void OneTimeSetUp ()
+		{
+			SetupClass.SetUp ();
+			Mock<ILicenseLimitationsService> mockLicenseLimitation = new Mock<ILicenseLimitationsService> ();
+			mockLicenseLimitation.Setup (license => license.CanExecute (It.IsAny<string> ())).Returns (true);
+			App.Current.LicenseLimitationsService = mockLicenseLimitation.Object;
+		}
+
+		async Task ControllerSetUp (IViewModel viewModel)
 		{
 			controller = new LMTeamTaggerController ();
 			controller.SetViewModel (viewModel);
-			controller.Start ();
+			await controller.Start ();
 		}
 
-		void SimpleSetUp ()
+		async Task SimpleSetUpAsync ()
 		{
 			var viewModel = new LMDrawingToolVM ();
 			teamTagger = viewModel.TeamTagger;
 			viewModel.Project = Utils.CreateProject ();
-			ControllerSetUp (viewModel);
+			await ControllerSetUp (viewModel);
 		}
 
-		void ProjectSetUp ()
+		async Task ProjectSetUpAsync ()
 		{
 			var viewModel = new PlayEditorVM ();
 			teamTagger = viewModel.TeamTagger;
 			viewModel.Project = new LMProjectVM { Model = Utils.CreateProject () };
 			project = viewModel.Project;
-			ControllerSetUp (viewModel);
+			await ControllerSetUp (viewModel);
 		}
 
-		void AnalysisSetUp ()
+		async Task AnalysisSetUpAsync ()
 		{
 			var viewModel = new LMProjectAnalysisVM ();
 			viewModel.VideoPlayer = new VideoPlayerVM ();
 			videoPlayer = viewModel.VideoPlayer;
 			teamTagger = viewModel.TeamTagger;
 			viewModel.Project = new LMProjectVM { Model = Utils.CreateProject () };
-			ControllerSetUp (viewModel);
+			await ControllerSetUp (viewModel);
 			eventsController = new LMEventsController ();
 			eventsController.SetViewModel (viewModel);
-			eventsController.Start ();
+			await eventsController.Start ();
 		}
 
 		[TearDown]
-		public void TearDown ()
+		public async Task TearDownAsync ()
 		{
-			controller.Stop ();
+			await controller.Stop ();
 			eventsController?.Stop ();
 			eventsController = null;
 		}
 
 		[Test]
-		public void TestTagPlayerSingleModeSubstitutionModeFalse ()
+		public async Task TestTagPlayerSingleModeSubstitutionModeFalseAsync ()
 		{
-			SimpleSetUp ();
+			await SimpleSetUpAsync ();
 			teamTagger.SelectionMode = MultiSelectionMode.Single;
 			teamTagger.SubstitutionMode = false;
 			var clickedPlayer1 = teamTagger.HomeTeam.ViewModels.FirstOrDefault () as LMPlayerVM;
@@ -107,9 +120,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestTagPlayerMultipleModeSubstitutionModeFalse ()
+		public async Task TestTagPlayerMultipleModeSubstitutionModeFalse ()
 		{
-			SimpleSetUp ();
+			await SimpleSetUpAsync ();
 			teamTagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamTagger.SubstitutionMode = false;
 			var clickedPlayer1 = teamTagger.HomeTeam.ViewModels.FirstOrDefault () as LMPlayerVM;
@@ -130,9 +143,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestTagPlayerMultipleWithModifierModeSubstitutionModeFalse ()
+		public async Task TestTagPlayerMultipleWithModifierModeSubstitutionModeFalse ()
 		{
-			SimpleSetUp ();
+			await SimpleSetUpAsync ();
 			teamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamTagger.SubstitutionMode = false;
 			var clickedPlayer1 = teamTagger.HomeTeam.ViewModels.FirstOrDefault () as LMPlayerVM;
@@ -157,11 +170,11 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestSubstitutionsNoAnalysisVM ()
+		public async Task TestSubstitutionsNoAnalysisVM ()
 		{
 			bool emitedPropertyChange = false;
 			int times = 0;
-			SimpleSetUp ();
+			await SimpleSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
@@ -192,12 +205,12 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestSubstitutionsIsNotEmmitedClickSamePlayer ()
+		public async Task TestSubstitutionsIsNotEmmitedClickSamePlayer ()
 		{
 			bool substEventEmitted = false;
 			bool emitedPropertyChange = false;
 			int times = 0;
-			AnalysisSetUp ();
+			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => substEventEmitted = true);
@@ -219,13 +232,14 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestSubstitutionsWithAnalysisVM ()
+		public async Task TestSubstitutionsWithAnalysisVM ()
 		{
 			bool substEventEmitted = false;
 			bool emitedPropertyChange = false;
 			int times = 0;
-			AnalysisSetUp ();
+			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
+			videoPlayer.CurrentTime = new Time (10000);
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => substEventEmitted = true);
@@ -250,9 +264,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestLineupChangesWhenCurrentTimeChangesWithAnalysis ()
+		public async Task TestLineupChangesWhenCurrentTimeChangesWithAnalysis ()
 		{
-			AnalysisSetUp ();
+			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
 			videoPlayer.CurrentTime = new Time (10000);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => Assert.AreEqual (10000, ev.Time.MSeconds));
@@ -273,9 +287,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestLineupChangesWhenCurrentTimeChangesWithProject ()
+		public async Task TestLineupChangesWhenCurrentTimeChangesWithProject ()
 		{
-			ProjectSetUp ();
+			await ProjectSetUpAsync ();
 			var outPlayer = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var inPlayer = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 			var substEvent = new SubstitutionEvent {
@@ -300,9 +314,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestLineupChangesWhenFormationChanges ()
+		public async Task TestLineupChangesWhenFormationChanges ()
 		{
-			SimpleSetUp ();
+			await SimpleSetUpAsync ();
 
 			Assert.AreEqual (4, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (1, teamTagger.HomeTeam.BenchPlayersList.Count ());
@@ -314,9 +328,9 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public void TestLineupChangesWhenFormationChangesWithProject ()
+		public async Task TestLineupChangesWhenFormationChangesWithProject ()
 		{
-			ProjectSetUp ();
+			await ProjectSetUpAsync ();
 
 			Assert.AreEqual (4, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (1, teamTagger.HomeTeam.BenchPlayersList.Count ());

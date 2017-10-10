@@ -26,6 +26,7 @@ using Gtk;
 using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
@@ -277,6 +278,9 @@ namespace LongoMatch.Gui.Component
 				hbuttonbox2.Visible = ViewModel.Mode == DashboardMode.Edit && internalButtons;
 				LinksButtonVisible = editbutton.Active = rightbox.Visible = ViewModel.Mode == DashboardMode.Edit;
 				Helpers.Misc.SetFocus (this, ViewModel.Mode == DashboardMode.Edit);
+				if (ViewModel.Edited) {
+					App.Current.EventsBroker.Publish<DashboardEditedEvent> ();
+				}
 			}
 			if (ViewModel.NeedsSync (e, nameof (DashboardVM.ShowLinks))) {
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;

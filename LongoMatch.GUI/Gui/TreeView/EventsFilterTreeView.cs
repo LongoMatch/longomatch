@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System.ComponentModel;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Filters;
@@ -100,7 +101,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFilterPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == "Collection") {
+			if ((sender == Predicate || Predicate.FlatElements.Any (el => el == sender)) && e.PropertyName.StartsWith ("Collection")) {
 				store.Clear ();
 				FillFilters (TreeIter.Zero, Predicate);
 			}

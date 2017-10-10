@@ -65,6 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\HomeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMUpgradeLimitationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LightLiveProjectState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\LMEventsFilterController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

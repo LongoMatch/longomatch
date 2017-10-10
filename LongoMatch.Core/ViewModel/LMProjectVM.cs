@@ -254,7 +254,6 @@ namespace LongoMatch.Core.ViewModel
 			AwayTeam.Model = Model.VisitorTeamTemplate;
 			//Set StartingPlayers
 			base.SyncLoadedModel ();
-			(Timeline as LMTimelineVM).UpdatePredicates ();
 		}
 	}
 }
