@@ -153,7 +153,7 @@ namespace Tests.Services.Controller
 			Assert.IsTrue (((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).All (p => p is Predicate));
 			Assert.AreEqual (2, ((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.ElementAt (1)).Elements.Count);
 
-			Assert.AreEqual (10, timelineVM.EventTypesPredicate.Elements.OfType<AndPredicate<TimelineEventVM>> ().Count ());
+			Assert.AreEqual (10, timelineVM.EventTypesPredicate.Elements.OfType<OrPredicate<TimelineEventVM>> ().Count ());
 			Assert.AreEqual (5, timelineVM.EventTypesPredicate.Elements.OfType<Predicate> ().Count ());
 		}
 
@@ -375,10 +375,10 @@ namespace Tests.Services.Controller
 			// Arrange
 			timelineVM.Filters.Active = false;
 
+			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
+
 			// Act
-			foreach (CompositePredicate<TimelineEventVM> tagGroup in timelineVM.EventTypesPredicate.Elements [0] as CompositePredicate<TimelineEventVM>) {
-				tagGroup.Elements [0].Active = true;
-			}
+			firstEventTypePredicate.Elements [0].Active = true;
 
 			// Assert
 			Assert.AreEqual (1, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -392,10 +392,9 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
-			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
 
 			// Act
-			outcomePredicate.Elements [2].Active = true;
+			firstEventTypePredicate.Elements [2].Active = true;
 
 			// Assert
 			Assert.AreEqual (2, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -410,11 +409,10 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
-			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
 
 			// Act
-			outcomePredicate.Elements [1].Active = true;
-			outcomePredicate.Elements [2].Active = true;
+			firstEventTypePredicate.Elements [1].Active = true;
+			firstEventTypePredicate.Elements [2].Active = true;
 
 			// Assert
 			Assert.AreEqual (3, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -430,32 +428,31 @@ namespace Tests.Services.Controller
 			timelineVM.Filters.Active = false;
 
 			CompositePredicate<TimelineEventVM> secondEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [1]);
-			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)secondEventTypePredicate.Elements [0]);
 
 			// Act
-			outcomePredicate.Elements [2].Active = true;
+			secondEventTypePredicate.Elements [2].Active = true;
 
 			// Assert
 			Assert.IsTrue (timelineVM.FullTimeline.All (e => !e.Visible));
 		}
 
 		[Test]
-		public void ApplyFilter_EventTypeOneGoodBadLeft_OneVisible ()
+		public void ApplyFilter_EventTypeOneGoodBadLeft_ThreeVisible ()
 		{
 			// Arrange
 			timelineVM.Filters.Active = false;
 
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
-			CompositePredicate<TimelineEventVM> outcomePredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [0]);
-			CompositePredicate<TimelineEventVM> positionPredicate = ((CompositePredicate<TimelineEventVM>)firstEventTypePredicate.Elements [1]);
 
 			// Act
-			outcomePredicate.Elements [1].Active = true;
-			outcomePredicate.Elements [2].Active = true;
-			positionPredicate.Elements [1].Active = true;
+			firstEventTypePredicate.Elements [1].Active = true;
+			firstEventTypePredicate.Elements [2].Active = true;
+			firstEventTypePredicate.Elements [3].Active = true;
 
 			// Assert
-			Assert.AreEqual (1, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.AreEqual (3, timelineVM.FullTimeline.Count (e => e.Visible));
+			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (1).Visible);
+			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (2).Visible);
 			Assert.IsTrue (timelineVM.FullTimeline.ElementAt (3).Visible);
 		}
 
