@@ -401,7 +401,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				sel = button.GetSelection (point, 0);
 				if (sel != null) {
 					clickedButton = sel.Drawable as ButtonObject;
-					(sel.Drawable as ICanvasObject).ClickPressed (point, modif);
+					(sel.Drawable as ICanvasObject).ClickPressed (point, modif, sel);
 					return true;
 				}
 			}
@@ -423,7 +423,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public override void ClickPressed (Point point, ButtonModifier modif)
+		public override void ClickPressed (Point point, ButtonModifier modif, Selection sel)
 		{
 			Selection selection = null;
 			modifier = ButtonModifier.None;
@@ -451,7 +451,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (selection != null) {
 				clickedPlayer = selection.Drawable as LMPlayerView;
 				modifier = modif;
-				(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
+				(selection.Drawable as ICanvasObject).ClickPressed (point, modif, selection);
 			} else {
 				clickedPlayer = null;
 			}
