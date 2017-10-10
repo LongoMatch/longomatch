@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManagerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabasesBackup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\" />

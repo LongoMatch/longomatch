@@ -21,14 +21,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
-using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
@@ -264,6 +262,7 @@ namespace LongoMatch.DB
 						}
 						try {
 							ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
+							database.Info.Version = new Version (2, 0);
 							database.Store (project, true);
 						} catch (Exception ex) {
 							Log.Exception (ex);
