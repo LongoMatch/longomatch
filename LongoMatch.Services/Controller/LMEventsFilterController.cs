@@ -47,6 +47,7 @@ namespace LongoMatch.Services.Controller
 
 		protected override void UpdateTeamsPredicates ()
 		{
+			bool oldIgnoreEvents = ViewModel.Filters.IgnoreEvents;
 			ViewModel.Filters.IgnoreEvents = true;
 			ViewModel.TeamsPredicate.Clear ();
 
@@ -79,8 +80,10 @@ namespace LongoMatch.Services.Controller
 				}
 				ViewModel.TeamsPredicate.Add (teamPredicate);
 			}
-			ViewModel.Filters.IgnoreEvents = false;
-			ViewModel.Filters.EmitPredicateChanged ();
+			ViewModel.Filters.IgnoreEvents = oldIgnoreEvents;
+			if (!ViewModel.Filters.IgnoreEvents) {
+				ViewModel.Filters.EmitPredicateChanged ();
+			}
 		}
 	}
 }

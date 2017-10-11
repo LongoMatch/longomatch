@@ -55,23 +55,31 @@ namespace LongoMatch.Gui.Component
 
 		protected override void UpdateSelection (Gtk.TreeIter iter, bool active)
 		{
+			predicate.IgnoreEvents = true;
+			UpdateActiveFilter (iter, active);
+			predicate.IgnoreEvents = false;
+			predicate.EmitPredicateChanged ();
+		}
+
+		private void UpdateActiveFilter (TreeIter iter, bool active)
+		{
 			bool oldActive = (bool)store.GetValue (iter, COL_ACTIVE);
 			if (active == oldActive) {
 				return;
 			}
 
-			IPredicate<TimelineEventVM> predicate = store.GetValue (iter, COL_VALUE) as IPredicate<TimelineEventVM>;
-			predicate.Active = active;
+			IPredicate<TimelineEventVM> selectedPredicate = store.GetValue (iter, COL_VALUE) as IPredicate<TimelineEventVM>;
+			selectedPredicate.Active = active;
 			store.SetValue (iter, COL_ACTIVE, active);
 
-			if (predicate is CompositePredicate<TimelineEventVM>) {
+			if (selectedPredicate is CompositePredicate<TimelineEventVM>) {
 				TreeIter child;
 				store.IterChildren (out child, iter);
 				while (store.IterIsValid (child)) {
-					UpdateSelection (child, active);
+					UpdateActiveFilter (child, active);
 					store.IterNext (ref child);
 				}
-			} else if (predicate is Predicate<TimelineEventVM>) {
+			} else if (selectedPredicate is Predicate<TimelineEventVM>) {
 				TreeIter parent;
 				store.IterParent (out parent, iter);
 				while (store.IterIsValid (parent)) {
