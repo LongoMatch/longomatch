@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			treeview = new LMProjectTreeView ();
-			vbox2.Add (treeview);
+			scrolledwindow1.Add (treeview);
 
 			selectedProjects = new List<LMProject> ();
 
