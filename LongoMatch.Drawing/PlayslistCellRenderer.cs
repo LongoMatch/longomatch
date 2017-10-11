@@ -250,7 +250,22 @@ namespace LongoMatch.Drawing
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, vm.EventTypeVM.Name);
 			RenderCount (isExpanded, vm.EventTypeVM.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
-			RenderPlayButton (tk, cellArea, vm.VisibleChildrenCount == 0, state);
+			if (!(vm.Model is SubstitutionEventType)) {
+				RenderPlayButton (tk, cellArea, vm.VisibleChildrenCount == 0, state);
+			}
+			tk.End ();
+		}
+
+		// FIXME: This method might be deleted when presentations is migrated to MVVMC
+		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
+												   IContext context, Area backgroundArea, Area cellArea)
+		{
+			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
+			tk.Context = context;
+			tk.Begin ();
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, cat.Name);
+			RenderCount (isExpanded, cat.Color, count, tk, backgroundArea, cellArea);
+			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
 
@@ -380,6 +395,7 @@ namespace LongoMatch.Drawing
 				var vm = item as EventTypeTimelineVM;
 				RenderAnalysisCategory (vm, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
+				return;
 			} else if (item is PlaylistElementVM) {
 				item = ((PlaylistElementVM)item).Model;
 			} else if (item is PlaylistVM) {
@@ -390,7 +406,11 @@ namespace LongoMatch.Drawing
 				item = ((PlayerTimelineVM)item).Model;
 			}
 
-			if (item is SubstitutionEvent) {
+			// FIXME: This first if case must be deleted when presentations is migrated to MVVMC
+			if (item is EventType) {
+				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
+					context, backgroundArea, cellArea);
+			} else if (item is SubstitutionEvent) {
 				SubstitutionEvent s = item as SubstitutionEvent;
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);

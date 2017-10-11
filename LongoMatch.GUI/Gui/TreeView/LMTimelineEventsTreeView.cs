@@ -130,8 +130,13 @@ namespace LongoMatch.Gui.Component
 		protected override bool ProcessViewModelClicked (IViewModel viewModel, int x, int y, int cellWidth, Gdk.ModifierType state)
 		{
 			if (viewModel is EventTypeTimelineVM && state.HasFlag (Gdk.ModifierType.None)) {
+				var vm = (EventTypeTimelineVM)viewModel;
+				if (vm.Model is SubstitutionEventType) {
+					return false;
+				}
+
 				if (PlaysCellRenderer.ClickedPlayButton (x, y, cellWidth)) {
-					((EventTypeTimelineVM)viewModel).LoadEventType ();
+					vm.LoadEventType ();
 					pathClicked = null;
 					return true;
 				}
