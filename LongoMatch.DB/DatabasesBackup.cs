@@ -21,16 +21,20 @@ namespace LongoMatch.DB
 		public static void Backup ()
 		{
 			VFS.SetCurrent (new FileSystem ());
-			// Do a backup of databases in version 1 to allow the usage of an open source version
-			InternalBackup (Path.Combine (App.Current.DBDir, "templates"), "templates");
-			foreach (var file in Directory.EnumerateFiles (App.Current.DBDir)) {
+			FolderBackup (Path.Combine (App.Current.DBDir, "templates"));
+			FolderBackup (App.Current.DBDir);
+		}
+
+		static void FolderBackup (string folderPath)
+		{
+			foreach (var file in Directory.EnumerateFiles (folderPath)) {
 				if (file.EndsWith (".cblite")) {
-					InternalBackup (App.Current.DBDir, Path.GetFileNameWithoutExtension(file));
+					FileBackup (folderPath, Path.GetFileNameWithoutExtension (file));
 				}
 			}
 		}
 
-		static void InternalBackup (string dbPath, string dbName)
+		static void FileBackup (string dbPath, string dbName)
 		{
 			var backup = Path.Combine (App.Current.DBDir, "backup");
 			try {
