@@ -80,9 +80,14 @@
   <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5') Or ($(TargetFrameworkIdentifier) == 'MonoAndroid' And $(TargetFrameworkVersion) == 'v7.0') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS')">
+    <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid' And $(TargetFrameworkVersion) == 'v7.0') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS')">
       <PropertyGroup>
-        <__paket__Fody_targets>netstandard1.0\Fody</__paket__Fody_targets>
+        <__paket__Fody_targets>netstandard1.4\Fody</__paket__Fody_targets>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <PropertyGroup>
+        <__paket__Fody_targets>portable-net+sl+win+wpa+wp\Fody</__paket__Fody_targets>
       </PropertyGroup>
     </When>
   </Choose>
