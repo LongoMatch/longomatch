@@ -2,6 +2,7 @@
 //  Copyright (C) 2017 Fluendo S.A.
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 using VAS.Services.State;
@@ -50,8 +51,13 @@ namespace LongoMatch.Services.State
 			ViewModel.FeaturesCaption = Catalog.GetString ("... and much more");
 			ViewModel.UpgradeCommand = new Command (() => {
 				Utils.OpenURL (LMConstants.UPGRADE_URL, $"Limitation_{limitation.RegisterName.Replace (" ", string.Empty)}");
-			});
-			ViewModel.UpgradeCommand.Text = Catalog.GetString ("UPGRADE TO PRO");
+				App.Current.EventsBroker.Publish (new UpgradeLinkClickedEvent {
+					LimitationName = limitation.RegisterName,
+					Source = "UpgradeDialog"
+				});
+			}){
+				Text = Catalog.GetString ("UPGRADE TO PRO")
+			};
 			ViewModel.Undecided = Catalog.GetString ("Still undecided?");
 			ViewModel.OtherPlansURL = LMConstants.OTHER_PLANS_URL;
 		}
