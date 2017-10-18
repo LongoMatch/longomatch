@@ -55,9 +55,8 @@ namespace LongoMatch.Services.State
 					LimitationName = limitation.RegisterName,
 					Source = "UpgradeDialog"
 				});
-			}){
-				Text = Catalog.GetString ("UPGRADE TO PRO")
-			};
+			});
+			ViewModel.UpgradeCommand.Text = Catalog.GetString ("UPGRADE TO PRO");
 			ViewModel.Undecided = Catalog.GetString ("Still undecided?");
 			ViewModel.OtherPlansURL = LMConstants.OTHER_PLANS_URL;
 		}
