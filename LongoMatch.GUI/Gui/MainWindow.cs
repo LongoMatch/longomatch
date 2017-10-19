@@ -32,9 +32,11 @@ using LongoMatch.Services.State;
 using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
+using VAS.Services.AppUpdater;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
 
@@ -103,6 +105,12 @@ namespace LongoMatch.Gui
 		public MenuItem PreferencesMenu {
 			get {
 				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/PreferencesAction");
+			}
+		}
+
+		public MenuItem CheckForUpdatesMenu {
+			get {
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/HelpAction/CheckForUpdatesAction");
 			}
 		}
 
@@ -324,6 +332,15 @@ namespace LongoMatch.Gui
 			about.TransientFor = this;
 			about.Run ();
 			about.Destroy ();
+		}
+		/// <summary>
+		/// Handles the check for updates action initializing the Sparkle CheckForUpdates Workflow.
+		/// </summary>
+		protected void HandleCheckForUpdatesAction (object sender, EventArgs e)
+		{
+			App.Current.DependencyRegistry
+			   .Retrieve<IAppUpdater> (InstanceType.Default)
+			   .CheckForUpdates ();
 		}
 
 		#endregion
