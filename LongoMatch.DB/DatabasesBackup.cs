@@ -20,16 +20,22 @@ namespace LongoMatch.DB
 		/// </summary>
 		public static void Backup ()
 		{
-			VFS.SetCurrent (new FileSystem ());
-			FolderBackup (Path.Combine (App.Current.DBDir, "templates"));
-			FolderBackup (App.Current.DBDir);
+			try {
+				VFS.SetCurrent (new FileSystem ());
+				FolderBackup (Path.Combine (App.Current.DBDir, "templates"));
+				FolderBackup (App.Current.DBDir);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+			}
 		}
 
 		static void FolderBackup (string folderPath)
 		{
-			foreach (var file in Directory.EnumerateFiles (folderPath)) {
-				if (file.EndsWith (".cblite")) {
-					FileBackup (folderPath, Path.GetFileNameWithoutExtension (file));
+			if (Directory.Exists (folderPath)) {
+				foreach (var file in Directory.EnumerateFiles (folderPath)) {
+					if (file.EndsWith (".cblite")) {
+						FileBackup (folderPath, Path.GetFileNameWithoutExtension (file));
+					}
 				}
 			}
 		}
@@ -37,30 +43,26 @@ namespace LongoMatch.DB
 		static void FileBackup (string dbPath, string dbName)
 		{
 			var backup = Path.Combine (App.Current.DBDir, "backup");
-			try {
-				if (!Directory.Exists (backup)) {
-					Directory.CreateDirectory (backup);
-				}
+			if (!Directory.Exists (backup)) {
+				Directory.CreateDirectory (backup);
+			}
 
-				string outputFilename = Path.Combine (backup, dbName + ".tar.gz");
-				if (File.Exists (outputFilename)) {
-					File.Delete (outputFilename);
-				}
+			string outputFilename = Path.Combine (backup, dbName + ".tar.gz");
+			if (File.Exists (outputFilename)) {
+				File.Delete (outputFilename);
+			}
 
-				// storage backup in old format
-				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
-					using (Stream gzipStream = new GZipOutputStream (fs)) {
-						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
-							foreach (string n in new string [] { "", "-wal", "-shm" }) {
-								TarEntry tarEntry = TarEntry.CreateEntryFromFile (Path.Combine (dbPath, dbName + ".cblite" + n));
-								tarArchive.WriteEntry (tarEntry, true);
-							}
-							AddDirectoryFilesToTar (tarArchive, Path.Combine (dbPath, dbName + " attachments"), true);
+			// storage backup in old format
+			using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
+				using (Stream gzipStream = new GZipOutputStream (fs)) {
+					using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
+						foreach (string n in new string [] { "", "-wal", "-shm" }) {
+							TarEntry tarEntry = TarEntry.CreateEntryFromFile (Path.Combine (dbPath, dbName + ".cblite" + n));
+							tarArchive.WriteEntry (tarEntry, true);
 						}
+						AddDirectoryFilesToTar (tarArchive, Path.Combine (dbPath, dbName + " attachments"), true);
 					}
 				}
-			} catch (Exception ex) {
-				Log.Exception (ex);
 			}
 		}
 
