@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Component
 
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
-			ViewModel.VideoPlayer.Pause ();
+			ViewModel.VideoPlayer.PauseCommand.Execute (false);
 			if (!detachedPlayer) {
 				Log.Debug ("Detaching player");
 
@@ -204,7 +204,7 @@ namespace LongoMatch.Gui.Component
 				playsSelection.ExpandTabs = false;
 			}
 			if (isPlaying) {
-				ViewModel.VideoPlayer.Play ();
+				ViewModel.VideoPlayer.PlayCommand.Execute ();
 			}
 			detachedPlayer = !detachedPlayer;
 			playercapturer.AttachPlayer (detachedPlayer);
