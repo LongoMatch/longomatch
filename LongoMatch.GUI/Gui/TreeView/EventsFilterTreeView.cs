@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			predicate.IgnoreEvents = true;
 			UpdateActiveFilter (iter, active);
 			predicate.IgnoreEvents = false;
-			predicate.EmitPredicateChanged ();
+			predicate.EmitActiveChanged ();
 		}
 
 		private void UpdateActiveFilter (TreeIter iter, bool active)
