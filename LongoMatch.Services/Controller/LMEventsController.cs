@@ -111,12 +111,12 @@ namespace LongoMatch.Services
 			switch (action) {
 			case LMKeyAction.EditEvent:
 				bool playing = VideoPlayer.Playing;
-				VideoPlayer.Pause ();
+				VideoPlayer.PauseCommand.Execute (false);
 
 				App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = LoadedPlay });
 
 				if (playing) {
-					VideoPlayer.Play ();
+					VideoPlayer.PlayCommand.Execute ();
 				}
 				break;
 			case LMKeyAction.DeleteEvent:
