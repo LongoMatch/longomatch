@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -35,10 +34,10 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
-using VAS.Core.ViewModel;
-using VAS.Services.AppUpdater;
+using VAS.Services.State;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
+using PreferencesState = LongoMatch.Services.State.PreferencesState;
 
 namespace LongoMatch.Gui
 {
@@ -328,10 +327,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
-			var about = new LongoMatch.Gui.Dialog.AboutDialog (App.Current.Version);
-			about.TransientFor = this;
-			about.Run ();
-			about.Destroy ();
+			App.Current.StateController.MoveToModal (AboutState.NAME, null);
 		}
 		/// <summary>
 		/// Handles the check for updates action initializing the Sparkle CheckForUpdates Workflow.

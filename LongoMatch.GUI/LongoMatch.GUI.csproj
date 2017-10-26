@@ -79,7 +79,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
-    <Compile Include="Gui\Dialog\About.cs" />
     <Compile Include="Gui\GUIToolkit.cs" />
     <Compile Include="Gui\Cairo.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
