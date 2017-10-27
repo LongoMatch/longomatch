@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Dialog
 			addbutton1.Clicked += OnAddbuttonClicked;
 			convertimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-converter-big", 64);
 			addimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.ButtonNormalSize);
-			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
 			addbutton1.CanFocus = false;
 			scrolledwindow1.Visible = false;
 			conversionCommand = new LimitationCommand (LongoMatchFeature.VideoConverter.ToString (), ExecuteConversion);

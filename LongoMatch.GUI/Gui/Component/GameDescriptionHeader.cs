@@ -67,16 +67,16 @@ namespace LongoMatch.Gui.Component
 			Pango.FontDescription numDesc = Pango.FontDescription.FromString (App.Current.Style.Font + " 48px");
 			Pango.FontDescription nameDesc = Pango.FontDescription.FromString (App.Current.Style.Font + " 30px");
 
-			homescoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
-			homescorelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			homescoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
+			homescorelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 			homescorelabel.ModifyFont (numDesc);
-			awayscoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
-			awayscorelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			awayscoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
+			awayscorelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 			awayscorelabel.ModifyFont (numDesc);
 			homenamelabel.ModifyFont (nameDesc);
-			homenamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			homenamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 			awaynamelabel.ModifyFont (nameDesc);
-			awaynamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			awaynamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 		}
 	}
 }

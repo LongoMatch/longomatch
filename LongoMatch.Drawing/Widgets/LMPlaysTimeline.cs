@@ -88,7 +88,7 @@ namespace LongoMatch.Drawing.Widgets
 				Duration = ViewModel.Project.FileSet.Duration,
 				Height = StyleConf.TimelineCategoryHeight,
 				OffsetY = line * StyleConf.TimelineCategoryHeight,
-				LineColor = App.Current.Style.PaletteBackgroundDark,
+				LineColor = App.Current.Style.ThemeBase,
 				BackgroundColor = VASDrawing.Utils.ColorForRow (line),
 				ShowLine = false
 			};

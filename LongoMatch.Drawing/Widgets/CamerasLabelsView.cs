@@ -74,7 +74,7 @@ namespace LongoMatch.Drawing.Widgets
 			l.Width = width;
 			l.Height = height;
 			l.OffsetY = row * height;
-			l.BackgroundColor = App.Current.Style.PaletteBackgroundLight;
+			l.BackgroundColor = App.Current.Style.ThemeContrastDisabled;
 			l.ViewModel = fileVM;
 			AddLabel (l);
 			row++;
@@ -95,7 +95,7 @@ namespace LongoMatch.Drawing.Widgets
 			l.Width = w;
 			l.Height = h;
 			l.OffsetY = row * h;
-			l.BackgroundColor = App.Current.Style.PaletteBackgroundLight;
+			l.BackgroundColor = App.Current.Style.ThemeContrastDisabled;
 			l.Name = Catalog.GetString ("Periods");
 			AddLabel (l);
 			row++;

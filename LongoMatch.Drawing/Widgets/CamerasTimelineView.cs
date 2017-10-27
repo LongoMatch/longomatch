@@ -158,8 +158,8 @@ namespace LongoMatch.Drawing.Widgets
 				DraggingMode = NodeDraggingMode.All,
 				Height = StyleConf.TimelineCameraHeight,
 				OffsetY = 0,
-				LineColor = App.Current.Style.PaletteBackgroundLight,
-				BackgroundColor = App.Current.Style.PaletteBackground
+				LineColor = App.Current.Style.ThemeContrastDisabled,
+				BackgroundColor = App.Current.Style.ScreenBase
 			};
 			PeriodsTimeline.ViewModel = ViewModel.Project.Periods;
 			AddTimeLine (PeriodsTimeline);
@@ -174,8 +174,8 @@ namespace LongoMatch.Drawing.Widgets
 					ShowLine = true,
 					Height = StyleConf.TimelineCameraHeight,
 					OffsetY = i * StyleConf.TimelineCameraHeight,
-					LineColor = App.Current.Style.PaletteBackgroundLight,
-					BackgroundColor = App.Current.Style.PaletteBackground,
+					LineColor = App.Current.Style.ThemeContrastDisabled,
+					BackgroundColor = App.Current.Style.ScreenBase,
 				};
 				cameraTimeLine.ViewModel = fileVM;
 				AddTimeLine (cameraTimeLine);

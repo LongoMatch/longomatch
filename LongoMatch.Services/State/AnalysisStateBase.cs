@@ -93,7 +93,7 @@ namespace LongoMatch.Services.State
 		{
 			if (App.Current.LicenseLimitationsService != null) {
 				ViewModel.Timeline.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
-					VASCountLimitedObjects.TimelineEvents.ToString (), 9, App.Current.Style.PaletteBackground);
+					VASCountLimitedObjects.TimelineEvents.ToString (), 9, App.Current.Style.ScreenBase);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = VASDrawing.Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			BackgroundColor = App.Current.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.ScreenBase;
 			eventToView = new Dictionary<LMTimelineEventVM, TimelineEventLocationView> ();
 		}
 

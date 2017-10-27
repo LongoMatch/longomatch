@@ -156,11 +156,11 @@ namespace LongoMatch.Gui.Panel
 		void SetStyle ()
 		{
 			FontDescription desc = FontDescription.FromString (App.Current.Style.Font + " 18");
-			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
-			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
+			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 			infolabel.ModifyFont (desc);
-			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
-			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
+			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 			videoslabel.ModifyFont (desc);
 		}
 

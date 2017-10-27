@@ -298,12 +298,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			subPlayers = new ButtonObject ();
 			subPlayers.BackgroundImageActive = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsUnlock);
-			subPlayers.BackgroundColorActive = App.Current.Style.PaletteBackground;
+			subPlayers.BackgroundColorActive = App.Current.Style.ScreenBase;
 			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();
-			subInjury.BackgroundColorActive = App.Current.Style.PaletteBackground;
+			subInjury.BackgroundColorActive = App.Current.Style.ScreenBase;
 			subInjury.Toggle = true;
 			subInjury.ClickedEvent += HandleSubsClicked;
 			subInjury.Visible = false;

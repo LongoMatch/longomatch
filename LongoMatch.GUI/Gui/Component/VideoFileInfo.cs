@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			eventbox3.ButtonPressEvent += HandleButtonPressEvent;
 			HeightRequest = 100;
 			snapshotimage.SetSize (100);
-			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
+			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.TextBase));
 		}
 
 		public MediaFileSetVM ViewModel {
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
 				mediaFile.Container);
 			offsetlabel.Markup = String.Format ("<span foreground=\"{0}\">{1}: {2}</span>",
-				App.Current.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"),
+				App.Current.Style.ThemeContrastDisabled.ToRGBString (false), Catalog.GetString ("Offset"),
 				mediaFile.Offset.ToMSecondsString ());
 		}
 
