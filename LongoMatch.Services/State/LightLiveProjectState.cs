@@ -56,7 +56,6 @@ namespace LongoMatch.Services.State
 			ViewModel = new LMProjectAnalysisVM ();
 			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.CaptureSettings = data.CaptureSettings;
-			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			// FIXME: use this hack until the capturer uses a controller
 			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
 		}
