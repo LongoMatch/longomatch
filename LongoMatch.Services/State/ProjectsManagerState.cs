@@ -20,8 +20,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.Store;
 using VAS.Services.Controller;
 using VAS.Services.State;
 
@@ -59,6 +61,7 @@ namespace LongoMatch.Services.State
 
 			ViewModel.Model.Reset (App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().
 			                       SortByCreationDate (true));
+
 			if (ViewModel.Selection.Count == 0) {
 				ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());
 			}

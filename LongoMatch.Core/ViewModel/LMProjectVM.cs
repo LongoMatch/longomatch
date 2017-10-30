@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Store;
 using VAS.Core.ViewModel;
 
 namespace LongoMatch.Core.ViewModel
@@ -192,6 +193,26 @@ namespace LongoMatch.Core.ViewModel
 				} else {
 					Model.Description.Competition = value;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the preview of the first file in set or null if the set is empty.
+		/// </summary>
+		/// <value>The preview.</value>
+		public Image Preview {
+			get {
+				return Model.Description.FileSet?.Preview;
+			}
+		}
+
+		/// <summary>
+		/// Gets the max duration from all files in MediaFileSet
+		/// </summary>
+		/// <value>The duration</value>
+		public Time Duration {
+			get {
+				return Model.Description.FileSet?.Duration;
 			}
 		}
 
