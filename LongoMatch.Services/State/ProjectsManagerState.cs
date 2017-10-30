@@ -40,8 +40,6 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new SportsProjectsManagerVM ();
-			ViewModel.Model = new RangeObservableCollection<LMProject> (
-				App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().SortByCreationDate (true));
 			if (App.Current.LicenseLimitationsService != null) {
 				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 					LongoMatchCountLimitedObjects.Projects.ToString ());
@@ -58,6 +56,9 @@ namespace LongoMatch.Services.State
 			if (!await base.ShowState ()) {
 				return false;
 			}
+
+			ViewModel.Model.Reset (App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().
+			                       SortByCreationDate (true));
 			if (ViewModel.Selection.Count == 0) {
 				ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());
 			}
