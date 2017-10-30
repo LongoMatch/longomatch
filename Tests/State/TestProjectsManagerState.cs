@@ -62,7 +62,7 @@ namespace Tests.State
 		}
 
 		[Test]
-		public async Task LoadState_WithProjects_ProjectsLoadedInCreationOrder ()
+		public async Task ShowState_WithProjects_ProjectsLoadedInCreationOrder ()
 		{
 			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
 			var sortedProjectList = new RangeObservableCollection<LMProject>{
@@ -70,8 +70,9 @@ namespace Tests.State
 				nowProject,
 				pastProject,
 			};
-
 			await state.LoadState (null);
+
+			await state.ShowState ();
 
 			CollectionAssert.AreEqual (sortedProjectList, state.ViewModel.Model);
 		}
