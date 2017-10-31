@@ -88,8 +88,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			if (ShowLine) {
 				// We want the background line and overlay to use the same starting point although they have different sizes.
 				double linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
-				tk.FillColor = App.Current.Style.PaletteBackgroundDark;
-				tk.StrokeColor = App.Current.Style.PaletteBackgroundDark;
+				tk.FillColor = App.Current.Style.ThemeBase;
+				tk.StrokeColor = App.Current.Style.ThemeBase;
 				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;
 				tk.DrawLine (new Point (0, linepos),
 							 new Point (Width, linepos));

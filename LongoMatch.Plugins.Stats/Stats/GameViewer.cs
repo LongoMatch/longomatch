@@ -168,7 +168,7 @@ namespace LongoMatch.Plugins.Stats
 			layout = new Pango.Layout (PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Center;
-			ModifyText (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteText));
+			ModifyText (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.TextBase));
 			this.textSize = textSize;
 			name_tpl = "{0}";
 			count_tpl = "{0} ({1}%)";

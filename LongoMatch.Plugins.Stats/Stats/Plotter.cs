@@ -141,10 +141,10 @@ namespace LongoMatch.Plugins.Stats
 					valueAxis.MajorStep = 50;
 				}
 			}
-			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
-									  LongoMatch.App.Current.Style.PaletteText.R,
-									  LongoMatch.App.Current.Style.PaletteText.G,
-									  LongoMatch.App.Current.Style.PaletteText.B);
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.TextBase.A,
+									  LongoMatch.App.Current.Style.TextBase.R,
+									  LongoMatch.App.Current.Style.TextBase.G,
+									  LongoMatch.App.Current.Style.TextBase.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;
@@ -175,10 +175,10 @@ namespace LongoMatch.Plugins.Stats
 			} else if (team == TeamType.VISITOR) {
 				ps.Title = AwayName;
 			}
-			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
-									  LongoMatch.App.Current.Style.PaletteText.R,
-									  LongoMatch.App.Current.Style.PaletteText.G,
-									  LongoMatch.App.Current.Style.PaletteText.B);
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.TextBase.A,
+									  LongoMatch.App.Current.Style.TextBase.R,
+									  LongoMatch.App.Current.Style.TextBase.G,
+									  LongoMatch.App.Current.Style.TextBase.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;

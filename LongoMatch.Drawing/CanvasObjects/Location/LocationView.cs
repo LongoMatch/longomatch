@@ -180,7 +180,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 			if (Selected) {
 				fillColor = VASDrawing.Constants.TAGGER_SELECTION_COLOR;
 			} else if (Highlighted) {
-				fillColor = App.Current.Style.PaletteActive;
+				fillColor = App.Current.Style.ThemeContrastDisabled;
 			}
 
 			tk.FillColor = fillColor;

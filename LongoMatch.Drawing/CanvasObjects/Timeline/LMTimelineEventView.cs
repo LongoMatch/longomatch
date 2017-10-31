@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			if (teams.Count == 1) {
 				color = teams [0].Color;
 			} else {
-				color = App.Current.Style.PaletteWidgets;
+				color = App.Current.Style.TextBase;
 			}
 
 			tk.FillColor = color;

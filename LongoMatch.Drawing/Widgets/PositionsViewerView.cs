@@ -34,7 +34,7 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = VASDrawing.Constants.TAGGER_POINT_SIZE + 3;
 			ObjectsCanMove = false;
 			SelectionMode = MultiSelectionMode.Single;
-			BackgroundColor = App.Current.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.ScreenBase;
 		}
 
 		public PositionsViewerView () : this (null)

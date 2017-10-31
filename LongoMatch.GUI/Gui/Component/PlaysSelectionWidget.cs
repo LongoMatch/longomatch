@@ -46,8 +46,8 @@ namespace LongoMatch.Gui.Component
 			LoadIcons ();
 			AddFilters ();
 			Helpers.Misc.SetFocus (this, false, typeof (TreeView));
-			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground));
-			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackgroundLight));
+			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.ScreenBase));
+			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.ThemeContrastDisabled));
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			clearButton.Clicked += HandleClearClicked;
