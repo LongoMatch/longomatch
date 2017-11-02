@@ -54,6 +54,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (EditPlaylistElementState.NAME, () => new EditPlaylistElementState ());
 			uiFlow.Add (UpgradeLimitationState.NAME, () => new LMUpgradeLimitationState ());
 			uiFlow.Add (LightLiveProjectState.NAME, () => new LightLiveProjectState ());
+			uiFlow.Add (AboutState.NAME, () => new AboutState ());
 		}
 
 		#region ITool implementation

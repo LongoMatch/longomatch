@@ -474,6 +474,7 @@ Sort by competition</property>
                               <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="fieldSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
+                                <property name="ResetButtonHeight">0</property>
                               </widget>
                               <packing>
                                 <property name="Position">0</property>
@@ -486,6 +487,7 @@ Sort by competition</property>
                               <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="hfieldSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
+                                <property name="ResetButtonHeight">0</property>
                               </widget>
                               <packing>
                                 <property name="Position">1</property>
@@ -498,6 +500,7 @@ Sort by competition</property>
                               <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="goalSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
+                                <property name="ResetButtonHeight">0</property>
                               </widget>
                               <packing>
                                 <property name="Position">2</property>
@@ -960,6 +963,12 @@ Sort by competition</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Show project stats</property>
       </action>
+      <action id="CheckForUpdatesAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Check For Updates</property>
+        <property name="ShortLabel" translatable="yes">Check For Updates</property>
+        <signal name="Activated" handler="HandleCheckForUpdatesAction" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1000,6 +1009,7 @@ Sort by competition</property>
                     <node type="Separator" />
                   </node>
                   <node type="Menu" action="HelpAction">
+                    <node type="Menuitem" action="CheckForUpdatesAction" />
                     <node type="Menuitem" action="AboutAction" />
                     <node type="Menuitem" action="HelpAction1" />
                   </node>
@@ -4023,6 +4033,7 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="watermarkSelector">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
+                        <property name="ResetButtonHeight">0</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">6</property>
@@ -4045,7 +4056,7 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel">
+              <widget class="Gtk.Label" id="GtkLabel1">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Rendering&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
@@ -4969,8 +4980,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="LongoMatch.Gui.Component.HomeTeamsComboBox" id="hometeamscombobox">
                                     <property name="MemberName" />
-                                    <property name="IsTextCombo">False</property>
-                                    <property name="Items" translatable="yes" />
                                   </widget>
                                   <packing>
                                     <property name="Position">0</property>
@@ -4991,8 +5000,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="LongoMatch.Gui.Component.AwayTeamsComboBox" id="awayteamscombobox">
                                     <property name="MemberName" />
-                                    <property name="IsTextCombo">False</property>
-                                    <property name="Items" translatable="yes" />
                                   </widget>
                                   <packing>
                                     <property name="Position">2</property>
@@ -5037,8 +5044,9 @@ You can continue with the current capture, cancel it or save your project.
                                         <property name="LeftAttach">1</property>
                                         <property name="RightAttach">2</property>
                                         <property name="AutoSize">True</property>
+                                        <property name="XOptions">Fill</property>
                                         <property name="YOptions">Fill</property>
-                                        <property name="XExpand">True</property>
+                                        <property name="XExpand">False</property>
                                         <property name="XFill">True</property>
                                         <property name="XShrink">False</property>
                                         <property name="YExpand">False</property>
@@ -5818,7 +5826,6 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="VAS.UI.Helpers.ImageView" id="teamimage">
                             <property name="MemberName" />
-                            <property name="Yalign">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -5861,8 +5868,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="newteamimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -5882,8 +5887,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="importteamimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -5903,8 +5906,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="saveteamimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -5924,8 +5925,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="exportteamimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -5945,8 +5944,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="deleteteamimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -6015,8 +6012,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="newplayerimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -6036,8 +6031,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="deleteplayerimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -6075,7 +6068,6 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="VAS.UI.Helpers.ImageView" id="playerheaderimage">
                             <property name="MemberName" />
-                            <property name="Ypad">14</property>
                           </widget>
                         </child>
                       </widget>
@@ -7672,7 +7664,6 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="VAS.UI.Helpers.ImageView" id="templateimage">
                             <property name="MemberName" />
-                            <property name="Yalign">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -7714,8 +7705,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="newtemplateimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7735,8 +7724,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="importtemplateimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7756,8 +7743,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="savetemplateimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7777,8 +7762,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="exporttemplateimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7798,8 +7781,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="deletetemplateimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7868,8 +7849,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="addcategoryimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7889,8 +7868,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="addtagimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7910,8 +7887,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="scoreimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7931,8 +7906,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="cardimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7952,8 +7925,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="VAS.UI.Helpers.ImageView" id="timerimage">
                                     <property name="MemberName" />
-                                    <property name="Xpad">5</property>
-                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -7992,7 +7963,6 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="VAS.UI.Helpers.ImageView" id="categoryheaderimage">
                             <property name="MemberName" />
-                            <property name="Yalign">1</property>
                           </widget>
                         </child>
                       </widget>

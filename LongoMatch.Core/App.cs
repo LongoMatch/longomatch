@@ -68,6 +68,8 @@ namespace LongoMatch
 			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
 			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
 			Current.ProjectExtension = Constants.PROJECT_EXT;
+			Current.Website = Constants.WEBSITE;
+			Current.Translators = Constants.TRANSLATORS;
 			Current.LowerRate = 1;
 			Current.UpperRate = 30;
 			Current.RatePageIncrement = 3;
