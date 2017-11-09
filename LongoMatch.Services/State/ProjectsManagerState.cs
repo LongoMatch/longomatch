@@ -33,37 +33,66 @@ namespace LongoMatch.Services.State
 	{
 		public const string NAME = "ProjectsManager";
 
-		public override string Name {
-			get {
+		public override string Name
+		{
+			get
+			{
 				return NAME;
 			}
 		}
 
-		protected override void CreateViewModel (dynamic data)
+		protected override void CreateViewModel(dynamic data)
 		{
-			ViewModel = new SportsProjectsManagerVM ();
-			if (App.Current.LicenseLimitationsService != null) {
-				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
-					LongoMatchCountLimitedObjects.Projects.ToString ());
+			ViewModel = new SportsProjectsManagerVM();
+			if (App.Current.LicenseLimitationsService != null)
+			{
+				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM(
+					LongoMatchCountLimitedObjects.Projects.ToString());
 			}
 		}
 
-		protected override void CreateControllers (dynamic data)
+		protected override void CreateControllers(dynamic data)
 		{
-			Controllers.Add (new MediaFileSetController ());
+			Controllers.Add(new MediaFileSetController());
 		}
 
-		public override async Task<bool> ShowState ()
+		public override async Task<bool> ShowState()
 		{
-			if (!await base.ShowState ()) {
+			if (!await base.ShowState())
+			{
 				return false;
 			}
 
-			ViewModel.Model.Reset (App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().
-			                       SortByCreationDate (true));
+			ViewModel.Model.Reset(App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject>().
+								   SortByCreationDate(true));
 
-			if (ViewModel.Selection.Count == 0) {
-				ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());
+			var projects = new RangeObservableCollection<LMProject>();
+			var teams = App.Current.TeamTemplatesProvider.Templates;
+
+			for (int i = 0; i < 50; i++)
+			{
+				var project = new LMProject();
+				project.LocalTeamTemplate = (LMTeam)teams[0];
+				project.VisitorTeamTemplate = (LMTeam)teams[1];
+				project.ProjectType = ProjectType.FileProject;
+				project.Description.Competition = $"Test Comp {i}";
+				project.Description.DashboardName = $"Test Dash {i}";
+				project.Description.Description = $"Test Des {i}";
+				project.Description.LocalShield = project.LocalTeamTemplate.Shield;
+				project.Description.VisitorShield = project.VisitorTeamTemplate.Shield;
+				project.Description.LocalGoals = 1;
+				project.Description.VisitorGoals = 6;
+				project.Description.LocalName = "Manchester U";
+				project.Description.VisitorName = "FC Barcelona";
+				project.Description.FileSet = new MediaFileSet();
+				project.IsLoaded = false;
+				projects.Add(project);
+			}
+			ViewModel.Model.AddRange(projects);
+
+			if (ViewModel.Selection.Count == 0)
+			{
+				ViewModel.Select(ViewModel.ViewModels.FirstOrDefault());
 			}
 			return true;
 		}

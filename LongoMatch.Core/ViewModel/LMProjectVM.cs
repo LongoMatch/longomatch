@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 
@@ -42,6 +43,7 @@ namespace LongoMatch.Core.ViewModel
 			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
 			Dashboard = new LMDashboardVM ();
 			ShowMenu = new Command (() => IsMenuVisible = !IsMenuVisible);
+			Visible = true;
 		}
 
 		/// <summary>
