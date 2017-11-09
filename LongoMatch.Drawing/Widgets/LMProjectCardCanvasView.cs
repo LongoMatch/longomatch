@@ -6,6 +6,7 @@ using System;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Resources;
 using VAS.Drawing.Widgets;
 
 namespace LongoMatch.Drawing.Widgets
@@ -34,15 +35,15 @@ namespace LongoMatch.Drawing.Widgets
 
 		Color scoreBoxColor;
 
-		protected override void DisposeManagedResources()
+		protected override void DisposeManagedResources ()
 		{
-			base.DisposeManagedResources();
+			base.DisposeManagedResources ();
 			ViewModel = null;
 		}
 
 		static LMProjectCardCanvasView ()
 		{
-			stopwatch = App.Current.DrawingToolkit.CreateSurfaceFromIcon (StyleConf.StopwatchIcon);
+			stopwatch = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.Stopwatch);
 		}
 
 		public LMProjectCardCanvasView ()

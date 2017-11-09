@@ -21,6 +21,7 @@ using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.UI.Helpers;
 using Helpers = VAS.UI.Helpers;
 
@@ -156,10 +157,10 @@ namespace LongoMatch.Gui.Component
 			s1.Add (categoriesfilter);
 			s2.Add (playersfilter);
 			l = new Gtk.Label (Catalog.GetString ("Categories filter"));
-			l.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			l.HeightRequest = Sizes.PlayerCapturerControlsHeight;
 			filtersnotebook.AppendPage (s1, l);
 			l = new Gtk.Label (Catalog.GetString ("Players filter"));
-			l.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			l.HeightRequest = Sizes.PlayerCapturerControlsHeight;
 			filtersnotebook.AppendPage (s2, l);
 			filtersnotebook.ShowAll ();
 		}

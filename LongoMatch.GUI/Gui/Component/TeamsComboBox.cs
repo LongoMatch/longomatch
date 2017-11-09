@@ -20,6 +20,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using VAS.Core.Resources.Styles;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 using VAS.Core;
@@ -39,10 +40,10 @@ namespace LongoMatch.Gui.Component
 		{
 			Clear ();
 			imageRenderer = new CellRendererImage ();
-			imageRenderer.Width = StyleConf.NewTeamsIconSize;
-			imageRenderer.Height = StyleConf.NewTeamsIconSize;
+			imageRenderer.Width = Sizes.NewTeamsIconSize;
+			imageRenderer.Height = Sizes.NewTeamsIconSize;
 			texrender = new CellRendererText ();
-			texrender.Font = App.Current.Style.Font + " " + StyleConf.NewTeamsFontSize;
+			texrender.Font = App.Current.Style.Font + " " + Sizes.NewTeamsFontSize;
 			texrender.Alignment = Pango.Alignment.Center;
 
 			if (Direction == TextDirection.Ltr) {
@@ -58,7 +59,7 @@ namespace LongoMatch.Gui.Component
 				Image shield;
 
 				if (t.Shield == null) {
-					shield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", StyleConf.NewTeamsIconSize);
+					shield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", Sizes.NewTeamsIconSize);
 				} else {
 					shield = t.Shield;
 				}

@@ -22,6 +22,7 @@ using LongoMatch.Drawing;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.Cairo;
 using Point = VAS.Core.Common.Point;
 
@@ -75,14 +76,14 @@ namespace LongoMatch.Gui.Component
 		{
 			x_offset = 0;
 			y_offset = 0;
-			width = StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator + StyleConf.ListTextWidth;
-			height = StyleConf.ListCategoryHeight;
+			width = Sizes.ListSelectedWidth + Sizes.ListRowSeparator + Sizes.ListTextWidth;
+			height = Sizes.ListCategoryHeight;
 			if (Item is LMTimelineEvent) {
 				LMTimelineEvent evt = Item as LMTimelineEvent;
 				if (evt.Miniature != null) {
-					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+					width += Sizes.ListImageWidth + Sizes.ListRowSeparator;
 				}
-				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * (evt.Players.Count + evt.Teams.Count);
+				width += (Sizes.ListImageWidth + Sizes.ListRowSeparator) * (evt.Players.Count + evt.Teams.Count);
 			}
 		}
 

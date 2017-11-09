@@ -29,6 +29,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.UI.Helpers;
 using VAS.UI.Helpers.Bindings;
 using Action = System.Action;
@@ -86,8 +87,8 @@ namespace LongoMatch.Gui.Panel
 			buttonWidgets = new List<Widget> ();
 			buttons = new List<WelcomeButton> (default_buttons);
 
-			hbox1.BorderWidth = StyleConf.WelcomeBorder;
-			vbox2.Spacing = StyleConf.WelcomeIconsVSpacing;
+			hbox1.BorderWidth = Sizes.WelcomeBorder;
+			vbox2.Spacing = Sizes.WelcomeIconsVSpacing;
 			label3.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 
@@ -98,7 +99,7 @@ namespace LongoMatch.Gui.Panel
 
 		uint NRows {
 			get {
-				return (uint)StyleConf.WelcomeIconsTotalRows;
+				return (uint)Sizes.WelcomeIconsTotalRows;
 			}
 		}
 
@@ -161,11 +162,11 @@ namespace LongoMatch.Gui.Panel
 
 			Gtk.Image prefImage = new Gtk.Image (
 									  Helpers.Misc.LoadIcon ("lm-preferences",
-										  StyleConf.WelcomeIconSize, 0));
+															 Sizes.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
 
-			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
-			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
+			preferencesbutton.WidthRequest = Sizes.WelcomeIconSize;
+			preferencesbutton.HeightRequest = Sizes.WelcomeIconSize;
 
 			// Our logo
 			logoImage = new ImageView ();
@@ -185,7 +186,7 @@ namespace LongoMatch.Gui.Panel
 
 			for (int i = 0; i < NRows; i++) {
 				Alignment al = new Alignment (0.5F, 0.5F, 0, 0);
-				hboxList.Add (new HBox (true, StyleConf.WelcomeIconsHSpacing));
+				hboxList.Add (new HBox (true, Sizes.WelcomeIconsHSpacing));
 				al.Add (hboxList [i]);
 				vbox2.Add (al);
 			}
@@ -193,7 +194,7 @@ namespace LongoMatch.Gui.Panel
 			int hboxRow = 0;
 			for (uint i = 0; i < buttons.Count; i++) {
 				Widget b;
-				if (i >= StyleConf.WelcomeIconsFirstRow && hboxRow == 0) {
+				if (i >= Sizes.WelcomeIconsFirstRow && hboxRow == 0) {
 					hboxRow++;
 				}
 				b = CreateButton (buttons [(int)i]);
@@ -212,16 +213,16 @@ namespace LongoMatch.Gui.Panel
 			Label label;
 
 			if (b.Icon == null) {
-				image = new ImageView (App.Current.ResourcesLocator.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize));
+				image = new ImageView (App.Current.ResourcesLocator.LoadIcon (b.Name, Sizes.WelcomeIconImageSize));
 			} else {
 				image = new ImageView (b.Icon);
 			}
-			image.SetSize (StyleConf.WelcomeIconImageSize, StyleConf.WelcomeIconImageSize);
+			image.SetSize (Sizes.WelcomeIconImageSize, Sizes.WelcomeIconImageSize);
 
 			button = new Button ();
 			button.Clicked += (sender, e) => b.Func ();
-			button.HeightRequest = StyleConf.WelcomeIconSize;
-			button.WidthRequest = StyleConf.WelcomeIconSize;
+			button.HeightRequest = Sizes.WelcomeIconSize;
+			button.WidthRequest = Sizes.WelcomeIconSize;
 			button.Add (image);
 			if (buttonWidgets.Count == 0) {
 				button.Realized += (sender, e) => button.GrabFocus ();
@@ -237,7 +238,7 @@ namespace LongoMatch.Gui.Panel
 			label.Justify = Justification.Center;
 			sizegroup.AddWidget (label);
 
-			box = new VBox (false, StyleConf.WelcomeIconsTextSpacing);
+			box = new VBox (false, Sizes.WelcomeIconsTextSpacing);
 			box.PackStart (alignment, false, false, 0);
 			box.PackStart (label, false, false, 0);
 

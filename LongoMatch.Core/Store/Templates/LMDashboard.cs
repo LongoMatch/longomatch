@@ -21,6 +21,7 @@ using System.Linq;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 
@@ -82,13 +83,13 @@ namespace LongoMatch.Core.Store.Templates
 
 			scoreButton = new ScoreButton {
 				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10),
-				BackgroundColor = StyleConf.ButtonScoreColor,
+				BackgroundColor = Colors.ButtonScoreColor,
 				Score = new Score (Catalog.GetString ("Free play goal"), 1),
 			};
 			template.List.Add (scoreButton);
 
 			scoreButton = new ScoreButton {
-				BackgroundColor = StyleConf.ButtonScoreColor,
+				BackgroundColor = Colors.ButtonScoreColor,
 				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10),
 				Score = new Score (Catalog.GetString ("Penalty goal"), 1),
 			};
@@ -111,7 +112,7 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			AnalysisEventButton button;
 			AnalysisEventType evtype;
-			Color c = StyleConf.ButtonEventColor;
+			Color c = Colors.ButtonEventColor;
 			HotKey h = new HotKey ();
 
 			evtype = new AnalysisEventType {

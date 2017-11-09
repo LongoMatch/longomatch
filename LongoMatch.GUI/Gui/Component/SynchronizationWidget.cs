@@ -24,6 +24,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Drawing.Cairo;
@@ -65,9 +66,9 @@ namespace LongoMatch.Gui.Component
 			camerasLabels = new CamerasLabelsView (new WidgetWrapper (labelsarea));
 
 			// Set some sane defaults
-			labels_vbox.WidthRequest = StyleConf.TimelineLabelsWidth;
+			labels_vbox.WidthRequest = Sizes.TimelineLabelsWidth;
 			// We need to align the timerule and the beginning of labels list
-			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
+			timerulearea.HeightRequest = Sizes.TimelineCameraHeight;
 
 			menu = new PeriodsMenu ();
 

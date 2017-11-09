@@ -32,6 +32,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
@@ -186,13 +187,13 @@ namespace LongoMatch.Gui.Panel
 			grp.AddWidget (lefttable);
 			grp.AddWidget (righttable);
 
-			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
+			centerbox.WidthRequest = Sizes.NewTeamsComboWidth * 2 + Sizes.NewTeamsSpacing;
 			lefttable.RowSpacing = outputfiletable.RowSpacing =
-				righttable.RowSpacing = StyleConf.NewTableHSpacing;
-			lefttable.ColumnSpacing = righttable.ColumnSpacing = StyleConf.NewTableHSpacing;
-			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
-			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
-			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
+				righttable.RowSpacing = Sizes.NewTableHSpacing;
+			lefttable.ColumnSpacing = righttable.ColumnSpacing = Sizes.NewTableHSpacing;
+			vsimage.WidthRequest = Sizes.NewTeamsSpacing;
+			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = Sizes.NewTeamsComboWidth;
+			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = Sizes.NewTeamsComboHeight;
 			hometeamscombobox.WrapWidth = awayteamscombobox.WrapWidth = 1;
 			homealignment.Xscale = awayalignment.Xscale = 0;
 			homealignment.Xalign = 0.8f;
@@ -201,10 +202,10 @@ namespace LongoMatch.Gui.Panel
 
 		void LoadIcons ()
 		{
-			fileimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-file", StyleConf.ProjectTypeIconSize);
-			captureimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-video-device", StyleConf.ProjectTypeIconSize);
-			fakeimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-fake", StyleConf.ProjectTypeIconSize);
-			ipimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-ip", StyleConf.ProjectTypeIconSize);
+			fileimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-file", Sizes.ProjectTypeIconSize);
+			captureimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-video-device", Sizes.ProjectTypeIconSize);
+			fakeimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-fake", Sizes.ProjectTypeIconSize);
+			ipimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-device-ip", Sizes.ProjectTypeIconSize);
 			vsimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-vs", 50);
 
 			filebutton.Clicked += HandleProjectTypeSet;

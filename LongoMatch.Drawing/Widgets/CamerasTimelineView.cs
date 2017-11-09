@@ -25,6 +25,7 @@ using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
@@ -132,7 +133,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (ViewModel == null)
 				return;
 
-			double width = ViewModel.Project.FileSet.Duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
+			double width = ViewModel.Project.FileSet.Duration.TotalSeconds / SecondsPerPixel + Sizes.TimelinePadding;
 			foreach (TimelineView tl in timelines) {
 				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
@@ -156,7 +157,7 @@ namespace LongoMatch.Drawing.Widgets
 				ShowLine = true,
 				Duration = ViewModel.Project.FileSet.Duration,
 				DraggingMode = NodeDraggingMode.All,
-				Height = StyleConf.TimelineCameraHeight,
+				Height = Sizes.TimelineCameraHeight,
 				OffsetY = 0,
 				LineColor = App.Current.Style.ThemeContrastDisabled,
 				BackgroundColor = App.Current.Style.ScreenBase
@@ -172,8 +173,8 @@ namespace LongoMatch.Drawing.Widgets
 				CameraTimelineView cameraTimeLine = new CameraTimelineView {
 					ShowName = false,
 					ShowLine = true,
-					Height = StyleConf.TimelineCameraHeight,
-					OffsetY = i * StyleConf.TimelineCameraHeight,
+					Height = Sizes.TimelineCameraHeight,
+					OffsetY = i * Sizes.TimelineCameraHeight,
 					LineColor = App.Current.Style.ThemeContrastDisabled,
 					BackgroundColor = App.Current.Style.ScreenBase,
 				};

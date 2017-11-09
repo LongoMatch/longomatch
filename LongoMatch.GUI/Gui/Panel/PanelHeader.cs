@@ -18,6 +18,7 @@
 using System;
 using Gtk;
 using VAS.Core.Common;
+using VAS.Core.Resources.Styles;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -45,13 +46,13 @@ namespace LongoMatch.Gui.Panel
 			logoimage.Image = App.Current.ResourcesLocator.LoadIcon (App.Current.SoftwareIconName, 45);
 			backrectbuttonimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-back", 40);
 			applyroundedbuttonimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", 40);
-			headerhbox.HeightRequest = StyleConf.HeaderHeight;
+			headerhbox.HeightRequest = Sizes.HeaderHeight;
 		}
 
 		public string Title {
 			set {
 				titlelabel.Markup = String.Format ("<span font_desc=\"{0}\"><b>{1}</b></span>",
-					StyleConf.HeaderFontSize, value);
+					Sizes.HeaderFontSize, value);
 			}
 		}
 
