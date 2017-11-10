@@ -90,6 +90,7 @@ Xavier Queralt Mateu (ca)";
 #else
 		public const string MANUAL = "http://www.longomatch.com/documentation/";
 #endif
+		public const string TERMS_URL = "https://longomatch.com/terms/";
 
 #if HAVE_GTK
 		public const int STEP = (int)Gdk.ModifierType.ShiftMask;
