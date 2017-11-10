@@ -48,8 +48,8 @@ namespace Tests.Drawing.Widgets
 		{
 			App.Current.DrawingToolkit = new Mock<IDrawingToolkit> ().Object;
 			App.Current.ViewLocator = new VAS.Core.MVVMC.ViewLocator ();
-			DrawingInit.ScanViews ();
-			LMDrawingInit.ScanViews ();
+			DrawingInit.Init ();
+			LMDrawingInit.Init ();
 		}
 
 		[SetUp]

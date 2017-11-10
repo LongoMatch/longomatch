@@ -16,26 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using LongoMatch.Core.Interfaces;
-using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch
 {
 	public class App : VAS.App
 	{
-		/* FIXME: We should split Config into:
-		*  - App: store aplication states, default directories, etc...
-		*  - Config: stores application configuration.
-		*  - Move some constants such as SoftwareName in a way that they can be easilly configured by the apllication, maybe in the initialization function of the library.
-		*  - Constants classes shouldn't be inheriting from other static classes of constants.
-		*/
-
 		/* State */
 		public ITeamTemplatesProvider TeamTemplatesProvider;
 		public ICategoriesTemplatesProvider CategoriesTemplatesProvider;
@@ -49,80 +38,31 @@ namespace LongoMatch
 			}
 		}
 
-		public static void Init ()
+		public static void Init (App app = null)
 		{
-			App app = new App ();
+			if (app == null) {
+				app = new App ();
+			}
 
-			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
-			InitConstants ();
+			Init (app, Constants.SOFTWARE_NAME, Constants.LOGO_ICON, Constants.PORTABLE_FILE, "LONGOMATCH_HOME", "LGM");
+			App.Current.InitConstants ();
 			App.Current.DataDir.Add (Path.Combine (Path.GetFullPath ("."), "../data"));
-			Load ();
+
+			/* Redirects logs to a file */
+			Log.SetLogFile (App.Current.LogFile);
+			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
+			Log.Information (Utils.SysInfo);
+
+			/* Fill up the descriptions again after initializing the translations */
+			App.Current.Config.Hotkeys.FillActionsDescriptions ();
 		}
 
-		internal protected static void InitConstants ()
-		{
-			Current.Copyright = Constants.COPYRIGHT;
-			Current.License = Constants.LICENSE;
-			Current.SoftwareName = Constants.SOFTWARE_NAME;
-			Current.SoftwareIconName = Constants.LOGO_ICON;
-			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
-			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
-			Current.ProjectExtension = Constants.PROJECT_EXT;
-			Current.Website = Constants.WEBSITE;
-			Current.Translators = Constants.TRANSLATORS;
-			Current.LowerRate = 0;
-			Current.UpperRate = 9;
-			Current.RatePageIncrement = 1;
-			Current.RateList = new List<double> { 0.1, 0.25, 0.50, 0.75, 1, 2, 3, 4, 5 };
-			Current.StepList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60 };
-			Current.DefaultRate = 4;
-		}
-
-		protected static void Load ()
-		{
-			if (File.Exists (Current.ConfigFile)) {
-				Log.Information ("Loading config from " + Current.ConfigFile);
-				try {
-					Current.Config = Serializer.Instance.LoadSafe<Config> (Current.ConfigFile);
-				} catch (Exception ex) {
-					Log.Error ("Error loading config");
-					Log.Exception (ex);
-				}
-			}
-
-			if (Current.Config == null) {
-				Log.Information ("Creating new config at " + Current.ConfigFile);
-				Current.Config = new Config ();
-				Current.Config.Save ();
-			}
-
-			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
-			Current.ResourcesLocator.Register (Assembly.GetExecutingAssembly ());
-		}
-
-		Config config;
-
-		public Config Config {
+		public new Config Config {
 			get {
-				return config;
+				return base.Config as Config;
 			}
 			set {
-				config = value;
-				VAS.App.Current.Config = config;
-			}
-		}
-
-		new public string ConfigFile {
-			get {
-				string filename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
-				return Path.Combine (App.Current.ConfigDir, filename);
-			}
-		}
-
-		public string LogFile {
-			get {
-				string filename = Constants.SOFTWARE_NAME.ToLower () + ".log";
-				return Path.Combine (App.Current.ConfigDir, filename);
+				base.Config = value;
 			}
 		}
 
@@ -157,6 +97,22 @@ namespace LongoMatch
 			get {
 				return Path.Combine (DBDir, "teams");
 			}
+		}
+
+		protected override VAS.Config CreateConfig ()
+		{
+			return new Config ();
+		}
+
+		void InitConstants ()
+		{
+			Current.Copyright = Constants.COPYRIGHT;
+			Current.License = Constants.LICENSE;
+			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
+			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
+			Current.ProjectExtension = Constants.PROJECT_EXT;
+			Current.Website = Constants.WEBSITE;
+			Current.Translators = Constants.TRANSLATORS;
 		}
 	}
 }

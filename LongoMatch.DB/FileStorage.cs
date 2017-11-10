@@ -19,11 +19,13 @@ using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Interfaces;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
+	[DependencyService (typeof (IFileStorage), 1)]
 	public class FileStorage : VAS.DB.FileStorage
 	{
 		protected override void MigrateStorable (IStorable storable)

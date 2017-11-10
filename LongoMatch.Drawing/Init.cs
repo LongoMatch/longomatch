@@ -22,9 +22,9 @@ namespace LongoMatch.Drawing
 {
 	public static class LMDrawingInit
 	{
-		public static void ScanViews ()
+		public static void Init ()
 		{
-			Scanner.ScanViews (App.Current.ViewLocator);
+			Scanner.ScanAll ();
 		}
 	}
 }

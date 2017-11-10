@@ -16,10 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using VAS.Core.Interfaces;
+using VAS.Core.MVVMC;
 using VAS.DB;
 
 namespace LongoMatch.DB
 {
+	[DependencyService (typeof (IStorageManager), 1)]
 	public class CouchbaseManagerLongoMatch : CouchbaseManager
 	{
 		public CouchbaseManagerLongoMatch (string dbDir) : base (dbDir)

@@ -27,12 +27,9 @@ using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Drawing;
 using VAS.UI;
-using VAS.UI.Multimedia;
 using VAS.Video.Utils;
 
 namespace LongoMatch.Gui
@@ -47,29 +44,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		new MainWindow MainWindow {
-			get {
-				return base.MainWindow as MainWindow;
-			}
-			set {
-				base.MainWindow = value;
-			}
-		}
-
-		private GUIToolkit ()
+		GUIToolkit ()
 		{
-			MainWindow = new MainWindow (this);
-			MainWindow.Hide ();
-			Scanner.ScanViews (App.Current.ViewLocator);
-			DrawingInit.ScanViews ();
-			LMDrawingInit.ScanViews ();
-			VASUIMultimediaInit.ScanViews ();
-		}
-
-		public override IMainController MainController {
-			get {
-				return MainWindow;
-			}
+			Scanner.ScanAll ();
+			LMDrawingInit.Init ();
 		}
 
 		public override void ExportFrameSeries (TimelineEvent play, string snapshotsDir)
@@ -107,11 +85,6 @@ namespace LongoMatch.Gui
 			}
 			dialog.Destroy ();
 			return project;
-		}
-
-		public override bool LoadPanel (IPanel panel)
-		{
-			return MainWindow.SetPanel (panel);
 		}
 
 		public override void ShowProjectStats (Project project)

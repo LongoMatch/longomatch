@@ -27,7 +27,6 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	[ViewAttribute ("ProjectsManager")]
 	public class SportsProjectsManagerVM : ProjectsManagerVM<LMProject, LMProjectVM>
 	{
 		CountLimitationBarChartVM limitationChart;
