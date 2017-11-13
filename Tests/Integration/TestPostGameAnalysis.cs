@@ -137,7 +137,7 @@ namespace Tests.Integration
 		}
 
 		[Test ()]
-		public void TestGameAnalysis ()
+		public async Task TestGameAnalysis ()
 		{
 			Guid projectID;
 			App.Init ();
@@ -175,7 +175,7 @@ namespace Tests.Integration
 			eventsController.SetViewModel (viewModel);
 
 			// Do controllers start in here since the EventBroker is instantiante again in the test
-			eventsController.Start ();
+			await eventsController.Start ();
 			toolsManager.Start ();
 
 			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (p, true);
@@ -195,7 +195,7 @@ namespace Tests.Integration
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			App.Current.EventsBroker.Publish<EventsDeletedEvent> (
+			await App.Current.EventsBroker.Publish<EventsDeletedEvent> (
 				new EventsDeletedEvent {
 					TimelineEvents = new List<TimelineEvent> {
 						p.Timeline [0],
@@ -224,7 +224,7 @@ namespace Tests.Integration
 			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().FirstOrDefault (pr => pr.ID == projectID);
 			viewModel.Project.Model = savedP;
 
-			App.Current.EventsBroker.Publish<SaveProjectEvent> (
+			await App.Current.EventsBroker.Publish<SaveProjectEvent> (
 				new SaveProjectEvent {
 					Project = savedP,
 					ProjectType = ProjectType.FileProject
@@ -239,7 +239,7 @@ namespace Tests.Integration
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm");
 			mockDialogs.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string []> ())).Returns (tmpFile);
-			App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
+			await App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
 			Assert.IsTrue (File.Exists (tmpFile));
 			savedP = Project.Import (tmpFile) as LMProject;
 			Assert.IsNotNull (savedP);
@@ -255,7 +255,6 @@ namespace Tests.Integration
 				CanOverwrite = importPlugin.CanOverwrite,
 			};
 			CoreServices.toolsManager.ProjectImporters.Add (importer);
-			p = null;
 			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
 			mockDialogs.Setup (g => g.ChooseOption (
 				It.IsAny<Dictionary<string, object>> (), It.IsAny<string> (), It.IsAny<object> ())).
@@ -263,22 +262,20 @@ namespace Tests.Integration
 			);
 			mockDialogs.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string []> ())).Returns (projectPath);
-			App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((e) => {
-				p = e.Project as LMProject;
-				viewModel.Project.Model = p;
-			});
-			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			Assert.IsNotNull (p);
+			await App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
+			LMProject retrievedProject = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().ToList () [1];
+			Assert.IsNotNull (retrievedProject);
+			Assert.AreNotEqual (retrievedProject.ID, p.ID);
 			int eventsCount = p.Timeline.Count;
 
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
+
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 
-			eventsController.Stop ();
+			await eventsController.Stop ();
 			toolsManager.Stop ();
 		}
 
