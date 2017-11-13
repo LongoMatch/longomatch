@@ -67,6 +67,8 @@ namespace LongoMatch.Gui.Menus
 				isSubstitution = plays.FirstOrDefault () is SubstitutionEvent;
 			}
 
+			MenuHelpers.FillExportToVideoFileMenu (render, project, plays, Catalog.GetString ("Export to video file"));
+
 			if (isLineup || isSubstitution) {
 				edit.Visible = true;
 				del.Visible = isSubstitution;
@@ -78,8 +80,6 @@ namespace LongoMatch.Gui.Menus
 				drawings.Visible = this.plays.Count == 1 && this.plays.FirstOrDefault ().Drawings.Count > 0;
 				moveCat.Visible = del.Visible = addPLN.Visible = duplicate.Visible = this.plays.Any ();
 			}
-
-			MenuHelpers.FillExportToVideoFileMenu (render, project, plays, Catalog.GetString ("Export to video file"));
 
 			if (plays.Count () > 0) {
 				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count ());

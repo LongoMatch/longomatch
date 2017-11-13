@@ -145,5 +145,16 @@ namespace Tests.Controller
 			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
 			                              Times.Once);
 		}
+
+		[Test]
+		public void EventsDeletedEvent_DeleteAllEvents_LineupEventNotDeleted ()
+		{
+			App.Current.EventsBroker.Publish (new EventsDeletedEvent {
+				TimelineEvents = projectVM.Timeline.Model
+			});
+
+			Assert.AreEqual (1, projectVM.Timeline.Model.Count);
+			Assert.AreSame (projectVM.Model.Lineup, projectVM.Timeline.Model.FirstOrDefault ());
+		}
 	}
 }
