@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\PointLocationView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Init.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\PeriodsTimelineView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\LMProjectCardCanvasView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)CanvasObjects\Location\" />
