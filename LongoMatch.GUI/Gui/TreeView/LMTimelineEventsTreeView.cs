@@ -158,6 +158,39 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		protected override bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected)
+		{
+			//FIXME: This logic could be done in the TreeViewBase by passing the different ViewModel Types that do not
+			// 	     support multiple selection, then this logic could be shared for all TreeViews that need some elements
+			//		 in the treeview to be selected alone.
+			TreePath [] selectedRows;
+
+			selectedRows = selection.GetSelectedRows ();
+			if (!selected && selectedRows.Length > 0) {
+				TimelineEventVM timelineEvent;
+
+				var firstSelected = GetViewModelAtPath (selectedRows [0]);
+				// No multiple selection for event types and substitution events
+				if (selectedRows.Length == 1) {
+					if (firstSelected is EventTypeTimelineVM) {
+						return false;
+					} else if ((timelineEvent = (firstSelected as TimelineEventVM)) != null &&
+					           timelineEvent.Model is StatEvent) {
+						return false;
+					}
+				}
+
+				var currentSelected = GetViewModelAtPath (path);
+				if (currentSelected is EventTypeTimelineVM || ((timelineEvent = (currentSelected as TimelineEventVM)) != null &&
+				                                               timelineEvent.Model is StatEvent)) {
+					return false;
+				}
+				return true;
+			}
+			// Always unselect
+			return true;
+		}
+
 		protected override int HandleSort (TreeModel model, TreeIter a, TreeIter b)
 		{
 			object objecta, objectb;

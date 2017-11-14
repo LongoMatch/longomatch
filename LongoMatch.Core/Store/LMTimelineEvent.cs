@@ -121,6 +121,10 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class LineupEvent : StatEvent
 	{
+		public LineupEvent ()
+		{
+			Deletable = false;
+		}
 		public List<LMPlayer> HomeStartingPlayers {
 			get;
 			set;
