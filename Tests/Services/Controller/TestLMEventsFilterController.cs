@@ -378,7 +378,7 @@ namespace Tests.Services.Controller
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 
 			// Act
-			firstEventTypePredicate.Elements [0].Active = true;
+			firstEventTypePredicate.Elements [5].Active = true;
 
 			// Assert
 			Assert.AreEqual (1, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -394,7 +394,7 @@ namespace Tests.Services.Controller
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 
 			// Act
-			firstEventTypePredicate.Elements [2].Active = true;
+			firstEventTypePredicate.Elements [1].Active = true;
 
 			// Assert
 			Assert.AreEqual (2, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -411,8 +411,8 @@ namespace Tests.Services.Controller
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 
 			// Act
+			firstEventTypePredicate.Elements [0].Active = true;
 			firstEventTypePredicate.Elements [1].Active = true;
-			firstEventTypePredicate.Elements [2].Active = true;
 
 			// Assert
 			Assert.AreEqual (3, timelineVM.FullTimeline.Count (e => e.Visible));
@@ -445,9 +445,9 @@ namespace Tests.Services.Controller
 			CompositePredicate<TimelineEventVM> firstEventTypePredicate = ((CompositePredicate<TimelineEventVM>)timelineVM.EventTypesPredicate.Elements [0]);
 
 			// Act
+			firstEventTypePredicate.Elements [0].Active = true;
 			firstEventTypePredicate.Elements [1].Active = true;
 			firstEventTypePredicate.Elements [2].Active = true;
-			firstEventTypePredicate.Elements [3].Active = true;
 
 			// Assert
 			Assert.AreEqual (3, timelineVM.FullTimeline.Count (e => e.Visible));

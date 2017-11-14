@@ -137,12 +137,8 @@ namespace LongoMatch.Services
 							return;
 					}
 					DB.Store<LMProject> (project, true);
-					App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-						new OpenProjectIDEvent {
-							ProjectID = project.ID,
-							Project = project
-						}
-					);
+					project.ProjectType = ProjectType.FileProject;
+					LMStateHelper.OpenProject (new LMProjectVM { Model = project });
 				}
 			} catch (Exception ex) {
 				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error importing project:") +
