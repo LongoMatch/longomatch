@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Gui.Component;
@@ -23,17 +24,22 @@ using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Services.ViewModel;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
+	//FIXME: This Panel should dissapear in favour of PreferencesPanel in VAS.UI, but only when all panels inside this
+	//preferences panel are migrated to have a VM of type IPreferencesVM
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (PreferencesState.NAME)]
-	public partial class PreferencesPanel : Gtk.Bin, IPanel
+	public partial class PreferencesPanel : Gtk.Bin, IPanel<PreferencesPanelVM>
 	{
 		Widget selectedPanel;
 		ListStore prefsStore;
+		PreferencesPanelVM viewModel;
 
 		public PreferencesPanel ()
 		{
@@ -41,13 +47,11 @@ namespace LongoMatch.Gui.Panel
 			prefsStore = new ListStore (typeof (Pixbuf), typeof (string), typeof (Widget));
 			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);
 			treeview.AppendColumn ("Desc", new CellRendererText (), "text", 1);
-			treeview.CursorChanged += HandleCursorChanged;
+			treeview.Selection.Changed += HandleSelectionChanged;
 			treeview.Model = prefsStore;
 			treeview.HeadersVisible = false;
 			treeview.EnableGridLines = TreeViewGridLines.None;
 			treeview.EnableTreeLines = false;
-			AddPanels ();
-			treeview.SetCursor (new TreePath ("0"), null, false);
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => {
@@ -73,6 +77,24 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		public PreferencesPanelVM ViewModel {
+			get {
+				return viewModel;
+			}
+
+			set {
+				if (viewModel != null) {
+					RemovePanels ();
+				}
+				viewModel = value;
+				if (viewModel != null) {
+					AddPanels ();
+					//Select First Panel
+					treeview.Selection.SelectPath (new TreePath ("0"));
+				}
+			}
+		}
+
 		public void OnLoad ()
 		{
 
@@ -90,6 +112,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
+			ViewModel = (PreferencesPanelVM)viewModel;
 		}
 
 		void AddPanels ()
@@ -97,9 +120,9 @@ namespace LongoMatch.Gui.Panel
 			AddPanel (Catalog.GetString ("General"),
 				Helpers.Misc.LoadIcon ("lm-preferences", IconSize.Dialog, 0),
 				new GeneralPreferencesPanel ());
-			AddPanel (Catalog.GetString ("Keyboard shortcuts"),
-				Helpers.Misc.LoadIcon ("lm-shortcut", IconSize.Dialog, 0),
-				new HotkeysConfiguration ());
+			//FIXME: this is a hack, when all preferences panel are migrated to MVVM we should use the PreferencesPanel from VAS
+			//Now as we know that in this position there should be the HokteysConfiguration we add it
+			AddPanel (ViewModel.ViewModels.Where (p => p is HotkeysConfigurationVM).FirstOrDefault ());
 			AddPanel (Catalog.GetString ("Video"),
 				Helpers.Misc.LoadIcon ("vas-record", IconSize.Dialog, 0),
 				new VideoPreferencesPanel ());
@@ -111,13 +134,41 @@ namespace LongoMatch.Gui.Panel
 				new PluginsPreferences ());
 		}
 
+		/// <summary>
+		/// Adds the specified panel.
+		/// </summary>
+		/// <param name="desc">Desc.</param>
+		/// <param name="icon">Icon.</param>
+		/// <param name="pane">Pane.</param>
 		void AddPanel (string desc, Pixbuf icon, Widget pane)
 		{
 			prefsStore.AppendValues (icon, desc, pane);
 		}
 
-		void HandleCursorChanged (object sender, EventArgs e)
+		/// <summary>
+		/// Adds a preference panel, by passing a IPreferencesVM ViewModel
+		/// </summary>
+		/// <param name="prefViewModel">Preference view model.</param>
+		void AddPanel (IPreferencesVM prefViewModel)
 		{
+			IView view = App.Current.ViewLocator.Retrieve (prefViewModel.View);
+			view.SetViewModel (prefViewModel);
+			var icon = App.Current.ResourcesLocator.LoadIcon (prefViewModel.Icon).Value;
+			prefsStore.AppendValues (icon, prefViewModel.Name,
+									 view as Widget);
+		}
+
+		void RemovePanels ()
+		{
+			prefsStore.Foreach ((model, path, iter) => prefsStore.Remove (ref iter));
+		}
+
+		void HandleSelectionChanged (object sender, EventArgs e)
+		{
+			if (viewModel == null) {
+				return;
+			}
+
 			Widget newPanel;
 			TreeIter iter;
 
