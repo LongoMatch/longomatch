@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Component
 
 			menu = new PeriodsMenu ();
 
-			videoPlayerView = App.Current.GUIToolkit.GetPlayerView ();
+			videoPlayerView = App.Current.ViewLocator.Retrieve ("VideoPlayerView") as IVideoPlayerView;
 			videoplayerbox.PackStart (videoPlayerView as Widget, true, true, 0);
 			videoplayerbox.ShowAll ();
 
