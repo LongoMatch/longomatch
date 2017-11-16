@@ -26,8 +26,6 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers;
-using VAS.UI.Helpers.Gtk2;
-using Constants = LongoMatch.Core.Common.Constants;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Gui.Component
@@ -38,6 +36,7 @@ namespace LongoMatch.Gui.Component
 	public partial class AnalysisComponent : Gtk.Bin, IPanel<LMProjectAnalysisVM>
 	{
 		bool detachedPlayer;
+		bool wasPlaying;
 		LMProjectAnalysisVM viewModel;
 		DetachHelper videoPlayerDetachHelper;
 		ProjectFileMenuLoader fileMenuLoader;
@@ -49,7 +48,8 @@ namespace LongoMatch.Gui.Component
 			detachedPlayer = false;
 			fileMenuLoader = new ProjectFileMenuLoader ();
 			toolsMenuLoader = new ProjectToolsMenuLoader ();
-			videoPlayerDetachHelper = new DetachHelper ();
+			videoPlayerDetachHelper = new DetachHelper (playercapturer, App.Current.SoftwareName, videowidgetsbox,
+														ProcessDetach);
 		}
 
 		public override void Dispose ()
@@ -178,25 +178,24 @@ namespace LongoMatch.Gui.Component
 			toolsMenuLoader.UnloadMenu ();
 		}
 
+		void ProcessDetach ()
+		{
+			videowidgetsbox.Visible = detachedPlayer;
+			detachedPlayer = !detachedPlayer;
+			playsSelection.ExpandTabs = detachedPlayer;
+			if (wasPlaying) {
+				ViewModel.VideoPlayer.PlayCommand.Execute ();
+			}
+			playercapturer.Detach (detachedPlayer);
+		}
+
 		void DetachPlayer (DetachEvent evt)
 		{
-			bool isPlaying = ViewModel.VideoPlayer.Playing;
-
+			wasPlaying = ViewModel.VideoPlayer.Playing;
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
 			ViewModel.VideoPlayer.PauseCommand.Execute (false);
-
-			videoPlayerDetachHelper.Detach (playercapturer, Constants.SOFTWARE_NAME, videowidgetsbox,
-											() => {
-												videowidgetsbox.Visible = detachedPlayer;
-												detachedPlayer = !detachedPlayer;
-												playsSelection.ExpandTabs = detachedPlayer;
-												if (isPlaying) {
-													ViewModel.VideoPlayer.PlayCommand.Execute ();
-												}
-												playercapturer.Detach (detachedPlayer);
-												return true;
-											});
+			videoPlayerDetachHelper.Detach ();
 		}
 	}
 }
