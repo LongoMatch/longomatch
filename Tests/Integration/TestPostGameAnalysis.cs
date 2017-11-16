@@ -134,7 +134,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
-			CoreServices.Stop ();
+			App.Current.StopServices ();
 			SetupClass.SetUp ();
 		}
 
@@ -144,7 +144,7 @@ namespace Tests.Integration
 			Guid projectID;
 			App.Init ();
 			CoreServices.Init ();
-			App.Current.DependencyRegistry.Register<VAS.DB.IFileStorage, FileStorage> (0);
+			App.Current.DependencyRegistry.Register<IFileStorage, FileStorage> (0);
 
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
@@ -154,7 +154,7 @@ namespace Tests.Integration
 			App.Current.Config.AutoSave = true;
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
-			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+			App.Current.StartServices ();
 
 			// Start importing templates
 			App.Current.TeamTemplatesProvider.Save (

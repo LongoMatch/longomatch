@@ -75,7 +75,7 @@ namespace Tests.Integration
 		{
 			SetupClass.SetUp ();
 			try {
-				CoreServices.Stop ();
+				App.Current.StopServices ();
 			} catch {
 			}
 		}
@@ -112,7 +112,7 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
-			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
+			App.Current.StartServices ();
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
@@ -131,7 +131,7 @@ namespace Tests.Integration
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "basket.lct")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "old", "longomatch.ldb", "spain_france_test.lgm")));
 
-			CoreServices.Stop ();
+			App.Current.StopServices ();
 		}
 
 		[Test]
@@ -153,7 +153,7 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
-			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
+			App.Current.StartServices ();
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
@@ -179,7 +179,7 @@ namespace Tests.Integration
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
-			CoreServices.Stop ();
+			App.Current.StopServices ();
 		}
 	}
 }

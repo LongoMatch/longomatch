@@ -15,9 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using LongoMatch.Services;
+using LongoMatch;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Interfaces;
@@ -42,15 +41,15 @@ namespace Tests.Services
 			msvc2.Setup (s => s.Start ()).Returns (true).Callback (() => levels.Add (20));
 			msvc2.Setup (s => s.Stop ()).Returns (true).Callback (() => levels.Add (20));
 
-			CoreServices.RegisterService (msvc1.Object);
-			CoreServices.RegisterService (msvc2.Object);
+			App.Current.RegisterService (msvc1.Object);
+			App.Current.RegisterService (msvc2.Object);
 
 			msvc1.Verify (s => s.Start (), Times.Never);
 			msvc2.Verify (s => s.Start (), Times.Never);
 			msvc1.Verify (s => s.Stop (), Times.Never);
 			msvc2.Verify (s => s.Stop (), Times.Never);
 
-			CoreServices.StartServices ();
+			App.Current.StartServices ();
 
 			msvc1.Verify (s => s.Start (), Times.Once);
 			msvc2.Verify (s => s.Start (), Times.Once);
@@ -60,7 +59,7 @@ namespace Tests.Services
 
 			levels.Clear ();
 
-			CoreServices.StopServices ();
+			App.Current.StopServices ();
 
 			msvc1.Verify (s => s.Start (), Times.Once);
 			msvc2.Verify (s => s.Start (), Times.Once);

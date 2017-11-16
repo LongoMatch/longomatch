@@ -86,7 +86,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
-			CoreServices.Stop ();
+			App.Current.StopServices ();
 			SetupClass.SetUp ();
 		}
 
@@ -110,7 +110,7 @@ namespace Tests.Integration
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
 
-			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+			App.Current.StartServices ();
 
 			// Check database dirs
 			Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.TeamsDir).ToString ());
@@ -122,15 +122,14 @@ namespace Tests.Integration
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 
-			CoreServices.Stop ();
+			App.Current.StopServices ();
 
 			// Simulate an application restart
 			CoreServices.Init ();
-			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+			App.Current.StartServices ();
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 		}
 	}
 }
-

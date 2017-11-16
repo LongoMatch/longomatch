@@ -104,7 +104,7 @@ namespace LongoMatch
 			return new Config ();
 		}
 
-		void InitConstants ()
+		internal void InitConstants ()
 		{
 			Current.Copyright = Constants.COPYRIGHT;
 			Current.License = Constants.LICENSE;
