@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
@@ -89,6 +90,12 @@ namespace LongoMatch.Services
 										() => ViewModel.SaveCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.CLOSE),
 										() => ViewModel.CloseCommand.Execute ()));
+			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_RECORDING_PERIOD),
+			                            () => Capturer?.StartPeriod ()));
+			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.STOP_RECORDING_PERIOD),
+			                            () => Capturer?.StopPeriod ()));
+			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.TOGGLE_CAPTURE_CLOCK),
+			                            ToggleCapturer));
 			return actions;
 		}
 
@@ -377,6 +384,18 @@ namespace LongoMatch.Services
 		{
 			if (e.Name == ProjectAnalysisState.NAME) {
 				ViewModel.ShowWarningLimitation.Execute ();
+			}
+		}
+
+		void ToggleCapturer ()
+		{
+			if (Capturer == null) {
+				return;
+			}
+			if (Capturer.Capturing) {
+				Capturer.PausePeriod ();
+			} else {
+				Capturer.ResumePeriod ();
 			}
 		}
 	}

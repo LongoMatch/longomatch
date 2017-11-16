@@ -162,77 +162,77 @@ namespace LongoMatch.Services
 						}
 					}*/
 
-				if (projectType == ProjectType.CaptureProject ||
-					projectType == ProjectType.FakeCaptureProject ||
-					projectType == ProjectType.URICaptureProject) {
-					switch (action) {
-					case KeyAction.PauseClock:
-						if (capturer.Capturing) {
-							capturer.PausePeriod ();
-						} else {
-							capturer.ResumePeriod ();
-						}
-						break;
-					case KeyAction.StartPeriod:
-						capturer.StartPeriod ();
-						break;
-					case KeyAction.StopPeriod:
-						capturer.StopPeriod ();
-						break;
-					}
-				} else {
-					switch (action) {
-					case KeyAction.FrameUp:
-						player.SeekToNextFrame ();
-						return;
-					case KeyAction.FrameDown:
-						player.SeekToPreviousFrame ();
-						return;
-					case KeyAction.JumpUp:
-						player.StepForward ();
-						return;
-					case KeyAction.JumpDown:
-						player.StepBackward ();
-						return;
-					case KeyAction.DrawFrame:
-						player.DrawFrame ();
-						return;
-					case KeyAction.TogglePlay:
-						player.TogglePlay ();
-						return;
-					case KeyAction.SpeedUp:
-						player.FramerateUp ();
-						App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
-							new PlaybackRateChangedEvent {
-								Value = (float)player.Rate
-							}
-						);
-						return;
-					case KeyAction.SpeedDown:
-						player.FramerateDown ();
-						App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
-							new PlaybackRateChangedEvent {
-								Value = (float)player.Rate
-							}
-						);
-						return;
-					case KeyAction.CloseEvent:
-						App.Current.EventsBroker.Publish<LoadEventEvent> (new LoadEventEvent ());
-						return;
-					case KeyAction.Prev:
-						player.Previous ();
-						return;
-					case KeyAction.Next:
-						player.Next ();
-						return;
-					case KeyAction.SpeedUpper:
-						player.FramerateUpper ();
-						return;
-					case KeyAction.SpeedLower:
-						player.FramerateLower ();
-						return;
-					}
-				}
+				//if (projectType == ProjectType.CaptureProject ||
+				//	projectType == ProjectType.FakeCaptureProject ||
+				//	projectType == ProjectType.URICaptureProject) {
+				//	switch (action) {
+				//	case KeyAction.PauseClock:
+				//		if (capturer.Capturing) {
+				//			capturer.PausePeriod ();
+				//		} else {
+				//			capturer.ResumePeriod ();
+				//		}
+				//		break;
+				//	case KeyAction.StartPeriod:
+				//		capturer.StartPeriod ();
+				//		break;
+				//	case KeyAction.StopPeriod:
+				//		capturer.StopPeriod ();
+				//		break;
+				//	}
+				//} else {
+					//switch (action) {
+					//case KeyAction.FrameUp:
+					//	player.SeekToNextFrame ();
+					//	return;
+					//case KeyAction.FrameDown:
+					//	player.SeekToPreviousFrame ();
+					//	return;
+					//case KeyAction.JumpUp:
+					//	player.StepForward ();
+					//	return;
+					//case KeyAction.JumpDown:
+					//	player.StepBackward ();
+					//	return;
+					//case KeyAction.DrawFrame:
+					//	player.DrawFrame ();
+					//	return;
+					//case KeyAction.TogglePlay:
+					//	player.TogglePlay ();
+					//	return;
+					//case KeyAction.SpeedUp:
+					//	player.FramerateUp ();
+					//	App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
+					//		new PlaybackRateChangedEvent {
+					//			Value = (float)player.Rate
+					//		}
+					//	);
+					//	return;
+					//case KeyAction.SpeedDown:
+					//	player.FramerateDown ();
+					//	App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
+					//		new PlaybackRateChangedEvent {
+					//			Value = (float)player.Rate
+					//		}
+					//	);
+					//	return;
+					//case KeyAction.CloseEvent:
+					//	App.Current.EventsBroker.Publish<LoadEventEvent> (new LoadEventEvent ());
+					//	return;
+					//case KeyAction.Prev:
+					//	player.Previous ();
+					//	return;
+					//case KeyAction.Next:
+					//	player.Next ();
+					//	return;
+					//case KeyAction.SpeedUpper:
+					//	player.FramerateUpper ();
+					//	return;
+					//case KeyAction.SpeedLower:
+					//	player.FramerateLower ();
+					//	return;
+					//}
+				//}
 			}
 		}
 

@@ -22,17 +22,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
+//using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Services.Controller;
-using LMKeyAction = LongoMatch.Core.Common.KeyAction;
+using KeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Services
 {
@@ -48,7 +51,6 @@ namespace LongoMatch.Services
 		{
 			await base.Start ();
 			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 		}
@@ -56,10 +58,17 @@ namespace LongoMatch.Services
 		public override async Task Stop ()
 		{
 			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 			await base.Stop ();
+		}
+
+		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
+		{
+			yield return new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.DELETE),
+			                            DeleteLoadedEvent);
+			yield return new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.EDIT_SELECTED_EVENT),
+			                            EditLoadedEvent);
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
@@ -93,47 +102,36 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleKeyPressed (KeyPressedEvent e)
-		{
-			LMKeyAction action;
-
-			try {
-				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (e.Key);
-			} catch (Exception ex) {
-				/* The dictionary contains 2 equal values for different keys */
-				Log.Exception (ex);
-				return;
-			}
-
-			if (action == LMKeyAction.None || LoadedPlay == null) {
-				return;
-			}
-
-			switch (action) {
-			case LMKeyAction.EditEvent:
-				bool playing = VideoPlayer.Playing;
-				VideoPlayer.PauseCommand.Execute (false);
-
-				App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = LoadedPlay });
-
-				if (playing) {
-					VideoPlayer.PlayCommand.Execute ();
-				}
-				break;
-			case LMKeyAction.DeleteEvent:
-				App.Current.EventsBroker.Publish (
-					new EventsDeletedEvent {
-						TimelineEvents = new List<TimelineEvent> { LoadedPlay }
-					}
-				);
-				break;
-			}
-		}
-
 		void HandleShowProjectStatsEvent (ShowProjectStatsEvent e)
 		{
 			App.Current.GUIToolkit.ShowProjectStats (e.Project);
 		}
 
+		void DeleteLoadedEvent ()
+		{
+			if (LoadedPlay == null) {
+				return;
+			}
+			App.Current.EventsBroker.Publish (
+				new EventsDeletedEvent {
+					TimelineEvents = new List<TimelineEvent> { LoadedPlay }
+				}
+			);
+		}
+
+		void EditLoadedEvent ()
+		{
+			if (LoadedPlay == null) {
+				return;
+			}
+			bool playing = VideoPlayer.Playing;
+			VideoPlayer.PauseCommand.Execute (false);
+
+			App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = LoadedPlay });
+
+			if (playing) {
+				VideoPlayer.PlayCommand.Execute ();
+			}
+		}
 	}
 }

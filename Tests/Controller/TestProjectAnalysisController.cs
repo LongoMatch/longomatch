@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
@@ -69,6 +70,7 @@ namespace Tests.Controller
 
 			App.Current.HotkeysService = new HotkeysService ();
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
+			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
 
 			var playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();

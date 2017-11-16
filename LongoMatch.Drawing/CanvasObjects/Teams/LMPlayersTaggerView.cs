@@ -302,6 +302,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
+			subPlayers.RedrawEvent += (co, area) => EmitRedrawEvent (subPlayers, area);
 			subInjury = new ButtonObject ();
 			subInjury.BackgroundColorActive = App.Current.Style.ScreenBase;
 			subInjury.Toggle = true;
@@ -602,6 +603,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homeBench.SubstitutionMode =
 					awayBench.SubstitutionMode =
 						field.SubstitutionMode = ViewModel.SubstitutionMode;
+				subPlayers.Active = ViewModel.SubstitutionMode;
 			}
 
 			if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.ShowTeamsButtons), sender, ViewModel)) {
