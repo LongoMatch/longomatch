@@ -31,6 +31,7 @@ namespace Tests.State
 		Mock<IMultimediaToolkit> mtkMock;
 		Mock<IGUIToolkit> gtkMock;
 		Mock<IVideoPlayer> playerMock;
+		Mock<IMultiVideoPlayer> multiplayerMock;
 		ProjectAnalysisState state;
 		LMProject project;
 		LMProjectVM projectVM;
@@ -41,6 +42,7 @@ namespace Tests.State
 		{
 			var hotkeysMock = new Mock<IHotkeysService> ();
 			playerMock = new Mock<IVideoPlayer> ();
+			multiplayerMock = new Mock<IMultiVideoPlayer> ();
 			mtkMock = new Mock<IMultimediaToolkit> ();
 			gtkMock = new Mock<IGUIToolkit> ();
 			var capturerMock = new Mock<IFramesCapturer> ();
@@ -140,6 +142,36 @@ namespace Tests.State
 
 			// Assert
 			Assert.IsTrue (ret);
+		}
+
+		[Test]
+		public async Task LoadState_SupportsMultipleCameras_NotLimited ()
+		{
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);
+			var total_filesets = analysisVM.Project.FileSet.ViewModels.Count;
+
+			bool ret = await state.LoadState (analysisVM);
+
+			Assert.IsTrue (ret);
+			Assert.Greater (total_filesets, 1);
+			Assert.AreEqual (total_filesets, analysisVM.Project.FileSet.ViewModels.Count);
+			Assert.AreEqual (total_filesets, state.ViewModel.VideoPlayer.FileSet.ViewModels.Count);
+			Assert.AreEqual (analysisVM.Project.FileSet.Model.ID, state.ViewModel.VideoPlayer.FileSet.Model.ID);
+		}
+
+		[Test]
+		public async Task LoadState_MultipleCamerasSupportDisabled_MediaFileLimited ()
+		{
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
+			var total_filesets = analysisVM.Project.FileSet.ViewModels.Count;
+
+			bool ret = await state.LoadState (analysisVM);
+
+			Assert.IsTrue (ret);
+			Assert.Greater (total_filesets, 1);
+			Assert.AreEqual (total_filesets, analysisVM.Project.FileSet.ViewModels.Count);
+			Assert.AreEqual (1, state.ViewModel.VideoPlayer.FileSet.ViewModels.Count);
+			Assert.AreEqual (analysisVM.Project.FileSet.Model.ID, state.ViewModel.VideoPlayer.FileSet.Model.ID);
 		}
 
 	}
