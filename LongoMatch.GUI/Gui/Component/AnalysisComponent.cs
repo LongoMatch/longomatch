@@ -26,6 +26,7 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers;
+using VAS.UI.Helpers.Gtk2;
 using Constants = LongoMatch.Core.Common.Constants;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
@@ -38,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	{
 		bool detachedPlayer;
 		LMProjectAnalysisVM viewModel;
-		Gtk.Window playerWindow;
+		DetachHelper videoPlayerDetachHelper;
 		ProjectFileMenuLoader fileMenuLoader;
 		ProjectToolsMenuLoader toolsMenuLoader;
 
@@ -48,6 +49,7 @@ namespace LongoMatch.Gui.Component
 			detachedPlayer = false;
 			fileMenuLoader = new ProjectFileMenuLoader ();
 			toolsMenuLoader = new ProjectToolsMenuLoader ();
+			videoPlayerDetachHelper = new DetachHelper ();
 		}
 
 		public override void Dispose ()
@@ -70,7 +72,7 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			if (detachedPlayer) {
-				playerWindow.Destroy ();
+				videoPlayerDetachHelper.Dispose ();
 				detachedPlayer = false;
 			}
 			playercapturer.Dispose ();
@@ -180,40 +182,18 @@ namespace LongoMatch.Gui.Component
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
 			ViewModel.VideoPlayer.PauseCommand.Execute (false);
-			if (!detachedPlayer) {
-				Log.Debug ("Detaching player");
 
-				ExternalWindow playerWindow = new ExternalWindow ();
-				this.playerWindow = playerWindow;
-				playerWindow.Title = Constants.SOFTWARE_NAME;
-				int player_width = playercapturer.Allocation.Width;
-				int player_height = playercapturer.Allocation.Height;
-				playerWindow.SetDefaultSize (player_width, player_height);
-				playerWindow.DeleteEvent += (o, args) => DetachPlayer (new DetachEvent ());
-				playerWindow.Show ();
-				playercapturer.Reparent (playerWindow.Box);
-				// Hack to reposition video window in widget for OSX
-				playerWindow.Resize (player_width + 10, player_height);
-				videowidgetsbox.Visible = false;
-				playsSelection.ExpandTabs = true;
-			} else {
-				Log.Debug ("Attaching player again");
-				videowidgetsbox.Visible = true;
-				playercapturer.Reparent (this.videowidgetsbox);
-				playerWindow.Destroy ();
-				playsSelection.ExpandTabs = false;
-			}
-			if (isPlaying) {
-				ViewModel.VideoPlayer.PlayCommand.Execute ();
-			}
-			detachedPlayer = !detachedPlayer;
-			playercapturer.AttachPlayer (detachedPlayer);
-		}
-
-		public void CloseOpenedProject ()
-		{
-			if (detachedPlayer)
-				DetachPlayer (new DetachEvent ());
+			videoPlayerDetachHelper.Detach (playercapturer, Constants.SOFTWARE_NAME, videowidgetsbox,
+											() => {
+												videowidgetsbox.Visible = detachedPlayer;
+												detachedPlayer = !detachedPlayer;
+												playsSelection.ExpandTabs = detachedPlayer;
+												if (isPlaying) {
+													ViewModel.VideoPlayer.PlayCommand.Execute ();
+												}
+												playercapturer.Detach (detachedPlayer);
+												return true;
+											});
 		}
 	}
 }
