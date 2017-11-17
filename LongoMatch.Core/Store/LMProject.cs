@@ -304,7 +304,7 @@ namespace LongoMatch.Core.Store
 			evt.EventType = type;
 			evt.Notes = "";
 			evt.Miniature = miniature;
-			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
+			evt.CamerasConfig = new RangeObservableCollection<CameraConfig> { new CameraConfig (0) };
 			evt.FileSet = Description.FileSet;
 			evt.Project = this;
 

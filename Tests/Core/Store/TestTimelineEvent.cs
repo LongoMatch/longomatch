@@ -249,7 +249,7 @@ namespace Tests.Core.Store
 		public void TestCamerasConfigNotHavingNulls ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
-			var cc = new ObservableCollection<CameraConfig> ();
+			var cc = new RangeObservableCollection<CameraConfig> ();
 			cc.Add (null);
 			cc.Add (new CameraConfig (0));
 			evt.CamerasConfig = cc;
