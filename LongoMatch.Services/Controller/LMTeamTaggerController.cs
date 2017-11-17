@@ -128,6 +128,7 @@ namespace LongoMatch.Services.Controller
 			App.Current.EventsBroker.Subscribe<UpdateLineup> (HandleUpdateLineup);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			App.Current.EventsBroker.Subscribe<EventEditedEvent> (HandleEventEdited);
+			App.Current.EventsBroker.Subscribe<CapturerTickEvent> (HandleCapturerTick);
 			substitutionPlayer = new KeyValuePair<PlayerVM, TeamVM> (null, null);
 			lastTime = null;
 			UpdateLineup ();
@@ -140,6 +141,7 @@ namespace LongoMatch.Services.Controller
 			App.Current.EventsBroker.Unsubscribe<UpdateLineup> (HandleUpdateLineup);
 			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			App.Current.EventsBroker.Unsubscribe<EventEditedEvent> (HandleEventEdited);
+			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
 		}
 
 		void HandleTagPlayerEvent (TagPlayerEvent e)
@@ -191,7 +193,7 @@ namespace LongoMatch.Services.Controller
 					Player1 = player1Model,
 					Player2 = player2Model,
 					SubstitutionReason = reason,
-					Time = videoPlayer.CurrentTime
+					Time = teamTagger.CurrentTime
 				});
 				UpdateLineup ();
 			} else {
@@ -252,7 +254,8 @@ namespace LongoMatch.Services.Controller
 
 		void HandleVideoPlayerPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (videoPlayer.NeedsSync (e.PropertyName, nameof (videoPlayer.CurrentTime), sender, videoPlayer)) {
+			if (videoPlayer.NeedsSync (e.PropertyName, nameof (videoPlayer.CurrentTime), sender, videoPlayer) &&
+				project.ProjectType == ProjectType.FileProject) {
 				teamTagger.CurrentTime = videoPlayer.CurrentTime;
 			}
 		}
@@ -390,6 +393,11 @@ namespace LongoMatch.Services.Controller
 			if (e.TimelineEvent is SubstitutionEvent || e.TimelineEvent is LineupEvent) {
 				UpdatePlayersPosition ();
 			}
+		}
+
+		void HandleCapturerTick (CapturerTickEvent e)
+		{
+			teamTagger.CurrentTime = e.Time;
 		}
 	}
 }

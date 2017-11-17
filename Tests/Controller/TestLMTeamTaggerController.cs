@@ -28,21 +28,25 @@ using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
+using VAS.Services.ViewModel;
 
 namespace Tests.Controller
 {
 	public class TestLMTeamTaggerController
 	{
 		LMTeamTaggerController controller;
+		LMTaggingController taggingController;
 		LMEventsController eventsController;
 		LMTeamTaggerVM teamTagger;
 		VideoPlayerVM videoPlayer;
 		LMProjectVM project;
+		LMProjectVM projectVM;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp ()
@@ -83,11 +87,17 @@ namespace Tests.Controller
 			viewModel.VideoPlayer = new VideoPlayerVM ();
 			videoPlayer = viewModel.VideoPlayer;
 			teamTagger = viewModel.TeamTagger;
-			viewModel.Project = new LMProjectVM { Model = Utils.CreateProject () };
+			projectVM = new LMProjectVM { Model = Utils.CreateProject () };
+			viewModel.Project = projectVM;
 			await ControllerSetUp (viewModel);
 			eventsController = new LMEventsController ();
 			eventsController.SetViewModel (viewModel);
 			await eventsController.Start ();
+
+
+			taggingController = new LMTaggingController ();
+			taggingController.SetViewModel (new ProjectAnalysisVM<LMProjectVM> { VideoPlayer = videoPlayer, Project = projectVM });
+			await taggingController.Start ();
 		}
 
 		[TearDown]
@@ -96,6 +106,8 @@ namespace Tests.Controller
 			await controller.Stop ();
 			eventsController?.Stop ();
 			eventsController = null;
+			taggingController?.Stop ();
+			taggingController = null;
 		}
 
 		[Test]
@@ -261,6 +273,62 @@ namespace Tests.Controller
 			Assert.IsTrue (emitedPropertyChange);
 			Assert.IsTrue (substEventEmitted);
 			Assert.AreEqual (1, times);
+		}
+
+		[Test]
+		public async Task TaggingController_VideoPlayerTimeChangeOnFileProject_AffectsToDashboardTime ()
+		{
+			// Arrange
+			await AnalysisSetUpAsync ();
+			teamTagger.SubstitutionMode = true;
+			videoPlayer.CurrentTime = new Time (0);
+			projectVM.Dashboard.CurrentTime = new Time (0);
+
+			// Action
+			videoPlayer.CurrentTime = new Time (10000);
+
+			// Assert
+			Assert.AreEqual (new Time (10000), videoPlayer.CurrentTime);
+			Assert.AreEqual (videoPlayer.CurrentTime, projectVM.Dashboard.CurrentTime);
+		}
+
+		[Test]
+		public async Task TaggingController_VideoPlayerTimeChangeOnCaptureProject_DoesNotAffectToDashboardTime ()
+		{
+			// Arrange
+			await AnalysisSetUpAsync ();
+			projectVM.ProjectType = ProjectType.CaptureProject;
+			teamTagger.SubstitutionMode = true;
+			videoPlayer.CurrentTime = new Time (0);
+			projectVM.Dashboard.CurrentTime = new Time (0);
+
+			// Action
+			videoPlayer.CurrentTime = new Time (10000);
+
+			// Assert
+			Assert.AreEqual (new Time (10000), videoPlayer.CurrentTime);
+			Assert.AreEqual (new Time (0), projectVM.Dashboard.CurrentTime);
+		}
+
+		[Test]
+		public async Task TaggingController_LineupChangeOnCaptureProject_EventTaggedOnDashboardTime ()
+		{
+			// Arrange
+			await AnalysisSetUpAsync ();
+			projectVM.ProjectType = ProjectType.CaptureProject;
+			teamTagger.SubstitutionMode = true;
+			videoPlayer.CurrentTime = new Time (0);
+			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
+			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
+
+			// Action
+			await App.Current.EventsBroker.Publish (new CapturerTickEvent { Time = new Time (10000) });
+			teamTagger.PlayerClick (clickedPlayer1, ButtonModifier.None);
+			teamTagger.PlayerClick (clickedPlayer2, ButtonModifier.None);
+
+			// Assert
+			Assert.AreEqual (new Time (0), videoPlayer.CurrentTime);
+			Assert.AreEqual (new Time (10000), projectVM.Timeline.FullTimeline.Model [4].EventTime);
 		}
 
 		[Test]
