@@ -270,7 +270,7 @@ namespace LongoMatch.Services.Controller
 		{
 			if (videoPlayer.NeedsSync (e.PropertyName, nameof (videoPlayer.CurrentTime), sender, videoPlayer) &&
 				project.ProjectType == ProjectType.FileProject) {
-				teamTagger.CurrentTime = videoPlayer.CurrentTime;
+				teamTagger.CurrentTime = videoPlayer.AbsoluteCurrentTime;
 			}
 		}
 
