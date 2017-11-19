@@ -25,6 +25,7 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
+using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
@@ -48,6 +49,7 @@ namespace Tests.Controller
 		Mock<IGUIToolkit> gtkMock;
 		Mock<ICapturer> capturerMock;
 		Mock<ICapturerBin> capturerBinMock;
+		Mock<IStateController> stateControllerMock;
 		VideoPlayerController player;
 		ProjectAnalysisController projectsManager;
 		LMProject project;
@@ -111,6 +113,9 @@ namespace Tests.Controller
 			player.SetViewModel (videoPlayerVM);
 
 			currentService = App.Current.LicenseLimitationsService;
+
+			stateControllerMock = new Mock<IStateController> ();
+			App.Current.StateController = stateControllerMock.Object;
 		}
 
 		[SetUp ()]
@@ -178,8 +183,8 @@ namespace Tests.Controller
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 		}
 
-		[Test ()]
-		public void TestCaptureFinished ()
+		[Test]
+		public void CaptureFinished_Cancelled_ProjectNotSavedAndNavigatedHome ()
 		{
 			List<string> transitions = new List<string> ();
 			App.Current.EventsBroker.Subscribe<NavigationEvent> ((obj) => {
@@ -191,31 +196,34 @@ namespace Tests.Controller
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
 
-			App.Current.EventsBroker.Publish<CaptureFinishedEvent> (
+			App.Current.EventsBroker.Publish (
 				new CaptureFinishedEvent {
 					Cancel = true,
-					Reopen = true
+					Reopen = false
 				}
 			);
 
 			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			Assert.AreEqual (project, projectsManager.Project.Model); // SP-Remark: check that project is null has no sense here 
+			Assert.AreEqual (project, projectsManager.Project.Model);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
-			capturerBinMock.ResetCalls ();
-			Assert.AreEqual ("Home", App.Current.StateController.Current.Name); // replaced previous line for this one
-			gtkMock.ResetCalls ();
-			Utils.DeleteProject (project);
+			stateControllerMock.Verify (e => e.MoveToHome (false), Times.Once);
+		}
 
-			project = Utils.CreateProject ();
-			settings.EncodingSettings.OutputFile = project.Description.FileSet.FirstOrDefault ().FilePath;
+		[Test]
+		public void CaptureFinished_ProjectSaved_AskedToSaveAndProjectReopened ()
+		{
+			List<string> transitions = new List<string> ();
+			App.Current.EventsBroker.Subscribe<NavigationEvent> ((obj) => {
+				transitions.Add (obj.Name);
+			});
 
 			projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
 
-			App.Current.EventsBroker.Publish<CaptureFinishedEvent> (
+			App.Current.EventsBroker.Publish (
 				new CaptureFinishedEvent {
 					Cancel = false,
 					Reopen = true
@@ -226,14 +234,9 @@ namespace Tests.Controller
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
-			Assert.AreEqual ("Home", App.Current.StateController.Current.Name);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.Project.Model);
-			/*Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
-			// Make sure the project is not cleared.
-			Assert.IsNotEmpty (projectsManager.Project.Dashboard.List);
-			Assert.IsNotEmpty (projectsManager.Project.LocalTeamTemplate.List);
-			Assert.IsNotEmpty (projectsManager.Project.VisitorTeamTemplate.List);*/
+			stateControllerMock.Verify (e => e.MoveTo (ProjectAnalysisState.NAME, It.IsAny<object> (), true, false), Times.Once);
 		}
 
 		[Test ()]
