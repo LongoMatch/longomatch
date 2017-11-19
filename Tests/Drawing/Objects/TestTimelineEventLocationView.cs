@@ -8,14 +8,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.CanvasObjects.Location;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.ViewModel;
 
 namespace Tests.Drawing.Objects
 {
@@ -86,5 +86,74 @@ namespace Tests.Drawing.Objects
 			Assert.Greater (redrawCount, 1);
 			tkMock.Verify (tk => tk.DrawCircle (It.IsAny<Point> (), It.IsAny<double> ()), Times.Once ());
 		}
+
+		[Test]
+		public void HandleViewModelPropertyChanged_VisibilityChanged_RedrawTriggered ()
+		{
+			int redrawCount = 0;
+			Mock<IDrawingToolkit> tkMock = new Mock<IDrawingToolkit> ();
+			var timelineEvent = new LMTimelineEvent { EventType = new EventType () };
+			var timelineEventVM = new LMTimelineEventVM { Model = timelineEvent };
+			TimelineEventLocationView view = new TimelineEventLocationView {
+				FieldPosition = FieldPositionType.Field,
+				BackgroundWidth = 100,
+				BackgroundHeight = 100,
+			};
+			view.SetViewModel (timelineEventVM);
+			view.RedrawEvent += (co, area) => redrawCount++;
+			timelineEvent.EventType.TagFieldPosition = true;
+			timelineEvent.AddDefaultPositions ();
+			view.RedrawEvent += (co, area) => redrawCount++;
+
+			timelineEventVM.Visible = false;
+
+			Assert.GreaterOrEqual (1, redrawCount);
+		}
+
+		[Test]
+		public void HandleViewModelPropertyChanged_ColorChanged_RedrawTriggered ()
+		{
+			int redrawCount = 0;
+			Mock<IDrawingToolkit> tkMock = new Mock<IDrawingToolkit> ();
+			var timelineEvent = new LMTimelineEvent { EventType = new EventType () };
+			var timelineEventVM = new LMTimelineEventVM { Model = timelineEvent };
+			TimelineEventLocationView view = new TimelineEventLocationView {
+				FieldPosition = FieldPositionType.Field,
+				BackgroundWidth = 100,
+				BackgroundHeight = 100,
+			};
+			view.SetViewModel (timelineEventVM);
+			view.RedrawEvent += (co, area) => redrawCount++;
+			timelineEvent.EventType.TagFieldPosition = true;
+			timelineEvent.AddDefaultPositions ();
+			view.RedrawEvent += (co, area) => redrawCount++;
+
+			timelineEvent.EventType.Color = Color.Black.Copy ();
+
+			Assert.GreaterOrEqual (1, redrawCount);
+		}
+
+		[Test]
+		public void HandleViewModelPropertyChanged_TimeChanged_RedrawNotTriggered ()
+		{
+			int redrawCount = 0;
+			Mock<IDrawingToolkit> tkMock = new Mock<IDrawingToolkit> ();
+			var timelineEvent = new LMTimelineEvent { EventType = new EventType () };
+			var timelineEventVM = new LMTimelineEventVM { Model = timelineEvent };
+			TimelineEventLocationView view = new TimelineEventLocationView {
+				FieldPosition = FieldPositionType.Field,
+				BackgroundWidth = 100,
+				BackgroundHeight = 100,
+			};
+			view.SetViewModel (timelineEventVM);
+			timelineEvent.EventType.TagFieldPosition = true;
+			timelineEvent.AddDefaultPositions ();
+			view.RedrawEvent += (co, area) => redrawCount++;
+
+			timelineEventVM.Start = new Time ();
+
+			Assert.AreEqual (0, redrawCount);
+		}
+
 	}
 }

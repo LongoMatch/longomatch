@@ -15,7 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -35,22 +37,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 			base.DisposeManagedResources ();
 		}
 
-		override protected Color Color {
-			get {
-				return viewModel.Color;
-			}
-			set {
-			}
-		}
-
-		override protected Color OutlineColor {
-			get {
-				return viewModel.TeamColor;
-			}
-			set {
-			}
-		}
-
 		public LMTimelineEventVM ViewModel {
 			get {
 				return viewModel;
@@ -61,9 +47,25 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 				}
 				viewModel = value;
 				if (viewModel != null) {
-					UpdatePoints ();
+					Points = EventPoints;
 					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 				}
+			}
+		}
+
+		override protected Color Color {
+			get {
+				return ViewModel?.Color;
+			}
+			set {
+			}
+		}
+
+		override protected Color OutlineColor {
+			get {
+				return ViewModel?.TeamColor;
+			}
+			set {
 			}
 		}
 
@@ -73,26 +75,30 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 			}
 		}
 
+		public override bool Visible {
+			get {
+				return ViewModel?.Visible ?? false;
+			}
+		}
+
+		IList<Point> EventPoints { get => ViewModel.Model.CoordinatesInFieldPosition (FieldPosition)?.Points; }
+
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (LMTimelineEventVM)viewModel;
 		}
 
-		void UpdatePoints ()
-		{
-			// FIXME: Add postions to the VM
-			Points = viewModel.Model.CoordinatesInFieldPosition (FieldPosition)?.Points;
-		}
-
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			// FIXME: Add positions to the VM
-			if ( (FieldPosition == FieldPositionType.Field ||
-				FieldPosition == FieldPositionType.HalfField ||
-			      FieldPosition == FieldPositionType.Goal) &&
-			   		ViewModel.FieldPosition?.Points.Count > 0) {
-				UpdatePoints ();
-				ReDraw ();
+			if (ViewModel.NeedsSync (e, nameof (ViewModel.Visible)) ||
+				ViewModel.NeedsSync (e, nameof (ViewModel.Color)) ||
+				ViewModel.NeedsSync (e, $"Collection_{nameof (ViewModel.FieldPosition.Points)}")) {
+				// FIXME: Add positions to the VM
+				var eventPoints = EventPoints;
+				if (eventPoints?.Any () ?? false) {
+					Points = eventPoints;
+					ReDraw ();
+				}
 			}
 		}
 	}
