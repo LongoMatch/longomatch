@@ -53,9 +53,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			set {
 				base.ViewModel = value;
-				ClearObjects ();
-				int i = 0;
-				FillCanvas (ref i);
 			}
 		}
 
