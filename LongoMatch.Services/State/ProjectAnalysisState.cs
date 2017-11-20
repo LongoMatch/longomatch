@@ -78,8 +78,10 @@ namespace LongoMatch.Services.State
 					ViewModel.VideoPlayer.OpenFileSet (project.FileSet);
 				} else {
 					MediaFileSetVM limitedSet = new MediaFileSetVM ();
-					limitedSet.Model = new MediaFileSet ();
-					limitedSet.Model.Add (project.FileSet.Model.First ());
+					var fileset = project.FileSet.Model.Clone ();
+					fileset.Clear ();
+					fileset.Add (project.FileSet.Model.First ());
+					limitedSet.Model = fileset;
 					ViewModel.VideoPlayer.OpenFileSet (limitedSet);
 				}
 			} catch (Exception ex) {

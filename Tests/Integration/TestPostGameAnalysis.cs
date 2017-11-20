@@ -264,9 +264,10 @@ namespace Tests.Integration
 				It.IsAny<string> (), It.IsAny<string []> ())).Returns (projectPath);
 			await App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			LMProject retrievedProject = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().ToList () [1];
-			Assert.IsNotNull (retrievedProject);
-			Assert.AreNotEqual (retrievedProject.ID, p.ID);
+			LMProject importedProject = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().
+			                                SortByCreationDate (true).ToList () [0];
+			Assert.IsNotNull (importedProject);
+			Assert.AreNotEqual (importedProject.ID, p.ID);
 			int eventsCount = p.Timeline.Count;
 
 			AddEvent (p, 2, 3000, 3050, 3025);
