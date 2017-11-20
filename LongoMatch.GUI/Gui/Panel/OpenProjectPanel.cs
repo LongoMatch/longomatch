@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Panel
 			set {
 				viewModel = value;
 				//FIXME: Change it to ViewModel structure in the future
-				projectlistwidget.Fill (viewModel.Model.ToList ());
+				projectlistwidget.Fill (viewModel.ViewModels.Select (p => p.Model).ToList ());
 			}
 			get {
 				return viewModel;
