@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2017 
+//  Copyright (C) 2017 Fluendo S.A.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +15,13 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.License;
 using VAS.Core.ViewModel;
-using VAS.Core.ViewModel.Statistics;
 
 namespace Tests.State
 {
 	[TestFixture]
-	public class TestProjectsManagerState
-	{
-		ProjectsManagerState state;
+    public class TestOpenProjectState
+    {
+		OpenProjectState state;
 		LMProject pastProject, nowProject, futureProject;
 		Mock<IStorage> storageMock;
 		List<LMProject> projectList;
@@ -49,15 +48,13 @@ namespace Tests.State
 
 			notLimitedLimitation = new CountLicenseLimitation {
 				Count = 0,
-				Enabled = false,
-				DisplayName = "NotLimited"
+				Enabled = false
 			};
 
 			limitedLimitation = new CountLicenseLimitation {
 				Count = 0,
 				Enabled = true,
-				Maximum = 1,
-				DisplayName = "Limited"
+				Maximum = 1
 			};
 
 			storageMock = new Mock<IStorage> ();
@@ -75,8 +72,7 @@ namespace Tests.State
 						Model = notLimitedLimitation
 					});
 			App.Current.LicenseLimitationsService = licenseLimitationMock.Object;
-
-			state = new ProjectsManagerState ();
+			state = new OpenProjectState ();
 			state.Panel = Mock.Of<IPanel> ();
 		}
 
@@ -85,44 +81,6 @@ namespace Tests.State
 		{
 			state.Dispose ();
 			state = null;
-		}
-
-		[Test]
-		public async Task ShowState_WithProjects_ProjectsLoadedInCreationOrder ()
-		{
-			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
-			var sortedProjectList = new RangeObservableCollection<LMProject>{
-				futureProject,
-				nowProject,
-				pastProject,
-			};
-			await state.LoadState (null);
-
-			await state.ShowState ();
-
-			CollectionAssert.AreEqual (sortedProjectList, state.ViewModel.Model);
-		}
-
-		[Test]
-		public async Task ShowState_WithProjects_FirstSelected ()
-		{
-			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
-			await state.LoadState (null);
-
-			await state.ShowState ();
-
-			Assert.AreEqual (futureProject, state.ViewModel.Selection.First ().Model);
-		}
-
-		[Test]
-		public async Task ShowState_WithoutProjects_FirstSelected ()
-		{
-			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (Enumerable.Empty<LMProject> ());
-			await state.LoadState (null);
-
-			await state.ShowState ();
-
-			Assert.IsFalse (state.ViewModel.Selection.Any ());
 		}
 
 		[Test]
@@ -138,24 +96,18 @@ namespace Tests.State
 
 			await state.ShowState ();
 
-			CollectionAssert.AreEqual (sortedProjectList, state.ViewModel.ViewModels.Select (p => p.Model));
+			CollectionAssert.AreEqual (sortedProjectList, state.ViewModel.ViewModels.Select(p => p.Model));
 		}
 
 		[Test]
 		public async Task ShowState_Limitation_LimitedLoadedProjects ()
 		{
 			licenseLimitationMock.Reset ();
-
-			CountLimitationVM countLimitation = new CountLimitationVM {
-				Model = limitedLimitation,
-			};
-			licenseLimitationMock.Setup (ls => ls.CreateBarChartVM (It.IsAny<string> (), -1, null)).Returns (
-				new CountLimitationBarChartVM {
-					Limitation = countLimitation,
-					BarChart = new TwoBarChartVM (4,new SeriesVM (), new SeriesVM ())
-				}
-			);
-
+			licenseLimitationMock.Setup (lim => lim.Get<CountLimitationVM> (
+				LongoMatchCountLimitedObjects.Projects.ToString ())).Returns (
+					new CountLimitationVM {
+						Model = limitedLimitation
+					});
 			storageMock.Setup (s => s.RetrieveAll<LMProject> ()).Returns (projectList);
 			var sortedProjectList = new RangeObservableCollection<LMProject>{
 				futureProject,
@@ -170,5 +122,5 @@ namespace Tests.State
 			Assert.AreNotEqual (limitedLimitation.Maximum, state.ViewModel.Model.Count ());
 			Assert.AreEqual (limitedLimitation.Maximum, state.ViewModel.ViewModels.Count ());
 		}
-	}
+    }
 }
