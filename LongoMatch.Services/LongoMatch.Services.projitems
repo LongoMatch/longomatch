@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CoreServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">

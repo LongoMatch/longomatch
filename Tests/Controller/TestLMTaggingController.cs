@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using LongoMatch;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
@@ -34,6 +35,7 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
+using VAS.Services;
 using VAS.Services.ViewModel;
 
 namespace Tests.Controller
@@ -53,6 +55,8 @@ namespace Tests.Controller
 		[SetUp]
 		public void Setup ()
 		{
+			App.Current.HotkeysService = new HotkeysService ();
+			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
 			mockToolkit = new Mock<IGUIToolkit> ();
 			mockToolkit.SetupGet (o => o.DeviceScaleFactor).Returns (1.0f);
 			App.Current.GUIToolkit = mockToolkit.Object;

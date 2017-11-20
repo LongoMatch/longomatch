@@ -244,17 +244,22 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public async Task TestSubstitutionsWithAnalysisVM ()
+		public async Task Substitution_IsEmitted_WithAbsoluteCurrentTime ()
 		{
 			bool substEventEmitted = false;
 			bool emitedPropertyChange = false;
+			Time substTime = new Time (0);
 			int times = 0;
 			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
+			videoPlayer.AbsoluteCurrentTime = new Time (20000);
 			videoPlayer.CurrentTime = new Time (10000);
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => substEventEmitted = true);
+			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => {
+				substEventEmitted = true;
+				substTime = ev.Time;
+			});
 			teamTagger.PropertyChanged += (sender, e) => {
 				if (sender == teamTagger.HomeTeam && e.PropertyName == nameof (teamTagger.HomeTeam.FieldPlayersList)) {
 					emitedPropertyChange = true;
@@ -273,10 +278,11 @@ namespace Tests.Controller
 			Assert.IsTrue (emitedPropertyChange);
 			Assert.IsTrue (substEventEmitted);
 			Assert.AreEqual (1, times);
+			Assert.AreEqual (videoPlayer.AbsoluteCurrentTime, substTime);
 		}
 
 		[Test]
-		public async Task TaggingController_VideoPlayerTimeChangeOnFileProject_AffectsToDashboardTime ()
+		public async Task TaggingController_VideoPlayerTimeChangeOnFileProject_DashboardTimeEqualsAbsoluteCurrentTime ()
 		{
 			// Arrange
 			await AnalysisSetUpAsync ();
@@ -285,11 +291,12 @@ namespace Tests.Controller
 			projectVM.Dashboard.CurrentTime = new Time (0);
 
 			// Action
+			videoPlayer.AbsoluteCurrentTime = new Time (15000);
 			videoPlayer.CurrentTime = new Time (10000);
 
 			// Assert
 			Assert.AreEqual (new Time (10000), videoPlayer.CurrentTime);
-			Assert.AreEqual (videoPlayer.CurrentTime, projectVM.Dashboard.CurrentTime);
+			Assert.AreEqual (videoPlayer.AbsoluteCurrentTime, projectVM.Dashboard.CurrentTime);
 		}
 
 		[Test]
@@ -303,6 +310,7 @@ namespace Tests.Controller
 			projectVM.Dashboard.CurrentTime = new Time (0);
 
 			// Action
+			videoPlayer.AbsoluteCurrentTime = new Time (10000);
 			videoPlayer.CurrentTime = new Time (10000);
 
 			// Assert
@@ -332,22 +340,25 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public async Task TestLineupChangesWhenCurrentTimeChangesWithAnalysis ()
+		public async Task CurrentTimeChanges_AnalysisMode_LineupChangesWithAbsoluteCurrentTime ()
 		{
 			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
+			videoPlayer.AbsoluteCurrentTime = new Time (20001);
 			videoPlayer.CurrentTime = new Time (10000);
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => Assert.AreEqual (10000, ev.Time.MSeconds));
+			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => Assert.AreEqual (20001, ev.Time.MSeconds));
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 
 			teamTagger.PlayerClick (clickedPlayer1, ButtonModifier.None);
 			teamTagger.PlayerClick (clickedPlayer2, ButtonModifier.None);
+			videoPlayer.AbsoluteCurrentTime = new Time (1000);
 			videoPlayer.CurrentTime = new Time (0);
 
 			Assert.AreSame (clickedPlayer1, teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ());
 			Assert.AreSame (clickedPlayer2, teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ());
 
+			videoPlayer.AbsoluteCurrentTime = new Time (30000);
 			videoPlayer.CurrentTime = new Time (20000);
 
 			Assert.AreSame (clickedPlayer2, teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ());
@@ -355,7 +366,7 @@ namespace Tests.Controller
 		}
 
 		[Test]
-		public async Task TestLineupChangesWhenCurrentTimeChangesWithProject ()
+		public async Task LineupChanges_WhenCurrentTimeChanges_WithProject ()
 		{
 			await ProjectSetUpAsync ();
 			var outPlayer = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();

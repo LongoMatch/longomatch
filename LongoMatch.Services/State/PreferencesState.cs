@@ -17,11 +17,11 @@
 //
 //
 using VAS.Core.Interfaces.MVVMC;
-using VAS.Services.State;
+using VASPreferencesState = VAS.Services.State.PreferencesState;
 
 namespace LongoMatch.Services.State
 {
-	public class PreferencesState : ScreenState<IViewModel>
+	public class PreferencesState : VASPreferencesState
 	{
 		public const string NAME = "Preferences";
 
@@ -33,6 +33,8 @@ namespace LongoMatch.Services.State
 
 		protected override void CreateViewModel (dynamic data)
 		{
+			base.CreateViewModel (null);
+			ViewModel.AutoSave = true;
 		}
 	}
 }

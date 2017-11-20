@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
@@ -18,6 +19,7 @@ using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
+using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Services.Controller
 {
@@ -144,6 +146,18 @@ namespace LongoMatch.Services.Controller
 			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
 		}
 
+		public override IEnumerable<VKeyAction> GetDefaultKeyActions ()
+		{
+			List<VKeyAction> keyActions = new List<VKeyAction> ();
+
+			keyActions.Add (new VKeyAction (
+				App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.TOGGLE_SUBSTITUTION_MODE),
+				() => TeamTagger.SubstitutionMode = !TeamTagger.SubstitutionMode
+			));
+
+			return keyActions;
+		}
+
 		void HandleTagPlayerEvent (TagPlayerEvent e)
 		{
 			if (teamTagger.SubstitutionMode) {
@@ -256,7 +270,7 @@ namespace LongoMatch.Services.Controller
 		{
 			if (videoPlayer.NeedsSync (e.PropertyName, nameof (videoPlayer.CurrentTime), sender, videoPlayer) &&
 				project.ProjectType == ProjectType.FileProject) {
-				teamTagger.CurrentTime = videoPlayer.CurrentTime;
+				teamTagger.CurrentTime = videoPlayer.AbsoluteCurrentTime;
 			}
 		}
 

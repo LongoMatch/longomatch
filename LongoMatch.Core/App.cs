@@ -70,12 +70,12 @@ namespace LongoMatch
 			Current.ProjectExtension = Constants.PROJECT_EXT;
 			Current.Website = Constants.WEBSITE;
 			Current.Translators = Constants.TRANSLATORS;
-			Current.LowerRate = 1;
-			Current.UpperRate = 30;
-			Current.RatePageIncrement = 3;
+			Current.LowerRate = 0;
+			Current.UpperRate = 9;
+			Current.RatePageIncrement = 1;
 			Current.RateList = new List<double> { 0.1, 0.25, 0.50, 0.75, 1, 2, 3, 4, 5 };
 			Current.StepList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60 };
-			Current.DefaultRate = 25;
+			Current.DefaultRate = 4;
 		}
 
 		protected static void Load ()

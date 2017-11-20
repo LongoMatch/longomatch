@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
@@ -29,8 +30,6 @@ using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 using Constants = VAS.Core.Common.Constants;
-using LKeyAction = LongoMatch.Core.Common.KeyAction;
-using VKeyAction = VAS.Core.Hotkeys.KeyAction;
 
 namespace LongoMatch.Services.Controller
 {
@@ -45,20 +44,18 @@ namespace LongoMatch.Services.Controller
 			base.SetViewModel (viewModel);
 		}
 
-		public override IEnumerable<VKeyAction> GetDefaultKeyActions ()
+		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
 		{
-			List<VKeyAction> keyActions = (List<VKeyAction>)base.GetDefaultKeyActions ();
+			List<KeyAction> keyActions = (List<KeyAction>)base.GetDefaultKeyActions ();
 
-			VKeyAction action = new VKeyAction (new KeyConfig {
-				Name = App.Current.Config.Hotkeys.ActionsDescriptions [LKeyAction.LocalPlayer],
-				Key = App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.LocalPlayer]
-			}, () => HandleTeamTagging (((LMProjectVM)project).HomeTeam, string.Empty));
+			KeyAction action = new KeyAction (
+				App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_HOMETEAM_TAGGING),
+				() => HandleTeamTagging (((LMProjectVM)project).HomeTeam, string.Empty));
 			keyActions.Add (action);
 
-			action = new VKeyAction (new KeyConfig {
-				Name = App.Current.Config.Hotkeys.ActionsDescriptions [LKeyAction.VisitorPlayer],
-				Key = App.Current.Config.Hotkeys.ActionsHotkeys [LKeyAction.VisitorPlayer]
-			}, () => HandleTeamTagging (((LMProjectVM)project).AwayTeam, string.Empty));
+			action = new KeyAction (
+				App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_AWAYTEAM_TAGGING),
+				() => HandleTeamTagging (((LMProjectVM)project).AwayTeam, string.Empty));
 			keyActions.Add (action);
 
 			return keyActions;
@@ -72,6 +69,7 @@ namespace LongoMatch.Services.Controller
 
 		void HandleTeamTagging (LMTeamVM team, string taggedPlayer)
 		{
+			team.Tagged = true;
 			// limitation to the number of temporal contexts that can be created
 			int position = taggedPlayer.Length;
 			if (position == 3) {
@@ -81,7 +79,7 @@ namespace LongoMatch.Services.Controller
 			KeyTemporalContext tempContext = new KeyTemporalContext { };
 			for (int i = 0; i < 10; i++) {
 				string newTaggedPlayer = taggedPlayer + i;
-				VKeyAction action = new VKeyAction (new KeyConfig {
+				KeyAction action = new KeyAction (new KeyConfig {
 					Name = taggedPlayer,
 					Key = App.Current.Keyboard.ParseName (i.ToString ())
 				}, () => HandleTeamTagging (team, newTaggedPlayer));

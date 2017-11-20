@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
@@ -111,10 +112,10 @@ namespace LongoMatch.Gui.Component
 				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.FIT_TIMELINE),
 							   () => codingwidget1.FitTimeline ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_DASHBOARD),
+				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_DASHBOARD),
 							   () => codingwidget1.ShowDashboard ()));
 			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_TIMELINE),
+				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_TIMELINE),
 							   () => codingwidget1.ShowTimeline ()));
 
 			return keyContext;

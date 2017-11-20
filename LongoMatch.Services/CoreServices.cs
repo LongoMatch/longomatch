@@ -47,7 +47,6 @@ namespace LongoMatch.Services
 	public class CoreServices
 	{
 		static DataBaseManager dbManager;
-		static HotKeysManager hkManager;
 		static JobsManagerVM jobsManagerVM;
 		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
@@ -82,8 +81,6 @@ namespace LongoMatch.Services
 			}
 			InitTranslations ();
 
-			/* Fill up the descriptions again after initializing the translations */
-			App.Current.Config.Hotkeys.FillActionsDescriptions ();
 			App.Current.DependencyRegistry = new Registry ("Dependencies");
 			CoreTool tool = new CoreTool ();
 			tool.Enable ();
@@ -165,9 +162,7 @@ namespace LongoMatch.Services
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
-			/* Start the hotkeys manager */
-			hkManager = new HotKeysManager ();
-			RegisterService (hkManager);
+			/* Start the hotkeys Service */
 			App.Current.HotkeysService = new HotkeysService ();
 			RegisterService (App.Current.HotkeysService);
 

@@ -30,10 +30,5 @@ namespace LongoMatch
 		{
 			KeyConfigs = new List<KeyConfig> ();
 		}
-
-		public Hotkeys Hotkeys {
-			get;
-			set;
-		} = new Hotkeys ();
 	}
 }

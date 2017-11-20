@@ -147,14 +147,14 @@ namespace LongoMatch.Gui.Component
 				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_ZONAL_TAGS),
 							   () => codingwidget.ShowZonalTags ()));
 			keyContext.AddAction (
+				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_DASHBOARD),
+				                () => codingwidget.ShowDashboard ()));
+			keyContext.AddAction (
+				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_TIMELINE),
+				                () => codingwidget.ShowTimeline ()));
+			keyContext.AddAction (
 				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.FIT_TIMELINE),
 							   () => codingwidget.FitTimeline ()));
-			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_DASHBOARD),
-							   () => codingwidget.ShowDashboard ()));
-			keyContext.AddAction (
-				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.SHOW_TIMELINE),
-							   () => codingwidget.ShowTimeline ()));
 
 			return keyContext;
 		}
