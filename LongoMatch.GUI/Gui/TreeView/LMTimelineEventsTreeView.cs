@@ -63,8 +63,7 @@ namespace LongoMatch.Gui.Component
 		protected override bool AllowDrag (IViewModel source)
 		{
 			EventTypeTimelineVM vm = source as EventTypeTimelineVM;
-			if (vm != null)
-			{
+			if (vm != null) {
 				categoryToMove = vm;
 				return true;
 			}
@@ -72,22 +71,23 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-
 		protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time_)
 		{
-			TreeViewColumn column;
-			int cellX, cellY;
+			TreeIter srcIter, dstIter;
+			TreeViewDropPosition srcPos, dstPos;
 
-			EventTypeTimelineVM srcVm = (EventTypeTimelineVM)GetViewModelAtPosition ((int)dragStart.X, (int)dragStart.Y, out column, out cellX, out cellY);
-			EventTypeTimelineVM dstVm = (EventTypeTimelineVM)GetViewModelAtPosition (x, y, out column, out cellX, out cellY);
-			int index = ViewModel.EventTypesTimeline.ViewModels.IndexOf (dstVm);
+			var srcVm = GetTimelineAtPosition ((int)dragStart.X, (int)dragStart.Y, out srcIter, out srcPos);
+			var dstVm = GetTimelineAtPosition (x, y, out dstIter, out dstPos);
+			int dstIndex = ViewModel.EventTypesTimeline.ViewModels.IndexOf (dstVm);
+			int srcIndex = ViewModel.EventTypesTimeline.ViewModels.IndexOf (srcVm);
 
-			ViewModel.EventTypesTimeline.ViewModels.Remove (srcVm);
-			Project.Model.EventTypes.Remove (srcVm.EventTypeVM.Model);
-
-			ViewModel.EventTypesTimeline.ViewModels.Insert (index, srcVm);
-			Project.Model.EventTypes.Insert (index, srcVm.EventTypeVM.Model);
-
+			if (dstPos == TreeViewDropPosition.Before) {
+				store.MoveBefore (srcIter, dstIter);
+			} else {
+				store.MoveAfter (srcIter, dstIter);
+			}
+			ViewModel.EventTypesTimeline.ViewModels.Move (srcIndex, dstIndex);
+			Project.Model.EventTypes.Move (srcIndex, dstIndex);
 			return true;
 		}
 
