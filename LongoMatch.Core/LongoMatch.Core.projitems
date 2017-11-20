@@ -40,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\LMDashboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\LMTimer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />

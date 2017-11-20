@@ -132,8 +132,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
     <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
-    <Compile Include="Gui\Component\HotkeysConfiguration.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
     <Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.FakeAnalysisComponent.cs" />
     <Compile Include="Gui\Component\EventsListWidget.cs" />
