@@ -83,7 +83,7 @@ namespace Tests.Drawing.Objects
 			view.Points = timelineEvent.FieldPosition.Points;
 			view.Draw (tkMock.Object, null);
 
-			Assert.Greater (redrawCount, 1);
+			Assert.Greater (1, redrawCount);
 			tkMock.Verify (tk => tk.DrawCircle (It.IsAny<Point> (), It.IsAny<double> ()), Times.Once ());
 		}
 
@@ -107,7 +107,7 @@ namespace Tests.Drawing.Objects
 
 			timelineEventVM.Visible = false;
 
-			Assert.GreaterOrEqual (1, redrawCount);
+			Assert.GreaterOrEqual (redrawCount, 1);
 		}
 
 		[Test]
@@ -130,7 +130,7 @@ namespace Tests.Drawing.Objects
 
 			timelineEvent.EventType.Color = Color.Black.Copy ();
 
-			Assert.GreaterOrEqual (1, redrawCount);
+			Assert.GreaterOrEqual (redrawCount, 1);
 		}
 
 		[Test]
