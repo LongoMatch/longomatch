@@ -41,6 +41,7 @@ namespace LongoMatch.Services.Controller
 		{
 			await base.Start ();
 			App.Current.EventsBroker.SubscribeAsync<ResyncEvent> (HandleResync);
+			App.Current.EventsBroker.SubscribeAsync<CreateEvent<LMProject>> (HandleNew);
 			App.Current.EventsBroker.Subscribe<OpenEvent<LMProject>> (HandleOpen);
 			App.Current.EventsBroker.Subscribe<SearchEvent<LMProject>> (HandleSearchEvent);
 		}
@@ -49,6 +50,7 @@ namespace LongoMatch.Services.Controller
 		{
 			await base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<ResyncEvent> (HandleResync);
+			App.Current.EventsBroker.UnsubscribeAsync<CreateEvent<LMProject>> (HandleNew);
 			App.Current.EventsBroker.Unsubscribe<OpenEvent<LMProject>> (HandleOpen);
 			App.Current.EventsBroker.Unsubscribe<SearchEvent<LMProject>> (HandleSearchEvent);
 		}
@@ -94,6 +96,11 @@ namespace LongoMatch.Services.Controller
 			}
 			ViewModel.VisibleViewModels.ApplyPropertyChanges ();
 			ViewModel.NoResults = !ViewModel.VisibleViewModels.Any ();
+		}
+
+		async Task HandleNew (CreateEvent<LMProject> arg)
+		{
+			await App.Current.StateController.MoveTo (NewProjectState.NAME, null);
 		}
 	}
 }
