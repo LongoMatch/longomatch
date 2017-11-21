@@ -15,11 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
@@ -35,6 +37,7 @@ namespace LongoMatch.Services.ViewModel
 		public SportsProjectsManagerVM ()
 		{
 			ResyncCommand = new LimitationAsyncCommand (VASFeature.OpenMultiCamera.ToString (), Resync, () => LoadedProject.FileSet.Count () > 1);
+			ProjectMenu = CreateProjectMenu ();
 		}
 
 		protected override void DisposeManagedResources ()
@@ -84,6 +87,12 @@ namespace LongoMatch.Services.ViewModel
 			protected set;
 		}
 
+		/// <summary>
+		/// Gets the project menu.
+		/// </summary>
+		/// <value>The project menu.</value>
+		public MenuVM ProjectMenu { get; private set; }
+
 		protected override async Task Open (LMProjectVM viewModel)
 		{
 			await Save (false);
@@ -93,6 +102,16 @@ namespace LongoMatch.Services.ViewModel
 		protected async Task Resync ()
 		{
 			await App.Current.EventsBroker.Publish (new ResyncEvent ());
+		}
+
+		protected MenuVM CreateProjectMenu ()
+		{
+			MenuVM menu = new MenuVM ();
+			menu.ViewModels.AddRange (new List<MenuNodeVM> {
+				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { Color = App.Current.Style.ColorAccentError },
+			});
+
+			return menu;
 		}
 	}
 }

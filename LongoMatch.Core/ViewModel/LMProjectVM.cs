@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 
@@ -40,6 +41,7 @@ namespace LongoMatch.Core.ViewModel
 			AwayTeam = new LMTeamVM ();
 			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
 			Dashboard = new LMDashboardVM ();
+			ShowMenu = new Command (() => IsMenuVisible = !IsMenuVisible);
 		}
 
 		/// <summary>
@@ -195,6 +197,18 @@ namespace LongoMatch.Core.ViewModel
 				}
 			}
 		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Core.ViewModel.LMProjectVM"/> is menu visible.
+		/// </summary>
+		/// <value><c>true</c> if is card menu visible; otherwise, <c>false</c>.</value>
+		public bool IsMenuVisible { get; set; }
+
+		/// <summary>
+		/// Gets the display options command.
+		/// </summary>
+		/// <value>The display options.</value>
+		public Command ShowMenu { get; private set; }
 
 		/// <summary>
 		/// Gets the preview of the first file in set or null if the set is empty.
