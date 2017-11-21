@@ -63,8 +63,7 @@ namespace LongoMatch.Gui.Component
 		protected override bool AllowDrag (IViewModel source)
 		{
 			EventTypeTimelineVM vm = source as EventTypeTimelineVM;
-			if (vm != null)
-			{
+			if (vm != null) {
 				categoryToMove = vm;
 				return true;
 			}
