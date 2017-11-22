@@ -83,7 +83,7 @@ namespace Tests.Drawing.Objects
 			view.Points = timelineEvent.FieldPosition.Points;
 			view.Draw (tkMock.Object, null);
 
-			Assert.Greater (1, redrawCount);
+			Assert.Greater (redrawCount, 1);
 			tkMock.Verify (tk => tk.DrawCircle (It.IsAny<Point> (), It.IsAny<double> ()), Times.Once ());
 		}
 
