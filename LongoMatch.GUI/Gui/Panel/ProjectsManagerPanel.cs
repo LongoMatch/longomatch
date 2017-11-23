@@ -221,7 +221,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx = this.GetBindingContext ();
 			detailCtx = new BindingContext ();
-			ctx.Add (deletebutton.Bind (vm => ((SportsProjectsManagerVM)vm).DeleteSelectionCommand));
+			ctx.Add (deletebutton.Bind (vm => ((SportsProjectsManagerVM)vm).DeleteCommand));
 			ctx.Add (openbutton.Bind (vm => ((SportsProjectsManagerVM)vm).OpenCommand));
 			ctx.Add (exportbutton.Bind (vm => ((SportsProjectsManagerVM)vm).ExportCommand));
 			ctx.Add (savebutton.Bind (vm => ((SportsProjectsManagerVM)vm).SaveCommand));
