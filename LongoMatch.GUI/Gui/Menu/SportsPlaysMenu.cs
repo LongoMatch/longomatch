@@ -24,25 +24,26 @@ using VAS;
 using VAS.Core;
 using VAS.Core.Events;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.UI.Menus;
 
 namespace LongoMatch.Gui.Menus
 {
 	public class SportsPlaysMenu : PlaysMenu
 	{
-		protected new void ShowMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
+		protected new void ShowMenu (Project project, IEnumerable<TimelineEventVM> plays, EventType eventType, Time time,
 										  IList<EventType> eventTypes, bool editableName)
 		{
 			PrepareMenu (project, plays, eventType, time, eventTypes, editableName);
 			Popup ();
 		}
 
-		public override void ShowMenu (Project project, List<TimelineEvent> plays)
+		public override void ShowMenu (Project project, IEnumerable<TimelineEventVM> plays)
 		{
 			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		protected override void PrepareMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
+		protected override void PrepareMenu (Project project, IEnumerable<TimelineEventVM> plays, EventType eventType, Time time,
 										 IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
@@ -61,10 +62,10 @@ namespace LongoMatch.Gui.Menus
 			}
 
 			if (plays == null) {
-				plays = new List<TimelineEvent> ();
+				plays = new List<TimelineEventVM> ();
 			} else if (plays.Count () == 1) {
-				isLineup = plays.FirstOrDefault () is LineupEvent;
-				isSubstitution = plays.FirstOrDefault () is SubstitutionEvent;
+				isLineup = plays.FirstOrDefault ().Model is LineupEvent;
+				isSubstitution = plays.FirstOrDefault ().Model is SubstitutionEvent;
 			}
 
 			MenuHelpers.FillExportToVideoFileMenu (render, project, plays, Catalog.GetString ("Export to video file"));
@@ -132,7 +133,7 @@ namespace LongoMatch.Gui.Menus
 					};
 					deleteItem.Activated += (sender, e) => {
 						plays.FirstOrDefault ().Drawings.RemoveAt (index);
-						plays.FirstOrDefault ().UpdateMiniature ();
+						plays.FirstOrDefault ().Model.UpdateMiniature ();
 					};
 					drawingItem.Submenu = drawingMenu;
 					drawingMenu.ShowAll ();
@@ -142,7 +143,8 @@ namespace LongoMatch.Gui.Menus
 			}
 
 			if (!IsLineupEvent ()) {
-				MenuHelpers.FillAddToPlaylistMenu (addPLN, project.Playlists, this.plays);
+				var playlistVMs = project.Playlists.Select (pl => new PlaylistVM { Model = pl });
+				MenuHelpers.FillAddToPlaylistMenu (addPLN, playlistVMs, this.plays);
 			}
 		}
 
@@ -161,10 +163,10 @@ namespace LongoMatch.Gui.Menus
 
 			duplicate = new MenuItem ("");
 			duplicate.Activated += (sender, e) => App.Current.EventsBroker.Publish<DuplicateEventsEvent> (
-					new DuplicateEventsEvent {
-						TimelineEvents = plays
-					}
-				);
+				new DuplicateEventsEvent {
+					TimelineEvents = plays
+				}
+			);
 			Add (duplicate);
 
 			moveCat = new MenuItem (Catalog.GetString ("Move to"));
@@ -193,7 +195,7 @@ namespace LongoMatch.Gui.Menus
 
 		bool IsLineupEvent ()
 		{
-			return plays.Any (p => p is LineupEvent || p is SubstitutionEvent);
+			return plays.Any (p => p.Model is LineupEvent || p.Model is SubstitutionEvent);
 		}
 	}
 }

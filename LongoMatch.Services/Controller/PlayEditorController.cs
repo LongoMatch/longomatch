@@ -17,13 +17,13 @@ namespace LongoMatch.Services.Controller
 	[Controller (PlayEditorState.NAME)]
 	public class PlayEditorController : ControllerBase
 	{
-		PlayEditorVM playEditorVM;
+		PlayEditorVM playEditor;
 		LMTeamTaggerVM teamTagger;
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			playEditorVM = (PlayEditorVM)viewModel;
-			teamTagger = playEditorVM.TeamTagger;
+			playEditor = (PlayEditorVM)viewModel;
+			teamTagger = playEditor.TeamTagger;
 		}
 
 		public override async Task Start ()
@@ -42,7 +42,7 @@ namespace LongoMatch.Services.Controller
 		{
 			if (teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.HomeTeam) ||
 				teamTagger.NeedsSync (e.PropertyName, "Collection_Selection", sender, teamTagger.AwayTeam)) {
-				playEditorVM.Play.Players.Reset (teamTagger.HomeTeam.Selection.Select (p => p.Model)
+				playEditor.Play.Players.Reset (teamTagger.HomeTeam.Selection.Select (p => p.Model)
 												   .Concat (teamTagger.AwayTeam.Selection.Select (p => p.Model)));
 			}
 
@@ -57,12 +57,10 @@ namespace LongoMatch.Services.Controller
 
 		void UpdatePlayTeams (LMTeamVM team)
 		{
-			//FIXME: this is using playEditorVM.Play as Model, it should use TimelineEventVM,
-			//when the PlayEditor view is fully migrated to MVVM
-			if (team.Tagged && !playEditorVM.Play.Teams.Contains (team.Model)) {
-				playEditorVM.Play.Teams.Add (team.Model);
-			} else if (!team.Tagged && playEditorVM.Play.Teams.Contains (team.Model)) {
-				playEditorVM.Play.Teams.Remove (team.Model);
+			if (team.Tagged && !playEditor.Play.Teams.Contains (team.Model)) {
+				playEditor.Play.Teams.Add (team.Model);
+			} else if (!team.Tagged && playEditor.Play.Teams.Contains (team.Model)) {
+				playEditor.Play.Teams.Remove (team.Model);
 			}
 		}
 	}

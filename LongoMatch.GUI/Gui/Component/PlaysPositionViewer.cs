@@ -64,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			if (plays == null || !plays.Any ()) {
 				return;
 			}
-			menu.ShowMenu (ViewModel.Model, plays.ToList ());
+			menu.ShowMenu (ViewModel.Model, plays.Select (p => new TimelineEventVM () { Model = p }));
 		}
 
 		protected override void OnDestroyed ()

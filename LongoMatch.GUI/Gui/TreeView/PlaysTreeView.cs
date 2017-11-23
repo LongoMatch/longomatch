@@ -19,9 +19,11 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
@@ -298,7 +300,10 @@ namespace LongoMatch.Gui.Component
 		void ShowEventTypeMenu (EventType eventType, TreePath [] paths)
 		{
 			List<LMTimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
-			eventTypeMenu.ShowMenu (Project, eventType, events);
+
+			IEnumerable<LMTimelineEventVM> eventVMs = events.Select (e => new LMTimelineEventVM () { Model = e });
+
+			eventTypeMenu.ShowMenu (Project, eventType, eventVMs);
 		}
 
 	}
