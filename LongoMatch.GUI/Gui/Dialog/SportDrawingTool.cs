@@ -16,12 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
+using VAS.Core.Common;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
@@ -42,6 +44,11 @@ namespace LongoMatch.Gui.Dialog
 		public new void SetViewModel (object viewModel)
 		{
 			ViewModel = (LMDrawingToolVM)viewModel;
+			if (ViewModel.TeamTagger.HomeTeam.Model == null || ViewModel.TeamTagger.AwayTeam.Model == null)
+			{
+				buttonToDrawTool.FirstOrDefault(x => x.Value == DrawTool.Player).Key.Visible = false;
+			}
+
 			base.SetViewModel (viewModel);
 		}
 
