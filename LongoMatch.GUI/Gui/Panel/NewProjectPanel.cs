@@ -441,6 +441,7 @@ namespace LongoMatch.Gui.Panel
 			project.UpdateEventTypesAndTimers ();
 			project.ConsolidateDescription ();
 			project.ProjectType = projectType;
+			ViewModel.Project.Model = project;
 		}
 
 		bool CreateProject ()
@@ -478,8 +479,6 @@ namespace LongoMatch.Gui.Panel
 			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
-			ViewModel.Project.Model = project;
-
 
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();
