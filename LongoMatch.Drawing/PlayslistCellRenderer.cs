@@ -414,6 +414,8 @@ namespace LongoMatch.Drawing
 			offsetX = backgroundArea.Right - cellArea.Right;
 			offsetY = cellArea.Top - backgroundArea.Top;
 
+			bool playing = (item as IPlayable)?.Playing ?? false;
+
 			// HACK: to be remove when all treeviews are migrated to user VM's
 			if (item is TimelineEventVM) {
 				item = ((TimelineEventVM)item).Model;
@@ -438,12 +440,12 @@ namespace LongoMatch.Drawing
 					context, backgroundArea, cellArea);
 			} else if (item is SubstitutionEvent) {
 				SubstitutionEvent s = item as SubstitutionEvent;
-				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
+				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
 				LMTimelineEvent p = item as LMTimelineEvent;
 				// always add local first.
-				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Playing, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as LMPlayer, count, isExpanded, tk, context, backgroundArea, cellArea);
@@ -451,11 +453,11 @@ namespace LongoMatch.Drawing
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
-				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, p.Playing, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is IPlaylistElement) {
 				IPlaylistElement p = item as IPlaylistElement;
-				RenderPlay (App.Current.Style.ThemeContrastDisabled, p.Miniature, null, null, p.Playing, p.Description,
+				RenderPlay (App.Current.Style.ThemeContrastDisabled, p.Miniature, null, null, playing, p.Description,
 					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item?.GetType ());

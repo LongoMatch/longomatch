@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 			foreach (PlaylistVM playlist in ViewModel.ViewModels) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
 				plmenu.Activated += (s, e) => App.Current.EventsBroker.Publish (
-					new RenderPlaylistEvent { Playlist = playlist.Model });
+					new RenderPlaylistEvent { Playlist = playlist });
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();
