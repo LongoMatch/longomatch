@@ -24,6 +24,7 @@ using LongoMatch.Gui.Component;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.UI.Helpers;
@@ -56,7 +57,7 @@ namespace LongoMatch.Gui.Dialog
 			FillBitrates ();
 			addbutton1.Clicked += OnAddbuttonClicked;
 			convertimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-video-converter-big", 64);
-			addimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.ButtonNormalSize);
+			addimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.ButtonNormalSize);
 			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.ThemeBase));
 			addbutton1.CanFocus = false;
 			scrolledwindow1.Visible = false;

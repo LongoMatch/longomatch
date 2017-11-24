@@ -22,6 +22,7 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
@@ -54,7 +55,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			tk.Begin ();
 
 			if (Active) {
-				tk.LineWidth = StyleConf.ButtonLineWidth;
+				tk.LineWidth = Sizes.ButtonLineWidth;
 				tk.StrokeColor = BackgroundColor;
 				tk.FillColor = TextColor;
 			} else {
@@ -81,7 +82,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.FontSize = StyleConf.ButtonNameFontSize;
+			tk.FontSize = Sizes.ButtonNameFontSize;
 			tk.FontWeight = FontWeight.Light;
 			tk.FontAlignment = FontAlignment.Center;
 			if (Recording) {

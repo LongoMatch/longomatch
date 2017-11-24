@@ -23,6 +23,7 @@ using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Drawing.Widgets;
@@ -86,8 +87,8 @@ namespace LongoMatch.Drawing.Widgets
 			var timeline = new PeriodsTimelineView {
 				DraggingMode = NodeDraggingMode.All,
 				Duration = ViewModel.Project.FileSet.Duration,
-				Height = StyleConf.TimelineCategoryHeight,
-				OffsetY = line * StyleConf.TimelineCategoryHeight,
+				Height = Sizes.TimelineCategoryHeight,
+				OffsetY = line * Sizes.TimelineCategoryHeight,
 				LineColor = App.Current.Style.ThemeBase,
 				BackgroundColor = VASDrawing.Utils.ColorForRow (line),
 				ShowLine = false

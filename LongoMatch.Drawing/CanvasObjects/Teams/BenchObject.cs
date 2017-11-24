@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing.CanvasObjects;
 using VASDrawing = VAS.Drawing;
@@ -93,7 +94,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.Begin ();
 			tk.TranslateAndScale (Position, new Point (1, 1));
 			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = App.Current.Style.BenchLineWidth;
+			tk.LineWidth = Sizes.BenchLineWidth;
 			tk.StrokeColor = App.Current.Style.ThemeContrastDisabled;
 			tk.FillColor = null;
 			tk.DrawRectangle (new Point (0, 0), Width, Height);

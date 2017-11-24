@@ -30,6 +30,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.UI.Component;
 using VAS.UI.Helpers.Bindings;
@@ -57,10 +58,10 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
-			teamimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-team-header", StyleConf.TemplatesHeaderIconSize);
-			playerheaderimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-player-header", StyleConf.TemplatesHeaderIconSize);
+			teamimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-team-header", Sizes.TemplatesHeaderIconSize);
+			playerheaderimage.Image = App.Current.ResourcesLocator.LoadIcon ("lm-player-header", Sizes.TemplatesHeaderIconSize);
 			// FIXME: "vertical-separator" has a png extension
-			vseparatorimage.Image = new Image (Helpers.Misc.LoadIcon ("lm-vertical-separator", StyleConf.TemplatesIconSize));
+			vseparatorimage.Image = new Image (Helpers.Misc.LoadIcon ("lm-vertical-separator", Sizes.TemplatesIconSize));
 
 
 			newteambutton.Entered += HandleEnterTeamButton;

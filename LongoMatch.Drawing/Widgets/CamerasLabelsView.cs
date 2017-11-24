@@ -19,6 +19,7 @@ using System.Linq;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
@@ -84,8 +85,8 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			int row = 0, w, h, height = 0;
 
-			w = StyleConf.TimelineLabelsWidth * 2;
-			h = StyleConf.TimelineCameraHeight;
+			w = Sizes.TimelineLabelsWidth * 2;
+			h = Sizes.TimelineCameraHeight;
 
 			// Main camera
 			AddCamera (fileSetVM.ViewModels [0], w, h, ref row);

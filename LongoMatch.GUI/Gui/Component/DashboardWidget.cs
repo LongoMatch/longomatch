@@ -30,6 +30,7 @@ using VAS.Core.Events;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
@@ -61,7 +62,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", StyleConf.ButtonDialogIconSize);
+			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", Sizes.ButtonDialogIconSize);
 
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.ShowMenuEvent += HandleShowMenuEvent;

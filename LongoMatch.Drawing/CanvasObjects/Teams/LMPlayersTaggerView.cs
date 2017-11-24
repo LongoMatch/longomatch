@@ -29,6 +29,8 @@ using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Resources;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing.CanvasObjects;
@@ -178,7 +180,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
 				if (ViewModel.HomeTeam.Icon == null) {
-					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
+					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 				} else {
 					homeButton.BackgroundImage = ViewModel.HomeTeam.Icon;
 				}
@@ -193,7 +195,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
 				if (ViewModel.AwayTeam.Icon == null) {
-					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
+					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 				} else {
 					awayButton.BackgroundImage = ViewModel.AwayTeam.Icon;
 				}
@@ -210,7 +212,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayBench.BenchPlayers = awayBenchPlayers;
 			homeBench.Height = awayBench.Height = field.Height;
 
-			border = App.Current.Style.TeamTaggerBenchBorder;
+			border = Sizes.TeamTaggerBenchBorder;
 			if (homeTeam == null || awayTeam == null) {
 				if (homeTeam != null) {
 					homeBench.Position = new Point (border, 0);
@@ -297,9 +299,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		void LoadSubsButtons ()
 		{
 			subPlayers = new ButtonObject ();
-			subPlayers.BackgroundImageActive = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsUnlock);
+			subPlayers.BackgroundImageActive = App.Current.ResourcesLocator.LoadIcon (Icons.SubsUnlock);
 			subPlayers.BackgroundColorActive = App.Current.Style.ScreenBase;
-			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsLock);
+			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subPlayers.RedrawEvent += (co, area) => EmitRedrawEvent (subPlayers, area);
@@ -476,7 +478,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			/* Compute how we should scale and translate to fit the widget
 			 * in the designated area */
 			width = homeBench.Width * NTeams + field.Width +
-			2 * NTeams * App.Current.Style.TeamTaggerBenchBorder;
+			2 * NTeams * Sizes.TeamTaggerBenchBorder;
 			height = field.Height;
 			Image.ScaleFactor ((int)width, (int)height, (int)Width,
 				(int)Height - BUTTONS_HEIGHT, ScaleMode.AspectFit,
@@ -495,12 +497,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (homeButton.Visible) {
 				/* Draw local team button */
-				double x = Position.X + App.Current.Style.TeamTaggerBenchBorder * scaleX + offset.X;
+				double x = Position.X + Sizes.TeamTaggerBenchBorder * scaleX + offset.X;
 				homeButton.Position = new Point (x, offset.Y - homeButton.Height);
 				homeButton.Draw (tk, area);
 			}
 			if (awayButton.Visible) {
-				double x = (Position.X + Width - offset.X - App.Current.Style.TeamTaggerBenchBorder * scaleX) - awayButton.Width;
+				double x = (Position.X + Width - offset.X - Sizes.TeamTaggerBenchBorder * scaleX) - awayButton.Width;
 				awayButton.Position = new Point (x, offset.Y - awayButton.Height);
 				awayButton.Draw (tk, area);
 			}

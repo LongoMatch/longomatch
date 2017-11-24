@@ -27,6 +27,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.Cairo;
 using VAS.UI.UI.Component;
 using Color = VAS.Core.Common.Color;
@@ -55,7 +56,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", StyleConf.ButtonDialogIconSize);
+			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-apply", Sizes.ButtonDialogIconSize);
 
 			teamtagger = new LMTeamTaggerView (new WidgetWrapper (drawingarea));
 			shieldvbox.WidthRequest = SHIELD_SIZE;

@@ -23,6 +23,8 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using VAS.Core.Store.Templates;
@@ -52,11 +54,11 @@ namespace LongoMatch.Drawing
 		//RiftAnalyst, try to reuse the code.
 		static PlayslistCellRenderer ()
 		{
-			PlayIcon = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayButton, false);
-			BtnNormalBackground = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonNormalTheme, false);
-			BtnNormalBackgroundPrelight = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonPrelightTheme, false);
-			BtnNormalBackgroundActive = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonActiveTheme, false);
-			BtnNormalBackgroundInsensitive = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.NormalButtonInsensititveTheme, false);
+			PlayIcon = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.PlayButton, false);
+			BtnNormalBackground = App.Current.DrawingToolkit.CreateSurfaceFromResource (Themes.NormalButtonNormalTheme, false);
+			BtnNormalBackgroundPrelight = App.Current.DrawingToolkit.CreateSurfaceFromResource (Themes.NormalButtonPrelightTheme, false);
+			BtnNormalBackgroundActive = App.Current.DrawingToolkit.CreateSurfaceFromResource (Themes.NormalButtonActiveTheme, false);
+			BtnNormalBackgroundInsensitive = App.Current.DrawingToolkit.CreateSurfaceFromResource (Themes.NormalButtonInsensititveTheme, false);
 		}
 
 		/// <summary>
@@ -120,14 +122,14 @@ namespace LongoMatch.Drawing
 			// FIXME: Remove it with everything is ported to MVVM
 			po.Player = new LMPlayerVM { Model = p };
 			po.Position = imagePoint;
-			po.Size = StyleConf.ListImageWidth - 2;
+			po.Size = Sizes.ListImageWidth - 2;
 			po.Draw (tk, null);
 			po.Dispose ();
 		}
 
 		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
-			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield,
+			tk.DrawImage (imagePoint, Sizes.ListImageWidth, Sizes.ListImageWidth, team.Shield,
 				ScaleMode.AspectFit);
 		}
 
@@ -137,37 +139,37 @@ namespace LongoMatch.Drawing
 			Point arrowY;
 			ISurface arrow;
 
-			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator * 2 + StyleConf.ListCountRadio;
-			countX2 = countX1 + StyleConf.ListCountWidth;
+			countX1 = cellArea.Start.X + Sizes.ListRowSeparator * 2 + Sizes.ListCountRadio;
+			countX2 = countX1 + Sizes.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
-			countY = countYC - StyleConf.ListCountRadio;
+			countY = countYC - Sizes.ListCountRadio;
 			if (count > 0) {
 				if (!isExpanded) {
 					if (ArrowRight == null) {
-						ArrowRight = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListArrowRightPath, false);
+						ArrowRight = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.ListArrowRightPath, false);
 					}
 					arrow = ArrowRight;
 				} else {
 					if (ArrowDown == null) {
-						ArrowDown = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListArrowDownPath, false);
+						ArrowDown = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.ListArrowDownPath, false);
 					}
 					arrow = ArrowDown;
 				}
 				arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
-				tk.DrawSurface (arrowY, StyleConf.ListArrowRightWidth, StyleConf.ListArrowRightHeight, arrow, ScaleMode.AspectFit);
+				tk.DrawSurface (arrowY, Sizes.ListArrowRightWidth, Sizes.ListArrowRightHeight, arrow, ScaleMode.AspectFit);
 			}
 
 			tk.LineWidth = 0;
 			tk.FillColor = color;
-			tk.DrawCircle (new Point (countX1, countYC), StyleConf.ListCountRadio);
-			tk.DrawCircle (new Point (countX2, countYC), StyleConf.ListCountRadio);
-			tk.DrawRectangle (new Point (countX1, countY), StyleConf.ListCountWidth, 2 * StyleConf.ListCountRadio);
+			tk.DrawCircle (new Point (countX1, countYC), Sizes.ListCountRadio);
+			tk.DrawCircle (new Point (countX2, countYC), Sizes.ListCountRadio);
+			tk.DrawRectangle (new Point (countX1, countY), Sizes.ListCountWidth, 2 * Sizes.ListCountRadio);
 			tk.StrokeColor = App.Current.Style.ThemeBase;
 			tk.FontAlignment = FontAlignment.Center;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 14;
-			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
-				2 * StyleConf.ListCountRadio, count.ToString ());
+			tk.DrawText (new Point (countX1, countY), Sizes.ListCountWidth,
+						 2 * Sizes.ListCountRadio, count.ToString ());
 		}
 
 		static void RenderPlayButton (IDrawingToolkit tk, Area cellArea, bool insensitive, CellState state)
@@ -202,7 +204,7 @@ namespace LongoMatch.Drawing
 
 			/* Text */
 			tk.StrokeColor = textColor;
-			tk.FontSize = StyleConf.ListTextFontSize;
+			tk.FontSize = Sizes.ListTextFontSize;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.DrawText (textP, textW, backgroundArea.Height, text);
@@ -214,8 +216,8 @@ namespace LongoMatch.Drawing
 			Point image, text;
 			double textWidth;
 
-			image = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
-			text = new Point (image.X + StyleConf.ListRowSeparator + StyleConf.ListImageWidth,
+			image = new Point (Sizes.ListTextOffset, cellArea.Start.Y);
+			text = new Point (image.X + Sizes.ListRowSeparator + Sizes.ListImageWidth,
 				cellArea.Start.Y);
 			textWidth = cellArea.Start.X + cellArea.Width - text.X;
 
@@ -232,7 +234,7 @@ namespace LongoMatch.Drawing
 		public static void RenderPlaylist (Playlist playlist, int count, bool isExpanded, IDrawingToolkit tk,
 										   IContext context, Area backgroundArea, Area cellArea)
 		{
-			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
+			Point textP = new Point (Sizes.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, playlist.Name);
@@ -242,9 +244,9 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderAnalysisCategory (EventTypeTimelineVM vm, int count, bool isExpanded, IDrawingToolkit tk,
-		                                           IContext context, Area backgroundArea, Area cellArea, CellState state)
+												   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
-			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
+			Point textP = new Point (Sizes.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, vm.EventTypeVM.Name);
@@ -260,7 +262,7 @@ namespace LongoMatch.Drawing
 		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
 												   IContext context, Area backgroundArea, Area cellArea)
 		{
-			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
+			Point textP = new Point (Sizes.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, cat.Name);
@@ -275,10 +277,10 @@ namespace LongoMatch.Drawing
 											 out Point circlePoint, out double textWidth)
 		{
 			selectPoint = new Point (backgroundArea.Start.X, backgroundArea.Start.Y);
-			textPoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator, selectPoint.Y);
-			imagePoint = new Point (textPoint.X + StyleConf.ListTextWidth + StyleConf.ListRowSeparator, selectPoint.Y);
-			textWidth = StyleConf.ListTextWidth;
-			circlePoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth / 2, selectPoint.Y + backgroundArea.Height / 2);
+			textPoint = new Point (selectPoint.X + Sizes.ListSelectedWidth + Sizes.ListRowSeparator, selectPoint.Y);
+			imagePoint = new Point (textPoint.X + Sizes.ListTextWidth + Sizes.ListRowSeparator, selectPoint.Y);
+			textWidth = Sizes.ListTextWidth;
+			circlePoint = new Point (selectPoint.X + Sizes.ListSelectedWidth / 2, selectPoint.Y + backgroundArea.Height / 2);
 
 			tk.LineWidth = 0;
 			if (state.HasFlag (CellState.Prelit)) {
@@ -290,13 +292,13 @@ namespace LongoMatch.Drawing
 			/* Selection rectangle */
 			tk.LineWidth = 0;
 			tk.FillColor = color;
-			tk.DrawRectangle (selectPoint, StyleConf.ListSelectedWidth, backgroundArea.Height);
+			tk.DrawRectangle (selectPoint, Sizes.ListSelectedWidth, backgroundArea.Height);
 			tk.FillColor = App.Current.Style.ThemeBase;
-			tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 1);
+			tk.DrawCircle (circlePoint, (Sizes.ListSelectedWidth / 2) - 1);
 			if (state.HasFlag (CellState.Selected)) {
 				tk.FillColor = App.Current.Style.ScreenBase;
 				tk.FillColor = App.Current.Style.ThemeContrastDisabled;
-				tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 2);
+				tk.DrawCircle (circlePoint, (Sizes.ListSelectedWidth / 2) - 2);
 			}
 
 			if (desc != null) {
@@ -308,12 +310,13 @@ namespace LongoMatch.Drawing
 			}
 			if (selected) {
 				if (EyeSurface == null) {
-					EyeSurface = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListEyeIconPath, false);
+					EyeSurface = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.ListEyePath, false);
 				}
-				tk.DrawSurface (new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2), StyleConf.ListEyeIconWidth, StyleConf.ListEyeIconHeight, EyeSurface, ScaleMode.AspectFit);
+				tk.DrawSurface (new Point (imagePoint.X - EyeSurface.Width - Sizes.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2),
+								Sizes.ListEyeIconWidth, Sizes.ListEyeIconHeight, EyeSurface, ScaleMode.AspectFit);
 			}
 			if (ss != null) {
-				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss,
+				tk.DrawImage (imagePoint, Sizes.ListImageWidth, cellArea.Height, ss,
 					ScaleMode.AspectFit);
 			}
 		}
@@ -327,7 +330,7 @@ namespace LongoMatch.Drawing
 			double textWidth;
 
 			if (subsImage == null) {
-				subsImage = App.Current.ResourcesLocator.LoadImage (StyleConf.SubsIcon);
+				subsImage = App.Current.ResourcesLocator.LoadIcon (Icons.Subs);
 			}
 			tk.Context = context;
 			tk.Begin ();
@@ -335,13 +338,13 @@ namespace LongoMatch.Drawing
 			RenderTimelineEventBase (color, null, selected, null, tk, context, backgroundArea, cellArea, state,
 				out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
 			inPoint = textPoint;
-			imgPoint = new Point (textPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y);
-			outPoint = new Point (imgPoint.X + 20 + StyleConf.ListRowSeparator, imgPoint.Y);
+			imgPoint = new Point (textPoint.X + Sizes.ListImageWidth + Sizes.ListRowSeparator, textPoint.Y);
+			outPoint = new Point (imgPoint.X + 20 + Sizes.ListRowSeparator, imgPoint.Y);
 			RenderPlayer (tk, playerIn, inPoint);
 			tk.DrawImage (imgPoint, 20, cellArea.Height, subsImage, ScaleMode.AspectFit);
 			RenderPlayer (tk, playerOut, outPoint);
 
-			timePoint = new Point (outPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y);
+			timePoint = new Point (outPoint.X + Sizes.ListImageWidth + Sizes.ListRowSeparator, textPoint.Y);
 			tk.FontSize = 10;
 			tk.FontWeight = FontWeight.Normal;
 			tk.StrokeColor = App.Current.Style.TextBase;
@@ -364,17 +367,17 @@ namespace LongoMatch.Drawing
 			RenderTimelineEventBase (color, ss, selected, desc, tk, context, backgroundArea, cellArea, state,
 				out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
 
-			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+			imagePoint.X += Sizes.ListImageWidth + Sizes.ListRowSeparator;
 			if (players != null && players.Count > 0) {
 				foreach (LMPlayer p in players) {
 					RenderPlayer (tk, p, imagePoint);
-					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+					imagePoint.X += Sizes.ListImageWidth + Sizes.ListRowSeparator;
 				}
 			}
 			if (teams != null) {
 				foreach (var team in teams) {
 					RenderTeam (tk, team, imagePoint);
-					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+					imagePoint.X += Sizes.ListImageWidth + Sizes.ListRowSeparator;
 				}
 			}
 			RenderSeparationLine (tk, context, backgroundArea);

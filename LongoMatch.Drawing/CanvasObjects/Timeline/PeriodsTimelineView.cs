@@ -21,6 +21,7 @@ using System.Linq;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Drawing.CanvasObjects.Timeline;
@@ -87,10 +88,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 			if (ShowLine) {
 				// We want the background line and overlay to use the same starting point although they have different sizes.
-				double linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
+				double linepos = OffsetY + Height / 2 + Sizes.TimelineLineSize / 2;
 				tk.FillColor = App.Current.Style.ThemeBase;
 				tk.StrokeColor = App.Current.Style.ThemeBase;
-				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;
+				tk.LineWidth = Sizes.TimelineBackgroundLineSize;
 				tk.DrawLine (new Point (0, linepos),
 							 new Point (Width, linepos));
 			}

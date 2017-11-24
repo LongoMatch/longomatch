@@ -20,6 +20,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources;
 using VAS.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
@@ -31,7 +32,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		static ScoreView ()
 		{
-			iconImage = App.Current.ResourcesLocator.LoadImage (StyleConf.ButtonScoreIcon);
+			iconImage = App.Current.ResourcesLocator.LoadImage (Images.ButtonScore);
 		}
 
 		public ScoreButtonVM ViewModel {

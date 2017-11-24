@@ -23,6 +23,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Resources;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -41,7 +42,7 @@ namespace LongoMatch.Core.Store.Templates
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
 			try {
-				Shield = App.Current.ResourcesLocator.LoadImage (StyleConf.DefaultShield);
+				Shield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 			} catch {
 				/* Ignore for unit tests */
 			}

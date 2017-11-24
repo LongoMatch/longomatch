@@ -21,6 +21,7 @@ using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
@@ -37,7 +38,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			playsnotebook.Page = 0;
-			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			playsList1.HeightRequest = Sizes.PlayerCapturerControlsHeight;
 
 			playsList = new LMTimelineEventsTreeView ();
 			playsList.Show ();

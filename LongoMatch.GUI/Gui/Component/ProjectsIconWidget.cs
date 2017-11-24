@@ -27,6 +27,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using Misc = VAS.UI.Helpers.Misc;
@@ -236,7 +237,7 @@ namespace LongoMatch.Gui.Component
 
 			TreeViewColumn filterColumn = new TreeViewColumn ();
 			checkCell = new CellRendererToggle ();
-			checkCell.Width = StyleConf.FilterTreeViewToogleWidth;
+			checkCell.Width = Sizes.FilterTreeViewToogleWidth;
 			checkCell.Toggled += HandleCellToggled;
 			filterColumn.PackStart (checkCell, false);
 			filterColumn.AddAttribute (checkCell, "active", COL_ACTIVE);

@@ -22,6 +22,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
@@ -54,8 +55,8 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			recimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-control-record", StyleConf.PlayerCapturerIconSize);
+			hbox2.HeightRequest = Sizes.PlayerCapturerControlsHeight;
+			recimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-control-record", Sizes.PlayerCapturerIconSize);
 			newvideobutton.Clicked += HandleRenderPlaylistClicked;
 
 			Bind ();
@@ -81,7 +82,7 @@ namespace LongoMatch.Gui.Component
 		{
 			ctx = this.GetBindingContext ();
 			ctx.Add (newbutton.BindWithIcon (
-				App.Current.ResourcesLocator.LoadIcon ("lm-playlist-new", StyleConf.PlayerCapturerIconSize),
+				App.Current.ResourcesLocator.LoadIcon ("lm-playlist-new", Sizes.PlayerCapturerIconSize),
 				vm => ((PlaylistCollectionVM)vm).NewCommand));
 		}
 

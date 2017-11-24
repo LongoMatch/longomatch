@@ -9,6 +9,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -21,8 +22,8 @@ namespace LongoMatch.Services.ViewModel
 		{
 			NewPlayerCommand = new AsyncCommand (CreatePlayer, () => Team.Model != null);
 			DeletePlayersCommand = new AsyncCommand (DeletePlayers, () => Team.Selection.Any ());
-			NewPlayerCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.TemplatesIconSize);
-			DeletePlayersCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", StyleConf.TemplatesIconSize);
+			NewPlayerCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.TemplatesIconSize);
+			DeletePlayersCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", Sizes.TemplatesIconSize);
 		}
 
 		public LMTeamVM Team {

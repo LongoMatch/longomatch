@@ -21,6 +21,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Drawing.Widgets;
 using VUtils = VAS.Drawing.Utils;
@@ -33,8 +34,8 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		public LMTimelineLabels (IWidget widget) : base (widget)
 		{
-			labelWidth = StyleConf.TimelineLabelsWidth;
-			labelHeight = StyleConf.TimelineSelectionLeftHeight;
+			labelWidth = Sizes.TimelineLabelsWidth;
+			labelHeight = Sizes.TimelineSelectionLeftHeight;
 		}
 
 		public LMTimelineLabels () : this (null)

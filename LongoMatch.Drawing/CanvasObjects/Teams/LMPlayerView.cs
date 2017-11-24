@@ -20,6 +20,8 @@ using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.CanvasObjects.Teams;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
@@ -32,8 +34,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		static LMPlayerView ()
 		{
-			ArrowOut = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowOut);
-			ArrowIn = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowIn);
+			ArrowOut = App.Current.DrawingToolkit.CreateSurfaceFromResource (Images.PlayerArrowOut);
+			ArrowIn = App.Current.DrawingToolkit.CreateSurfaceFromResource (Images.PlayerArrowIn);
 		}
 
 		public LMPlayerView ()
@@ -84,7 +86,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return;
 
 			zero = new Point (0, 0);
-			size = StyleConf.PlayerSize;
+			size = Sizes.PlayerSize;
 			scale = (double)Width / size;
 
 			if (Team == TeamType.LOCAL) {
@@ -106,17 +108,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			/* Background */
 			tk.FillColor = App.Current.Style.ThemeBase;
 			tk.LineWidth = 0;
-			tk.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
+			tk.DrawRectangle (zero, Sizes.PlayerSize, Sizes.PlayerSize);
 
 			/* Image */
 			if (Player.Photo != null) {
 				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, DefaultPhoto, ScaleMode.AspectFit);
+				tk.DrawSurface (zero, Sizes.PlayerSize, Sizes.PlayerSize, DefaultPhoto, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */
-			p = new Point (0, size - StyleConf.PlayerLineWidth);
+			p = new Point (0, size - Sizes.PlayerLineWidth);
 			tk.FillColor = Color;
 			tk.DrawRectangle (p, size, 3);
 
@@ -130,15 +132,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				} else {
 					arrow = arrowin;
 				}
-				ap = new Point (StyleConf.PlayerArrowX, StyleConf.PlayerArrowY);
-				tk.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
+				ap = new Point (Sizes.PlayerArrowX, Sizes.PlayerArrowY);
+				tk.DrawRectangle (ap, Sizes.PlayerArrowSize, Sizes.PlayerArrowSize);
 				tk.DrawSurface (arrow, ap);
 			}
 
 			/* Draw number */
-			p = new Point (StyleConf.PlayerNumberX, StyleConf.PlayerNumberY);
+			p = new Point (Sizes.PlayerNumberX, Sizes.PlayerNumberY);
 			tk.FillColor = Color;
-			tk.DrawRectangle (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize);
+			tk.DrawRectangle (p, Sizes.PlayerNumberSize, Sizes.PlayerNumberSize);
 
 			tk.FillColor = Color.White;
 			tk.StrokeColor = Color.White;
@@ -149,7 +151,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			} else {
 				tk.FontSize = 16;
 			}
-			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
+			tk.DrawText (p, Sizes.PlayerNumberSize, Sizes.PlayerNumberSize,
 						 ViewModel.Number.ToString ());
 
 			if (Player.Tagged && !SubstitutionMode) {
