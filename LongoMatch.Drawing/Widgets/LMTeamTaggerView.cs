@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			Accuracy = 0;
 			tagger = new LMPlayersTaggerView ();
-			BackgroundColor = App.Current.Style.ScreenBase;
+			BackgroundColor = App.Current.Style.ThemeBase;
 			ObjectsCanMove = false;
 			AddObject (tagger);
 		}
