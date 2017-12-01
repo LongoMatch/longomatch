@@ -76,6 +76,7 @@ namespace LongoMatch.Core.Common
 		VideoConverter,
 		ExcelExport,
 		XMlImportExport,
+		MergeImport,
 		IpCameras,
 		Sync2Desk
 	}
