@@ -2,7 +2,7 @@
 //  Copyright (C) 2016 Fluendo S.A.
 //
 //
-using System;
+
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +11,12 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
 using LongoMatch.Services.ViewModel;
-using VAS.Core.Common;
+using VAS.Core.Filters;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Services.Controller;
 using VAS.Services.State;
+using System;
 
 namespace LongoMatch.Services.Controller
 {
@@ -26,6 +27,7 @@ namespace LongoMatch.Services.Controller
 	[ControllerAttribute (ProjectsManagerState.NAME)]
 	public class SportsProjectsController : ProjectsController<LMProject, LMProjectVM>
 	{
+
 		public new SportsProjectsManagerVM ViewModel {
 			get {
 				return (SportsProjectsManagerVM)base.ViewModel;
@@ -40,6 +42,7 @@ namespace LongoMatch.Services.Controller
 			await base.Start ();
 			App.Current.EventsBroker.SubscribeAsync<ResyncEvent> (HandleResync);
 			App.Current.EventsBroker.Subscribe<OpenEvent<LMProject>> (HandleOpen);
+			App.Current.EventsBroker.Subscribe<SearchEvent<LMProject>> (HandleSearchEvent);
 		}
 
 		public override async Task Stop ()
@@ -47,6 +50,7 @@ namespace LongoMatch.Services.Controller
 			await base.Stop ();
 			App.Current.EventsBroker.UnsubscribeAsync<ResyncEvent> (HandleResync);
 			App.Current.EventsBroker.Unsubscribe<OpenEvent<LMProject>> (HandleOpen);
+			App.Current.EventsBroker.Unsubscribe<SearchEvent<LMProject>> (HandleSearchEvent);
 		}
 
 		protected override void HandleSelectionChanged (object sender, NotifyCollectionChangedEventArgs e)
@@ -78,9 +82,18 @@ namespace LongoMatch.Services.Controller
 			if (ViewModel.LoadedProject != null) {
 				// We get the selection instead of LoadedProject because it can be modified without saving.
 				// Also we don't use the selected VM directly because it's disposed on unload
-				LMProjectVM selectedVM = new LMProjectVM {Model = ViewModel.Selection.First ().Model};
+				LMProjectVM selectedVM = new LMProjectVM { Model = ViewModel.Selection.First ().Model };
 				LMStateHelper.OpenProject (selectedVM);
 			}
+		}
+
+		void HandleSearchEvent (SearchEvent<LMProject> searchEvent)
+		{
+			foreach (var lmProjectVM in ViewModel.ViewModels) {
+				lmProjectVM.Visible = lmProjectVM.Model.Description.Search (searchEvent.TextFilter);
+			}
+			ViewModel.VisibleViewModels.ApplyPropertyChanges ();
+			ViewModel.NoResults = !ViewModel.VisibleViewModels.Any ();
 		}
 	}
 }

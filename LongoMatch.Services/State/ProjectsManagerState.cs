@@ -60,7 +60,7 @@ namespace LongoMatch.Services.State
 			}
 
 			ViewModel.Model.Reset (App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().
-			                       SortByCreationDate (true));
+								   SortByCreationDate (true));
 
 			if (ViewModel.Selection.Count == 0) {
 				ViewModel.Select (ViewModel.ViewModels.FirstOrDefault ());

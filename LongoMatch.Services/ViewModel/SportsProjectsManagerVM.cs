@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Filters;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 using VAS.Services.ViewModel;
@@ -38,6 +39,7 @@ namespace LongoMatch.Services.ViewModel
 		{
 			ResyncCommand = new LimitationAsyncCommand (VASFeature.OpenMultiCamera.ToString (), Resync, () => LoadedProject.FileSet.Count () > 1);
 			ProjectMenu = CreateProjectMenu ();
+			VisibleViewModels = new VisibleRangeObservableProxy<LMProjectVM> (ViewModels);
 		}
 
 		protected override void DisposeManagedResources ()
@@ -80,6 +82,20 @@ namespace LongoMatch.Services.ViewModel
 			get;
 			set;
 		} = "";
+
+		/// <summary>
+		/// Gets or sets the visible view models, viewmodels that has boolean Visible property setted to true.
+		/// </summary>
+		/// <value>The visible view models.</value>
+		public VisibleRangeObservableProxy<LMProjectVM> VisibleViewModels {
+			get;
+			set;
+		}
+
+		public bool NoResults {
+			get;
+			set;
+		}
 
 		[PropertyChanged.DoNotNotify]
 		public LimitationAsyncCommand ResyncCommand {
