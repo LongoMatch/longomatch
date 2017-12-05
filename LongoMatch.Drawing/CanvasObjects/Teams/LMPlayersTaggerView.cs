@@ -21,17 +21,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Resources;
 using VAS.Core.Resources.Styles;
-using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing.CanvasObjects;
 using VASDrawing = VAS.Drawing;
@@ -51,6 +48,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
+		const int MIN_PLAYERS_ROWS = 5;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		LMTeam homeTeam, awayTeam;
 		Dictionary<LMPlayerVM, LMPlayerView> homePlayerToPlayerObject;
@@ -350,7 +348,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					max = awayTeam.Formation.Max ();
 				}
 				optWidth = width / count;
-				optHeight = field.Height / max;
+				optHeight = field.Height / Math.Max (MIN_PLAYERS_ROWS, max);
 				return Math.Min (optWidth, optHeight);
 			}
 		}

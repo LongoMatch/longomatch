@@ -93,16 +93,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			tk.Begin ();
 			tk.TranslateAndScale (Position, new Point (1, 1));
-			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = Sizes.BenchLineWidth;
-			tk.StrokeColor = App.Current.Style.ThemeContrastDisabled;
-			tk.FillColor = null;
+			tk.FillColor = App.Current.Style.ThemeContrastBase;
+			tk.LineWidth = 0;
 			tk.DrawRectangle (new Point (0, 0), Width, Height);
-			tk.LineStyle = LineStyle.Normal;
 
 			foreach (LMPlayerView po in BenchPlayers) {
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
+				po.Circular = false;
 				po.Draw (tk, area);
 			}
 
