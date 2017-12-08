@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 using System.Dynamic;
 using LongoMatch.Services.State;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
 	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, DashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
