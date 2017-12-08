@@ -74,7 +74,7 @@ namespace LongoMatch.DB.Migration
 			var dashboards = App.Current.CategoriesTemplatesProvider.Templates;
 			foreach (var dashboard in dashboards) {
 				DashboardMigration.Migrate (dashboard);
-				App.Current.CategoriesTemplatesProvider.Save (dashboard);
+				// App.Current.CategoriesTemplatesProvider.Save (dashboard);
 			}
 
 			dashboardsMigrated = true;
