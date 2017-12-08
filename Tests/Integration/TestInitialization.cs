@@ -109,6 +109,7 @@ namespace Tests.Integration
 			App.Current.GUIToolkit = guiToolkitMock.Object;
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 

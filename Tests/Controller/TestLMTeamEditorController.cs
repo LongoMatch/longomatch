@@ -20,6 +20,7 @@ using System.Linq;
 using LongoMatch;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
 using Moq;

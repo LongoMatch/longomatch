@@ -18,7 +18,7 @@
 using System.ComponentModel;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;

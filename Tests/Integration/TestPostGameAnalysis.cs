@@ -154,6 +154,7 @@ namespace Tests.Integration
 			App.Current.Config.AutoSave = true;
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 
 			// Start importing templates
