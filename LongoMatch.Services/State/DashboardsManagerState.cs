@@ -18,7 +18,7 @@
 //
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Store.Templates;
 using VAS.Services.State;

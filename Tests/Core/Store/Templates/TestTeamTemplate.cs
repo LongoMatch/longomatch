@@ -18,11 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Store.Templates
@@ -30,6 +33,15 @@ namespace Tests.Core.Store.Templates
 	[TestFixture ()]
 	public class TestTeamTemplate
 	{
+		Mock<IPreviewService> mockPreview;
+
+		[OneTimeSetUp]
+		public void FixtureSetUp ()
+		{
+			mockPreview = new Mock<IPreviewService> ();
+			App.Current.PreviewService = mockPreview.Object;
+		}
+
 		[Test ()]
 		public void TestSerialization ()
 		{
@@ -63,8 +75,8 @@ namespace Tests.Core.Store.Templates
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (1, new LMTeam ().Version);
-			Assert.AreEqual (1, LMTeam.DefaultTemplate (1).Version);
+			Assert.AreEqual (2, new LMTeam ().Version);
+			Assert.AreEqual (2, LMTeam.DefaultTemplate (1).Version);
 		}
 
 		[Test ()]
@@ -107,8 +119,14 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestCreateDefaultTemplate ()
 		{
+			// Arrrange
+			mockPreview.Setup (p => p.CreatePreview (It.IsAny<LMTeam> ())).Returns (new Image (1, 1));
+			
+			// Act
 			LMTeam t = LMTeam.DefaultTemplate (10);
 
+			// Assert
+			Assert.IsNotNull (t.Preview);
 			Assert.AreEqual (t.Players.Count, 10);
 			t.AddDefaultItem (8);
 			Assert.AreEqual (t.Players.Count, 11);

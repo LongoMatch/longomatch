@@ -18,7 +18,7 @@
 using System.Linq;
 using LongoMatch.Core.Hotkeys;
 using LongoMatch.Services.State;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
