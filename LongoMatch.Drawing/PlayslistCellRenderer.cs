@@ -30,6 +30,7 @@ using VAS.Core.Store.Playlists;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Drawing.CanvasObjects.Teams;
+using static LongoMatch.Core.Resources.Styles.Colors;
 
 namespace LongoMatch.Drawing
 {
@@ -232,15 +233,37 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderPlaylist (Playlist playlist, int count, bool isExpanded, IDrawingToolkit tk,
-										   IContext context, Area backgroundArea, Area cellArea)
+		                                   IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point textP = new Point (Sizes.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, playlist.Name);
 			RenderCount (isExpanded, App.Current.Style.ThemeContrastDisabled, count, tk, backgroundArea, cellArea);
+			RenderSelection (tk, context, backgroundArea, state);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
+		}
+
+		static void RenderSelection (IDrawingToolkit tk, IContext context,
+							  Area backgroundArea, CellState state)
+		{
+			int selectionLineWidth = 1;
+			Point pos = new Point (backgroundArea.Left + selectionLineWidth, backgroundArea.Start.Y + selectionLineWidth);
+
+			double width = backgroundArea.Width - pos.X - selectionLineWidth;
+			double height = backgroundArea.Height - selectionLineWidth;
+
+			tk.Context = context;
+			tk.Begin ();
+			tk.FillColor = Color.Transparent;
+			tk.StrokeColor = Color.Transparent;
+			if (state.HasFlag (CellState.Selected)) {
+				tk.StrokeColor = BorderSelection;
+			}
+			tk.LineWidth = selectionLineWidth;
+			tk.DrawRectangle (pos, width, height);
+			tk.StrokeColor = App.Current.Style.TextBase;
 		}
 
 		public static void RenderAnalysisCategory (EventTypeTimelineVM vm, int count, bool isExpanded, IDrawingToolkit tk,
@@ -425,7 +448,7 @@ namespace LongoMatch.Drawing
 			} else if (item is Player) {
 				RenderPlayer (item as LMPlayer, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is Playlist) {
-				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
+				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
 				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, p.Playing, p.Description, count, isExpanded, tk,

@@ -26,5 +26,6 @@ namespace LongoMatch.Core.Resources.Styles
 		public const float PlayerNumberAlpha = 0.9f;
 
 		public static Color PlayerBackground => App.Current.Style.ColorWhite;
+		public static Color BorderSelection = Color.Parse ("#428C41");
 	}
 }
