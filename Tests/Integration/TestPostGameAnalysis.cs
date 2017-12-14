@@ -115,6 +115,8 @@ namespace Tests.Integration
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
+			mockDialogs.Setup (m => m.QuestionMessage (It.IsAny<string> (), null, It.IsAny<object> ())).Returns (
+				AsyncHelpers.Return (true));
 			mockLicenseManager = new Mock<ILicenseManager> ();
 			mockLicenseStatus = new Mock<ILicenseStatus> ();
 			mockLicenseManager.SetupGet ((lm) => lm.LicenseStatus).Returns (mockLicenseStatus.Object);
