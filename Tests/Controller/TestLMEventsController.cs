@@ -27,6 +27,7 @@ using LongoMatch.Services;
 using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
@@ -47,6 +48,7 @@ namespace Tests.Controller
 		VideoPlayerVM videoPlayer;
 		Mock<IGUIToolkit> mockToolkit;
 		Mock<ILicenseLimitationsService> mockLimitationService;
+		Mock<IDialogs> mockDialogs;
 
 		[SetUp]
 		public async Task SetUp ()
@@ -77,6 +79,10 @@ namespace Tests.Controller
 			var mtkMock = new Mock<IMultimediaToolkit> ();
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			App.Current.MultimediaToolkit = mtkMock.Object;
+
+			mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
+			mockDialogs.Setup (m => m.QuestionMessage (It.IsAny<string> (), null, It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
 
 			await controller.Start ();
 		}
