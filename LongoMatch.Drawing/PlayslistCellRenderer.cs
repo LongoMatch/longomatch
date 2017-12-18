@@ -458,7 +458,7 @@ namespace LongoMatch.Drawing
 				RenderPlay (App.Current.Style.ThemeContrastDisabled, p.Miniature, null, null, p.Playing, p.Description,
 					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
-				Log.Error ("No renderer for type " + item.GetType ());
+				Log.Error ("No renderer for type " + item?.GetType ());
 			}
 		}
 	}
