@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluVAS.License;
 using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -38,6 +39,8 @@ namespace Tests.Services.Controller
 		[OneTimeSetUp]
 		public void FixtureSetUp ()
 		{
+			WibuInit.InitDependencies ();
+
 			DummyTeam team = new DummyTeam { Name = "Team 1" };
 
 			mockGuiToolkit = new Mock<IGUIToolkit> ();

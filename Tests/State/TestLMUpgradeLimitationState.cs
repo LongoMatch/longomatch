@@ -1,6 +1,7 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
 using System.Dynamic;
+using FluVAS.License;
 using LongoMatch;
 using LongoMatch.License;
 using LongoMatch.Services.State;
@@ -23,6 +24,7 @@ namespace Tests.State
 		[OneTimeSetUp]
 		public void TestFixtureSetUp ()
 		{
+			WibuInit.InitDependencies ();
 			currentLicenseManager = App.Current.LicenseManager;
 		}
 
