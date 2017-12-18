@@ -1,19 +1,20 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
-
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Threading.Tasks;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.State;
+using VAS.Core;
+using VAS.Core.Events;
 using VAS.Core.Filters;
+using VAS.Core.Interfaces;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
-using LongoMatch.Services.State;
 using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>;
-using LongoMatch.Core.ViewModel;
-using VAS.Core;
-using LongoMatch.Core.Store;
-using System.Collections.Specialized;
-using System.Threading.Tasks;
-using VAS.Core.Events;
-using System.Linq;
 
 namespace LongoMatch.Services.Controller
 {
@@ -50,12 +51,13 @@ namespace LongoMatch.Services.Controller
 			bool oldIgnoreEvents = ViewModel.Filters.IgnoreEvents;
 			ViewModel.Filters.IgnoreEvents = true;
 			ViewModel.TeamsPredicate.Clear ();
+			var teamsPredicates = new List<IPredicate<TimelineEventVM>> ();
 
 			LMTimelineVM lmTimeline = (LMTimelineVM)ViewModel;
 			LMTeamVM homeTeamVM = (LMTeamVM)lmTimeline.HomeTeamTimelineVM.Team;
 			LMTeamVM awayTeamVM = (LMTeamVM)lmTimeline.AwayTeamTimelineVM.Team;
 
-			ViewModel.TeamsPredicate.Add (new Predicate {
+			teamsPredicates.Add (new Predicate {
 				Name = Catalog.GetString ("No team / player tagged"),
 				Expression = ev =>
 					(!(ev.Model as LMTimelineEvent).Teams.Any () &&
@@ -63,23 +65,26 @@ namespace LongoMatch.Services.Controller
 			});
 
 			foreach (var team in new LMTeamVM [] { homeTeamVM, awayTeamVM }) {
+				var playersPredicates = new List<IPredicate<TimelineEventVM>> ();
 				var teamPredicate = new OrPredicate<TimelineEventVM> {
 					Name = team.Name,
 				};
-				teamPredicate.Add (new Predicate {
+				playersPredicates.Add (new Predicate {
 					Name = Catalog.GetString ("Team tagged"),
 					Expression = ev =>
 						(ev.Model as LMTimelineEvent).Teams.Contains (team.Model)
 				});
 				foreach (var player in team) {
-					teamPredicate.Add (new Predicate {
+					playersPredicates.Add (new Predicate {
 						Name = player.Model.Name,
 						Expression = ev =>
 							(ev.Model as LMTimelineEvent).Players.Contains (player.Model)
 					});
 				}
-				ViewModel.TeamsPredicate.Add (teamPredicate);
+				teamPredicate.AddRange (playersPredicates);
+				teamsPredicates.Add (teamPredicate);
 			}
+			ViewModel.TeamsPredicate.AddRange (teamsPredicates);
 			ViewModel.Filters.IgnoreEvents = oldIgnoreEvents;
 			if (!ViewModel.Filters.IgnoreEvents) {
 				ViewModel.Filters.EmitPredicateChanged ();
