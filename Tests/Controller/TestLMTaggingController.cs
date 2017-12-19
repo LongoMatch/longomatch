@@ -27,6 +27,7 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Events;
@@ -36,7 +37,6 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services;
-using VAS.Services.ViewModel;
 
 namespace Tests.Controller
 {
@@ -44,16 +44,21 @@ namespace Tests.Controller
 	public class TestLMTaggingController
 	{
 		LMTaggingController controller;
-		PlayerVM player1;
-		PlayerVM player2;
-		TeamVM team1;
-		List<TeamVM> teams;
+		LMTeamTaggerController teamController;
 		LMProjectVM projectVM;
 		Mock<IGUIToolkit> mockToolkit;
 		Mock<ITimer> timer;
+		AutoResetEvent resetEvent;
+
+		[OneTimeSetUp]
+		public void OnetimeSetup ()
+		{
+			timer = new Mock<ITimer> ();
+			App.Current.DependencyRegistry.Register<ITimer> (timer.Object, 1);
+		}
 
 		[SetUp]
-		public void Setup ()
+		public async Task Setup ()
 		{
 			App.Current.HotkeysService = new HotkeysService ();
 			LMGeneralUIHotkeys.RegisterDefaultHotkeys ();
@@ -67,29 +72,31 @@ namespace Tests.Controller
 
 			LMProject project = Utils.CreateProject ();
 
-			player1 = new PlayerVM { Model = new Utils.PlayerDummy () };
-			player2 = new PlayerVM { Model = new Utils.PlayerDummy () };
-
-			team1 = new TeamVM ();
-			team1.ViewModels.Add (player1);
-			team1.ViewModels.Add (player2);
-
-			teams = new List<TeamVM> { team1 };
-
 			projectVM = new LMProjectVM { Model = project };
 
-			controller = new LMTaggingController ();
-			controller.SetViewModel (new ProjectAnalysisVM<LMProjectVM> { VideoPlayer = videoPlayer, Project = projectVM });
-			controller.Start ();
+			var projectAnalysisVM = new LMProjectAnalysisVM { VideoPlayer = videoPlayer, Project = projectVM };
 
-			timer = new Mock<ITimer> ();
-			App.Current.DependencyRegistry.Register<ITimer> (timer.Object, 1);
+			controller = new LMTaggingController ();
+			controller.SetViewModel (projectAnalysisVM);
+			await controller.Start ();
+
+			teamController = new LMTeamTaggerController ();
+			teamController.SetViewModel (projectAnalysisVM);
+			await teamController.Start ();
+
+			resetEvent = new AutoResetEvent (false);
+			mockToolkit.Setup (x => x.Invoke (It.IsAny<EventHandler> ())).Callback ((EventHandler e) => {
+				Task actionExecution = Task.Factory.StartNew (() => e (null, null));
+				actionExecution.Wait ();
+				resetEvent.Set ();
+			});
 		}
 
 		[TearDown]
-		public void TearDown ()
+		public async Task TearDown ()
 		{
-			controller.Stop ();
+			await controller.Stop ();
+			await teamController.Stop ();
 		}
 
 		[Test]
@@ -105,13 +112,6 @@ namespace Tests.Controller
 			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).Tags.First ().HotKey.Model = subkey;
 			((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).CurrentTime = new Time ();
 
-			AutoResetEvent resetEvent = new AutoResetEvent (false);
-			mockToolkit.Setup (x => x.Invoke (It.IsAny<EventHandler> ())).Callback ((EventHandler e) => {
-				Task actionExecution = Task.Factory.StartNew (() => e (null, null));
-				actionExecution.Wait ();
-				resetEvent.Set ();
-			});
-
 			int taggedElements = 0;
 			bool newTagEventCreated = false;
 			App.Current.EventsBroker.Subscribe<NewTagEvent> ((x) => {
@@ -123,6 +123,7 @@ namespace Tests.Controller
 			int existentContexts = App.Current.KeyContextManager.CurrentKeyContexts.Count;
 			App.Current.KeyContextManager.HandleKeyPressed (key);
 			App.Current.KeyContextManager.HandleKeyPressed (subkey);
+			resetEvent.Reset ();
 			Thread.Sleep (1000); // time has to be expired
 			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
 			resetEvent.WaitOne (1000);
@@ -131,6 +132,78 @@ namespace Tests.Controller
 			Assert.IsTrue (newTagEventCreated);
 			Assert.AreEqual (1, taggedElements);
 			Assert.AreEqual (0, ((AnalysisEventButtonVM)projectVM.Dashboard.ViewModels [0]).SelectedTags.Count);
+		}
+
+		[Test]
+		public void Test_TagAndUntag_HomeTeam ()
+		{
+			// Arrange
+			KeyContext context = new KeyContext ();
+			context.KeyActions.AddRange ((List<KeyAction>)controller.GetDefaultKeyActions ());
+			App.Current.KeyContextManager.AddContext (context);
+			HotKey key = App.Current.Keyboard.ParseName ("<Shift_L>+n");
+
+			// Act
+			bool taggedStart = projectVM.HomeTeam.Tagged;
+			resetEvent.Reset ();
+			App.Current.KeyContextManager.HandleKeyPressed (key);
+			Thread.Sleep (1000);
+			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
+			resetEvent.WaitOne (1000);
+
+			bool taggedOnce = projectVM.HomeTeam.Tagged;
+			resetEvent.Reset ();
+			App.Current.KeyContextManager.HandleKeyPressed (key);
+			Thread.Sleep (1000);
+			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
+			resetEvent.WaitOne (1000);
+			bool taggedTwice = projectVM.HomeTeam.Tagged;
+
+			// Assert
+			Assert.AreEqual (taggedStart, !taggedOnce);
+			Assert.AreEqual (taggedOnce, !taggedTwice);
+		}
+
+		[Test]
+		public void Test_TagAndUntag_HomePlayer1 ()
+		{
+			// Arrange
+			KeyContext context = new KeyContext ();
+			context.KeyActions.AddRange ((List<KeyAction>)controller.GetDefaultKeyActions ());
+			App.Current.KeyContextManager.AddContext (context);
+			HotKey homeTeamKey = App.Current.Keyboard.ParseName ("<Shift_L>+n");
+			HotKey player1Key = App.Current.Keyboard.ParseName ("1");
+
+			// Act
+			bool taggedStart = projectVM.HomeTeam.ViewModels
+									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
+									.Tagged;
+
+			resetEvent.Reset ();
+			App.Current.KeyContextManager.HandleKeyPressed (homeTeamKey);
+			App.Current.KeyContextManager.HandleKeyPressed (player1Key);
+			Thread.Sleep (1000);
+			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
+			resetEvent.WaitOne (1000);
+
+			bool taggedOnce = projectVM.HomeTeam.ViewModels
+									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
+									.Tagged;
+
+			resetEvent.Reset ();
+			App.Current.KeyContextManager.HandleKeyPressed (homeTeamKey);
+			App.Current.KeyContextManager.HandleKeyPressed (player1Key);
+			Thread.Sleep (1000);
+			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
+			resetEvent.WaitOne (1000);
+
+			bool taggedTwice = projectVM.HomeTeam.ViewModels
+									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
+									.Tagged;
+
+			// Assert
+			Assert.AreEqual (taggedStart, !taggedOnce);
+			Assert.AreEqual (taggedOnce, !taggedTwice);
 		}
 	}
 }

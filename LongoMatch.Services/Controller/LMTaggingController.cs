@@ -69,7 +69,6 @@ namespace LongoMatch.Services.Controller
 
 		void HandleTeamTagging (LMTeamVM team, string taggedPlayer)
 		{
-			team.Tagged = true;
 			// limitation to the number of temporal contexts that can be created
 			int position = taggedPlayer.Length;
 			if (position == 3) {
@@ -103,6 +102,8 @@ namespace LongoMatch.Services.Controller
 						Sender = player
 					});
 				}
+			} else {
+				team.Tagged = !team.Tagged;
 			}
 		}
 	}
