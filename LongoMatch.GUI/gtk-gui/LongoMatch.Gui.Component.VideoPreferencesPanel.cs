@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Label watermarkLabel;
 
-		private global::VAS.UI.UI.Component.ImagePreviewWidget watermarkSelector;
+		private global::VAS.UI.Component.ImagePreviewWidget watermarkSelector;
 
 		private global::Gtk.Label GtkLabel1;
 
@@ -247,7 +247,7 @@ namespace LongoMatch.Gui.Component
 			w15.XOptions = ((global::Gtk.AttachOptions)(4));
 			w15.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child rendertable.Gtk.Table+TableChild
-			this.watermarkSelector = new global::VAS.UI.UI.Component.ImagePreviewWidget ();
+			this.watermarkSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.watermarkSelector.Events = ((global::Gdk.EventMask)(256));
 			this.watermarkSelector.Name = "watermarkSelector";
 			this.rendertable.Add (this.watermarkSelector);

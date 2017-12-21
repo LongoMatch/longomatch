@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Table table1;
 
-		private global::VAS.UI.UI.Component.DatePicker bdaydatepicker;
+		private global::VAS.UI.Component.DatePicker bdaydatepicker;
 
 		private global::Gtk.SpinButton heightspinbutton;
 
@@ -431,7 +431,7 @@ namespace LongoMatch.Gui.Component
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.bdaydatepicker = new global::VAS.UI.UI.Component.DatePicker();
+			this.bdaydatepicker = new global::VAS.UI.Component.DatePicker();
 			this.bdaydatepicker.Events = ((global::Gdk.EventMask)(256));
 			this.bdaydatepicker.Name = "bdaydatepicker";
 			this.bdaydatepicker.Date = new global::System.DateTime(0);

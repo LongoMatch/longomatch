@@ -44,11 +44,11 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.HBox positionsbox;
 
-		private global::VAS.UI.UI.Component.ImagePreviewWidget fieldSelector;
+		private global::VAS.UI.Component.ImagePreviewWidget fieldSelector;
 
-		private global::VAS.UI.UI.Component.ImagePreviewWidget hfieldSelector;
+		private global::VAS.UI.Component.ImagePreviewWidget hfieldSelector;
 
-		private global::VAS.UI.UI.Component.ImagePreviewWidget goalSelector;
+		private global::VAS.UI.Component.ImagePreviewWidget goalSelector;
 
 		private global::Gtk.HBox periodsbox;
 
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Component
 			this.positionsbox.Name = "positionsbox";
 			this.positionsbox.Spacing = 6;
 			// Container child positionsbox.Gtk.Box+BoxChild
-			this.fieldSelector = new global::VAS.UI.UI.Component.ImagePreviewWidget ();
+			this.fieldSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.fieldSelector.Events = ((global::Gdk.EventMask)(256));
 			this.fieldSelector.Name = "fieldSelector";
 			this.positionsbox.Add (this.fieldSelector);
@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Component
 			w17.Expand = false;
 			w17.Fill = false;
 			// Container child positionsbox.Gtk.Box+BoxChild
-			this.hfieldSelector = new global::VAS.UI.UI.Component.ImagePreviewWidget ();
+			this.hfieldSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.hfieldSelector.Events = ((global::Gdk.EventMask)(256));
 			this.hfieldSelector.Name = "hfieldSelector";
 			this.positionsbox.Add (this.hfieldSelector);
@@ -242,7 +242,7 @@ namespace LongoMatch.Gui.Component
 			w18.Expand = false;
 			w18.Fill = false;
 			// Container child positionsbox.Gtk.Box+BoxChild
-			this.goalSelector = new global::VAS.UI.UI.Component.ImagePreviewWidget ();
+			this.goalSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.goalSelector.Events = ((global::Gdk.EventMask)(256));
 			this.goalSelector.Name = "goalSelector";
 			this.positionsbox.Add (this.goalSelector);

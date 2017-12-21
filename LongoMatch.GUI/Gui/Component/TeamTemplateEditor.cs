@@ -29,7 +29,7 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Resources.Styles;
 using VAS.Drawing.Cairo;
-using VAS.UI.UI.Component;
+using VAS.UI.Component;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;

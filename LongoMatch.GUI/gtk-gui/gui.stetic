@@ -471,7 +471,7 @@ Sort by competition</property>
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
                             <child>
-                              <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="fieldSelector">
+                              <widget class="VAS.UI.Component.ImagePreviewWidget" id="fieldSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                                 <property name="ResetButtonHeight">0</property>
@@ -484,7 +484,7 @@ Sort by competition</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="hfieldSelector">
+                              <widget class="VAS.UI.Component.ImagePreviewWidget" id="hfieldSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                                 <property name="ResetButtonHeight">0</property>
@@ -497,7 +497,7 @@ Sort by competition</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="goalSelector">
+                              <widget class="VAS.UI.Component.ImagePreviewWidget" id="goalSelector">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                                 <property name="ResetButtonHeight">0</property>
@@ -4030,7 +4030,7 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="VAS.UI.UI.Component.ImagePreviewWidget" id="watermarkSelector">
+                      <widget class="VAS.UI.Component.ImagePreviewWidget" id="watermarkSelector">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                         <property name="ResetButtonHeight">0</property>
@@ -4851,7 +4851,7 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="VAS.UI.UI.Component.DatePicker" id="datepicker1">
+                              <widget class="VAS.UI.Component.DatePicker" id="datepicker1">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                                 <property name="Date">0</property>
@@ -6594,7 +6594,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="RowSpacing">6</property>
                                 <property name="ColumnSpacing">6</property>
                                 <child>
-                                  <widget class="VAS.UI.UI.Component.DatePicker" id="bdaydatepicker">
+                                  <widget class="VAS.UI.Component.DatePicker" id="bdaydatepicker">
                                     <property name="MemberName" />
                                     <property name="Events">ButtonPressMask</property>
                                     <property name="Date">0</property>
@@ -7268,7 +7268,7 @@ You can continue with the current capture, cancel it or save your project.
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="VAS.UI.UI.Component.DatePicker" id="datepicker">
+                                      <widget class="VAS.UI.Component.DatePicker" id="datepicker">
                                         <property name="MemberName" />
                                         <property name="WidthRequest">150</property>
                                         <property name="Events">ButtonPressMask</property>

@@ -32,7 +32,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.UI.Helpers.Bindings;
-using VAS.UI.UI.Bindings;
+using VAS.UI.Bindings;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
