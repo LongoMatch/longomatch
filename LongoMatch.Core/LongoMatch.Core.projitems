@@ -67,6 +67,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Hotkeys\LMGeneralUIHotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Styles\Sizes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Styles\Colors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Images.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Icons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Strings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

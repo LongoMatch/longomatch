@@ -37,22 +37,25 @@ namespace LongoMatch.Services.Controller
 			}
 		}
 
-		public override async Task Start ()
+		protected override void ConnectEvents ()
 		{
-			await base.Start ();
+			base.ConnectEvents ();
 			App.Current.EventsBroker.SubscribeAsync<ResyncEvent> (HandleResync);
 			App.Current.EventsBroker.SubscribeAsync<CreateEvent<LMProject>> (HandleNew);
 			App.Current.EventsBroker.Subscribe<OpenEvent<LMProject>> (HandleOpen);
-			App.Current.EventsBroker.Subscribe<SearchEvent<LMProject>> (HandleSearchEvent);
 		}
 
-		public override async Task Stop ()
+		protected override void DisconnectEvents ()
 		{
-			await base.Stop ();
+			base.DisconnectEvents ();
 			App.Current.EventsBroker.UnsubscribeAsync<ResyncEvent> (HandleResync);
 			App.Current.EventsBroker.UnsubscribeAsync<CreateEvent<LMProject>> (HandleNew);
 			App.Current.EventsBroker.Unsubscribe<OpenEvent<LMProject>> (HandleOpen);
-			App.Current.EventsBroker.Unsubscribe<SearchEvent<LMProject>> (HandleSearchEvent);
+		}
+
+		protected override bool IsProjectVisibleForSearchCriteria (LMProjectVM project, string search)
+		{
+			return project.Model.Description.Search (search);
 		}
 
 		protected override void HandleSelectionChanged (object sender, NotifyCollectionChangedEventArgs e)
@@ -87,15 +90,6 @@ namespace LongoMatch.Services.Controller
 				LMProjectVM selectedVM = new LMProjectVM { Model = ViewModel.Selection.First ().Model };
 				LMStateHelper.OpenProject (selectedVM);
 			}
-		}
-
-		void HandleSearchEvent (SearchEvent<LMProject> searchEvent)
-		{
-			foreach (var lmProjectVM in ViewModel.ViewModels) {
-				lmProjectVM.Visible = lmProjectVM.Model.Description.Search (searchEvent.TextFilter);
-			}
-			ViewModel.VisibleViewModels.ApplyPropertyChanges ();
-			ViewModel.NoResults = !ViewModel.VisibleViewModels.Any ();
 		}
 
 		async Task HandleNew (CreateEvent<LMProject> arg)
