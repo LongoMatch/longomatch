@@ -60,9 +60,6 @@ namespace LongoMatch.Gui.Component
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 
-			App.Current.EventsBroker.Subscribe<CapturerTickEvent> (HandleCapturerTick);
-			App.Current.EventsBroker.Subscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
-
 			Helpers.Misc.SetFocus (this, false);
 
 			buttonswidget.CodingDashboardMode = true;
@@ -81,9 +78,6 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-
-			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
-			App.Current.EventsBroker.Unsubscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
 
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
@@ -129,12 +123,8 @@ namespace LongoMatch.Gui.Component
 				return viewModel;
 			}
 			set {
-				if (viewModel != null) {
-					viewModel.PropertyChanged -= HandlePropertyChanged;
-				}
 				viewModel = value;
 				if (viewModel != null) {
-					viewModel.PropertyChanged += HandlePropertyChanged;
 					teamtagger.ViewModel = viewModel.TeamTagger;
 				}
 				LoadProject ();
@@ -242,34 +232,11 @@ namespace LongoMatch.Gui.Component
 			notebook.SetTabDetachable (notebook.GetNthPage ((int)args.PageNum), true);
 		}
 
-		void HandleCapturerTick (CapturerTickEvent e)
-		{
-			if (ViewModel.Project.ProjectType != ProjectType.FileProject) {
-				buttonswidget.CurrentTime = e.Time;
-			}
-		}
-
-		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == nameof (ViewModel.Capturer.CurrentCaptureTime)
-				&& ViewModel.Project.ProjectType == ProjectType.FileProject) {
-				timeline.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-				buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-			}
-		}
-
 		void HandleSizeAllocated (object o, SizeAllocatedArgs args)
 		{
 			if (!sizeAllocated) {
 				dashboardhpaned.Position = dashboardhpaned.MaxPosition / 2;
 				sizeAllocated = true;
-			}
-		}
-
-		void HandleTimeNodeStoppedEvent (TimeNodeStoppedEvent e)
-		{
-			if (e.TimerButton is TimerButton) {
-				ViewModel.Project.Timers.Model.Add (e.TimerButton.Timer);
 			}
 		}
 	}
