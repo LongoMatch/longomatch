@@ -204,7 +204,7 @@ namespace LongoMatch.Core.Store
 		{
 			StringComparison sc = StringComparison.InvariantCultureIgnoreCase;
 
-			if (text == "")
+			if (string.IsNullOrEmpty (text))
 				return true;
 
 			if (Title != null && Title.IndexOf (text, sc) > -1)
