@@ -82,6 +82,39 @@ namespace LongoMatch.Gui.Component
 			ViewMode = ProjectListViewMode.List;
 		}
 
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			limitationWidget.Dispose ();
+			// All this crap is needed for the GC to collect this widget and destroy it
+			store.Dispose ();
+			filter.Dispose ();
+			sort.Dispose ();
+			iconview.Destroy ();
+			treeview.Destroy ();
+			checkCell.Destroy ();
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
 		public SelectionMode SelectionMode {
 			set {
 				iconview.SelectionMode = value;

@@ -68,6 +68,7 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
+			projectlistwidget.Dispose ();
 			OnUnload ();
 			base.OnDestroyed ();
 			Disposed = true;
