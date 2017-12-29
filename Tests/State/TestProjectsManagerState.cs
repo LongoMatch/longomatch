@@ -70,7 +70,7 @@ namespace Tests.State
 		{
 			licenseLimitationMock = new Mock<ILicenseLimitationsService> ();
 			licenseLimitationMock.Setup (lim => lim.Get<CountLimitationVM> (
-				LongoMatchCountLimitedObjects.Projects.ToString ())).Returns (
+				VASCountLimitedObjects.Projects.ToString ())).Returns (
 					new CountLimitationVM {
 						Model = notLimitedLimitation
 					});

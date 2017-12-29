@@ -44,7 +44,7 @@ namespace LongoMatch.Services.State
 			ViewModel = new SportsProjectsManagerVM ();
 			if (App.Current.LicenseLimitationsService != null) {
 				ViewModel.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
-					LongoMatchCountLimitedObjects.Projects.ToString ());
+					VASCountLimitedObjects.Projects.ToString ());
 			}
 		}
 

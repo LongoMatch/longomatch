@@ -78,10 +78,10 @@ namespace LongoMatch.Gui
 			databaseManagerCommand = new LimitationCommand (LongoMatchFeature.DatabaseManager.ToString (), () => {
 				App.Current.StateController.MoveToModal (DatabasesManagerState.NAME, null, true);
 			});
-			newProjectCommand = new LimitationCommand (LongoMatchCountLimitedObjects.Projects.ToString (), () => {
+			newProjectCommand = new LimitationCommand (VASCountLimitedObjects.Projects.ToString (), () => {
 				App.Current.StateController.MoveTo (NewProjectState.NAME, null, true);
 			});
-			importCommand = new LimitationCommand (LongoMatchCountLimitedObjects.Projects.ToString (), () => {
+			importCommand = new LimitationCommand (VASCountLimitedObjects.Projects.ToString (), () => {
 				App.Current.EventsBroker.Publish (new ImportProjectEvent ());
 			});
 		}

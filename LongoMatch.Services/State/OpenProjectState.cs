@@ -41,7 +41,7 @@ namespace LongoMatch.Services.State
 			ViewModel.Model = new RangeObservableCollection<LMProject> (
 				App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().SortByCreationDate (true));
 			ViewModel.Limitation = App.Current.LicenseLimitationsService.Get<CountLimitationVM> (
-				LongoMatchCountLimitedObjects.Projects.ToString ());
+				VASCountLimitedObjects.Projects.ToString ());
 		}
 	}
 }
