@@ -24,6 +24,7 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;
 using VAS.UI.Helpers;
+using VAS.UI.Menus;
 
 namespace LongoMatch.Gui
 {

@@ -35,6 +35,7 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Services.State;
+using VAS.UI.Menus;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;
 using PreferencesState = LongoMatch.Services.State.PreferencesState;
@@ -77,10 +78,10 @@ namespace LongoMatch.Gui
 			databaseManagerCommand = new LimitationCommand (LongoMatchFeature.DatabaseManager.ToString (), () => {
 				App.Current.StateController.MoveToModal (DatabasesManagerState.NAME, null, true);
 			});
-			newProjectCommand = new LimitationCommand (LongoMatchCountLimitedObjects.Projects.ToString (), () => {
+			newProjectCommand = new LimitationCommand (VASCountLimitedObjects.Projects.ToString (), () => {
 				App.Current.StateController.MoveTo (NewProjectState.NAME, null, true);
 			});
-			importCommand = new LimitationCommand (LongoMatchCountLimitedObjects.Projects.ToString (), () => {
+			importCommand = new LimitationCommand (VASCountLimitedObjects.Projects.ToString (), () => {
 				App.Current.EventsBroker.Publish (new ImportProjectEvent ());
 			});
 		}

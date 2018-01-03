@@ -171,8 +171,6 @@
     <Compile Include="Gui\TreeView\LMPlaylistTreeView.cs" />
     <Compile Include="Gui\TreeView\EventsFilterTreeView.cs" />
     <Compile Include="Gui\TreeView\TeamTimelineEventsTreeView.cs" />
-    <Compile Include="MenuExtensionEntry.cs" />
-    <Compile Include="MenuLoaderBase.cs" />
     <Compile Include="ProjectFileMenuLoader.cs" />
     <Compile Include="ProjectToolsMenuLoader.cs" />
     <Compile Include="Gui\Panel\CameraSynchronizationPanel.cs" />
