@@ -105,19 +105,23 @@ namespace LongoMatch.Gui.Component
 				return viewModel;
 			}
 			set {
+				if (viewModel != null) {
+					viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
+				}
 				viewModel = value;
 				tagger.ViewModel = value;
-				// Start with disabled widget until something get selected
-				tagproperties.Tagger = null;
-				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
-				tagproperties.Dashboard = value.Model;
-				popupbutton.Active = !value.DisablePopupWindow;
-				viewModel.FitMode = FitMode.Fit;
-				fitbutton.Active = true;
-				viewModel.PropertyChanged += HandleViewModelPropertyChanged;
-
+				tagproperties.Dashboard = value?.Model;
 				ctx.UpdateViewModel (viewModel);
-				viewModel.Sync ();
+				if (viewModel != null) {
+					// Start with disabled widget until something get selected
+					tagproperties.Tagger = null;
+					propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
+					popupbutton.Active = !value.DisablePopupWindow;
+					viewModel.FitMode = FitMode.Fit;
+					fitbutton.Active = true;
+					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+					viewModel.Sync ();
+				}
 			}
 		}
 

@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-
+			Notebook.WindowCreationHook = null;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -124,10 +124,15 @@ namespace LongoMatch.Gui.Component
 			}
 			set {
 				viewModel = value;
+				teamtagger.ViewModel = viewModel?.TeamTagger;
 				if (viewModel != null) {
-					teamtagger.ViewModel = viewModel.TeamTagger;
+					LoadProject ();
+				} else {
+					timeline.ViewModel = null;
+					buttonswidget.ViewModel = null;
+					eventslistwidget.ViewModel = null;
+					playspositionviewer1.ViewModel = null;
 				}
-				LoadProject ();
 			}
 		}
 
