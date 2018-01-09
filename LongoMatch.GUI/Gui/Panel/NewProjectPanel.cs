@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
@@ -37,6 +38,7 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using VAS.Services.State;
+using VAS.UI.Helpers;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Device = VAS.Core.Common.Device;
@@ -90,6 +92,7 @@ namespace LongoMatch.Gui.Panel
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			urilabel.ModifyFg (StateType.Normal, red);
 
+			UpdateAutocompletionData ();
 			ApplyStyle ();
 		}
 
@@ -548,6 +551,18 @@ namespace LongoMatch.Gui.Panel
 				project.CreateLineupEvent ();
 			}
 			LMStateHelper.OpenProject (ViewModel.Project, captureSettings, isNew);
+		}
+
+		/// <summary>
+		/// Updates the autocompletion data.
+		/// </summary>
+		void UpdateAutocompletionData ()
+		{
+			List<LMProject> projects = App.Current.DatabaseManager.ActiveDB.RetrieveAll<LMProject> ().ToList ();
+			ProjectsFilter projectsFilter = new ProjectsFilter { Projects = projects };
+
+			seasonentry.Autocomplete (projectsFilter.Seasons);
+			competitionentry.Autocomplete (projectsFilter.Competitions);
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
