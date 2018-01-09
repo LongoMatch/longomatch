@@ -43,13 +43,7 @@ namespace LongoMatch.Gui.Component
 
 		public MediaFileSet FileSet {
 			set {
-				// In case we don't support multi camera, clip fileset to only one file.
-				if (!App.Current.SupportsMultiCamera && value.Count > 1) {
-					fileSet = new MediaFileSet ();
-					fileSet.Add (value [0]);
-				} else {
-					fileSet = value;
-				}
+				fileSet = value;
 
 				if (fileSet.Count > 0) {
 					// Create all choosers
@@ -183,7 +177,7 @@ namespace LongoMatch.Gui.Component
 
 			to_remove.Clear ();
 
-			if (!have_empty_chooser && App.Current.SupportsMultiCamera) {
+			if (!have_empty_chooser) {
 				AddMediaFileChooser (null);
 			}
 		}

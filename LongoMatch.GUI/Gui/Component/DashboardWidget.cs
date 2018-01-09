@@ -137,10 +137,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool LinksButtonVisible {
 			set {
-				if (!App.Current.SupportsActionLinks)
-					linksbutton.Visible = false;
-				else
-					linksbutton.Visible = value;
+				linksbutton.Visible = value;
 			}
 		}
 
