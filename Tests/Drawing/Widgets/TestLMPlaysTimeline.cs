@@ -25,8 +25,10 @@ using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS;
+using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
 using VAS.Core.ViewModel;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
@@ -104,6 +106,19 @@ namespace Tests.Drawing.Widgets
 				Assert.AreEqual (width, view.Width);
 				Assert.AreEqual (project.FileSet.Duration, view.Duration);
 			}
+		}
+
+		[Test]
+		public void RemovePeriodNode_PeriodNodeSelected_SelectionUpdated ()
+		{
+			PeriodsTimelineView view = timeline.Objects.OfType<PeriodsTimelineView> ().First ();
+			TimerTimeNodeView periodNode = view.nodes.First () as TimerTimeNodeView;
+
+			Selection sel = new Selection (periodNode, SelectionPosition.All, 0);
+			timeline.UpdateSelection (sel);
+			project.Periods.Remove (periodNode.Timer.Model as Period);
+
+			Assert.AreEqual (0, timeline.Selections.Count);
 		}
 	}
 }
