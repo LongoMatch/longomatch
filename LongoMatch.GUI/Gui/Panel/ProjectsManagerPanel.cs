@@ -69,8 +69,7 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
 
-			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
-			resyncbutton.Visible = App.Current.SupportsMultiCamera;
+			resyncbutton.Visible = true;
 
 			SetStyle ();
 			Bind ();
