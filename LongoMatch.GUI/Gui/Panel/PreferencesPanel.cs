@@ -17,8 +17,9 @@
 //
 using System;
 using System.Linq;
-using Gdk;
 using Gtk;
+using LongoMatch.Core.Resources;
+using LongoMatch.Core.Resources.Styles;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
 using VAS.Core;
@@ -27,7 +28,8 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Services.ViewModel;
-using Helpers = VAS.UI.Helpers;
+using VAS.UI.Component;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -44,8 +46,11 @@ namespace LongoMatch.Gui.Panel
 		public PreferencesPanel ()
 		{
 			this.Build ();
-			prefsStore = new ListStore (typeof (Pixbuf), typeof (string), typeof (Widget));
-			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);
+			prefsStore = new ListStore (typeof (Image), typeof (string), typeof (Widget));
+			var imageRenderer = new CellRendererImage ();
+			imageRenderer.Width = Sizes.PreferencesIconSize;
+			imageRenderer.Height = Sizes.PreferencesIconSize;
+			treeview.AppendColumn ("Icon", imageRenderer, "Image", 0);
 			treeview.AppendColumn ("Desc", new CellRendererText (), "text", 1);
 			treeview.Selection.Changed += HandleSelectionChanged;
 			treeview.Model = prefsStore;
@@ -117,20 +122,16 @@ namespace LongoMatch.Gui.Panel
 
 		void AddPanels ()
 		{
-			AddPanel (Catalog.GetString ("General"),
-				Helpers.Misc.LoadIcon ("lm-preferences", IconSize.Dialog, 0),
+			AddPanel (Catalog.GetString ("General"), App.Current.ResourcesLocator.LoadIcon (Icons.Preferences),
 				new GeneralPreferencesPanel ());
 			//FIXME: this is a hack, when all preferences panel are migrated to MVVM we should use the PreferencesPanel from VAS
 			//Now as we know that in this position there should be the HokteysConfiguration we add it
 			AddPanel (ViewModel.ViewModels.Where (p => p is HotkeysConfigurationVM).FirstOrDefault ());
-			AddPanel (Catalog.GetString ("Video"),
-				Helpers.Misc.LoadIcon ("vas-record", IconSize.Dialog, 0),
+			AddPanel (Catalog.GetString ("Video"), App.Current.ResourcesLocator.LoadIcon (Icons.RecordButton),
 				new VideoPreferencesPanel ());
-			AddPanel (Catalog.GetString ("Live analysis"),
-				Helpers.Misc.LoadIcon ("vas-video-device", IconSize.Dialog, 0),
+			AddPanel (Catalog.GetString ("Live analysis"), App.Current.ResourcesLocator.LoadIcon (Icons.VideoDevice),
 				new LiveAnalysisPreferences ());
-			AddPanel (Catalog.GetString ("Plugins"),
-				Helpers.Misc.LoadIcon ("vas-plugin", IconSize.Dialog, 0),
+			AddPanel (Catalog.GetString ("Plugins"), App.Current.ResourcesLocator.LoadIcon (Icons.Plugin),
 				new PluginsPreferences ());
 		}
 
@@ -140,7 +141,7 @@ namespace LongoMatch.Gui.Panel
 		/// <param name="desc">Desc.</param>
 		/// <param name="icon">Icon.</param>
 		/// <param name="pane">Pane.</param>
-		void AddPanel (string desc, Pixbuf icon, Widget pane)
+		void AddPanel (string desc, Image icon, Widget pane)
 		{
 			prefsStore.AppendValues (icon, desc, pane);
 		}
@@ -153,9 +154,8 @@ namespace LongoMatch.Gui.Panel
 		{
 			IView view = App.Current.ViewLocator.Retrieve (prefViewModel.View);
 			view.SetViewModel (prefViewModel);
-			var icon = App.Current.ResourcesLocator.LoadIcon (prefViewModel.Icon).Value;
-			prefsStore.AppendValues (icon, prefViewModel.Name,
-									 view as Widget);
+			var icon = App.Current.ResourcesLocator.LoadIcon (prefViewModel.Icon);
+			prefsStore.AppendValues (icon, prefViewModel.Name, view as Widget);
 		}
 
 		void RemovePanels ()
