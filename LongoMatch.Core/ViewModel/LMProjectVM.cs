@@ -46,6 +46,13 @@ namespace LongoMatch.Core.ViewModel
 			Visible = true;
 		}
 
+		protected override void DisposeManagedResources ()
+		{
+			HomeTeam.Dispose ();
+			AwayTeam.Dispose ();
+			base.DisposeManagedResources ();
+		}
+
 		/// <summary>
 		/// Gets the description of the project
 		/// </summary>

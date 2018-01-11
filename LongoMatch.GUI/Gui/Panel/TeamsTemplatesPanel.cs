@@ -105,7 +105,9 @@ namespace LongoMatch.Gui.Panel
 
 		public override void Destroy ()
 		{
-			teamtemplateeditor1.Dispose ();
+			teamsStore.Dispose ();
+			teamtemplateeditor1.Destroy ();
+			teamseditortreeview.Destroy ();
 			base.Destroy ();
 		}
 
@@ -300,7 +302,7 @@ namespace LongoMatch.Gui.Panel
 				}
 				break;
 			case NotifyCollectionChangedAction.Reset:
-				Reset (); 
+				Reset ();
 				break;
 			case NotifyCollectionChangedAction.Replace:
 				QueueDraw ();

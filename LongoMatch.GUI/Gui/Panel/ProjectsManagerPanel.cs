@@ -99,6 +99,8 @@ namespace LongoMatch.Gui.Panel
 			ViewModel = null;
 			ctx.Dispose ();
 			ctx = null;
+			detailCtx.Dispose ();
+			detailCtx = null;
 
 			base.OnDestroyed ();
 
