@@ -61,12 +61,10 @@ namespace LongoMatch.Services.Controller
 			return keyActions;
 		}
 
-		protected override TimelineEventVM CreateTimelineEventVM (EventType type, Time start, Time stop, Time eventTime, Image miniature)
+		protected override TimelineEvent CreateTimelineEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature)
 		{
-			var evt = project.Model.CreateEvent (type, start, stop, eventTime, miniature,
+			return project.Model.CreateEvent (type, start, stop, eventTime, miniature,
 											  project.Model.EventsByType (type).Count + 1);
-
-			return new TimelineEventVM () { Model = evt };
 		}
 
 		void HandleTeamTagging (LMTeamVM team, string taggedPlayer)

@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Menus
 			menu.Append (appendMenu);
 
 			deleteMenu = new MenuItem (Catalog.GetString ("Delete"));
-			deleteMenu.Activated += (sender, e) => elements.ForEach (el => playlist.Elements.Remove (el));
+			deleteMenu.Activated += (sender, e) => elements.ForEach (el => playlist.Remove (el));
 			menu.Append (deleteMenu);
 			menu.ShowAll ();
 		}

@@ -156,17 +156,18 @@ namespace LongoMatch.Gui.Dialog
 			goal.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 
-		void LoadTimelineEvent (LMTimelineEventVM evt)
+		void LoadTimelineEvent (LMTimelineEvent timelineEvent)
 		{
-			fieldDrawingarea.Visible = evt.EventType.TagFieldPosition;
-			hfieldDrawingarea.Visible = evt.EventType.TagHalfFieldPosition;
-			goalDrawingarea.Visible = evt.EventType.TagGoalPosition;
-			field.SetViewModel (evt);
-			hfield.SetViewModel (evt);
-			goal.SetViewModel (evt);
+			var viewModel = new LMTimelineEventVM { Model = timelineEvent };
+			fieldDrawingarea.Visible = timelineEvent.EventType.TagFieldPosition;
+			hfieldDrawingarea.Visible = timelineEvent.EventType.TagHalfFieldPosition;
+			goalDrawingarea.Visible = timelineEvent.EventType.TagGoalPosition;
+			field.SetViewModel (viewModel);
+			hfield.SetViewModel (viewModel);
+			goal.SetViewModel (viewModel);
 		}
 
-		void AddTagsGroup (LMTimelineEventVM evt, string grp, List<Tag> tags, SizeGroup sgroup)
+		void AddTagsGroup (LMTimelineEvent evt, string grp, List<Tag> tags, SizeGroup sgroup)
 		{
 			HBox box = new HBox ();
 			Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
@@ -212,23 +213,23 @@ namespace LongoMatch.Gui.Dialog
 			tagsvbox.PackStart (new HSeparator ());
 		}
 
-		void FillTags (LMProject project, LMTimelineEventVM eventVM)
+		void FillTags (LMProject project, LMTimelineEvent evt)
 		{
 			Dictionary<string, List<Tag>> tagsByGroup;
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
 
-			if (eventVM.EventType is AnalysisEventType) {
-				tagsByGroup = (eventVM.EventType as AnalysisEventType).TagsByGroup;
+			if (evt.EventType is AnalysisEventType) {
+				tagsByGroup = (evt.EventType as AnalysisEventType).TagsByGroup;
 			} else {
 				tagsByGroup = new Dictionary<string, List<Tag>> ();
 			}
 
 			tagsvbox.PackStart (new HSeparator ());
 			foreach (var kv in project.Dashboard.CommonTagsByGroup) {
-				AddTagsGroup (eventVM, kv.Key, kv.Value, sgroup);
+				AddTagsGroup (evt, kv.Key, kv.Value, sgroup);
 			}
 			foreach (var kv in tagsByGroup) {
-				AddTagsGroup (eventVM, kv.Key, kv.Value, sgroup);
+				AddTagsGroup (evt, kv.Key, kv.Value, sgroup);
 			}
 			tagsvbox.ShowAll ();
 		}

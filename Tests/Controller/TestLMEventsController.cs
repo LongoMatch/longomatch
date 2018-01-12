@@ -99,16 +99,15 @@ namespace Tests.Controller
 			var ev1 = new TimelineEvent ();
 			ev1.Start = new Time (0);
 			ev1.Stop = new Time (1000);
-			var vm1 = new TimelineEventVM () { Model = ev1 };
 
 			App.Current.EventsBroker.Publish (
-				new LoadTimelineEventEvent<TimelineEventVM> {
-					Object = vm1,
-					Playing = true,
-				}
-			);
+					new LoadTimelineEventEvent<TimelineEvent> {
+						Object = ev1,
+						Playing = true,
+					}
+				);
 
-			playerController.Verify (p => p.LoadEvent (vm1, ev1.Start, true));
+			playerController.Verify (p => p.LoadEvent (ev1, ev1.Start, true));
 		}
 
 		[Test]
@@ -150,16 +149,14 @@ namespace Tests.Controller
 
 			Assert.AreEqual (currentCount, projectVM.Timeline.FullTimeline.Count ());
 			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
-										  Times.Once);
+			                              Times.Once);
 		}
 
 		[Test]
 		public void EventsDeletedEvent_DeleteAllEvents_LineupEventNotDeleted ()
 		{
-			var eventVMs = projectVM.Timeline.Model.Select (e => new TimelineEventVM () { Model = e });
-
 			App.Current.EventsBroker.Publish (new EventsDeletedEvent {
-				TimelineEvents = eventVMs
+				TimelineEvents = projectVM.Timeline.Model
 			});
 
 			Assert.AreEqual (1, projectVM.Timeline.Model.Count);
