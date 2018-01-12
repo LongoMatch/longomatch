@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
-//using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
@@ -34,8 +33,10 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 using KeyAction = VAS.Core.Hotkeys.KeyAction;
+using System.Linq;
 
 namespace LongoMatch.Services
 {
@@ -50,14 +51,14 @@ namespace LongoMatch.Services
 		public override async Task Start ()
 		{
 			await base.Start ();
-			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
+			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEventVM>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 		}
 
 		public override async Task Stop ()
 		{
-			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEvent>> (HandleLoadTimelineEvent);
+			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEventVM>> (HandleLoadTimelineEvent);
 			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
 			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 			await base.Stop ();
@@ -78,7 +79,7 @@ namespace LongoMatch.Services
 		}
 
 		// FIXME: remove this when the video capturer is ported to MVVM
-		void HandleLoadTimelineEvent (LoadTimelineEventEvent<TimelineEvent> e)
+		void HandleLoadTimelineEvent (LoadTimelineEventEvent<TimelineEventVM> e)
 		{
 			VideoPlayer.LoadEvent (e.Object, e.Playing);
 		}
@@ -92,9 +93,12 @@ namespace LongoMatch.Services
 
 			try {
 				evt = viewModel.Project.Model.SubsitutePlayer (e.Team, e.Player1, e.Player2, e.SubstitutionReason, e.Time);
+
+				var timelineEventVM = viewModel.Project.Timeline.FullTimeline.Where (x => x.Model == evt).FirstOrDefault ();
+
 				App.Current.EventsBroker.Publish (
 					new EventCreatedEvent {
-						TimelineEvent = evt
+						TimelineEvent = timelineEventVM
 					}
 				);
 			} catch (SubstitutionException ex) {
@@ -109,19 +113,19 @@ namespace LongoMatch.Services
 
 		void DeleteLoadedEvent ()
 		{
-			if (LoadedPlay == null) {
+			if (LoadedPlay?.Model == null) {
 				return;
 			}
 			App.Current.EventsBroker.Publish (
 				new EventsDeletedEvent {
-					TimelineEvents = new List<TimelineEvent> { LoadedPlay }
+					TimelineEvents = new List<TimelineEventVM> { LoadedPlay }
 				}
 			);
 		}
 
 		void EditLoadedEvent ()
 		{
-			if (LoadedPlay == null) {
+			if (LoadedPlay?.Model == null) {
 				return;
 			}
 			bool playing = VideoPlayer.Playing;

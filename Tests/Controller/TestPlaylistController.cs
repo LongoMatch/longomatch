@@ -94,15 +94,18 @@ namespace Tests.Controller
 		public void TestLoadPlayEvent ()
 		{
 			TimelineEvent element = new TimelineEvent { Start = new Time (0), Stop = new Time (5) };
-			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
-			videoPlayerController.Verify (player => player.LoadEvent (element, new Time (0), true),
+			TimelineEventVM vm = new TimelineEventVM () { Model = element };
+
+			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = vm });
+			videoPlayerController.Verify (player => player.LoadEvent (vm, new Time (0), true),
 				Times.Once ());
 		}
 
 		[Test]
 		public void TestLoadPlayEventNull ()
 		{
-			TimelineEvent element = null;
+			TimelineEventVM element = null;
+
 			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
 			videoPlayerController.Verify (player => player.UnloadCurrentEvent (), Times.Once ());
 		}
@@ -111,7 +114,9 @@ namespace Tests.Controller
 		public void TestLoadPlayEventWithoutDuration ()
 		{
 			TimelineEvent element = new TimelineEvent { Start = new Time (0), Stop = new Time (0) };
-			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
+			TimelineEventVM vm = new TimelineEventVM () { Model = element };
+
+			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = vm });
 			videoPlayerController.Verify (
 				player => player.Seek (element.EventTime, true, false, false), Times.Once ());
 			videoPlayerController.Verify (player => player.Play (false), Times.Once ());
@@ -122,7 +127,9 @@ namespace Tests.Controller
 		{
 			projectVM.Model.ProjectType = ProjectType.FakeCaptureProject;
 			TimelineEvent element = new TimelineEvent ();
-			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
+			TimelineEventVM vm = new TimelineEventVM () { Model = element };
+
+			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = vm });
 			videoPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (),
 				It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 			videoPlayerController.Verify (player => player.Play (false), Times.Never ());
@@ -132,7 +139,9 @@ namespace Tests.Controller
 		public void TestPrev ()
 		{
 			TimelineEvent element = new TimelineEvent ();
-			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
+			TimelineEventVM vm = new TimelineEventVM () { Model = element };
+
+			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = vm });
 			// loadedPlay != null
 			videoPlayerController.ResetCalls ();
 
@@ -145,7 +154,9 @@ namespace Tests.Controller
 		public void TestNext ()
 		{
 			TimelineEvent element = new TimelineEvent ();
-			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = element });
+			TimelineEventVM vm = new TimelineEventVM () { Model = element };
+
+			App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = vm });
 			// loadedPlay != null
 			videoPlayerController.ResetCalls ();
 

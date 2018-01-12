@@ -66,7 +66,7 @@ namespace Tests.Services.ViewModel
 			var play = lmProject.Timeline [0] as LMTimelineEvent;
 			play.Players.Add (lmProject.LocalTeamTemplate.List [0]);
 			play.Teams.Add (lmProject.LocalTeamTemplate);
-			viewModel.Play = play;
+			viewModel.Play = new LMTimelineEventVM () { Model = play };
 
 			Assert.IsTrue (viewModel.TeamTagger.HomeTeam.Tagged);
 			Assert.IsFalse (viewModel.TeamTagger.AwayTeam.Tagged);

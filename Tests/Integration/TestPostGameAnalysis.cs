@@ -197,12 +197,14 @@ namespace Tests.Integration
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			await App.Current.EventsBroker.Publish<EventsDeletedEvent> (
-				new EventsDeletedEvent {
-					TimelineEvents = new List<TimelineEvent> {
+			var events = new List<TimelineEvent> {
 						p.Timeline [0],
 						p.Timeline [1]
-					}
+			};
+
+			await App.Current.EventsBroker.Publish<EventsDeletedEvent> (
+				new EventsDeletedEvent {
+					TimelineEvents = events.Select (e => new TimelineEventVM () { Model = e })
 				}
 			);
 			Assert.AreEqual (3, p.Timeline.Count);

@@ -34,10 +34,15 @@ namespace Tests.Core.ViewModel
 			var viewModel = new PlaylistVM {
 				Model = model
 			};
+
 			LMTimelineEvent timelineEvent = new LMTimelineEvent ();
+
 			model.Elements.Add (new PlaylistPlayElement (timelineEvent));
+
 			viewModel.PropertyChanged += (sender, e) => {
-				senderObject = sender;
+				if (sender is PlaylistPlayElementVM) {
+					senderObject = sender;
+				};
 			};
 
 			timelineEvent.Name = "test";

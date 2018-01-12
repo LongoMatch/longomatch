@@ -26,6 +26,7 @@ using LongoMatch.Gui.Dialog;
 using VAS.Core.Events;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Core.ViewModel;
 using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
@@ -166,15 +167,15 @@ namespace LongoMatch.Gui.Component
 			foreach (var path in paths) {
 				TreeIter iter;
 				PlaylistPlayElement element;
-				
+
 				treeview.Model.GetIter (out iter, path);
 				element = new PlaylistPlayElement (treeview.Model.GetValue (iter, 0) as TimelineEvent);
 				playlist.Elements.Add (element);
 			}
-			
+
 			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
 				new RenderPlaylistEvent {
-					Playlist = playlist
+					Playlist = new PlaylistVM { Model = playlist }
 				}
 			);
 		}

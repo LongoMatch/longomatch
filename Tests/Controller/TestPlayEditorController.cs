@@ -46,7 +46,7 @@ namespace Tests.Controller
 			var play = project.Timeline [0] as LMTimelineEvent;
 			play.Players.Add (project.LocalTeamTemplate.List [0]);
 			play.Teams.Add (project.LocalTeamTemplate);
-			viewModel.Play = play;
+			viewModel.Play = new LMTimelineEventVM () { Model = play };
 
 			controller.SetViewModel (viewModel);
 			teamTaggerController.SetViewModel (viewModel);
