@@ -17,15 +17,12 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Store;
-using VAS.Core.ViewModel;
 using VAS.UI.Menus;
 
 namespace LongoMatch.Gui.Menus
@@ -38,7 +35,7 @@ namespace LongoMatch.Gui.Menus
 		Menu sortMenu;
 		MenuItem addToPlaylistMenuItem, exportToVideoFileItem, editItem, sortItem;
 		RadioMenuItem sortByName, sortByStart, sortByStop, sortByDuration;
-		IEnumerable<TimelineEventVM> eventVMs;
+		IEnumerable<TimelineEvent> events;
 		EventType eventType;
 
 		public EventTypeMenu ()
@@ -46,15 +43,14 @@ namespace LongoMatch.Gui.Menus
 			FillMenu ();
 		}
 
-		public void ShowMenu (LMProject project, EventType eventType, IEnumerable<LMTimelineEventVM> eventVMs)
+		public void ShowMenu (LMProject project, EventType eventType,
+							  IList<LMTimelineEvent> events)
 		{
 			this.eventType = eventType;
-			this.eventVMs = eventVMs;
+			this.events = events;
 			SetupSortMenu ();
-			var playlistVMs = project.Playlists.Select (pl => new PlaylistVM { Model = pl });
-
-			MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenuItem, playlistVMs, eventVMs);
-			MenuHelpers.FillExportToVideoFileMenu (exportToVideoFileItem, project, eventVMs, Catalog.GetString ("Export to video file"));
+			MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenuItem, project.Playlists, events);
+			MenuHelpers.FillExportToVideoFileMenu (exportToVideoFileItem, project, events, Catalog.GetString ("Export to video file"));
 			Popup ();
 		}
 
@@ -144,7 +140,7 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleExportEvents (object sender, EventArgs e)
 		{
-			MenuHelpers.EmitRenderPlaylist (eventVMs);
+			MenuHelpers.EmitRenderPlaylist (events);
 		}
 	}
 }

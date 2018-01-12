@@ -150,13 +150,11 @@ namespace LongoMatch.Gui.Component
 			IEnumerable<TimelineEventVM> events = viewModels.OfType<TimelineEventVM> ();
 
 			EventTypeTimelineVM categoryVM = viewModels.OfType<EventTypeTimelineVM> ().FirstOrDefault ();
-
 			if (!events.Any () && categoryVM != null) {
 				events = categoryVM.ViewModels.Where (vm => vm.Visible);
-				eventTypeMenu.ShowMenu (Project.Model, categoryVM.Model,
-										events.Select (vm => vm as LMTimelineEventVM));
+				eventTypeMenu.ShowMenu (Project.Model, categoryVM.Model, events.Select (vm => vm.Model as LMTimelineEvent).ToList ());
 			} else {
-				menu.ShowMenu (Project.Model, events);
+				menu.ShowMenu (Project.Model, events.Select (vm => vm.Model).ToList ());
 			}
 		}
 

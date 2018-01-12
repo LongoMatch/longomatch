@@ -26,7 +26,6 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
-using VAS.Core.ViewModel;
 using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
@@ -99,9 +98,9 @@ namespace LongoMatch.Gui.Component
 		public void SetTeam (LMTeam template, IEnumerable<LMTimelineEvent> plays)
 		{
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter> ();
-
+			
 			Log.Debug ("Updating teams models with template:" + template);
-			team = new TreeStore (typeof (object));
+			team = new TreeStore (typeof(object));
 
 			foreach (var player in template.List) {
 				/* Add a root in the tree with the option name */
@@ -131,20 +130,20 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
 			Playlist playlist = new Playlist ();
-			TreePath [] paths = playerstreeview.Selection.GetSelectedRows ();
+			TreePath[] paths = playerstreeview.Selection.GetSelectedRows ();
 
 			foreach (var path in paths) {
 				TreeIter iter;
 				PlaylistPlayElement element;
-
+				
 				playerstreeview.Model.GetIter (out iter, path);
 				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as LMTimelineEvent);
 				playlist.Elements.Add (element);
 			}
-
+			
 			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
 				new RenderPlaylistEvent {
-					Playlist = new PlaylistVM { Model = playlist }
+					Playlist = playlist
 				}
 			);
 		}

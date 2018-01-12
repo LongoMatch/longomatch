@@ -20,7 +20,6 @@ using System.Linq;
 using Gtk;
 using VAS.Core;
 using VAS.Core.Store;
-using VAS.Core.ViewModel;
 using VAS.UI.Menus;
 
 namespace LongoMatch.Gui.Menus
@@ -37,12 +36,11 @@ namespace LongoMatch.Gui.Menus
 			Add (exportToVideoFile);
 		}
 
-		public void ShowMenu (Project project, IEnumerable<TimelineEventVM> eventVMs)
+		public void ShowMenu (Project project, IEnumerable<TimelineEvent> events)
 		{
-			if (eventVMs.Count () > 0) {
-				var playlistVMs = project.Playlists.Select (pl => new PlaylistVM { Model = pl });
-				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, playlistVMs, eventVMs);
-				MenuHelpers.FillExportToVideoFileMenu (exportToVideoFile, project, eventVMs,
+			if (events.Count () > 0) {
+				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, project.Playlists, events);
+				MenuHelpers.FillExportToVideoFileMenu (exportToVideoFile, project, events,
 													   Catalog.GetString ("Export to video file"));
 				Popup ();
 			}

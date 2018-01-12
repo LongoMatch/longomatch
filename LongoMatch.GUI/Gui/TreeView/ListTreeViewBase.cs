@@ -26,7 +26,6 @@ using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Store;
-using VAS.Core.ViewModel;
 using Color = Gdk.Color;
 using Image = VAS.Core.Common.Image;
 using LMCommon = LongoMatch.Core.Common;
@@ -126,11 +125,7 @@ namespace LongoMatch.Gui.Component
 
 		protected void ShowMenu ()
 		{
-			IEnumerable<TimelineEventVM> eventVMs = SelectedPlays
-				.Cast<TimelineEvent> ()
-				.Select (evt => new TimelineEventVM () { Model = evt });
-
-			playsMenu.ShowListMenu (Project, eventVMs);
+			playsMenu.ShowListMenu (Project, SelectedPlays.Cast<TimelineEvent> ().ToList ());
 		}
 
 		protected object GetValueFromPath (TreePath path)
@@ -154,7 +149,7 @@ namespace LongoMatch.Gui.Component
 
 			App.Current.EventsBroker.Publish<LoadEventEvent> (
 				new LoadEventEvent {
-					TimelineEvent = new TimelineEventVM () { Model = item as LMTimelineEvent }
+					TimelineEvent = item as LMTimelineEvent
 				}
 			);
 		}
@@ -165,9 +160,7 @@ namespace LongoMatch.Gui.Component
 			List<Player> players = selectedEvent.Players.ToList ();
 
 			App.Current.EventsBroker.Publish<EditEventEvent> (
-				new EditEventEvent {
-					TimelineEvent = new TimelineEventVM () { Model = selectedEvent }
-				});
+				new EditEventEvent { TimelineEvent = selectedEvent });
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
 				App.Current.EventsBroker.Publish<TeamTagsChangedEvent> ();
