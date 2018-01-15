@@ -16,10 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Store;
 using Misc = VAS.UI.Helpers.Misc;
@@ -48,7 +50,9 @@ namespace LongoMatch.Gui.Component
 		void ShowPlayerMenu (TreePath [] paths)
 		{
 			List<LMTimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
-			playerMenu.ShowMenu (Project, events);
+			IEnumerable<LMTimelineEventVM> eventVMs = events.Select (evt => new LMTimelineEventVM () { Model = evt });
+
+			playerMenu.ShowMenu (Project, eventVMs);
 		}
 
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)

@@ -21,6 +21,7 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Events;
 using VAS.Core.Store;
 using LMCommon = LongoMatch.Core.Common;
@@ -32,7 +33,7 @@ namespace LongoMatch.Gui.Component
 	public partial class NotesWidget : Gtk.Bin
 	{
 		TextBuffer buf;
-		LMTimelineEvent play;
+		LMTimelineEventVM play;
 
 		public NotesWidget ()
 		{
@@ -48,7 +49,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public LMTimelineEvent Play {
+		public LMTimelineEventVM Play {
 			set {
 				play = value;
 				Notes = play.Notes;
@@ -74,8 +75,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			Play = e.TimelineEvent as LMTimelineEvent;
+			Play = e.TimelineEvent as LMTimelineEventVM;
 		}
-		
+
 	}
 }

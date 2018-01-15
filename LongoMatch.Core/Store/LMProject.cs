@@ -22,11 +22,13 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
+using VAS.Core.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store

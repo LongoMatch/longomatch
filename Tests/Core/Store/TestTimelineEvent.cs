@@ -38,7 +38,6 @@ namespace Tests.Core.Store
 
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
-			evt.Playing = true;
 			evt.Teams.Add (new LMTeam ());
 			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));

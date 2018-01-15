@@ -32,7 +32,7 @@ namespace LongoMatch.Services.ViewModel
 	/// </summary>
 	public class PlayEditorVM : ViewModelBase, ILMTeamTaggerDealer, IProjectDealer
 	{
-		LMTimelineEvent play;
+		LMTimelineEventVM play;
 		LMProjectVM project;
 
 		public PlayEditorVM ()
@@ -61,7 +61,7 @@ namespace LongoMatch.Services.ViewModel
 		/// Gets or sets the timeline event.
 		/// </summary>
 		/// <value>The timeline event.</value>
-		public LMTimelineEvent Play {
+		public LMTimelineEventVM Play {
 			get {
 				return play;
 			}

@@ -54,7 +54,9 @@ namespace Tests.Services
 			eventEditor.Start ();
 
 			// Act
-			await App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = new StatEvent () });
+			await App.Current.EventsBroker.Publish (new EditEventEvent {
+				TimelineEvent = new LMTimelineEventVM () { Model = new StatEvent () }
+			});
 
 			// Assert
 			mockStateControler.Verify (e => e.MoveToModal (SubstitutionsEditorState.NAME, It.IsAny<object> (), true), Times.Once);
@@ -72,7 +74,9 @@ namespace Tests.Services
 			eventEditor.Start ();
 
 			// Act
-			await App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = new LMTimelineEvent () });
+			await App.Current.EventsBroker.Publish (new EditEventEvent {
+				TimelineEvent = new LMTimelineEventVM () { Model = new LMTimelineEvent () }
+			});
 
 			// Assert
 			mockStateControler.Verify (e => e.MoveToModal (PlayEditorState.NAME, It.IsAny<object> (), true), Times.Once);

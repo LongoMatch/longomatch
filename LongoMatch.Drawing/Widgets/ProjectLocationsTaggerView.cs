@@ -103,22 +103,22 @@ namespace LongoMatch.Drawing.Widgets
 			ViewModel = (LMProjectVM)viewModel;
 		}
 
-		public void AddTimelineEvent (LMTimelineEventVM timelineEventVM)
+		public void AddTimelineEvent (LMTimelineEventVM timelineEvent)
 		{
 			var po = new TimelineEventLocationView {
 				BackgroundWidth = Background.Width,
 				BackgroundHeight = Background.Height,
 				FieldPosition = FieldPosition
 			};
-			po.SetViewModel (timelineEventVM);
-			eventToView [timelineEventVM] = po;
+			po.SetViewModel (timelineEvent);
+			eventToView [timelineEvent] = po;
 			AddObject (po);
 		}
 
-		public void RemoveTimelineEvent (LMTimelineEventVM timelineEventVM)
+		public void RemoveTimelineEvent (LMTimelineEventVM timelineEvent)
 		{
-			Objects.Remove (eventToView [timelineEventVM]);
-			eventToView.Remove (timelineEventVM);
+			Objects.Remove (eventToView [timelineEvent]);
+			eventToView.Remove (timelineEvent);
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)
@@ -127,7 +127,7 @@ namespace LongoMatch.Drawing.Widgets
 				LMTimelineEventVM p = (selections.Last ().Drawable as TimelineEventLocationView).ViewModel;
 				if (EmitSignals) {
 					// FIXME: Use a ViewModel command
-					App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = p.Model });
+					App.Current.EventsBroker.Publish (new LoadEventEvent { TimelineEvent = p });
 				}
 			}
 		}

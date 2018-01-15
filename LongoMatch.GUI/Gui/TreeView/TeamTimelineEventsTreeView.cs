@@ -74,14 +74,14 @@ namespace LongoMatch.Gui.Component
 		protected override void ShowMenu ()
 		{
 			IEnumerable<IViewModel> viewModels = GetSelectedViewModels ();
-			IEnumerable<TimelineEventVM> events = viewModels.OfType<TimelineEventVM> ();
+			IEnumerable<TimelineEventVM> eventVMs = viewModels.OfType<TimelineEventVM> ();
 			PlayerTimelineVM playerVM = viewModels.OfType<PlayerTimelineVM> ().FirstOrDefault ();
 
-			if (!events.Any () && playerVM != null) {
-				events = playerVM.ViewModels.Where (vm => vm.Visible);
-				playerMenu.ShowMenu (Project.Model, events.Select (e => e.Model));
+			if (!eventVMs.Any () && playerVM != null) {
+				eventVMs = playerVM.ViewModels.Where (vm => vm.Visible);
+				playerMenu.ShowMenu (Project.Model, eventVMs);
 			} else {
-				menu.ShowMenu (Project.Model, events.Select (vm => vm.Model).ToList ());
+				menu.ShowMenu (Project.Model, eventVMs.ToList ());
 			}
 		}
 	}
