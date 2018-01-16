@@ -75,7 +75,7 @@ namespace Tests.Core.ViewModel
 
 			viewModel.Season = "newseason";
 
-			Assert.IsTrue (viewModel.Edited);
+			Assert.IsFalse (viewModel.Edited);
 			Assert.IsTrue (viewModel.IsChanged);
 			Assert.IsFalse (model.IsChanged);
 			Assert.AreEqual ("newseason", viewModel.Season);
