@@ -112,7 +112,7 @@ namespace Tests.Drawing.Widgets
 		public void RemovePeriodNode_PeriodNodeSelected_SelectionUpdated ()
 		{
 			PeriodsTimelineView view = timeline.Objects.OfType<PeriodsTimelineView> ().First ();
-			TimerTimeNodeView periodNode = view.nodes.First () as TimerTimeNodeView;
+			TimerTimeNodeView periodNode = (TimerTimeNodeView)view.First ();
 
 			Selection sel = new Selection (periodNode, SelectionPosition.All, 0);
 			timeline.UpdateSelection (sel);

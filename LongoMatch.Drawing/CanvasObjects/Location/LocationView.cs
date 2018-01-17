@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
-using VAS.Drawing.CanvasObjects;
+using VAS.Drawing;
 using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Location

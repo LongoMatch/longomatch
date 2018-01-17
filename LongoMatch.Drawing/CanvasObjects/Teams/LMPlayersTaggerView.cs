@@ -30,6 +30,7 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Resources;
 using VAS.Core.Resources.Styles;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing;
 using VAS.Drawing.CanvasObjects;
 using VASDrawing = VAS.Drawing;
 

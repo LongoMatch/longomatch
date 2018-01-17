@@ -14,6 +14,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.ViewModel;
+using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Services.ViewModel;
 using VAS.Tests;
 
@@ -23,7 +24,7 @@ namespace Tests.Drawing.Widgets
 	{
 		public DummyCamerasTimelineView (IWidget widget) : base (widget)
 		{
-			
+
 		}
 		/// <summary>
 		/// A list with all the selected objects
@@ -36,7 +37,7 @@ namespace Tests.Drawing.Widgets
 
 		public new void HandleLeftButton (Point coords, ButtonModifier modif)
 		{
-			base.HandleLeftButton (coords,modif);
+			base.HandleLeftButton (coords, modif);
 		}
 	}
 
@@ -79,8 +80,8 @@ namespace Tests.Drawing.Widgets
 			DummyCamerasTimelineView camerasTimelineView = new DummyCamerasTimelineView (Mock.Of<IWidget> ());
 			camerasTimelineView.SetViewModel (viewModel);
 			//Force a Selection by clicking on a Period
-			var periodsView = camerasTimelineView.Objects.OfType<PeriodsTimelineView>().First ();
-			var periodView = periodsView.nodes.First ();
+			var periodsView = camerasTimelineView.Objects.OfType<PeriodsTimelineView> ().First ();
+			var periodView = (TimeNodeView)periodsView.First ();
 			camerasTimelineView.HandleLeftButton (new Point (periodView.StartX + 1, periodView.OffsetY + 1), ButtonModifier.None);
 
 			Assert.IsTrue (camerasTimelineView.Selections.Any ());
