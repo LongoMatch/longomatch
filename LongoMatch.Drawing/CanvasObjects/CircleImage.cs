@@ -5,14 +5,14 @@
 using System;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Drawing.CanvasObjects;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	/// <summary>
 	/// An object that draws circular image image.
 	/// </summary>
-	public class CircleImage: FixedSizeCanvasObject
+	public class CircleImage : FixedSizeCanvasObject
 	{
 		/// <summary>
 		/// Gets or sets the image to display.

@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		void ReloadPeriods ()
 		{
-			ClearObjects ();
+			Clear ();
 			foreach (PeriodVM t in viewModel) {
 				AddPeriod (t);
 			}
@@ -117,7 +117,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			to.DraggingMode = DraggingMode;
 			to.ShowName = true;
 			to.LineColor = LineColor;
-			AddNode (to);
+			Add (to);
 		}
 
 		void AddPeriod (PeriodVM period)
@@ -130,9 +130,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		void RemovePeriod (PeriodVM timer)
 		{
-			foreach (TimerTimeNodeView view in nodes.OfType<TimerTimeNodeView> ().ToList()) {
+			foreach (TimerTimeNodeView view in this.OfType<TimerTimeNodeView> ().ToList ()) {
 				if (view.Timer == timer) {
-					RemoveObject (view, true);
+					Remove (view);
 				}
 			}
 			ReDraw ();
