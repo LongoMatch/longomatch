@@ -30,6 +30,7 @@ using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
@@ -67,7 +68,7 @@ namespace Tests.Controller
 			App.Current.GUIToolkit = mockToolkit.Object;
 
 			VideoPlayerVM videoPlayer = new VideoPlayerVM {
-				CamerasConfig = new ObservableCollection<CameraConfig> ()
+				CamerasConfig = new RangeObservableCollection<CameraConfig> ()
 			};
 
 			LMProject project = Utils.CreateProject ();

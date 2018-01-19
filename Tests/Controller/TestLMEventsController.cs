@@ -61,7 +61,7 @@ namespace Tests.Controller
 			playerController = new Mock<IVideoPlayerController> ();
 			videoPlayer = new VideoPlayerVM {
 				Player = playerController.Object,
-				CamerasConfig = new ObservableCollection<CameraConfig> ()
+				CamerasConfig = new RangeObservableCollection<CameraConfig> ()
 			};
 			Mock<IVideoPlayer> playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();

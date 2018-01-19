@@ -101,7 +101,7 @@ namespace Tests.Integration
 			playerControllerMock = new Mock<IVideoPlayerController> ();
 			playerControllerMock.Setup (p => p.StreamLength).Returns (new Time { TotalSeconds = 60000 });
 			playerControllerMock.Setup (p => p.CamerasConfig).Returns (
-				new ObservableCollection<CameraConfig> { new CameraConfig (0) });
+				new RangeObservableCollection<CameraConfig> { new CameraConfig (0) });
 
 			playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
