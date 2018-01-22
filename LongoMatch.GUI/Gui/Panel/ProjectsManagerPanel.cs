@@ -21,6 +21,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Gui.Component;
 using LongoMatch.Services.State;
@@ -31,8 +33,9 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
-using VAS.UI.Helpers.Bindings;
 using VAS.UI.Bindings;
+using VAS.UI.Helpers;
+using VAS.UI.Helpers.Bindings;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -125,6 +128,7 @@ namespace LongoMatch.Gui.Panel
 				projectlistwidget1.SetViewModel (viewModel);
 				ctx.UpdateViewModel (viewModel);
 				if (viewModel != null) {
+					UpdateAutocompletionData ();
 					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 					viewModel.ViewModels.CollectionChanged += HandleViewModelsCollectionChanged;
 				}
@@ -175,6 +179,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleViewModelsCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			rbox.Visible = ViewModel.ViewModels.Any ();
+			UpdateAutocompletionData ();
 		}
 
 		void LoadProject (LMProjectVM project)
@@ -201,6 +206,18 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			rbox.Visible = true;
+		}
+
+		/// <summary>
+		/// Updates the autocompletion data.
+		/// </summary>
+		void UpdateAutocompletionData ()
+		{
+			List<LMProject> projects = ViewModel.ViewModels.Select (vm => vm.Model).ToList ();
+			ProjectsFilter projectsFilter = new ProjectsFilter { Projects = projects };
+
+			seasonentry.Autocomplete (projectsFilter.Seasons);
+			competitionentry.Autocomplete (projectsFilter.Competitions);
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
