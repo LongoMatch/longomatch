@@ -124,6 +124,16 @@ namespace Tests
 			throw new NotImplementedException ();
 		}
 
+		public void Start ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Dispose ()
+		{
+			throw new NotImplementedException ();
+		}
+
 		#endregion
 	}
 
