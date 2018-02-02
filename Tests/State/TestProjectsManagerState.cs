@@ -152,7 +152,7 @@ namespace Tests.State
 			licenseLimitationMock.Setup (ls => ls.CreateBarChartVM (It.IsAny<string> (), -1, null)).Returns (
 				new CountLimitationBarChartVM {
 					Limitation = countLimitation,
-					BarChart = new TwoBarChartVM (4, new SeriesVM (), new SeriesVM ())
+					BarChart = new TwoBarChartVM (new SeriesVM (), new SeriesVM (), 4)
 				}
 			);
 
