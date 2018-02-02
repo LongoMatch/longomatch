@@ -28,6 +28,7 @@ using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.DB;
+using VAS.Services;
 using VAS.Tests;
 using LMDB = LongoMatch.DB;
 using Timer = VAS.Core.Common.Timer;
@@ -70,6 +71,7 @@ namespace Tests
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 			App.Current.ResourcesLocator = new DummyResourcesLocator ();
 			App.Current.FileSystemManager = new FileSystemManager ();
+			App.Current.HotkeysService = new HotkeysService ();
 			Mock<IGUIToolkit> mockGuiToolkit = new Mock<IGUIToolkit> ();
 			mockGuiToolkit.Setup (g => g.DeviceScaleFactor).Returns (1.0f);
 			App.Current.GUIToolkit = mockGuiToolkit.Object;
