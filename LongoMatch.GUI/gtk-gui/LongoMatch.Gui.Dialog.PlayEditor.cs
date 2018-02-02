@@ -149,6 +149,7 @@ namespace LongoMatch.Gui.Dialog
 			w11.Position = 1;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.locationsBox = new global::Gtk.HBox ();
+			this.locationsBox.HeightRequest = 200;
 			this.locationsBox.Name = "locationsBox";
 			this.locationsBox.Spacing = 6;
 			// Container child locationsBox.Gtk.Box+BoxChild
