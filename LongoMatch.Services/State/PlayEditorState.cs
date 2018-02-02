@@ -39,7 +39,7 @@ namespace LongoMatch.Services.State
 			ViewModel = new PlayEditorVM ();
 			ViewModel.Project = new LMProjectVM { Model = data.project.Model };
 			ViewModel.EditionSettings = data.settings;
-			ViewModel.Play = data.play;
+			ViewModel.Play = (LMTimelineEventVM)data.play;
 		}
 	}
 }
