@@ -10,22 +10,6 @@ namespace LongoMatch.Core.ViewModel
 	public class LMTimelineEventVM : TimelineEventVM<LMTimelineEvent>
 	{
 		/// <summary>
-		/// Explicit conversion from PlaylistElementVM to LMTimelineEventVM
-		/// </summary>
-		/// <returns>The converted LMTimelineEventVM</returns>
-		/// <param name="vm">PlaylistElementVM</param>
-		public static explicit operator LMTimelineEventVM (PlaylistElementVM vm)
-		{
-			if (vm.Model is PlaylistPlayElement) {
-				var timelineEvent = vm.Model as PlaylistPlayElement;
-				if (timelineEvent.Play is LMTimelineEvent) {
-					return new LMTimelineEventVM { Model = timelineEvent.Play as LMTimelineEvent };
-				}
-			}
-			return null;
-		}
-
-		/// <summary>
 		/// Gets or sets the field position.
 		/// </summary>
 		/// <value>The field position.</value>
