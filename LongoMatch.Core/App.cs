@@ -52,9 +52,6 @@ namespace LongoMatch
 			Log.SetLogFile (App.Current.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
-
-			/* Fill up the descriptions again after initializing the translations */
-			App.Current.Config.Hotkeys.FillActionsDescriptions ();
 		}
 
 		public new Config Config {
