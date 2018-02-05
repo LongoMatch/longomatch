@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
@@ -27,8 +26,11 @@ using VAS.Core;
 using System;
 using VAS.Core.Resources;
 using LMIcons = LongoMatch.Core.Resources.Icons;
+using System.Threading.Tasks;
+using System.Dynamic;
+using LongoMatch.Services.State;
 
-namespace LongoMatch.Core.ViewModel
+namespace LongoMatch.Services.ViewModel
 {
 	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, DashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
@@ -52,6 +54,7 @@ namespace LongoMatch.Core.ViewModel
 				Icon = App.Current.ResourcesLocator.LoadIcon (LMIcons.Select, Sizes.TemplatesIconSize),
 				IconName = LMIcons.Select
 			};
+			ShowDetailsCommand = new AsyncCommand<DashboardVM> (ShowDetails, (vm) => vm != null);
 
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();
@@ -105,6 +108,15 @@ namespace LongoMatch.Core.ViewModel
 			}
 
 			return vm;
+		}
+
+		public async Task ShowDetails (DashboardVM viewModel)
+		{
+			this.LoadedTemplate = viewModel;
+			dynamic properties = new ExpandoObject ();
+			properties.viewModel = this;
+
+			await App.Current.StateController.MoveTo (DashboardDetailsState.NAME, properties, false);
 		}
 	}
 }
