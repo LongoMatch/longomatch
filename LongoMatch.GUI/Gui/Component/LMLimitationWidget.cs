@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component
 			countLabel.UseMarkup = true;
 			countLabel.ModifyFont (Pango.FontDescription.FromString (App.Current.Style.Font + " 16px"));
 
-			barCanvas = new Canvas (new WidgetWrapper (barDrawingArea));
+			barCanvas = new FillCanvas (new WidgetWrapper (barDrawingArea));
 			barView = new BarChartView ();
 			barCanvas.AddObject (barView);
 
