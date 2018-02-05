@@ -25,6 +25,19 @@ namespace LongoMatch.Core.Resources.Styles
 		public const int PlayerFontSize = 20;
 		public const int PlayerSmallFontSize = 16;
 
+		public const double NavigationTopBarHeight = 44;
+		public const double NavigationBarTitleFontSize = 20;
+		public const double NavigationBarSubtitleFontSize = 18;
+
+		public const double DetailsViewTitleFontSize = 18;
+		public const double DetailsViewSubtitleFontSize = 10;
+
+		public const double DetailsContentFontSize = 11;
+		public const double DetailsFieldIconsHeight = 56;
+
+		public const double DefaultIconHeight = 24;
+		public const double DefaultIconWidth = 24;
+
 		public const int BenchSize = 85;
 		public const int MinRangeReboundAnimationDuration = 400;
 		public const int MaxRangeReboundAnimationDuration = 550;
