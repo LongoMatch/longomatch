@@ -22,6 +22,10 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Core.Resources.Styles;
+using VAS.Services.ViewModel;
+using System.Collections.Generic;
+using VAS.Core;
+using System;
 
 namespace LongoMatch.Core.ViewModel
 {
@@ -33,17 +37,48 @@ namespace LongoMatch.Core.ViewModel
 		{
 			AddButton = LoadedTemplate.AddButton;
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.TemplatesIconSize);
+			NewCommand.IconName = "vas-add";
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", Sizes.TemplatesIconSize);
 			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", Sizes.TemplatesIconSize);
+			DeleteCommand.IconName = "vas-delete";
 			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", Sizes.TemplatesIconSize);
 			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", Sizes.TemplatesIconSize);
+			TransferCommand = new Command (() => throw new NotImplementedException ()) {
+				Icon = App.Current.ResourcesLocator.LoadIcon ("lm-transfer", Sizes.TemplatesIconSize),
+				IconName = "lm-transfer"
+			};
+			MakeDefaultCommand = new Command (() => throw new NotImplementedException ()) {
+				Icon = App.Current.ResourcesLocator.LoadIcon ("lm-select", Sizes.TemplatesIconSize),
+				IconName = "lm-select"
+			};
+
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();
 				LimitationChart = null;
 			}
+			DashboardMenu = new MenuVM ();
+			FillDashboardMenu ();
 		}
 
 		public Command<string> AddButton {
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Calls the transfer service holding the current Dashboard.
+		/// </summary>
+		/// <value>The transfer command.</value>
+		public Command TransferCommand {
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Marks dashboard as default
+		/// </summary>
+		/// <value>The make default command.</value>
+		public Command MakeDefaultCommand {
 			get;
 			private set;
 		}
@@ -53,6 +88,18 @@ namespace LongoMatch.Core.ViewModel
 				return LoadedTemplate;
 			}
 		}
+
+		/// <summary>
+		/// Gets the dashboard menu.
+		/// </summary>
+		/// <value>The dashboard menu.</value>
+		public MenuVM DashboardMenu { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the filter text.
+		/// </summary>
+		/// <value>The filter text.</value>
+		public string FilterText { get; set; }
 
 		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
@@ -65,6 +112,15 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
+		protected virtual void FillDashboardMenu ()
+		{
+			DashboardMenu.ViewModels.AddRange (new List<MenuNodeVM> {
+				//TODO: Uncomment this when you need to implement those commands
+				//new MenuNodeVM (MakeDefaultCommand, null, Catalog.GetString("Make Default")) { Color = App.Current.Style.ColorAccentSuccess },
+				//new MenuNodeVM (TransferCommand, null, Catalog.GetString("Transfer...")) { Color = App.Current.Style.TextBase },
+				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { Color = App.Current.Style.ColorAccentError },
+			});
+		}
 		protected override DashboardVM CreateInstance (Dashboard model)
 		{
 			var vm = base.CreateInstance (model);
