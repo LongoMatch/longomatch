@@ -167,6 +167,10 @@ namespace LongoMatch.Services
 			App.Current.HotkeysService = new HotkeysService ();
 			RegisterService (App.Current.HotkeysService);
 
+			var vmFacoryService = new ViewModelFactoryService ();
+			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (vmFacoryService);
+			RegisterService (vmFacoryService);
+
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 			PlaybackHotkeys.RegisterDefaultHotkeys ();
 			DrawingToolHotkeys.RegisterDefaultHotkeys ();
