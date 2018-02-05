@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Panel
 	//FIXME: This Panel should dissapear in favour of PreferencesPanel in VAS.UI, but only when all panels inside this
 	//preferences panel are migrated to have a VM of type IPreferencesVM
 	[System.ComponentModel.ToolboxItem (true)]
-	[ViewAttribute (PreferencesState.NAME)]
+	[ViewAttribute (PreferencesState.NAME, 1)]
 	public partial class PreferencesPanel : Gtk.Bin, IPanel<PreferencesPanelVM>
 	{
 		Widget selectedPanel;
