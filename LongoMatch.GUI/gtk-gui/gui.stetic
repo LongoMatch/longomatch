@@ -8669,12 +8669,6 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <placeholder />
                         </child>
-                        <child>
-                          <placeholder />
-                        </child>
-                        <child>
-                          <placeholder />
-                        </child>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -8684,6 +8678,7 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.HBox" id="locationsBox">
                         <property name="MemberName" />
+                        <property name="HeightRequest">200</property>
                         <property name="Spacing">6</property>
                         <child>
                           <widget class="Gtk.DrawingArea" id="fieldDrawingarea">
@@ -8715,7 +8710,7 @@ You can continue with the current capture, cancel it or save your project.
                       </widget>
                       <packing>
                         <property name="Position">2</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>
@@ -8725,7 +8720,7 @@ You can continue with the current capture, cancel it or save your project.
                       </widget>
                       <packing>
                         <property name="Position">3</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
