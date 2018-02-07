@@ -11,6 +11,7 @@
     <widget-library name="../../../bin/VAS.UI.dll" />
     <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../../bin/VAS.UI.Multimedia.Gtk2.dll" />
+    <widget-library name="../../../bin/FluVAS.License.dll" />
     <widget-library name="../../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
@@ -960,6 +961,12 @@ Sort by competition</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Show project stats</property>
       </action>
+      <action id="EnterLicenseKeyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Enter license key</property>
+        <property name="ShortLabel" translatable="yes">Enter license key</property>
+        <signal name="Activated" handler="HandleEnterLicenseKeyAction" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1000,6 +1007,7 @@ Sort by competition</property>
                     <node type="Separator" />
                   </node>
                   <node type="Menu" action="HelpAction">
+                    <node type="Menuitem" action="EnterLicenseKeyAction" />
                     <node type="Menuitem" action="AboutAction" />
                     <node type="Menuitem" action="HelpAction1" />
                   </node>
@@ -2796,7 +2804,7 @@ You can download it using this direct link:</property>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
                     <property name="LabelProp" translatable="yes">A capture project is actually running.
-You can continue with the current capture, cancel it or save your project. 
+You can continue with the current capture, cancel it or save your project.
 
 &lt;b&gt;Warning: If you cancel the current project all your changes will be lost.&lt;/b&gt;</property>
                     <property name="UseMarkup">True</property>
@@ -9596,7 +9604,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">As explained and detailed in the &lt;a href="http://www.longomatch.com/open-source.html"&gt;OpenSource project&lt;/a&gt; page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  
+                    <property name="LabelProp" translatable="yes">As explained and detailed in the &lt;a href="http://www.longomatch.com/open-source.html"&gt;OpenSource project&lt;/a&gt; page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.
 
 To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the &lt;a href="http://www.longomatch.com/open-source.html"&gt;OpenSource project&lt;/a&gt; page.
 

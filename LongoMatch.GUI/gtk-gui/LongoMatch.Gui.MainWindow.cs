@@ -58,6 +58,8 @@ namespace LongoMatch.Gui
 
 		private global::Gtk.Action ShowProjectStatsAction;
 
+		private global::Gtk.Action EnterLicenseKeyAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.VBox menubox;
@@ -157,6 +159,9 @@ namespace LongoMatch.Gui
 			this.ShowProjectStatsAction.Sensitive = false;
 			this.ShowProjectStatsAction.ShortLabel = global::VAS.Core.Catalog.GetString("Show project stats");
 			w1.Add(this.ShowProjectStatsAction, "<Primary>h");
+			this.EnterLicenseKeyAction = new global::Gtk.Action("EnterLicenseKeyAction", global::VAS.Core.Catalog.GetString("Enter license key"), null, null);
+			this.EnterLicenseKeyAction.ShortLabel = global::VAS.Core.Catalog.GetString("Enter license key");
+			w1.Add(this.EnterLicenseKeyAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.Name = "LongoMatch.Gui.MainWindow";
@@ -171,7 +176,7 @@ namespace LongoMatch.Gui
 			this.menubox.Name = "menubox";
 			this.menubox.Spacing = 6;
 			// Container child menubox.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='PreferencesAction' action='PreferencesAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='DatabasesManagerAction' action='DatabasesManagerAction'/><separator/><separator/><menuitem name='VideoConverterToolAction' action='VideoConverterToolAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><separator/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='PreferencesAction' action='PreferencesAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='DatabasesManagerAction' action='DatabasesManagerAction'/><separator/><separator/><menuitem name='VideoConverterToolAction' action='VideoConverterToolAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><separator/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='EnterLicenseKeyAction' action='EnterLicenseKeyAction'/><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.menubox.Add(this.menubar1);
@@ -212,6 +217,7 @@ namespace LongoMatch.Gui
 			this.AboutAction.Activated += new global::System.EventHandler(this.OnAboutActionActivated);
 			this.HelpAction1.Activated += new global::System.EventHandler(this.OnHelpAction1Activated);
 			this.VideoConverterToolAction.Activated += new global::System.EventHandler(this.OnVideoConverterToolActionActivated);
+			this.EnterLicenseKeyAction.Activated += new global::System.EventHandler(this.HandleEnterLicenseKeyAction);
 		}
 	}
 }

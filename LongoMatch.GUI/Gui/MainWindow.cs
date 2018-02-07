@@ -19,8 +19,10 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluVAS.License.State;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -103,6 +105,12 @@ namespace LongoMatch.Gui
 		public MenuItem PreferencesMenu {
 			get {
 				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/PreferencesAction");
+			}
+		}
+
+		public MenuItem EnterLicenseMenu {
+			get {
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/HelpAction/EnterLicenseKeyAction");
 			}
 		}
 
@@ -338,6 +346,20 @@ namespace LongoMatch.Gui
 		void HandleClosed (CloseEvent<LMProjectVM> e)
 		{
 			MakeActionsSensitive (true);
+		}
+
+		/// <summary>
+		/// Enter license key action handler.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		protected void HandleEnterLicenseKeyAction (object sender, EventArgs e)
+		{
+			dynamic properties = new ExpandoObject ();
+			properties.Url = Constants.LICENSE_CODE_URL;
+			properties.LogoImage = App.Current.ResourcesLocator.LoadImage (Constants.LM_LOGO_ANY, 400, 200);
+
+			App.Current.StateController.MoveToModal (LicenseEntryState.NAME, properties);
 		}
 	}
 }
