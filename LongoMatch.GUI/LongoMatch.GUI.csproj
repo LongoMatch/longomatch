@@ -270,6 +270,10 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\fluVAS\FluVAS.License\FluVAS.License.csproj">
+      <Project>{B96D5D49-BB1C-4C7B-AC7E-CE4B7161EF85}</Project>
+      <Name>FluVAS.License</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
