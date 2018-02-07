@@ -17,7 +17,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
@@ -25,7 +24,6 @@ using LongoMatch.Services.State;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
-using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
@@ -33,7 +31,6 @@ using VAS.Core.Resources.Styles;
 using VAS.UI.Helpers;
 using VAS.UI.Helpers.Bindings;
 using Action = System.Action;
-using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
@@ -89,12 +86,15 @@ namespace LongoMatch.Gui.Panel
 
 			hbox1.BorderWidth = Sizes.WelcomeBorder;
 			vbox2.Spacing = Sizes.WelcomeIconsVSpacing;
-			label3.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
-			preferencesbutton.Clicked += HandlePreferencesClicked;
-
+			topBarAlignment.WidthRequest = Sizes.WelcomeBarButtonSize;
+			topBarAlignment.HeightRequest = Sizes.WelcomeBarButtonSize;
+			preferencesbutton.HeightRequest = Sizes.WelcomeBarButtonSize;
+			preferencesbutton.WidthRequest = Sizes.WelcomeBarButtonSize;
 			Create ();
 
 			Bind ();
+
+
 		}
 
 		uint NRows {
@@ -115,6 +115,7 @@ namespace LongoMatch.Gui.Panel
 			}
 			set {
 				viewModel = value;
+				licenseBannerView.ViewModel = viewModel?.LicenseBanner;
 				if (viewModel != null) {
 					ctx.UpdateViewModel (viewModel);
 				}
@@ -125,12 +126,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx = new BindingContext ();
 			ctx.Add (logoImage.Bind (vm => ((HomeViewModel)vm).LogoIcon));
-
-		}
-
-		void HandlePreferencesClicked (object sender, EventArgs e)
-		{
-			App.Current.StateController.MoveTo (PreferencesState.NAME, null);
+			ctx.Add (preferencesbutton.Bind (vm => ((HomeViewModel)vm).PreferencesCommand));
 		}
 
 		void Populate ()
@@ -159,14 +155,6 @@ namespace LongoMatch.Gui.Panel
 			Populate ();
 
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
-
-			Gtk.Image prefImage = new Gtk.Image (
-									  Helpers.Misc.LoadIcon ("lm-preferences",
-															 Sizes.WelcomeIconSize, 0));
-			preferencesbutton.Add (prefImage);
-
-			preferencesbutton.WidthRequest = Sizes.WelcomeIconSize;
-			preferencesbutton.HeightRequest = Sizes.WelcomeIconSize;
 
 			// Our logo
 			logoImage = new ImageView ();
