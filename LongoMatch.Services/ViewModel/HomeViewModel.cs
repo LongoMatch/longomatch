@@ -16,16 +16,45 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Resources;
+using LongoMatch.Core.Resources.Styles;
+using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
+using VASStrings = VAS.Core.Resources.Strings;
 
 namespace LongoMatch.Services.ViewModel
 {
 	public class HomeViewModel : ViewModelBase
 	{
+		public HomeViewModel ()
+		{
+			LicenseBanner = new LicenseBannerVM ();
+			PreferencesCommand = new Command (HandlePreferencesCommand) {
+				ToolTipText = VASStrings.Preferences,
+				Icon = App.Current.ResourcesLocator.LoadIcon ("lm-preferences", Sizes.WelcomeBarIconSize)
+			};
+		}
+
 		public Image LogoIcon {
 			get;
 			set;
+		}
+
+		public LicenseBannerVM LicenseBanner {
+			get;
+			set;
+		}
+
+		public Command PreferencesCommand {
+			get;
+			set;
+		}
+
+		void HandlePreferencesCommand ()
+		{
+			App.Current.StateController.MoveTo (PreferencesState.NAME, null);
 		}
 	}
 }

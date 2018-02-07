@@ -65,6 +65,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PenaltyCardButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Hotkeys\LMGeneralUIHotkeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Strings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Styles\Sizes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
@@ -73,6 +75,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)Hotkeys\" />
     <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\Styles\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\logo-watermark.svg">
