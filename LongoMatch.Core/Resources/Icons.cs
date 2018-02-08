@@ -8,6 +8,7 @@ namespace LongoMatch.Core.Resources
 	public class Icons : VAS.Core.Resources.Icons
 	{
 		public const string Box = "lm-box";
+		public const string BoxBig = "lm-box-big";
 		public const string Menu = "lm-menu";
 		public const string Preferences = "lm-preferences";
 		public const string Formation = "lm-formation";
