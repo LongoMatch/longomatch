@@ -26,6 +26,7 @@ using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Service;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -246,6 +247,29 @@ namespace Tests
 		public interface IDummyCapturerPanel : IPanel
 		{
 			ICapturerBin Capturer { get; set; }
+		}
+	}
+
+	public class DummyLicenseCustomizationService : ILicenseCustomizationService
+	{
+		public bool GetLicenseBannerVisibility ()
+		{
+			return false;
+		}
+
+		public string GetLicenseInformationText ()
+		{
+			return string.Empty;
+		}
+
+		public string GetLogoName ()
+		{
+			return string.Empty;
+		}
+
+		public void OpenUpgradeURL ()
+		{
+
 		}
 	}
 }
