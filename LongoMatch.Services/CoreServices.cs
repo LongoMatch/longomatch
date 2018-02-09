@@ -134,6 +134,7 @@ namespace LongoMatch.Services
 			App.Current.DependencyRegistry.Register<ISeeker, Seeker> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
+			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
 			App.Current.EventsBroker = new EventsBroker ();
@@ -166,10 +167,6 @@ namespace LongoMatch.Services
 			/* Start the hotkeys Service */
 			App.Current.HotkeysService = new HotkeysService ();
 			RegisterService (App.Current.HotkeysService);
-
-			var vmFacoryService = new ViewModelFactoryService ();
-			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (vmFacoryService);
-			RegisterService (vmFacoryService);
 
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 			PlaybackHotkeys.RegisterDefaultHotkeys ();

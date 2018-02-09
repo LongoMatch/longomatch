@@ -372,8 +372,8 @@ namespace Tests.Controller
 			var outPlayer = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var inPlayer = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 			var substEvent = new SubstitutionEvent {
-				In = inPlayer.Model,
-				Out = outPlayer.Model,
+				In = inPlayer.TypedModel,
+				Out = outPlayer.TypedModel,
 				EventTime = new Time (10000),
 				EventType = new SubstitutionEventType (),
 				Name = "Test Subst"
@@ -400,7 +400,7 @@ namespace Tests.Controller
 			Assert.AreEqual (4, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (1, teamTagger.HomeTeam.BenchPlayersList.Count ());
 
-			teamTagger.HomeTeam.Model.FormationStr = "2-1";
+			teamTagger.HomeTeam.TypedModel.FormationStr = "2-1";
 
 			Assert.AreEqual (3, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (2, teamTagger.HomeTeam.BenchPlayersList.Count ());
@@ -414,7 +414,7 @@ namespace Tests.Controller
 			Assert.AreEqual (4, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (1, teamTagger.HomeTeam.BenchPlayersList.Count ());
 
-			teamTagger.HomeTeam.Model.FormationStr = "2-1";
+			teamTagger.HomeTeam.TypedModel.FormationStr = "2-1";
 
 			Assert.AreEqual (3, teamTagger.HomeTeam.FieldPlayersList.Count ());
 			Assert.AreEqual (2, teamTagger.HomeTeam.BenchPlayersList.Count ());
