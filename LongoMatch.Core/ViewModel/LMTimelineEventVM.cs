@@ -7,18 +7,11 @@ using VAS.Core.ViewModel;
 
 namespace LongoMatch.Core.ViewModel
 {
-	public class LMTimelineEventVM : TimelineEventVM<LMTimelineEvent>
+	public class LMTimelineEventVM : TimelineEventVM
 	{
-		/// <summary>
-		/// Gets or sets the field position.
-		/// </summary>
-		/// <value>The field position.</value>
-		public Coordinates FieldPosition {
+		public LMTimelineEvent TypedModel {
 			get {
-				return Model.FieldPosition;
-			}
-			set {
-				Model.FieldPosition = value;
+				return (LMTimelineEvent)base.Model;
 			}
 		}
 

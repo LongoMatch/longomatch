@@ -27,7 +27,7 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
+	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, DashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
 		CountLimitationBarChartVM chartVM;
 
@@ -67,9 +67,9 @@ namespace LongoMatch.Services.ViewModel
 			}
 		}
 
-		protected override LMDashboardVM CreateInstance (Dashboard model)
+		protected override DashboardVM CreateInstance (Dashboard model)
 		{
-			LMDashboardVM vm = new LMDashboardVM { Model = model };
+			var vm = base.CreateInstance (model);
 			if (model.Static) {
 				StaticViewModels.Add (vm);
 			}

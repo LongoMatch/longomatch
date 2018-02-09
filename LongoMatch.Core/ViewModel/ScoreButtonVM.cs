@@ -9,15 +9,12 @@ namespace LongoMatch.Core.ViewModel
 	public class ScoreButtonVM : EventButtonVM
 	{
 		/// <summary>
-		/// Gets or sets the model.
+		/// Gets or sets the typed model.
 		/// </summary>
 		/// <value>The model.</value>
-		public new ScoreButton Model {
+		public ScoreButton TypedModel {
 			get {
 				return (ScoreButton)base.Model;
-			}
-			set {
-				base.Model = value;
 			}
 		}
 
