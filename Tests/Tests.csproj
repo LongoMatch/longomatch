@@ -122,6 +122,7 @@
     <Compile Include="State\TestNewProjectState.cs" />
     <Compile Include="Services\Controller\TestLMEventsFilterController.cs" />
     <Compile Include="State\TestOpenProjectState.cs" />
+    <Compile Include="Services\TestPlayEditorState.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">

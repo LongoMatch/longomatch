@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Hotkeys;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
 using VAS.Core.Common;
@@ -63,10 +64,10 @@ namespace LongoMatch.Services.Controller
 
 		protected override TimelineEventVM CreateTimelineEventVM (EventType type, Time start, Time stop, Time eventTime, Image miniature)
 		{
-			var evt = project.Model.CreateEvent (type, start, stop, eventTime, miniature,
+			LMTimelineEvent evt = (LMTimelineEvent)project.Model.CreateEvent (type, start, stop, eventTime, miniature,
 											  project.Model.EventsByType (type).Count + 1);
 
-			return new TimelineEventVM () { Model = evt };
+			return new LMTimelineEventVM () { Model = evt };
 		}
 
 		void HandleTeamTagging (LMTeamVM team, string taggedPlayer)
