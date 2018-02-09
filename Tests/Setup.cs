@@ -28,6 +28,7 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Service;
 using VAS.DB;
 using VAS.Services;
 using VAS.Tests;
@@ -54,7 +55,7 @@ namespace Tests
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
-
+			App.Current.DependencyRegistry.Register<ILicenseCustomizationService, DummyLicenseCustomizationService> (1);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
 			var navigation = new Mock<INavigation> ();
 			navigation.Setup (x => x.Push (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
