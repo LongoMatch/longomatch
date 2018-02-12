@@ -47,7 +47,7 @@ namespace LongoMatch.Services.Controller
 
 		void HandleCreatePlayer (CreateEvent<LMPlayer> e)
 		{
-			LMTeam model = teamEditor.Team.Model;
+			LMTeam model = teamEditor.Team.TypedModel;
 			var player = model.AddDefaultItem (model.List.Count);
 			var playerVM = teamEditor.Team.ViewModels.FirstOrDefault (p => p.Model == player);
 			teamEditor.Team.Selection.Replace (new List<PlayerVM> { playerVM });
@@ -60,7 +60,7 @@ namespace LongoMatch.Services.Controller
 
 		void HandleDeletePlayers (DeleteEvent<LMPlayer> e)
 		{
-			foreach (var player in teamEditor.Team.Selection) {
+			foreach (var player in teamEditor.Team.Selection.ToList ()) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + player.Name;
 				if (App.Current.Dialogs.QuestionMessage (msg, null).Result) {
 					teamEditor.Team.ViewModels.Remove (player);

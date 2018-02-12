@@ -93,8 +93,8 @@ namespace LongoMatch.Services.Controller
 
 		void HandleSaveSubstitutionEvent (UpdateEvent<SubstitutionEvent> e)
 		{
-			e.Object.In = substitutionEditor.InPlayer.Model;
-			e.Object.Out = substitutionEditor.OutPlayer.Model;
+			e.Object.In = substitutionEditor.InPlayer.TypedModel;
+			e.Object.Out = substitutionEditor.OutPlayer.TypedModel;
 		}
 
 		void HandleSaveLineupEvent (UpdateEvent<LineupEvent> e)

@@ -77,11 +77,11 @@ namespace Tests.Controller
 		[Test]
 		public void TestAddPlayer ()
 		{
-			int count = viewModel.Team.Model.Players.Count;
+			int count = viewModel.Team.TypedModel.Players.Count;
 
 			viewModel.NewPlayerCommand.Execute ();
 
-			Assert.AreEqual (count + 1, viewModel.Team.Model.Players.Count);
+			Assert.AreEqual (count + 1, viewModel.Team.TypedModel.Players.Count);
 		}
 
 		[Test]
@@ -98,12 +98,12 @@ namespace Tests.Controller
 		[Test]
 		public void TestDeletePlayer ()
 		{
-			int count = viewModel.Team.Model.Players.Count;
+			int count = viewModel.Team.TypedModel.Players.Count;
 
 			viewModel.Team.Selection.Add (viewModel.Team.ViewModels.FirstOrDefault ());
 			viewModel.DeletePlayersCommand.Execute ();
 
-			Assert.AreEqual (count - 1, viewModel.Team.Model.Players.Count);
+			Assert.AreEqual (count - 1, viewModel.Team.TypedModel.Players.Count);
 		}
 
 		[Test]

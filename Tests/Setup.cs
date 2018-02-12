@@ -20,6 +20,7 @@ using ICSharpCode.SharpZipLib;
 using LongoMatch;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using LongoMatch.Services;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
 using Moq;
@@ -52,6 +53,8 @@ namespace Tests
 			App.Current.DependencyRegistry.Register<ITimer, Timer> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
+			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
+
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
 			var navigation = new Mock<INavigation> ();
 			navigation.Setup (x => x.Push (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));

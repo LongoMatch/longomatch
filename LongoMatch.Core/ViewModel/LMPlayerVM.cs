@@ -11,28 +11,25 @@ namespace LongoMatch.Core.ViewModel
 	public class LMPlayerVM : PlayerVM
 	{
 		/// <summary>
+		/// Gets the player.
+		/// </summary>
+		/// <value>The player.</value>
+		public LMPlayer TypedModel {
+			get {
+				return (LMPlayer)base.Model;
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets the number of the player.
 		/// </summary>
 		/// <value>The number.</value>
 		public int Number {
 			get {
-				return Model.Number;
+				return TypedModel.Number;
 			}
 			set {
-				Model.Number = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets the player.
-		/// </summary>
-		/// <value>The player.</value>
-		public new LMPlayer Model {
-			get {
-				return (LMPlayer)base.Model;
-			}
-			set {
-				base.Model = value;
+				TypedModel.Number = value;
 			}
 		}
 
@@ -43,10 +40,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value><c>true</c> if called; otherwise, <c>false</c>.</value>
 		public bool Called {
 			get {
-				return Model.Playing;
+				return TypedModel.Playing;
 			}
 			set {
-				Model.Playing = value;
+				TypedModel.Playing = value;
 			}
 		}
 
