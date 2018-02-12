@@ -65,7 +65,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 
 			/* Draw Shape */
-			switch (ViewModel.Model.PenaltyCard.Shape) {
+			switch (ViewModel.TypedModel.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
 				tk.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
 				break;
@@ -106,7 +106,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			base.HandlePropertyChanged (sender, e);
 			if (sender == ViewModel && (
-				ButtonVM.NeedsSync (e, nameof (ViewModel.Model.PenaltyCard.Shape)))) {
+				ButtonVM.NeedsSync (e, nameof (ViewModel.TypedModel.PenaltyCard.Shape)))) {
 				ReDraw ();
 			}
 		}

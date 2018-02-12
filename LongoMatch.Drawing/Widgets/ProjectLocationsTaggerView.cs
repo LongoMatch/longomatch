@@ -135,7 +135,8 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void ShowMenu (Point coords)
 		{
 			if (ShowMenuEvent != null) {
-				List<LMTimelineEvent> plays = Selections.Select (p => (p.Drawable as TimelineEventLocationView).ViewModel.Model).ToList ();
+				List<LMTimelineEvent> plays = Selections.Select (p => (p.Drawable as TimelineEventLocationView)
+																 .ViewModel.TypedModel).ToList ();
 				ShowMenuEvent (plays);
 			}
 		}

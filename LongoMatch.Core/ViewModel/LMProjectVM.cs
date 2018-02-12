@@ -41,7 +41,7 @@ namespace LongoMatch.Core.ViewModel
 			HomeTeam = new LMTeamVM ();
 			AwayTeam = new LMTeamVM ();
 			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
-			Dashboard = new LMDashboardVM ();
+			Dashboard = new DashboardVM ();
 			ShowMenu = new Command (() => IsMenuVisible = !IsMenuVisible);
 			Visible = true;
 		}

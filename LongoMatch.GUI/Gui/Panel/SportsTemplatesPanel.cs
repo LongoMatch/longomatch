@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Entered += HandleEnterTagButton;
 			timerbutton.Left += HandleLeftTagButton;
 
-			dashboardsStore = new ListStore (typeof (LMDashboardVM), typeof (bool));
+			dashboardsStore = new ListStore (typeof (DashboardVM), typeof (bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = dashboardsStore;
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Panel
 				ctx.UpdateViewModel (viewModel);
 				limitationWidget.SetViewModel (viewModel.LimitationChart);
 				if (viewModel != null) {
-					foreach (LMDashboardVM dashboard in viewModel.ViewModels) {
+					foreach (DashboardVM dashboard in viewModel.ViewModels) {
 						Add (dashboard);
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
@@ -209,7 +209,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			string name;
 
-			LMDashboardVM dashboardVM = (LMDashboardVM)model.GetValue (iter, COL_DASHBOARD);
+			DashboardVM dashboardVM = (DashboardVM)model.GetValue (iter, COL_DASHBOARD);
 			name = dashboardVM.Name;
 			if (!dashboardVM.Editable) {
 				name += " (" + Catalog.GetString ("System") + ")";
@@ -217,12 +217,12 @@ namespace LongoMatch.Gui.Panel
 			(cell as CellRendererText).Text = name;
 		}
 
-		void Add (LMDashboardVM dashboardVM)
+		void Add (DashboardVM dashboardVM)
 		{
 			dashboardsStore.AppendValues (dashboardVM, dashboardVM.Editable);
 		}
 
-		void Remove (LMDashboardVM dashboardVM)
+		void Remove (DashboardVM dashboardVM)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIterFirst (out iter);
@@ -238,17 +238,17 @@ namespace LongoMatch.Gui.Panel
 		void Reset ()
 		{
 			dashboardsStore.Clear ();
-			foreach (LMDashboardVM vm in viewModel.ViewModels) {
+			foreach (DashboardVM vm in viewModel.ViewModels) {
 				Add (vm);
 			}
 		}
 
-		void Select (LMDashboardVM dashboardVM)
+		void Select (DashboardVM dashboardVM)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIterFirst (out iter);
 			while (dashboardsStore.IterIsValid (iter)) {
-				if ((dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM).Model.Equals (dashboardVM.Model)) {
+				if ((dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM).Model.Equals (dashboardVM.Model)) {
 					dashboardseditortreeview.Selection.SelectIter (iter);
 					break;
 				}
@@ -301,12 +301,12 @@ namespace LongoMatch.Gui.Panel
 		{
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
-				foreach (LMDashboardVM dashboardVM in e.NewItems) {
+				foreach (DashboardVM dashboardVM in e.NewItems) {
 					Add (dashboardVM);
 				}
 				break;
 			case NotifyCollectionChangedAction.Remove:
-				foreach (LMDashboardVM dashboardVM in e.OldItems) {
+				foreach (DashboardVM dashboardVM in e.OldItems) {
 					Remove (dashboardVM);
 				}
 				break;
@@ -328,7 +328,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			dashboardseditortreeview.Selection.GetSelected (out iter);
-			ViewModel.Select (dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM);
+			ViewModel.Select (dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM);
 		}
 
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
@@ -342,7 +342,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			dashboardsStore.GetIter (out iter, new TreePath (args.Path));
-			var dashboardVM = dashboardsStore.GetValue (iter, COL_DASHBOARD) as LMDashboardVM;
+			var dashboardVM = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM;
 			ViewModel.ChangeName (dashboardVM, args.NewText);
 			QueueDraw ();
 		}

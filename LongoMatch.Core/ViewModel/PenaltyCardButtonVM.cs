@@ -8,15 +8,12 @@ namespace LongoMatch.Core.ViewModel
 	public class PenaltyCardButtonVM : EventButtonVM
 	{
 		/// <summary>
-		/// Gets or sets the model.
+		/// Gets the typed model
 		/// </summary>
-		/// <value>The model.</value>
-		public new PenaltyCardButton Model {
+		/// <value>The typed model.</value>
+		public PenaltyCardButton TypedModel {
 			get {
 				return (PenaltyCardButton)base.Model;
-			}
-			set {
-				base.Model = value;
 			}
 		}
 
