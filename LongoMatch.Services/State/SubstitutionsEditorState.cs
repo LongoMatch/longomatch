@@ -37,7 +37,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new SubstitutionsEditorVM ();
-			ViewModel.Project = new LMProjectVM { Model = data.project.Model };
+			ViewModel.Project = new LMProjectVM { Model = data.project };
 			ViewModel.Play = data.play;
 		}
 	}
