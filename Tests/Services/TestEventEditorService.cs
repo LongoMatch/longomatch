@@ -49,18 +49,14 @@ namespace Tests.Services
 			// Arrange
 			var projectVM = new LMProjectAnalysisVM ();
 			projectVM.Project.Model = Utils.CreateProject ();
-			EventEditorController eventEditor = new EventEditorController ();
+			EventEditorService eventEditor = new EventEditorService ();
 			eventEditor.SetViewModel (projectVM);
-			eventEditor.Start ();
 
 			// Act
-			await App.Current.EventsBroker.Publish (new EditEventEvent {
-				TimelineEvent = new LMTimelineEventVM () { Model = new StatEvent () }
-			});
+			await eventEditor.EditEvent (new LMTimelineEventVM () { Model = new StatEvent () });
 
 			// Assert
 			mockStateControler.Verify (e => e.MoveToModal (SubstitutionsEditorState.NAME, It.IsAny<object> (), true), Times.Once);
-			eventEditor.Stop ();
 		}
 
 		[Test]
@@ -69,18 +65,14 @@ namespace Tests.Services
 			// Arrange
 			var projectVM = new LMProjectAnalysisVM ();
 			projectVM.Project.Model = Utils.CreateProject ();
-			EventEditorController eventEditor = new EventEditorController ();
+			EventEditorService eventEditor = new EventEditorService ();
 			eventEditor.SetViewModel (projectVM);
-			eventEditor.Start ();
 
 			// Act
-			await App.Current.EventsBroker.Publish (new EditEventEvent {
-				TimelineEvent = new LMTimelineEventVM () { Model = new LMTimelineEvent () }
-			});
+			await eventEditor.EditEvent (new LMTimelineEventVM () { Model = new LMTimelineEvent () });
 
 			// Assert
 			mockStateControler.Verify (e => e.MoveToModal (PlayEditorState.NAME, It.IsAny<object> (), true), Times.Once);
-			eventEditor.Stop ();
 		}
 	}
 }
