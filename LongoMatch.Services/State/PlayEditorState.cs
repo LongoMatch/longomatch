@@ -37,7 +37,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new PlayEditorVM ();
-			ViewModel.Project = new LMProjectVM { Model = data.project.Model };
+			ViewModel.Project = new LMProjectVM { Model = data.project };
 			ViewModel.EditionSettings = data.settings;
 			ViewModel.Play = (LMTimelineEventVM)data.play;
 		}

@@ -64,8 +64,7 @@ namespace LongoMatch.Services.Controller
 		protected virtual async Task ShowEditionView (PlayEventEditionSettings settings, TimelineEventVM timelineEvent)
 		{
 			dynamic properties = new ExpandoObject ();
-			// FIXME [LON-995]: Should this have the ProjectVM?
-			properties.project = timelineEvent.Model;
+			properties.project = timelineEvent.Model.Project;
 			properties.play = timelineEvent;
 
 			if (timelineEvent.Model is StatEvent) {
