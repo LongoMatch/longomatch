@@ -22,6 +22,7 @@ using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 
@@ -33,26 +34,15 @@ namespace LongoMatch.Services.Controller
 	[Controller (ProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
-	public class EventEditorController : ControllerBase<ProjectVM>
+	// TODO [LON-995]: Don't inherit from controller
+	public class EventEditorService : ControllerBase, IEventEditorService
 	{
 		public override void SetViewModel (IViewModel viewModel)
 		{
-			ViewModel = ((IProjectDealer)viewModel).Project;
+			// FIXME: REMOVE THIS
 		}
 
-		public override async Task Start ()
-		{
-			await base.Start ();
-			App.Current.EventsBroker.SubscribeAsync<EditEventEvent> (HandleEditEvent);
-		}
-
-		public override async Task Stop ()
-		{
-			await base.Stop ();
-			App.Current.EventsBroker.UnsubscribeAsync<EditEventEvent> (HandleEditEvent);
-		}
-
-		async Task HandleEditEvent (EditEventEvent e)
+		public async Task EditEvent (TimelineEventVM timelineEvent)
 		{
 			PlayEventEditionSettings settings = new PlayEventEditionSettings () {
 				EditTags = true,
@@ -61,22 +51,24 @@ namespace LongoMatch.Services.Controller
 				EditPositions = true
 			};
 
-			await ShowEditionView (settings, e);
+			await ShowEditionView (settings, timelineEvent);
 
+			// FIXME [LON-995]: Should we call the service directly?
 			await App.Current.EventsBroker.Publish (
 				new EventEditedEvent {
-					TimelineEvent = e.TimelineEvent
+					TimelineEvent = timelineEvent
 				}
 			);
 		}
 
-		protected virtual async Task ShowEditionView (PlayEventEditionSettings settings, EditEventEvent ev)
+		protected virtual async Task ShowEditionView (PlayEventEditionSettings settings, TimelineEventVM timelineEvent)
 		{
 			dynamic properties = new ExpandoObject ();
-			properties.project = ViewModel;
-			properties.play = ev.TimelineEvent;
+			// FIXME [LON-995]: Should this have the ProjectVM?
+			properties.project = timelineEvent.Model;
+			properties.play = timelineEvent;
 
-			if (ev.TimelineEvent.Model is StatEvent) {
+			if (timelineEvent.Model is StatEvent) {
 				await App.Current.StateController.MoveToModal (SubstitutionsEditorState.NAME, properties, true);
 			} else {
 				properties.settings = settings;

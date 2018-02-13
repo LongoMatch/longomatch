@@ -25,6 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using Color = Gdk.Color;
@@ -164,10 +165,9 @@ namespace LongoMatch.Gui.Component
 			LMTimelineEvent selectedEvent = SelectedPlay;
 			List<Player> players = selectedEvent.Players.ToList ();
 
-			App.Current.EventsBroker.Publish<EditEventEvent> (
-				new EditEventEvent {
-					TimelineEvent = new TimelineEventVM () { Model = selectedEvent }
-				});
+			// FIXME: Not awaited!
+			IEventEditorService editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
+			editorService.EditEvent (new TimelineEventVM { Model = selectedEvent });
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
 				App.Current.EventsBroker.Publish<TeamTagsChangedEvent> ();

@@ -82,6 +82,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Hotkeys\" />
     <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
     <Folder Include="$(MSBuildThisFileDirectory)Resources\Styles\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\Services\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\logo-watermark.svg">

@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using VAS;
 using VAS.Core;
 using VAS.Core.Events;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.UI.Menus;
@@ -152,12 +153,11 @@ namespace LongoMatch.Gui.Menus
 		{
 			base.CreateMenu ();
 
+			IEventEditorService editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
-				App.Current.EventsBroker.Publish (
-				new EditEventEvent {
-					TimelineEvent = plays.Single ()
-				});
+				// FIXME: Not awaited!
+				editorService.EditEvent (plays.Single ());
 			};
 			Add (edit);
 

@@ -17,7 +17,6 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,16 +26,16 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.MVVMC;
-using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 using KeyAction = VAS.Core.Hotkeys.KeyAction;
-using System.Linq;
 
 namespace LongoMatch.Services
 {
@@ -131,7 +130,9 @@ namespace LongoMatch.Services
 			bool playing = VideoPlayer.Playing;
 			VideoPlayer.PauseCommand.Execute (false);
 
-			App.Current.EventsBroker.Publish (new EditEventEvent { TimelineEvent = LoadedPlay });
+			// FIXME: Not awaited!
+			IEventEditorService editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
+			editorService.EditEvent (LoadedPlay);
 
 			if (playing) {
 				VideoPlayer.PlayCommand.Execute ();
