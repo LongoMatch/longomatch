@@ -35,6 +35,7 @@ using VAS.Core.Interfaces.Services;
 using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
+using VAS.Services.Controller;
 using VAS.Services.ViewModel;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMFileStorage = LongoMatch.DB.FileStorage;
@@ -138,6 +139,7 @@ namespace LongoMatch.Services
 			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
 			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
 			App.Current.DependencyRegistry.Register<IEventEditorService, EventEditorService> ();
+			App.Current.DependencyRegistry.Register<IDrawingsService, DrawingsService> ();
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
 			App.Current.EventsBroker = new EventsBroker ();

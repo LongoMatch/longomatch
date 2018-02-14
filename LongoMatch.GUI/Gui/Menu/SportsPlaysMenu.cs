@@ -122,8 +122,11 @@ namespace LongoMatch.Gui.Menus
 					drawingsMenu.Append (drawingItem);
 					drawingMenu.Append (editItem);
 					drawingMenu.Append (deleteItem);
+					IDrawingsService drawingsService = App.Current.DependencyRegistry.Retrieve<IDrawingsService> ();
 					editItem.Activated += (sender, e) => {
 						var play = plays.FirstOrDefault ();
+						// TODO: How do I get the player here?
+						drawingsService.DrawFrame ();
 						App.Current.EventsBroker.Publish (
 							new DrawFrameEvent {
 								Play = play,
