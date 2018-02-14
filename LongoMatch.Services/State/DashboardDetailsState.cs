@@ -5,6 +5,7 @@
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using VAS.Services.State;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
