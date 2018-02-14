@@ -38,6 +38,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (TeamsManagerState.NAME, () => new TeamsManagerState ());
 			uiFlow.Add (DashboardsManagerState.NAME, () => new DashboardsManagerState ());
 			uiFlow.Add (DashboardDetailsState.NAME, () => new DashboardDetailsState ());
+			uiFlow.Add (ProjectDetailsState.NAME, () => new ProjectDetailsState ());
 			uiFlow.Add (PreferencesState.NAME, () => new PreferencesState ());
 			uiFlow.Add (NewProjectState.NAME, () => new NewProjectState ());
 			uiFlow.Add (ProjectsManagerState.NAME, () => new ProjectsManagerState ());
