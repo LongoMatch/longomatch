@@ -137,7 +137,7 @@ namespace LongoMatch.Services
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
 			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
-			App.Current.DependencyRegistry.Register<IEventEditorService> (new EventEditorService ());
+			App.Current.DependencyRegistry.Register<IEventEditorService, EventEditorService> ();
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
 			App.Current.EventsBroker = new EventsBroker ();
