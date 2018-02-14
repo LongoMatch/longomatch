@@ -22,7 +22,6 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Core.Resources.Styles;
-using VAS.Services.ViewModel;
 using System.Collections.Generic;
 using VAS.Core;
 using System;
@@ -96,12 +95,6 @@ namespace LongoMatch.Core.ViewModel
 		public MenuVM DashboardMenu { get; private set; }
 
 		/// <summary>
-		/// Gets or sets the filter text.
-		/// </summary>
-		/// <value>The filter text.</value>
-		public string FilterText { get; set; }
-
-		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
 		/// </summary>
 		public CountLimitationBarChartVM LimitationChart {
@@ -118,7 +111,7 @@ namespace LongoMatch.Core.ViewModel
 				//TODO: Uncomment this when you need to implement those commands
 				//new MenuNodeVM (MakeDefaultCommand, null, Catalog.GetString("Make Default")) { Color = App.Current.Style.ColorAccentSuccess },
 				//new MenuNodeVM (TransferCommand, null, Catalog.GetString("Transfer...")) { Color = App.Current.Style.TextBase },
-				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { Color = App.Current.Style.ColorAccentError },
+				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { ActiveColor = App.Current.Style.ColorAccentError },
 			});
 		}
 		protected override DashboardVM CreateInstance (Dashboard model)
