@@ -11,6 +11,7 @@
     <widget-library name="../../../bin/VAS.UI.dll" />
     <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../../bin/VAS.UI.Multimedia.Gtk2.dll" />
+    <widget-library name="../../../bin/FluVAS.License.dll" />
     <widget-library name="../../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
@@ -969,6 +970,12 @@ Sort by competition</property>
         <property name="ShortLabel" translatable="yes">Check For Updates</property>
         <signal name="Activated" handler="HandleCheckForUpdatesAction" />
       </action>
+      <action id="EnterLicenseKeyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Enter license key</property>
+        <property name="ShortLabel" translatable="yes">Enter license key</property>
+        <signal name="Activated" handler="HandleEnterLicenseKeyAction" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1010,6 +1017,7 @@ Sort by competition</property>
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="CheckForUpdatesAction" />
+                    <node type="Menuitem" action="EnterLicenseKeyAction" />
                     <node type="Menuitem" action="AboutAction" />
                     <node type="Menuitem" action="HelpAction1" />
                   </node>
