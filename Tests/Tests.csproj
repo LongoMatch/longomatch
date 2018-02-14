@@ -124,6 +124,7 @@
     <Compile Include="State\TestOpenProjectState.cs" />
     <Compile Include="Services\TestPlayEditorState.cs" />
     <Compile Include="Services\TestViewModelFactoryService.cs" />
+    <Compile Include="Services\ViewModel\TestHomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">
