@@ -6,11 +6,12 @@ using System;
 using LongoMatch.Core.Resources;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
+using VAS.Core.ViewModel;
 using VAS.Drawing.Widgets;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class LMDashboardCardCanvasView : CardCanvasView<LMDashboardVM>
+	public class LMDashboardCardCanvasView : CardCanvasView<DashboardVM>
 	{
 
 		protected override string Title => ViewModel.Name;
