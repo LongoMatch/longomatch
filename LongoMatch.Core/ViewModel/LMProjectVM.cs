@@ -51,6 +51,17 @@ namespace LongoMatch.Core.ViewModel
 			base.DisposeManagedResources ();
 		}
 
+		public override LMProject Model {
+			get {
+				return base.Model;
+			}
+			set {
+				base.Model = value;
+				HomeTeam.Model = base.Model.LocalTeamTemplate;
+				AwayTeam.Model = base.Model.VisitorTeamTemplate;
+			}
+		}
+
 		/// <summary>
 		/// Gets the description of the project
 		/// </summary>
