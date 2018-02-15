@@ -54,7 +54,6 @@ namespace LongoMatch.Core.Store.Templates
 
 			template.FillDefaultTemplate (count);
 			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
-			template.Preview = App.Current.PreviewService.CreatePreview (template);
 			template.FieldBackground = App.Current.FieldBackground;
 			template.HalfFieldBackground = App.Current.HalfFieldBackground;
 			template.GoalBackground = App.Current.GoalBackground;
@@ -104,6 +103,7 @@ namespace LongoMatch.Core.Store.Templates
 				Position = new Point (10 + (10 + CAT_WIDTH) * 6, 10)
 			};
 			template.List.Add (timerButton);
+			template.Preview = App.Current.PreviewService.CreatePreview (template);
 			return template;
 		}
 
