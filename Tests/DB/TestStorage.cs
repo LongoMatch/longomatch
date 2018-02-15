@@ -106,6 +106,7 @@ namespace Tests.DB
 		[OneTimeSetUp]
 		public void InitDB ()
 		{
+			SetupClass.SetUp ();
 			string tmpPath = Path.GetTempPath ();
 			string homePath = Path.Combine (tmpPath, "LongoMatch");
 			string dbPath = Path.Combine (homePath, "db");

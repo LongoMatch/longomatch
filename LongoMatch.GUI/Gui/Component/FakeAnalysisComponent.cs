@@ -18,8 +18,8 @@
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;

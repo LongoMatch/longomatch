@@ -2,9 +2,10 @@
 //  Copyright (C) 2017 Fluendo S.A.
 using System;
 using LongoMatch.Core.Store;
-using LongoMatch.Services.Interfaces;
+using LongoMatch.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {

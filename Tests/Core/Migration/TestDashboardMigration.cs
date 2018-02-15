@@ -19,11 +19,15 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store.Templates;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -35,20 +39,32 @@ namespace Tests.Core.Migration
 	[TestFixture]
 	public class TestDashboardMigration
 	{
-		[Test ()]
+		Mock<IPreviewService> mockPreview;
+
+		[OneTimeSetUp]
+		public void FixtureSetUp ()
+		{
+			mockPreview = new Mock<IPreviewService> ();
+			App.Current.PreviewService = mockPreview.Object;
+		}
+
+		[Test]
 		public void TestMigrateDashboardFromV0 ()
 		{
 			Dashboard dashboard, origDashboard;
-
 			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("basket.lct")) {
 				origDashboard = Serializer.Instance.Load <Dashboard> (resource);
 			}
 			dashboard = origDashboard.Clone ();
 			dashboard.ID = Guid.Empty;
+
+			mockPreview.Setup (p => p.CreatePreview (dashboard)).Returns (new Image (1, 1));
+
 			Assert.AreEqual (0, dashboard.Version);
 			DashboardMigration.Migrate (dashboard);
 			Assert.AreNotEqual (Guid.Empty, dashboard.ID);
-			Assert.AreEqual (1, dashboard.Version);
+			Assert.IsNotNull (dashboard.Preview);
+			Assert.AreEqual (2, dashboard.Version);
 
 			// Check that every Score and PenaltyCard buttons have now different event types
 			Assert.AreNotEqual (1, dashboard.List.OfType<ScoreButton> ().Select (b => b.EventType).Distinct ());
@@ -72,7 +88,6 @@ namespace Tests.Core.Migration
 			foreach (PenaltyCardButton b in  dashboard.List.OfType<PenaltyCardButton> ()) {
 				Assert.IsNotNull (b.PenaltyCardEventType.PenaltyCard);
 			}
-
 		}
 	}
 }

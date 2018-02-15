@@ -112,6 +112,7 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
@@ -153,6 +154,7 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			App.Current.LicenseManager = mockLicenseManager.Object;
 			App.Current.LicenseLimitationsService = mockLicenseLimitationService.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());

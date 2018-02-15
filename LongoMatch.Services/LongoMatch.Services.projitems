@@ -19,9 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\TeamsController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SportsProjectsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\SportsProjectsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\CoreTool.cs" />
@@ -32,7 +30,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\ProjectsManagerState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\NewProjectState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\OpenProjectState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectAnalysisVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\ProjectAnalysisState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LiveProjectAnalysisState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\FakeLiveAnalysisState.cs" />
@@ -50,14 +47,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SubstitutionsEditorVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\EventEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMCameraSynchronizationController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewProjectVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamTaggerController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\SubstitutionsEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMTeamEditorController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\PlayEditorController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDrawingToolVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\LMDrawingToolState.cs" />
@@ -66,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\LightLiveProjectState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMEventsFilterController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelFactoryService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LMPreviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

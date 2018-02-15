@@ -30,7 +30,7 @@ namespace LongoMatch.Core.Store.Templates
 	[Serializable]
 	public class LMDashboard : Dashboard, ITemplate<DashboardButton>
 	{
-		public const int VERSION = 1;
+		public const int VERSION = 2;
 		new const int MIN_WIDTH = 320;
 		new const int MIN_HEIGHT = 240;
 
@@ -54,6 +54,7 @@ namespace LongoMatch.Core.Store.Templates
 
 			template.FillDefaultTemplate (count);
 			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
+			template.Preview = App.Current.PreviewService.CreatePreview (template);
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),

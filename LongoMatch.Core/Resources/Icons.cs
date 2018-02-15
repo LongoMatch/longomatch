@@ -10,5 +10,6 @@ namespace LongoMatch.Core.Resources
 		public const string Box = "lm-box";
 		public const string Menu = "lm-menu";
 		public const string Preferences = "lm-preferences";
+		public const string Formation = "lm-formation";
 	}
 }

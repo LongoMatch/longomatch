@@ -18,7 +18,7 @@
 using System;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.Interfaces;
+using LongoMatch.Core.Interfaces;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;

@@ -24,5 +24,7 @@ namespace LongoMatch.Core.Resources.Styles
 		public const float PlayerNumberRelativePosition = 0.6f;
 		public const int PlayerFontSize = 20;
 		public const int PlayerSmallFontSize = 16;
+
+		public const int BenchSize = 85;
 	}
 }

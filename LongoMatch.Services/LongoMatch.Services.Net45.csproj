@@ -76,6 +76,10 @@
       <Project>{B96D5D49-BB1C-4C7B-AC7E-CE4B7161EF85}</Project>
       <Name>FluVAS.License</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
+      <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
+      <Name>LongoMatch.Drawing.Net45</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -85,6 +85,16 @@ namespace LongoMatch.Core.ViewModel
 		}
 
 		/// <summary>
+		/// Gets the preview of the first file in set or null if the set is empty.
+		/// </summary>
+		/// <value>The preview.</value>
+		public Image Preview {
+			get {
+				return Model.Preview;
+			}
+		}
+
+		/// <summary>
 		/// Gets the playing players list.
 		/// </summary>
 		/// <value>The playing players list.</value>
