@@ -125,8 +125,7 @@ namespace LongoMatch.Gui.Menus
 					IDrawingsService drawingsService = App.Current.DependencyRegistry.Retrieve<IDrawingsService> ();
 					editItem.Activated += (sender, e) => {
 						var play = plays.FirstOrDefault ();
-						// TODO: How do I get the player here?
-						drawingsService.DrawFrame ();
+						// FIXME: Use DrawingsService.DrawFrame when this menu is migrated to MVVM
 						App.Current.EventsBroker.Publish (
 							new DrawFrameEvent {
 								Play = play,
@@ -187,6 +186,7 @@ namespace LongoMatch.Gui.Menus
 
 			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
 			snapshot.Activated += (sender, e) => App.Current.EventsBroker.Publish<SnapshotSeriesEvent> (
+				// FIXME: Use DrawingsService.CreateSnapshot when this menu is migrated to MVVM
 				new SnapshotSeriesEvent {
 					TimelineEvent = plays.FirstOrDefault ()
 				}
