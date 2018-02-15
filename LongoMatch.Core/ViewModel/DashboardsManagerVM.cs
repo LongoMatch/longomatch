@@ -55,8 +55,6 @@ namespace LongoMatch.Core.ViewModel
 				LimitationChart.Dispose ();
 				LimitationChart = null;
 			}
-			DashboardMenu = new MenuVM ();
-			FillDashboardMenu ();
 		}
 
 		public Command<string> AddButton {
@@ -89,12 +87,6 @@ namespace LongoMatch.Core.ViewModel
 		}
 
 		/// <summary>
-		/// Gets the dashboard menu.
-		/// </summary>
-		/// <value>The dashboard menu.</value>
-		public MenuVM DashboardMenu { get; private set; }
-
-		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
 		/// </summary>
 		public CountLimitationBarChartVM LimitationChart {
@@ -105,15 +97,17 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
-		protected virtual void FillDashboardMenu ()
+		protected override MenuVM CreateMenu (IViewModel vm)
 		{
-			DashboardMenu.ViewModels.AddRange (new List<MenuNodeVM> {
-				//TODO: Uncomment this when you need to implement those commands
-				//new MenuNodeVM (MakeDefaultCommand, null, Catalog.GetString("Make Default")) { Color = App.Current.Style.ColorAccentSuccess },
-				//new MenuNodeVM (TransferCommand, null, Catalog.GetString("Transfer...")) { Color = App.Current.Style.TextBase },
-				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { ActiveColor = App.Current.Style.ColorAccentError },
+			DeleteCommand.IconName = "vas-delete";
+			MenuVM menu = new MenuVM ();
+			menu.ViewModels.AddRange (new List<MenuNodeVM> {
+				new MenuNodeVM (DeleteCommand, vm, Catalog.GetString("Delete")) { ActiveColor = App.Current.Style.ColorAccentError },
 			});
+
+			return menu;
 		}
+
 		protected override DashboardVM CreateInstance (Dashboard model)
 		{
 			var vm = base.CreateInstance (model);
