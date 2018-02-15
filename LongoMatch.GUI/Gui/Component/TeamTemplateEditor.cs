@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;

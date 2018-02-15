@@ -79,6 +79,7 @@ namespace Tests
 			Mock<IGUIToolkit> mockGuiToolkit = new Mock<IGUIToolkit> ();
 			mockGuiToolkit.Setup (g => g.DeviceScaleFactor).Returns (1.0f);
 			App.Current.GUIToolkit = mockGuiToolkit.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 		}
 
 		static void RegisterScreenState (string name)

@@ -19,10 +19,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using LongoMatch;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
+using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 
 namespace Tests.Core.Migration
@@ -32,9 +35,18 @@ namespace Tests.Core.Migration
 	[TestFixture ()]
 	public class TestTeamMigration
 	{
-		[Test ()]
-		public void TestMigrateFromV0 ()
+		Mock<IPreviewService> mockPreview;
+
+		[OneTimeSetUp]
+		public void FixtureSetUp () {
+			mockPreview = new Mock<IPreviewService> ();
+			App.Current.PreviewService = mockPreview.Object;
+		}
+
+		[Test]
+		public void Migrate_FromV0ToV2_Ok ()
 		{
+			// Arrange
 			LMTeam team;
 			LMTeam origTeam;
 
@@ -44,10 +56,17 @@ namespace Tests.Core.Migration
 
 			team = origTeam.Clone ();
 			team.ID = Guid.Empty;
+
+			mockPreview.Setup (p => p.CreatePreview (team)).Returns (new Image (1, 1));
+
+			// Act
 			Assert.AreEqual (0, team.Version);
 			TeamMigration.Migrate (team);
+
+			// Assert
 			Assert.AreNotEqual (Guid.Empty, team.ID);
-			Assert.AreEqual (1, team.Version);
+			Assert.AreEqual (2, team.Version);
+			Assert.IsNotNull (team.Preview);
 
 			team = origTeam.Clone ();
 			team.ID = Guid.Empty;
@@ -55,7 +74,48 @@ namespace Tests.Core.Migration
 			Guid id = Guid.NewGuid ();
 			teamNameToID [team.TeamName] = id;
 			TeamMigration.Migrate0 (team, teamNameToID);
+
 			Assert.AreEqual (id, team.ID);
+		}
+
+		[Test]
+		public void MigrateV1_AlreadyMigrated_DoNothing ()
+		{
+			// Arrange
+			LMTeam team;
+			LMTeam origTeam;
+
+			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("spain.ltt")) {
+				origTeam = Serializer.Instance.Load<LMTeam> (resource);
+			}
+
+			team = origTeam.Clone ();
+			TeamMigration.Migrate (team);
+
+			mockPreview.Setup (p => p.CreatePreview (team)).Returns (new Image (1, 1));
+
+			// Act
+			Image preview = team.Preview;
+			TeamMigration.Migrate1 (team);
+
+			// Assert
+			Assert.AreSame (preview, team.Preview);
+			Assert.AreEqual (2, team.Version);
+		}
+
+		[Test]
+		public void NewTeam_NothingToMigrate_DoNothing ()
+		{
+			// Arrange
+			LMTeam team = new LMTeam ();
+			mockPreview.Setup (p => p.CreatePreview (team)).Returns (new Image (1, 1));
+
+			// Act
+			TeamMigration.Migrate (team);
+
+			// Assert
+			Assert.IsNull (team.Preview);
+			Assert.AreEqual (2, team.Version);
 		}
 	}
 }

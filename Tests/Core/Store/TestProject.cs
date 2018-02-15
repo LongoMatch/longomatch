@@ -33,7 +33,6 @@ namespace Tests.Core.Store
 	[TestFixture ()]
 	public class TestProject
 	{
-
 		LMProject CreateProject (bool fill = true)
 		{
 			LMProject p = new LMProject ();
@@ -58,6 +57,11 @@ namespace Tests.Core.Store
 			}
 
 			return p;
+		}
+
+		[OneTimeSetUp]
+		public void FixtureSetup () {
+			SetupClass.SetUp ();
 		}
 
 		[Test ()]
