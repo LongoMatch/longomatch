@@ -24,7 +24,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (ViewModel.Preview != null) {
 				tk.DrawImage (cardDetailArea.Start, cardDetailArea.Width, cardDetailArea.Height,
-				ViewModel.Preview, ScaleMode.AspectFit);
+							  ViewModel.Preview, ScaleMode.AspectFill);
 			} else {
 				base.DrawBackgroundImage ();
 			}
