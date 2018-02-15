@@ -72,6 +72,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		// FIXME: This should be migrated to MVVM and moved to DrawingsService (or somewhere it belongs)
 		public override void ExportFrameSeries (TimelineEvent play, string snapshotsDir)
 		{
 			SnapshotsDialog sd;

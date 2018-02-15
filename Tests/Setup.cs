@@ -31,6 +31,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Services;
 using VAS.DB;
 using VAS.Services;
+using VAS.Services.Controller;
 using VAS.Tests;
 using LMDB = LongoMatch.DB;
 using Timer = VAS.Core.Common.Timer;
@@ -56,6 +57,8 @@ namespace Tests
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
 			App.Current.DependencyRegistry.Register<ILicenseCustomizationService, DummyLicenseCustomizationService> (1);
+			App.Current.DependencyRegistry.Register<IDrawingsService, DrawingsService> ();
+
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
 			var navigation = new Mock<INavigation> ();
 			navigation.Setup (x => x.Push (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
