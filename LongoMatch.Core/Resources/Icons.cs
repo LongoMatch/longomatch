@@ -15,5 +15,8 @@ namespace LongoMatch.Core.Resources
 		//FIXME: Used in Mobile, Should be moved to a vas control?
 		public const string ControlSave = "longomatch-control-save";
 		public const string Undo = "longomatch-undo";
+		public const string Export = "lm-export";
+		public const string Transfer = "lm-transfer";
+		public const string Select = "lm-select";
 	}
 }
