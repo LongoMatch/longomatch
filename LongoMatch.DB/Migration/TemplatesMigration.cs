@@ -30,8 +30,7 @@ namespace LongoMatch.DB.Migration
 			// Apply all the migration steps starting from the current version
 			if (storage.Info.Version <= new Version (1, 0)) {
 				await Migrate1_0_to_1_1 (storage);
-			} 
-			else {
+			} else {
 				return;
 			}
 			await Migrate (storage);
@@ -52,7 +51,8 @@ namespace LongoMatch.DB.Migration
 			storage.Store (storage.Info);
 		}
 
-		void MigrateTeams () {
+		void MigrateTeams ()
+		{
 			if (teamsMigrated) {
 				return;
 			}
@@ -66,7 +66,8 @@ namespace LongoMatch.DB.Migration
 			teamsMigrated = true;
 		}
 
-		void MigrateDashboards () {
+		void MigrateDashboards ()
+		{
 			if (dashboardsMigrated) {
 				return;
 			}
@@ -74,7 +75,7 @@ namespace LongoMatch.DB.Migration
 			var dashboards = App.Current.CategoriesTemplatesProvider.Templates;
 			foreach (var dashboard in dashboards) {
 				DashboardMigration.Migrate (dashboard);
-				// App.Current.CategoriesTemplatesProvider.Save (dashboard);
+				App.Current.CategoriesTemplatesProvider.Save (dashboard);
 			}
 
 			dashboardsMigrated = true;
