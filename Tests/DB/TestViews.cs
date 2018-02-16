@@ -79,6 +79,7 @@ namespace Tests.DB
 		[OneTimeSetUp]
 		public void InitDB ()
 		{
+			SetupClass.SetUp ();
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			string dbPath = Path.Combine (Path.GetTempPath (), "TestDB");
 			if (Directory.Exists (dbPath)) {

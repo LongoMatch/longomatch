@@ -9,6 +9,7 @@ using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.License;
 using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;

@@ -11,6 +11,7 @@
     <widget-library name="../../../bin/VAS.UI.dll" />
     <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../../bin/VAS.UI.Multimedia.Gtk2.dll" />
+    <widget-library name="../../../bin/FluVAS.License.dll" />
     <widget-library name="../../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1851 741">
@@ -969,6 +970,12 @@ Sort by competition</property>
         <property name="ShortLabel" translatable="yes">Check For Updates</property>
         <signal name="Activated" handler="HandleCheckForUpdatesAction" />
       </action>
+      <action id="EnterLicenseKeyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Enter license key</property>
+        <property name="ShortLabel" translatable="yes">Enter license key</property>
+        <signal name="Activated" handler="HandleEnterLicenseKeyAction" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1010,6 +1017,7 @@ Sort by competition</property>
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="CheckForUpdatesAction" />
+                    <node type="Menuitem" action="EnterLicenseKeyAction" />
                     <node type="Menuitem" action="AboutAction" />
                     <node type="Menuitem" action="HelpAction1" />
                   </node>
@@ -4384,15 +4392,27 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="Spacing">30</property>
             <child>
-              <widget class="Gtk.Label" id="label3">
+              <widget class="Gtk.Alignment" id="topBarAlignment">
                 <property name="MemberName" />
-                <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">Preferences</property>
+                <child>
+                  <placeholder />
+                </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="VAS.UI.Component.LicenseBannerView" id="licenseBannerView">
+                <property name="MemberName" />
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>
@@ -4405,7 +4425,8 @@ You can continue with the current capture, cancel it or save your project.
                 </child>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="PackType">End</property>
+                <property name="Position">2</property>
                 <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -4420,7 +4441,7 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Alignment" id="alignment1">
+          <widget class="Gtk.Alignment" id="alignment2">
             <property name="MemberName" />
             <property name="Xscale">0</property>
             <property name="Yscale">0</property>

@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
@@ -131,7 +132,7 @@ namespace LongoMatch.Gui.Component
 				viewModel = value;
 				if (viewModel != null) {
 					viewModel.Team.PropertyChanged += HandleTeamPropertyChanged;
-					Team = ViewModel.Team.Model;
+					Team = ViewModel.Team.TypedModel;
 				}
 			}
 		}
@@ -370,7 +371,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ViewModel.Team.NeedsSync (e.PropertyName, nameof (ViewModel.Team.Model),
 											  sender, ViewModel.Team)) {
-				Team = ViewModel.Team.Model;
+				Team = ViewModel.Team.TypedModel;
 			}
 			if (ViewModel.Team.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.Team.Selection)}",
 											  sender, ViewModel.Team)) {

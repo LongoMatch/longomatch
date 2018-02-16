@@ -6,7 +6,7 @@ using VAS.Core.Events;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
 	/// <summary>
 	/// ViewModel used in LMTeamTaggerView, it has a HomeTeam and AwayTeam in order to

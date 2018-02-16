@@ -174,11 +174,8 @@ namespace LongoMatch.Gui.Panel
 				if (device.Formats.Count == 0)
 					continue;
 
-				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
-				if (includeSourceName) {
-					deviceName += String.Format (" ({0})", device.SourceElement);
-				}
-				devicecombobox.AppendText (deviceName);
+
+				devicecombobox.AppendText (device.GetDescription (includeSourceName));
 				devicecombobox.Active = 0;
 			}
 		}

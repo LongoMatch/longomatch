@@ -50,7 +50,7 @@ namespace LongoMatch.Services.State
 			};
 			ViewModel.FeaturesCaption = Catalog.GetString ("... and much more");
 			ViewModel.UpgradeCommand = new Command (() => {
-				Utils.OpenURL (LMConstants.UPGRADE_URL, $"Limitation_{limitation.RegisterName.Replace (" ", string.Empty)}");
+				App.Current.NetworkManager.OpenURL (LMConstants.UPGRADE_URL, $"Limitation_{limitation.RegisterName.Replace (" ", string.Empty)}");
 				App.Current.EventsBroker.Publish (new UpgradeLinkClickedEvent {
 					LimitationName = limitation.RegisterName,
 					Source = "UpgradeDialog"

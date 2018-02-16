@@ -24,7 +24,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
@@ -97,7 +97,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.Model };
+					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.TypedModel };
 				}
 			} else {
 				players = tagger.SelectedPlayers;

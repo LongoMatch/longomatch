@@ -37,6 +37,9 @@ namespace LongoMatch.Core.Migration
 			case 0:
 				Migrate0 (dashboard);
 				break;
+			case 1:
+				Migrate1 (dashboard);
+				break;
 			default:
 				return;
 			}
@@ -99,7 +102,18 @@ namespace LongoMatch.Core.Migration
 			}
 			dashboard.Version = 1;
 		}
+
 		#pragma warning restore 0618
+
+		public static void Migrate1 (Dashboard dashboard) {
+
+			if (dashboard.Version != 1) {
+				return;
+			}
+
+			dashboard.Preview = App.Current.PreviewService.CreatePreview (dashboard);
+			dashboard.Version = 2;
+		}
 	}
 }
 

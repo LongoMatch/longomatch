@@ -18,7 +18,7 @@
 using System;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Plugins;

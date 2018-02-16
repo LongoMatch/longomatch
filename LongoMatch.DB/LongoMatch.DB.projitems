@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DatabasesBackup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migration\TemplatesMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\" />

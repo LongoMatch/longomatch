@@ -43,6 +43,7 @@ namespace Tests.DB
 		[OneTimeSetUp]
 		public void InitDB ()
 		{
+			SetupClass.SetUp ();
 			string dbPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);

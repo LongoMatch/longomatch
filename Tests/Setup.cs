@@ -20,6 +20,7 @@ using ICSharpCode.SharpZipLib;
 using LongoMatch;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using LongoMatch.Services;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
 using Moq;
@@ -27,7 +28,9 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Service;
 using VAS.DB;
+using VAS.Services;
 using VAS.Tests;
 using LMDB = LongoMatch.DB;
 using Timer = VAS.Core.Common.Timer;
@@ -51,6 +54,8 @@ namespace Tests
 			App.Current.DependencyRegistry.Register<ITimer, Timer> (1);
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
+			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
+			App.Current.DependencyRegistry.Register<ILicenseCustomizationService, DummyLicenseCustomizationService> (1);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
 			var navigation = new Mock<INavigation> ();
 			navigation.Setup (x => x.Push (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
@@ -70,9 +75,11 @@ namespace Tests
 			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
 			App.Current.ResourcesLocator = new DummyResourcesLocator ();
 			App.Current.FileSystemManager = new FileSystemManager ();
+			App.Current.HotkeysService = new HotkeysService ();
 			Mock<IGUIToolkit> mockGuiToolkit = new Mock<IGUIToolkit> ();
 			mockGuiToolkit.Setup (g => g.DeviceScaleFactor).Returns (1.0f);
 			App.Current.GUIToolkit = mockGuiToolkit.Object;
+			App.Current.PreviewService = new Mock<IPreviewService> ().Object;
 		}
 
 		static void RegisterScreenState (string name)

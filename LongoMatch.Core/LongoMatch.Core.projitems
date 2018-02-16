@@ -50,7 +50,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\Events.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamVM.cs" />
@@ -60,16 +59,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ScoreEventType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayersCollectionVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ScoreButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PenaltyCardButtonVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Hotkeys\LMGeneralUIHotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Styles\Sizes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Styles\Colors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Images.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Icons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Strings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorDealer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerDealer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectAnalysisVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

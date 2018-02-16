@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
@@ -23,11 +22,10 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Core.Resources.Styles;
-using VAS.Services.ViewModel;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
-	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
+	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, DashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
 		CountLimitationBarChartVM chartVM;
 
@@ -67,9 +65,9 @@ namespace LongoMatch.Services.ViewModel
 			}
 		}
 
-		protected override LMDashboardVM CreateInstance (Dashboard model)
+		protected override DashboardVM CreateInstance (Dashboard model)
 		{
-			LMDashboardVM vm = new LMDashboardVM { Model = model };
+			var vm = base.CreateInstance (model);
 			if (model.Static) {
 				StaticViewModels.Add (vm);
 			}

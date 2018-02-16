@@ -122,6 +122,11 @@
     <Compile Include="State\TestNewProjectState.cs" />
     <Compile Include="Services\Controller\TestLMEventsFilterController.cs" />
     <Compile Include="State\TestOpenProjectState.cs" />
+    <Compile Include="Services\TestPlayEditorState.cs" />
+    <Compile Include="Services\TestViewModelFactoryService.cs" />
+    <Compile Include="Services\ViewModel\TestHomeViewModel.cs" />
+    <Compile Include="DB\TestTemplatesMigration.cs" />
+    <Compile Include="Services\TestLMPreviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\vas-dibujo.svg">
@@ -145,6 +150,8 @@
     <EmbeddedResource Include="data\v0\longomatch.tar.gz">
       <LogicalName>longomatch.tar.gz</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="data\templates\dashboard_1_0.lct" />
+    <EmbeddedResource Include="data\templates\team_1_0.ltt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Store\" />
@@ -168,6 +175,7 @@
     <Folder Include="Services\ViewModel\" />
     <Folder Include="Plugins\Exporters\" />
     <Folder Include="Core\Stats\" />
+    <Folder Include="data\templates\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
