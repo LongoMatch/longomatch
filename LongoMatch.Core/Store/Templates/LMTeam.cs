@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Store.Templates
 	[Serializable]
 	public class LMTeam : Team
 	{
-		public const int VERSION = 1;
+		public const int VERSION = 2;
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
 
@@ -232,6 +232,7 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			LMTeam defaultTemplate = new LMTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
+			defaultTemplate.Preview = App.Current.PreviewService.CreatePreview(defaultTemplate);
 			return defaultTemplate;
 		}
 

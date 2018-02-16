@@ -18,8 +18,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;

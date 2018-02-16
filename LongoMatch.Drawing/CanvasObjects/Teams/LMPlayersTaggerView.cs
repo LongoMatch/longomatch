@@ -24,7 +24,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Resources;
@@ -171,7 +170,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayPlayers = new List<LMPlayerView> ();
 
 			if (ViewModel.HomeTeam != null) {
-				homeTeam = ViewModel.HomeTeam.Model;
+				homeTeam = ViewModel.HomeTeam.TypedModel;
 				homeTeam.UpdateColors ();
 				homePlayingPlayers = GetPlayersViews (ViewModel.HomeTeam.FieldPlayersList, TeamType.LOCAL);
 				homeBenchPlayers = GetPlayersViews (ViewModel.HomeTeam.BenchPlayersList, TeamType.LOCAL);
@@ -186,7 +185,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				NTeams++;
 			}
 			if (ViewModel.AwayTeam != null) {
-				awayTeam = ViewModel.AwayTeam.Model;
+				awayTeam = ViewModel.AwayTeam.TypedModel;
 				awayTeam.UpdateColors ();
 				awayPlayingPlayers = GetPlayersViews (ViewModel.AwayTeam.FieldPlayersList, TeamType.VISITOR);
 				awayBenchPlayers = GetPlayersViews (ViewModel.AwayTeam.BenchPlayersList, TeamType.VISITOR);

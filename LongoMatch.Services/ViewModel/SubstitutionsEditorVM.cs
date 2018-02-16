@@ -19,7 +19,7 @@ using System;
 using System.Threading.Tasks;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.Interfaces;
+using LongoMatch.Core.Interfaces;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;

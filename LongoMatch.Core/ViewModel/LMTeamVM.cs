@@ -30,17 +30,9 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMTeamVM : TeamVM
 	{
-		public LMTeamVM ()
-		{
-			SubViewModel = new LMPlayersCollectionVM ();
-		}
-
-		public new LMTeam Model {
+		public LMTeam TypedModel {
 			get {
-				return base.Model as LMTeam;
-			}
-			set {
-				base.Model = value;
+				return (LMTeam)base.Model;
 			}
 		}
 
@@ -63,10 +55,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>the display name</value>
 		public string TeamName {
 			get {
-				return Model.TeamName;
+				return TypedModel.TeamName;
 			}
 			set {
-				Model.TeamName = value;
+				TypedModel.TeamName = value;
 			}
 		}
 
@@ -76,10 +68,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The formation.</value>
 		public int [] Formation {
 			get {
-				return Model.Formation;
+				return TypedModel.Formation;
 			}
 			set {
-				Model.Formation = value;
+				TypedModel.Formation = value;
 			}
 		}
 
@@ -90,6 +82,16 @@ namespace LongoMatch.Core.ViewModel
 		public bool TemplateEditorMode {
 			set;
 			get;
+		}
+
+		/// <summary>
+		/// Gets the preview of the first file in set or null if the set is empty.
+		/// </summary>
+		/// <value>The preview.</value>
+		public Image Preview {
+			get {
+				return Model.Preview;
+			}
 		}
 
 		/// <summary>
@@ -131,7 +133,7 @@ namespace LongoMatch.Core.ViewModel
 
 		void UpdatePlayerList ()
 		{
-			int count = Math.Min (Model.StartingPlayers, CalledPlayersList.Count ());
+			int count = Math.Min (TypedModel.StartingPlayers, CalledPlayersList.Count ());
 			FieldPlayersList = CalledPlayersList.Take (count);
 			BenchPlayersList = CalledPlayersList.Except (FieldPlayersList);
 			foreach (var player in FieldPlayersList) {

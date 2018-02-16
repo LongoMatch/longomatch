@@ -9,10 +9,9 @@ using LongoMatch.Core.Events;
 using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.Interfaces;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Services.State;
 using LongoMatch.Services.States;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
@@ -170,7 +169,7 @@ namespace LongoMatch.Services.Controller
 					e.Player.Tagged = true;
 					EmitSubstitutionEvent (e.Player as LMPlayerVM, substitutionPlayer.Key as LMPlayerVM, e.Team as LMTeamVM);
 				}
-			} else if (teamTagger.SelectionMode != MultiSelectionMode.None){
+			} else if (teamTagger.SelectionMode != MultiSelectionMode.None) {
 				if (teamTagger.SelectionMode != MultiSelectionMode.Multiple &&
 					(teamTagger.SelectionMode == MultiSelectionMode.Single || e.Modifier == ButtonModifier.None)) {
 					ClearSelection ();
@@ -189,8 +188,8 @@ namespace LongoMatch.Services.Controller
 		{
 			if (isAnalysis) {
 				SubstitutionReason reason;
-				var player1Model = player1.Model;
-				var player2Model = player2.Model;
+				var player1Model = player1.TypedModel;
+				var player2Model = player2.TypedModel;
 				if (team.BenchPlayersList.Contains (player1) && team.BenchPlayersList.Contains (player2)) {
 					reason = SubstitutionReason.BenchPositionChange;
 				} else if (!team.BenchPlayersList.Contains (player1) && !team.BenchPlayersList.Contains (player2)) {
@@ -198,12 +197,12 @@ namespace LongoMatch.Services.Controller
 				} else if (team.BenchPlayersList.Contains (player1)) {
 					reason = SubstitutionReason.PlayersSubstitution;
 				} else {
-					player1Model = player2.Model;
-					player2Model = player1.Model;
+					player1Model = player2.TypedModel;
+					player2Model = player1.TypedModel;
 					reason = SubstitutionReason.PlayersSubstitution;
 				}
 				App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
-					Team = team.Model,
+					Team = team.TypedModel,
 					Player1 = player1Model,
 					Player2 = player2Model,
 					SubstitutionReason = reason,
@@ -344,7 +343,7 @@ namespace LongoMatch.Services.Controller
 			if (players == null) {
 				players = team.CalledPlayersList;
 			}
-			var fieldPlayers = players.Take (team.Model.StartingPlayers);
+			var fieldPlayers = players.Take (team.TypedModel.StartingPlayers);
 			foreach (var player in fieldPlayers) {
 				player.Playing = true;
 			}

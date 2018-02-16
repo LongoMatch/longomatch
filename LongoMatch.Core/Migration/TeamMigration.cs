@@ -34,6 +34,9 @@ namespace LongoMatch.Core.Migration
 			case 0:
 				Migrate0 (team);
 				break;
+			case 1:
+				Migrate1 (team);
+				break;
 			default:
 				return;
 			}
@@ -62,6 +65,16 @@ namespace LongoMatch.Core.Migration
 			team.Version = 1;
 		}
 		#pragma warning restore 0618
+
+		public static void Migrate1 (LMTeam team)
+		{
+			if (team.Version != 1) {
+				return;
+			}
+
+			team.Preview = App.Current.PreviewService.CreatePreview (team);
+			team.Version = 2;
+		}
 	}
 }
 

@@ -18,7 +18,6 @@
 using System.Linq;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
-using LongoMatch.Services.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;

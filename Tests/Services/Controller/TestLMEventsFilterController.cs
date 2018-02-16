@@ -902,12 +902,12 @@ namespace Tests.Services.Controller
 			// Teams & Players
 			timelineVM.FullTimeline.ElementAt (1).Model.Teams.Add (homeTeam.Model);
 			timelineVM.FullTimeline.ElementAt (2).Model.Teams.Add (awayTeam.Model);
-			timelineVM.FullTimeline.ElementAt (3).Model.Players.Add (homeTeam.Model.Players [0]);
-			timelineVM.FullTimeline.ElementAt (4).Model.Players.Add (awayTeam.Model.Players [0]);
+			timelineVM.FullTimeline.ElementAt (3).Model.Players.Add (homeTeam.TypedModel.Players [0]);
+			timelineVM.FullTimeline.ElementAt (4).Model.Players.Add (awayTeam.TypedModel.Players [0]);
 			timelineVM.FullTimeline.ElementAt (5).Model.Teams.Add (homeTeam.Model);
-			timelineVM.FullTimeline.ElementAt (5).Model.Players.Add (homeTeam.Model.Players [0]);
+			timelineVM.FullTimeline.ElementAt (5).Model.Players.Add (homeTeam.TypedModel.Players [0]);
 			timelineVM.FullTimeline.ElementAt (6).Model.Teams.Add (homeTeam.Model);
-			timelineVM.FullTimeline.ElementAt (6).Model.Players.Add (awayTeam.Model.Players [0]);
+			timelineVM.FullTimeline.ElementAt (6).Model.Players.Add (awayTeam.TypedModel.Players [0]);
 		}
 	}
 }

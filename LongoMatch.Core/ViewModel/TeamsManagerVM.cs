@@ -15,19 +15,23 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
+using System;
+using System.Collections.Generic;
+using System.Windows.Input;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
-using VAS.Services.ViewModel;
+using VAS.Core.Filters;
+using VAS.Core.Resources;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
 	/// <summary>
 	/// ViewModel for the teams manager.
@@ -94,6 +98,18 @@ namespace LongoMatch.Services.ViewModel
 				Limitation = chartVM?.Limitation;
 			}
 		}
+
+		protected override MenuVM CreateMenu (IViewModel vm)
+		{
+			DeleteCommand.IconName = "vas-delete";
+			MenuVM menu = new MenuVM ();
+			menu.ViewModels.AddRange (new List<MenuNodeVM> {
+				new MenuNodeVM (DeleteCommand, vm, Strings.Delete) { ActiveColor = App.Current.Style.ColorAccentError },
+			});
+
+			return menu;
+		}
+
 	}
 }
 

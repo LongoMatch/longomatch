@@ -27,6 +27,8 @@ using NUnit.Framework;
 using VAS;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.ViewModel;
@@ -47,7 +49,7 @@ namespace Tests.Drawing.Widgets
 		public void Init ()
 		{
 			App.Current.DrawingToolkit = new Mock<IDrawingToolkit> ().Object;
-			App.Current.ViewLocator = new VAS.Core.MVVMC.ViewLocator ();
+			App.Current.ViewLocator = new Locator<IView> ();
 			DrawingInit.ScanViews ();
 			LMDrawingInit.ScanViews ();
 		}
