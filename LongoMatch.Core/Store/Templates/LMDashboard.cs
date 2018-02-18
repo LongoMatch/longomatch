@@ -53,6 +53,9 @@ namespace LongoMatch.Core.Store.Templates
 
 			template.FillDefaultTemplate (count);
 			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
+			template.FieldBackground = App.Current.FieldBackground;
+			template.HalfFieldBackground = App.Current.HalfFieldBackground;
+			template.GoalBackground = App.Current.GoalBackground;
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),
