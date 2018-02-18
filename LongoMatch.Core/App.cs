@@ -94,7 +94,9 @@ namespace LongoMatch
 				Current.Config.Save ();
 			}
 
-			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
+			if (string.IsNullOrEmpty (Current.Config.CurrentDatabase)) {
+				Current.Config.CurrentDatabase = Current.DefaultDBName;
+			}
 			Current.ResourcesLocator.Register (Assembly.GetExecutingAssembly ());
 		}
 
