@@ -41,11 +41,6 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
-			try {
-				Shield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
-			} catch {
-				/* Ignore for unit tests */
-			}
 			ActiveColor = 0;
 			Colors = new Color [2];
 			Colors [0] = Color.Blue1;
@@ -232,10 +227,10 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			LMTeam defaultTemplate = new LMTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
-			defaultTemplate.Preview = App.Current.PreviewService.CreatePreview(defaultTemplate);
+			defaultTemplate.Shield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+			defaultTemplate.Preview = App.Current.PreviewService.CreatePreview (defaultTemplate);
 			return defaultTemplate;
 		}
-
 
 		protected override void ForwardPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
