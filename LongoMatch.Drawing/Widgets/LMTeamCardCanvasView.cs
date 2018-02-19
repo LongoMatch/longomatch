@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		static LMTeamCardCanvasView ()
 		{
 			formation = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.Formation);
-			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.BigDefaultShield);
 		}
 
 		protected override string Title => String.Empty;
