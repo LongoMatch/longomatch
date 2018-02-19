@@ -17,6 +17,7 @@ namespace LongoMatch.Drawing.Widgets
 	/// </summary>
 	public class LMTeamCardCanvasView : CardCanvasView<LMTeamVM>
     {
+		static Image defaultShield;
 		static ISurface formation;
 		const int CREST_SIZE = 64, COLOR_SIZE = 24;
 
@@ -36,6 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		static LMTeamCardCanvasView ()
 		{
 			formation = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.Formation);
+			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.BigDefaultShield);
 		}
 
 		protected override string Title => String.Empty;
@@ -56,8 +58,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void DrawContent()
 		{
-		    tk.DrawImage (crestArea.Start, crestArea.Width, crestArea.Height,
-						 ViewModel.Icon, ScaleMode.AspectFit);
+			tk.FillColor = App.Current.Style.ColorWhite;
+			bool masked = ViewModel.Icon == null;
+			var icon = ViewModel.Icon ?? defaultShield;
+		    tk.DrawImage (crestArea.Start, crestArea.Width, crestArea.Height, icon, ScaleMode.AspectFit, masked);
 			
 			tk.FillColor = textColor;
 			tk.StrokeColor = textColor;
