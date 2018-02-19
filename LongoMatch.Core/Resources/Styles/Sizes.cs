@@ -26,5 +26,7 @@ namespace LongoMatch.Core.Resources.Styles
 		public const int PlayerSmallFontSize = 16;
 
 		public const int BenchSize = 85;
+		public const int MinRangeReboundAnimationDuration = 400;
+		public const int MaxRangeReboundAnimationDuration = 550;
 	}
 }

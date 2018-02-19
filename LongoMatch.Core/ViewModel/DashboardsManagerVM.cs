@@ -22,6 +22,11 @@ using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
 using VAS.Core.Resources.Styles;
+using System.Collections.Generic;
+using VAS.Core;
+using System;
+using VAS.Core.Resources;
+using LMIcons = LongoMatch.Core.Resources.Icons;
 
 namespace LongoMatch.Core.ViewModel
 {
@@ -32,27 +37,43 @@ namespace LongoMatch.Core.ViewModel
 		public DashboardsManagerVM ()
 		{
 			AddButton = LoadedTemplate.AddButton;
-			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.TemplatesIconSize);
-			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", Sizes.TemplatesIconSize);
-			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", Sizes.TemplatesIconSize);
-			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", Sizes.TemplatesIconSize);
-			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", Sizes.TemplatesIconSize);
+			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Add, Sizes.TemplatesIconSize);
+			NewCommand.IconName = Icons.Add;
+			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Save, Sizes.TemplatesIconSize);
+			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Delete, Sizes.TemplatesIconSize);
+			DeleteCommand.IconName = Icons.Delete;
+			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon (LMIcons.Export, Sizes.TemplatesIconSize);
+			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Import, Sizes.TemplatesIconSize);
+			TransferCommand = new Command (() => throw new NotImplementedException ()) {
+				Icon = App.Current.ResourcesLocator.LoadIcon (LMIcons.Transfer, Sizes.TemplatesIconSize),
+				IconName = LMIcons.Transfer
+			};
+			MakeDefaultCommand = new Command (() => throw new NotImplementedException ()) {
+				Icon = App.Current.ResourcesLocator.LoadIcon (LMIcons.Select, Sizes.TemplatesIconSize),
+				IconName = LMIcons.Select
+			};
+
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();
 				LimitationChart = null;
 			}
 		}
 
-		public Command<string> AddButton {
-			get;
-			private set;
-		}
+		public Command<string> AddButton { get; private set; }
 
-		public DashboardVM Dashboard {
-			get {
-				return LoadedTemplate;
-			}
-		}
+		/// <summary>
+		/// Calls the transfer service holding the current Dashboard.
+		/// </summary>
+		/// <value>The transfer command.</value>
+		public Command TransferCommand { get; private set; }
+
+		/// <summary>
+		/// Marks dashboard as default
+		/// </summary>
+		/// <value>The make default command.</value>
+		public Command MakeDefaultCommand { get; private set; }
+
+		public DashboardVM Dashboard => LoadedTemplate;
 
 		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
@@ -63,6 +84,17 @@ namespace LongoMatch.Core.ViewModel
 				chartVM = value;
 				Limitation = chartVM?.Limitation;
 			}
+		}
+
+		protected override MenuVM CreateMenu (IViewModel vm)
+		{
+			DeleteCommand.IconName = Icons.Delete;
+			MenuVM menu = new MenuVM ();
+			menu.ViewModels.AddRange (new List<MenuNodeVM> {
+				new MenuNodeVM (DeleteCommand, vm, Strings.Delete) { ActiveColor = App.Current.Style.ColorAccentError },
+			});
+
+			return menu;
 		}
 
 		protected override DashboardVM CreateInstance (Dashboard model)
