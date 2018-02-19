@@ -130,7 +130,8 @@ namespace LongoMatch.Drawing
 
 		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
-			tk.DrawImage (imagePoint, Sizes.ListImageWidth, Sizes.ListImageWidth, team.Shield,
+			var shield = team.Shield ?? App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+			tk.DrawImage (imagePoint, Sizes.ListImageWidth, Sizes.ListImageWidth, shield,
 				ScaleMode.AspectFit);
 		}
 

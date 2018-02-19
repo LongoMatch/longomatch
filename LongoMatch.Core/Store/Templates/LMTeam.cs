@@ -227,7 +227,6 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			LMTeam defaultTemplate = new LMTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
-			defaultTemplate.Shield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 			defaultTemplate.Preview = App.Current.PreviewService.CreatePreview (defaultTemplate);
 			return defaultTemplate;
 		}
