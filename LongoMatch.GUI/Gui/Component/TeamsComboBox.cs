@@ -16,15 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using Gdk;
 using Gtk;
 using LongoMatch.Core.Store.Templates;
-using VAS.Core.Common;
+using VAS.Core.Resources;
 using VAS.Core.Resources.Styles;
-using Helpers = VAS.UI.Helpers;
-using Image = VAS.Core.Common.Image;
-using VAS.Core;
 using VAS.UI.Component;
+using Color = VAS.Core.Common.Color;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
@@ -54,19 +52,23 @@ namespace LongoMatch.Gui.Component
 				PackStart (texrender, true);
 			}
 
-			store = new ListStore (typeof (Image), typeof (string), typeof (LMTeam));
+			store = new ListStore (typeof (Image), typeof (string), typeof (LMTeam), typeof (Color));
 			foreach (LMTeam t in teams) {
 				Image shield;
+				Color maskColor;
 
 				if (t.Shield == null) {
-					shield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", Sizes.NewTeamsIconSize);
+					maskColor = Colors.DefaultShield;
+					shield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield, Sizes.NewTeamsIconSize);
 				} else {
+					maskColor = null;
 					shield = t.Shield;
 				}
-				store.AppendValues (shield, t.Name, t);
+				store.AppendValues (shield, t.Name, t, maskColor);
 			}
+
 			SetAttributes (texrender, "text", 1);
-			SetAttributes (imageRenderer, "Image", 0);
+			SetAttributes (imageRenderer, "Image", 0, "MaskColor", 3);
 			Model = store;
 		}
 
