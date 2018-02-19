@@ -22,6 +22,7 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using VAS.Core.Resources;
 using VAS.Core.Store;
 using Color = Cairo.Color;
 using Helpers = VAS.UI.Helpers;
@@ -76,10 +77,16 @@ namespace LongoMatch.Plugins.Stats
 				project.GetScore (project.VisitorTeamTemplate),
 				project.VisitorTeamTemplate.TeamName);
 			GetMaxSize (out catsMaxSize, out subcatsMaxSize);
-			if (project.LocalTeamTemplate.Shield != null)
+			if (project.LocalTeamTemplate.Shield != null) {
 				homeimage.Pixbuf = project.LocalTeamTemplate.Shield.Value;
-			if (project.VisitorTeamTemplate.Shield != null)
+			} else {
+				homeimage.Pixbuf = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield).Value;
+			}
+			if (project.VisitorTeamTemplate.Shield != null) {
 				awayimage.Pixbuf = project.VisitorTeamTemplate.Shield.Value;
+			} else {
+				homeimage.Pixbuf = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield).Value;
+			}
 			
 			subcats = new List<Widget> ();
 			cats = new List<Widget> ();

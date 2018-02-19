@@ -126,6 +126,7 @@ namespace Tests.Core.Store.Templates
 			LMTeam t = LMTeam.DefaultTemplate (10);
 
 			// Assert
+			Assert.IsNull (t.Shield);
 			Assert.IsNotNull (t.Preview);
 			Assert.AreEqual (t.Players.Count, 10);
 			t.AddDefaultItem (8);

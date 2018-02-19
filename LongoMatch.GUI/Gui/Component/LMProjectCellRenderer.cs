@@ -15,6 +15,7 @@ using Log = VAS.Core.Common.Log;
 using Point = VAS.Core.Common.Point;
 using ScaleMode = VAS.Core.Common.ScaleMode;
 using Color = VAS.Core.Common.Color;
+using VAS.Core.Resources.Styles;
 
 namespace LongoMatch.Gui.Component
 {
@@ -34,6 +35,8 @@ namespace LongoMatch.Gui.Component
 		Image image;
 		Image homeShield;
 		Image awayShield;
+		Color homeMaskColor;
+		Color awayMaskColor;
 		string description;
 
 
@@ -103,18 +106,19 @@ namespace LongoMatch.Gui.Component
 				tk.Begin ();
 				remainingWidth = cellArea.Width;
 				pos = new Point (cellArea.X, cellArea.Y);
-				DrawTeamShield (homeShield);
-				DrawTeamShield (awayShield);
+				DrawTeamShield (homeShield, homeMaskColor);
+				DrawTeamShield (awayShield, awayMaskColor);
 				DrawDescription ();
 				tk.End ();
 				tk.Context = null;
 			}
 		}
 
-		void DrawTeamShield (Image shield)
+		void DrawTeamShield (Image shield, Color maskColor)
 		{
 			var point = new Point (pos.X, pos.Y + ((cellArea.Height - shield.Height) / 2));
-			tk.DrawImage (point, shield.Width, shield.Height, shield, ScaleMode.AspectFit);
+			tk.FillColor = maskColor;
+			tk.DrawImage (point, shield.Width, shield.Height, shield, ScaleMode.AspectFit, maskColor != null);
 			pos = new Point (pos.X + shield.Width, pos.Y);
 			remainingWidth -= shield.Width;
 		}
@@ -131,13 +135,17 @@ namespace LongoMatch.Gui.Component
 
 			if (ViewModel.HomeTeamShield != null) {
 				homeShield = ViewModel.HomeTeamShield.Scale (Constants.SHIELD_IMAGE_SIZE, Constants.SHIELD_IMAGE_SIZE);
+				homeMaskColor = null;
 			} else {
 				homeShield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", Constants.SHIELD_IMAGE_SIZE);
+				homeMaskColor = Colors.DefaultShield;
 			}
 			if (ViewModel.AwayTeamShield != null) {
 				awayShield = ViewModel.AwayTeamShield.Scale (Constants.SHIELD_IMAGE_SIZE, Constants.SHIELD_IMAGE_SIZE);
+				awayMaskColor = null;
 			} else {
 				awayShield = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", Constants.SHIELD_IMAGE_SIZE);
+				awayMaskColor = Colors.DefaultShield;
 			}
 			description = FormatDesc ();
 		}
