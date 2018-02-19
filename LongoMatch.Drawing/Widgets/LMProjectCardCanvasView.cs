@@ -46,7 +46,7 @@ namespace LongoMatch.Drawing.Widgets
 		static LMProjectCardCanvasView ()
 		{
 			stopwatch = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.Stopwatch);
-			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.BigDefaultShield);
 		}
 
 		public LMProjectCardCanvasView ()
