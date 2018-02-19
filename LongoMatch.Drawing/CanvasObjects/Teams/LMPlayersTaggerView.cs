@@ -179,8 +179,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homeF = homeTeam.Formation;
 				if (ViewModel.HomeTeam.Icon == null) {
 					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+					homeButton.MaskColor = Colors.DefaultShield;
 				} else {
 					homeButton.BackgroundImage = ViewModel.HomeTeam.Icon;
+					homeButton.MaskColor = null;
 				}
 				NTeams++;
 			}
@@ -194,8 +196,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayF = awayTeam.Formation;
 				if (ViewModel.AwayTeam.Icon == null) {
 					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+					awayButton.MaskColor = Colors.DefaultShield;
 				} else {
 					awayButton.BackgroundImage = ViewModel.AwayTeam.Icon;
+					awayButton.MaskColor = null;
 				}
 				NTeams++;
 			}

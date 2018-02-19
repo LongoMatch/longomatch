@@ -7,6 +7,7 @@ using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Resources;
+using VAS.Core.Resources.Styles;
 using VAS.Drawing.Widgets;
 
 namespace LongoMatch.Drawing.Widgets
@@ -17,6 +18,7 @@ namespace LongoMatch.Drawing.Widgets
 	/// </summary>
 	public class LMProjectCardCanvasView : CardCanvasView<LMProjectVM>
     {
+		static Image defaultShield;
 		static ISurface stopwatch;
 		const float ALPHA_SCORE_BACKGROUND = 0.9f;
 		const int CREST_SIZE = 32;
@@ -44,6 +46,7 @@ namespace LongoMatch.Drawing.Widgets
 		static LMProjectCardCanvasView ()
 		{
 			stopwatch = App.Current.DrawingToolkit.CreateSurfaceFromIcon (Icons.Stopwatch);
+			defaultShield = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 		}
 
 		public LMProjectCardCanvasView ()
@@ -70,10 +73,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void DrawContent()
 		{
-			tk.DrawImage(homeCrestArea.Start, homeCrestArea.Width, homeCrestArea.Height,
-			             ViewModel.HomeTeamShield, ScaleMode.AspectFit);
-			tk.DrawImage(awayCrestArea.Start, awayCrestArea.Width, awayCrestArea.Height,
-			             ViewModel.AwayTeamShield, ScaleMode.AspectFit);
+			tk.FillColor = App.Current.Style.ColorWhite;
+			DrawShield (ViewModel.HomeTeamShield, homeCrestArea);
+			DrawShield (ViewModel.AwayTeamShield, awayCrestArea);
 			tk.FillColor = scoreBoxColor;
 			tk.StrokeColor = scoreBoxColor;
 			tk.DrawRectangle(homeScoreBoxArea.Start, homeScoreBoxArea.Width, homeScoreBoxArea.Height);
@@ -107,6 +109,10 @@ namespace LongoMatch.Drawing.Widgets
 								stopwatch, ScaleMode.AspectFit, true);
 				tk.DrawText (duratonArea.Start, duratonArea.Width, duratonArea.Height, ViewModel.Duration.ToMSecondsString (true));
 			}
+		}
+
+		void DrawShield (Image shield, Area area) {
+			tk.DrawImage (area.Start, area.Width, area.Height, shield ?? defaultShield, ScaleMode.AspectFit, shield == null);
 		}
 	}
 }

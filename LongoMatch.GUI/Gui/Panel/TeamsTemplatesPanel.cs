@@ -30,6 +30,7 @@ using VAS.Core.Common;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
+using VAS.Core.Resources;
 using VAS.Core.Resources.Styles;
 using VAS.Core.ViewModel;
 using VAS.UI.Component;
@@ -195,7 +196,8 @@ namespace LongoMatch.Gui.Panel
 			CellRendererImage renderer = (cell as CellRendererImage);
 			renderer.Width = SHIELD_SIZE;
 			renderer.Height = SHIELD_SIZE;
-			renderer.Image = teamVM.Icon;
+			renderer.Image = teamVM.Icon ?? App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+			renderer.MaskColor = teamVM.Icon == null ? Colors.DefaultShield : null;
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

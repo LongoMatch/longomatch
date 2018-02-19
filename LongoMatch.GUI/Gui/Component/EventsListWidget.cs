@@ -23,6 +23,7 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Resources.Styles;
 using Helpers = VAS.UI.Helpers;
+using VAS.Core.Resources;
 
 namespace LongoMatch.Gui.Component
 {
@@ -113,16 +114,16 @@ namespace LongoMatch.Gui.Component
 				var localIcon = project.LocalTeamTemplate.Shield;
 				notebookHelper.SetTabIcon (homescrolledwindow, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (homescrolledwindow, "vas-default-shield", "vas-default-shield",
-					project.LocalTeamTemplate.Name);
+				notebookHelper.SetTabIcon (homescrolledwindow, Icons.DefaultShield, Icons.DefaultShield,
+					project.LocalTeamTemplate.Name, App.Current.Style.ThemeSecondary);
 			}
 
 			if (project.VisitorTeamTemplate.Shield != null) {
 				var visitorIcon = project.VisitorTeamTemplate.Shield;
 				notebookHelper.SetTabIcon (awayscrolledwindow, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (awayscrolledwindow, "vas-default-shield", "vas-default-shield",
-					project.VisitorTeamTemplate.Name);
+				notebookHelper.SetTabIcon (awayscrolledwindow, Icons.DefaultShield, Icons.DefaultShield,
+				                           project.VisitorTeamTemplate.Name, App.Current.Style.ThemeSecondary);
 			}
 
 			notebookHelper.UpdateTabs ();

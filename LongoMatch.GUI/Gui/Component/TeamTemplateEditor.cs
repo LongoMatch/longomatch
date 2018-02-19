@@ -28,6 +28,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Resources;
 using VAS.Core.Resources.Styles;
 using VAS.Drawing.Cairo;
 using VAS.UI.Component;
@@ -95,8 +96,10 @@ namespace LongoMatch.Gui.Component
 				ignoreChanges = true;
 				if (template.Shield != null) {
 					shieldimage.Image = template.Shield;
+					shieldimage.MaskColor = null;
 				} else {
-					shieldimage.Image = App.Current.ResourcesLocator.LoadIcon ("vas-default-shield", SHIELD_SIZE);
+					shieldimage.Image = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+					shieldimage.MaskColor = Colors.DefaultShield;
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
@@ -346,9 +349,9 @@ namespace LongoMatch.Gui.Component
 			}
 
 			if (shield != null) {
-				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE, Constants.MAX_SHIELD_ICON_SIZE);
 				template.Shield = shield;
 				shieldimage.Image = shield;
+				shieldimage.MaskColor = null;
 				Edited = true;
 			}
 		}
