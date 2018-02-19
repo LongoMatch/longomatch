@@ -48,7 +48,7 @@ namespace Tests.Services
 
 			// Assert
 			Assert.IsNotNull (result);
-			mockDrawingToolkit.Verify (d => d.Copy (It.Is<LMTeamTaggerView> (view => ValidateTaggerView (view)), It.IsAny<Area> ()), Times.Exactly (2));
+			mockDrawingToolkit.Verify (d => d.Copy (It.Is<LMTeamTaggerView> (view => ValidateTaggerView (view)), It.IsAny<Area> ()), Times.Exactly (4));
 		}
 
 		[Test]
