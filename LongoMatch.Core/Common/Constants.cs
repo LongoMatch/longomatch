@@ -28,7 +28,14 @@ namespace LongoMatch.Core.Common
 {
 	public class Constants : VAS.Core.Common.Constants
 	{
-		new public const string SOFTWARE_NAME = "LongoMatch";
+		public const string SOFTWARE_NAME_BASE = "LongoMatch";
+
+		#if DEVEL
+		// SOFTWARE_NAME should be the same as the app_name in the recipe
+		public const string SOFTWARE_NAME = SOFTWARE_NAME_BASE + "-dev";
+		#else
+		public const string SOFTWARE_NAME = SOFTWARE_NAME_BASE;
+		#endif
 
 		new public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 
