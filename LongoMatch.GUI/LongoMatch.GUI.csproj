@@ -187,28 +187,28 @@
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\lm-video.png">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\lm-video.png">
       <LogicalName>lm-video.png</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\lm-background.png">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\lm-background.png">
       <LogicalName>lm-background.png</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-dash-line.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-dash-line.svg">
       <LogicalName>lm-dashlm-line.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-line.svg">
       <LogicalName>lm-line.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-double-dot.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-line-double-dot.svg">
       <LogicalName>lm-line-double-dot.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-dot.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-line-dot.svg">
       <LogicalName>lm-line-dot.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-double-arrow.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-line-double-arrow.svg">
       <LogicalName>lm-line-double-arrow.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)\data\images\tools\vas-line-arrow.svg">
+    <EmbeddedResource Include="$(SolutionDir)\longomatch\data\images\tools\vas-line-arrow.svg">
       <LogicalName>lm-line-arrow.svg</LogicalName>
     </EmbeddedResource>
   </ItemGroup>

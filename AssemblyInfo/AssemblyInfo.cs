@@ -51,4 +51,4 @@ using System.Runtime.CompilerServices;
 // This is not required, if you don't want signing let these attributes like they're.
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
-[assembly: InternalsVisibleTo("Tests")]
+[assembly: InternalsVisibleTo("LongoMatch.Tests")]

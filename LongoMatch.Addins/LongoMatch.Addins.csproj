@@ -69,6 +69,22 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid' And $(TargetFrameworkVersion) == 'v7.0'">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Xamarin.iOS'">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
       <ItemGroup>
         <Reference Include="Mono.Addins">
@@ -92,7 +108,7 @@
     <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid' And $(TargetFrameworkVersion) == 'v7.0') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS')">
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
-          <HintPath>..\..\packages\Newtonsoft.Json\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+          <HintPath>..\..\packages\Newtonsoft.Json\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
