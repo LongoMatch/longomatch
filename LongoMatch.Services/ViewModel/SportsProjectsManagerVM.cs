@@ -109,8 +109,8 @@ namespace LongoMatch.Services.ViewModel
 		{
 			MenuVM menu = new MenuVM ();
 			menu.ViewModels.AddRange (new List<MenuNodeVM> {
-				new MenuNodeVM (DeleteCommand, viewModel, Catalog.GetString ("Delete")) { ActiveColor = App.Current.Style.ColorAccentError },
 				new MenuNodeVM (DetailsCommand, viewModel, Catalog.GetString ("Project Details")) { ActiveColor = App.Current.Style.TextBase },
+				new MenuNodeVM (DeleteCommand, viewModel, Catalog.GetString ("Delete")) { ActiveColor = App.Current.Style.ColorAccentError },
 			});
 
 			return menu;
