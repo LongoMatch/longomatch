@@ -36,6 +36,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services;
@@ -129,6 +130,15 @@ namespace Tests.Controller
 			LMProjectAnalysisVM viewModel = new LMProjectAnalysisVM ();
 			viewModel.VideoPlayer = videoPlayerVM;
 			viewModel.Project = projectVM;
+			viewModel.SaveCommand.SetCallback (
+				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = viewModel.Project }),
+				() => viewModel.Project.Edited);
+			viewModel.CloseCommand.SetCallback (
+				async () => await App.Current.EventsBroker.Publish (
+								new CloseEvent<LMProjectVM> { Object = viewModel.Project })
+			   );
+			viewModel.ShowWarningLimitation.SetCallback (() => { });
+			((LimitationCommand)viewModel.ShowWarningLimitation).LimitationCondition = () => viewModel.Project.FileSet.Count () > 1;
 
 			projectsManager = new ProjectAnalysisController ();
 			projectsManager.SetViewModel (viewModel);
