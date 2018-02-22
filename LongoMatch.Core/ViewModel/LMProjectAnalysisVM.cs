@@ -23,14 +23,10 @@ namespace LongoMatch.Core.ViewModel
 			TeamTagger.SelectionMode = MultiSelectionMode.Multiple;
 			TeamTagger.ShowTeamsButtons = true;
 			Project = new LMProjectVM ();
-			SaveCommand = new Command (
-				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = Project }),
-				() => Project.Edited);
-			ShowStatsCommand = new Command (
-				() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = Project.Model }));
-			CloseCommand = new AsyncCommand (Close);
-			ShowWarningLimitation = new LimitationCommand (VASFeature.OpenMultiCamera.ToString (), () => { });
-			ShowWarningLimitation.LimitationCondition = () => Project.FileSet.Count () > 1;
+			ShowStatsCommand = new Command ();
+			SaveCommand = new Command ();
+			CloseCommand = new AsyncCommand ();
+			ShowWarningLimitation = new LimitationCommand (VASFeature.OpenMultiCamera.ToString ());
 		}
 
 		protected override void DisposeManagedResources ()
@@ -39,7 +35,7 @@ namespace LongoMatch.Core.ViewModel
 			Project.PropertyChanged -= HandleProjectPropertyChanged;
 		}
 
-		public new LMProjectVM Project {
+		public override LMProjectVM Project {
 			get {
 				return base.Project;
 			}
@@ -86,12 +82,7 @@ namespace LongoMatch.Core.ViewModel
 		/// Gets or sets the show warning limitation command.
 		/// </summary>
 		/// <value>The show warning limitation command.</value>
-		public LimitationCommand ShowWarningLimitation { get; }
-
-		async Task Close ()
-		{
-			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = Project });
-		}
+		public Command ShowWarningLimitation { get; set; }
 
 		void HandleProjectPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{

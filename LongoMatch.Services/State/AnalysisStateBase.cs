@@ -16,13 +16,20 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Interfaces.Services;
+using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
@@ -32,6 +39,8 @@ namespace LongoMatch.Services.State
 	/// </summary>
 	public abstract class AnalysisStateBase : ScreenState<LMProjectAnalysisVM>
 	{
+		IEventEditorService editorService;
+
 		/// <summary>
 		/// Unloads the state before leaving it
 		/// </summary>
@@ -95,6 +104,105 @@ namespace LongoMatch.Services.State
 				ViewModel.Timeline.LimitationChart = App.Current.LicenseLimitationsService.CreateBarChartVM (
 					VASCountLimitedObjects.TimelineEvents.ToString (), 9, App.Current.Style.ScreenBase);
 			}
+		}
+
+		protected override void SetCommands ()
+		{
+			// LMProjectAnalysisVM's commands:
+			ViewModel.ShowStatsCommand.SetCallback (() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = ViewModel.Project.Model }));
+			ViewModel.SaveCommand.SetCallback (
+				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = ViewModel.Project }),
+				() => ViewModel.Project.Edited);
+			ViewModel.CloseCommand.SetCallback (async () => await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = ViewModel.Project }));
+
+			ViewModel.ShowWarningLimitation.SetCallback (() => { });
+			((LimitationCommand)ViewModel.ShowWarningLimitation).LimitationCondition = () => ViewModel.Project.FileSet.Count () > 1;
+
+			// TimelineVM's commands:
+			ViewModel.Project.Timeline.EditionCommand.SetCallback (evt => editorService.EditEvent ((TimelineEventVM)evt));
+
+			// PlaylistCollectionVM's commands:
+			ViewModel.Playlists.NewCommand.SetCallback (() => App.Current.EventsBroker.Publish (new CreateEvent<PlaylistVM> ()));
+			ViewModel.Playlists.DeleteCommand.SetCallback (() => App.Current.EventsBroker.Publish (new DeleteEvent<PlaylistVM> ()));
+			ViewModel.Playlists.EditCommand.SetCallback (
+				() => App.Current.EventsBroker.Publish (new EditEvent<PlaylistVM> { Object = ViewModel.Playlists.Selection.First () }),
+				() => { return ViewModel.Playlists.Selection.Count == 1; }
+			);
+			ViewModel.Playlists.RenderCommand.SetCallback (
+				() => App.Current.EventsBroker.Publish (new RenderPlaylistEvent { Playlist = ViewModel.Playlists.Selection.First () }),
+				() => { return ViewModel.Playlists.Selection.Count == 1; }
+			);
+			ViewModel.Playlists.InsertVideoCommand.SetCallback (
+				position => App.Current.EventsBroker.Publish (new InsertVideoInPlaylistEvent { Position = (PlaylistPosition)position }),
+				PlaylistHasChildsItemsSelected
+			);
+			ViewModel.Playlists.InsertVideoCommand.SetCallback (
+				position => App.Current.EventsBroker.Publish (new InsertImageInPlaylistEvent { Position = (PlaylistPosition)position }),
+				PlaylistHasChildsItemsSelected
+			);
+			ViewModel.Playlists.EditPlaylistElementCommand.SetCallback (
+				() => App.Current.EventsBroker.Publish (new EditEvent<PlaylistElementVM> { Object = GetFirstSelectedPlaylistElement () }),
+				CheckJustOneElementSelectedAndIsNotVideo
+			);
+
+			/* FIXME: There are still some things missing here:
+			 * DashboardVM has several commands to manage buttons, the dashboard mode, and some behaviour changes. All that logic should also be set from the state.
+			 * PlaylistCollectionVM has some methods used from the View, without a command. They should be easy to migrate to this setup.
+			 * LMTeamTaggerVM has a couple of methods that should also be commands.
+			 * HotkeyVM (included in all controllers that set hotkeys, and in dashboardbuttons) has a command to update the key. It's not used here but is used in RiftAnalyst when reconfiguring a button hotkey.
+			 * LMProjectVM has a command ShowMenu, used only in mobile. It won't be used in analysis.
+			 * The CapturerBin is still not migrated to MVVM (it's a WIP in RA-1294), but for the moment it contains several other commands:
+			 		public Command StartCommand { get; }
+					public Command StopCommand { get; }
+					public Command PauseClockCommand { get; }
+					public Command ResumeClockCommand { get; }
+					public Command SaveCommand { get; }
+					public Command CancelCommand { get; }
+					public Command ViewReadyCommand { get; }
+					public Command PlayLastEventCommand { get; }
+					public Command DeleteLastEventCommand { get; }
+			 */
+		}
+
+		// FIXME: All these methods are moved from PlaylistCollectionVM. We should find a way to reuse them in other states
+		bool PlaylistHasChildsItemsSelected ()
+		{
+			if (!ViewModel.Playlists.Selection.Any ()) {
+				foreach (var playlist in ViewModel.Playlists.ViewModels) {
+					if (playlist.Selection.Any ()) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		PlaylistElementVM GetFirstSelectedPlaylistElement ()
+		{
+			foreach (var playlist in ViewModel.Playlists.ViewModels) {
+				if (playlist.Selection.Any ()) {
+					return (PlaylistElementVM)playlist.Selection.First ();
+				}
+			}
+			return null;
+		}
+
+		bool CheckJustOneElementSelectedAndIsNotVideo ()
+		{
+			List<PlaylistElementVM> elements = new List<PlaylistElementVM> ();
+			if (!ViewModel.Playlists.Selection.Any ()) {
+				foreach (var playlist in ViewModel.Playlists.ViewModels) {
+					elements.AddRange (playlist.Selection);
+				}
+			}
+			return (elements.Count == 1 && !(elements [0] is PlaylistVideoVM));
+		}
+
+		// FIXME END
+
+		protected override void CreateControllers (dynamic data)
+		{
+			editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
 		}
 	}
 }

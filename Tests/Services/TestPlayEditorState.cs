@@ -69,9 +69,7 @@ namespace Tests.Services
 		{
 			// Arrange
 			dynamic data = new ExpandoObject ();
-			data.project = new LMProjectVM {
-				Model = new LMProject ()
-			};
+			data.project = new LMProject ();
 			data.settings = new PlayEventEditionSettings ();
 			data.play = new LMTimelineEventVM { Model = new LMTimelineEvent { Name = "Event1" } };
 
@@ -122,13 +120,11 @@ namespace Tests.Services
 		async Task SetUpState ()
 		{
 			dynamic data = new ExpandoObject ();
-			var projectVM = new LMProjectVM {
-				Model = new LMProject ()
-			};
-			projectVM.Model.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
-			projectVM.Model.VisitorTeamTemplate = LMTeam.DefaultTemplate (10);
+			var project = new LMProject ();
+			project.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
+			project.VisitorTeamTemplate = LMTeam.DefaultTemplate (10);
 
-			data.project = projectVM;
+			data.project = project;
 			data.settings = new PlayEventEditionSettings ();
 			data.play = new LMTimelineEventVM { Model = new LMTimelineEvent { Name = "Event1" } };
 
