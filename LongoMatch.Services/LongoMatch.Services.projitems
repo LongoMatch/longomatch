@@ -60,6 +60,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controller\LMEventsFilterController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelFactoryService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LMPreviewService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\DashboardDetailsState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
