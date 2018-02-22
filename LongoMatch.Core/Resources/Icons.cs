@@ -18,5 +18,7 @@ namespace LongoMatch.Core.Resources
 		public const string Export = "lm-export";
 		public const string Transfer = "lm-transfer";
 		public const string Select = "lm-select";
+		public const string Edit = "lm-edit";
+		public const string Back = "lm-back";
 	}
 }
