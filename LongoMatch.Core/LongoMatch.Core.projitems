@@ -67,7 +67,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Images.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Icons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Strings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
