@@ -28,7 +28,7 @@ using NUnit.Framework;
 using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Service;
+using VAS.Core.Interfaces.Services;
 using VAS.DB;
 using VAS.Services;
 using VAS.Tests;

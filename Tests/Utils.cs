@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2014 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Service;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
