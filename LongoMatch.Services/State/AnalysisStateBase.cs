@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.Interfaces.Services;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
@@ -48,10 +49,11 @@ namespace LongoMatch.Services.State
 		public override async Task<bool> HideState ()
 		{
 			// prompt before executing the close operation
-			if (!await App.Current.EventsBroker.PublishWithReturn (new CloseEvent<LMProjectVM> { Object = ViewModel.Project })) {
-				return false;
+			if (!ViewModel.Project.CloseHandled) {
+				if (!await GetService<IProjectAnalysisService> ().Close ()) {
+					return false;
+				}
 			}
-
 			return await base.HideState ();
 		}
 
@@ -108,18 +110,14 @@ namespace LongoMatch.Services.State
 
 		protected override void SetCommands ()
 		{
+			GetService<IProjectAnalysisService> ().SetDefaultCallbacks (ViewModel);
+			GetService<IEventEditorService> ().SetDefaultCallbacks (ViewModel.Project.Timeline);
+
 			// LMProjectAnalysisVM's commands:
 			ViewModel.ShowStatsCommand.SetCallback (() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = ViewModel.Project.Model }));
-			ViewModel.SaveCommand.SetCallback (
-				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = ViewModel.Project }),
-				() => ViewModel.Project.Edited);
-			ViewModel.CloseCommand.SetCallback (async () => await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = ViewModel.Project }));
 
 			ViewModel.ShowWarningLimitation.SetCallback (() => { });
 			((LimitationCommand)ViewModel.ShowWarningLimitation).LimitationCondition = () => ViewModel.Project.FileSet.Count () > 1;
-
-			// TimelineVM's commands:
-			ViewModel.Project.Timeline.EditionCommand.SetCallback (evt => editorService.EditEvent ((TimelineEventVM)evt));
 
 			// PlaylistCollectionVM's commands:
 			ViewModel.Playlists.NewCommand.SetCallback (() => App.Current.EventsBroker.Publish (new CreateEvent<PlaylistVM> ()));

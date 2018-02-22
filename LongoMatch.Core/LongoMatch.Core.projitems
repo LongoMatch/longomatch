@@ -73,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerDealer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectAnalysisVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Services\IProjectAnalysisService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch.Core.Hotkeys;
+using LongoMatch.Core.Interfaces.Services;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
@@ -42,7 +43,7 @@ namespace LongoMatch.Services
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	[Controller (LightLiveProjectState.NAME)]
-	public class ProjectAnalysisController : ControllerBase
+	public class ProjectAnalysisController : ControllerBase, IProjectAnalysisService
 	{
 		LMProjectAnalysisVM viewModel;
 
@@ -52,13 +53,11 @@ namespace LongoMatch.Services
 		}
 
 		public LMProjectVM Project {
-			set;
-			get;
+			get => ViewModel.Project;
 		}
 
 		public VideoPlayerVM VideoPlayer {
-			get;
-			set;
+			get => ViewModel.VideoPlayer;
 		}
 
 		public LMProjectAnalysisVM ViewModel {
@@ -68,13 +67,9 @@ namespace LongoMatch.Services
 			set {
 				viewModel = value;
 				if (viewModel != null) {
-					Project = viewModel.Project;
-					VideoPlayer = viewModel.VideoPlayer;
 					Capturer = viewModel.Capturer;
-					Project.CloseHandled = false;
-					Log.Debug ("Loading project " + viewModel.Project + " " + viewModel.Project.ProjectType);
+					Log.Debug ("Loading project " + Project + " " + Project.ProjectType);
 				}
-
 			}
 		}
 
@@ -91,57 +86,58 @@ namespace LongoMatch.Services
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.CLOSE),
 										() => ViewModel.CloseCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_RECORDING_PERIOD),
-			                            () => Capturer?.StartPeriod ()));
+										() => Capturer?.StartPeriod ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.STOP_RECORDING_PERIOD),
-			                            () => Capturer?.StopPeriod ()));
+										() => Capturer?.StopPeriod ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.TOGGLE_CAPTURE_CLOCK),
-			                            ToggleCapturer));
+										ToggleCapturer));
 			return actions;
+		}
+
+		public void SetDefaultCallbacks (LMProjectAnalysisVM projectAnalysisVM)
+		{
+			projectAnalysisVM.SaveCommand.SetCallback (
+				() => Save (),
+				() => projectAnalysisVM.Project.Edited);
+			projectAnalysisVM.CloseCommand.SetCallback (async () => await Close ());
 		}
 
 		public override async Task Start ()
 		{
 			await base.Start ();
-			App.Current.EventsBroker.SubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
-			App.Current.EventsBroker.SubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
+			// FIXME [LON-995]: Remove with the migration of the CapturerBin
 			App.Current.EventsBroker.Subscribe<CaptureErrorEvent> (HandleCaptureError);
 			App.Current.EventsBroker.Subscribe<CaptureFinishedEvent> (HandleCaptureFinished);
 			App.Current.EventsBroker.Subscribe<MultimediaErrorEvent> (HandleMultimediaError);
+			// FIXME [LON-995]: I'm not really sure we need this...
 			App.Current.EventsBroker.Subscribe<NavigationEvent> (HandleNavigation);
 		}
 
 		public override async Task Stop ()
 		{
 			await base.Stop ();
-			App.Current.EventsBroker.UnsubscribeAsync<CloseEvent<LMProjectVM>> (HandleClose);
-			App.Current.EventsBroker.UnsubscribeAsync<SaveEvent<LMProjectVM>> (HandleSave);
 			App.Current.EventsBroker.Unsubscribe<CaptureErrorEvent> (HandleCaptureError);
 			App.Current.EventsBroker.Unsubscribe<CaptureFinishedEvent> (HandleCaptureFinished);
 			App.Current.EventsBroker.Unsubscribe<MultimediaErrorEvent> (HandleMultimediaError);
 			App.Current.EventsBroker.Unsubscribe<NavigationEvent> (HandleNavigation);
 		}
 
-		protected Task HandleSave (SaveEvent<LMProjectVM> e)
+		public Task<bool> Save ()
 		{
-			if (e.Object == Project) {
-				e.ReturnValue = SaveProject ();
-			}
-			return AsyncHelpers.Return ();
+			return AsyncHelpers.Return (SaveProject ());
 		}
 
-		protected async Task HandleClose (CloseEvent<LMProjectVM> e)
+		public async Task<bool> Close ()
 		{
-			if (e.Object == Project) {
-				if (!Project.CloseHandled) {
-					Project.CloseHandled = true;
-					e.ReturnValue = await PromptCloseProject ();
-					if (!e.ReturnValue) {
-						Project.CloseHandled = false;
-					}
-				} else {
-					e.ReturnValue = true;
+			bool closedOK = false;
+			if (!Project.CloseHandled) {
+				Project.CloseHandled = true;
+				closedOK = await PromptCloseProject ();
+				if (!closedOK) {
+					Project.CloseHandled = false;
 				}
 			}
+			return closedOK;
 		}
 
 		void RemuxOutputFile (EncodingSettings settings)
@@ -186,8 +182,9 @@ namespace LongoMatch.Services
 			}
 		}
 
-		bool SaveCaptureProject (LMProject project)
+		bool SaveCaptureProject ()
 		{
+			LMProject project = Project.Model;
 			Guid projectID = project.ID;
 			// FIXME
 			string filePath = project.Description.FileSet.First ().FilePath;
@@ -203,7 +200,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = App.Current.MultimediaToolkit.DiscoverFile (filePath);
 				project.Periods.Reset (Capturer.Periods);
-				App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
+				App.Current.DatabaseManager.ActiveDB.Store (project);
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -215,7 +212,7 @@ namespace LongoMatch.Services
 				projectFile = projectFile.Replace (" ", "_");
 				projectFile = projectFile.Replace ("/", "_");
 				projectFile = filePathNoExtension + "_" + projectFile;
-				VAS.Core.Store.Project.Export (Project.Model, projectFile);
+				VAS.Core.Store.Project.Export (project, projectFile);
 				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
@@ -227,14 +224,13 @@ namespace LongoMatch.Services
 
 		async Task<bool> PromptCloseProject ()
 		{
-			if (Project == null)
+			if (Project.Model == null)
 				return true;
 
 			if (Project.ProjectType == ProjectType.FileProject) {
 				if (await App.Current.Dialogs.QuestionMessage (
 					Catalog.GetString ("Do you want to close the current project?"), null)) {
-					await CloseOpenedProject (true);
-					return true;
+					return await CloseOpenedProject (true);
 				}
 				return false;
 			} else {
@@ -266,7 +262,7 @@ namespace LongoMatch.Services
 
 		async Task<bool> CloseOpenedProject (bool save, bool goHome = true)
 		{
-			if (Project == null)
+			if (Project.Model == null)
 				return false;
 
 			Log.Debug ("Closing project " + Project.ShortDescription);
@@ -287,10 +283,10 @@ namespace LongoMatch.Services
 			return saveOk;
 		}
 
-		bool UpdateProject (LMProject project)
+		bool UpdateProject ()
 		{
 			try {
-				App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
+				App.Current.DatabaseManager.ActiveDB.Store (Project.Model);
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -305,30 +301,22 @@ namespace LongoMatch.Services
 			if (project == null)
 				return false;
 
-			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, project.ProjectType));
+			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, Project.ProjectType));
 			if (Project.ProjectType == ProjectType.FileProject) {
-				return UpdateProject (project);
+				return UpdateProject ();
 			} else if (Project.ProjectType == ProjectType.FakeCaptureProject) {
 				project.Periods.Reset (Capturer.Periods);
-				return UpdateProject (project);
+				return UpdateProject ();
 			} else if (Project.ProjectType == ProjectType.CaptureProject ||
 					   Project.ProjectType == ProjectType.URICaptureProject) {
-				return SaveCaptureProject (project);
+				return SaveCaptureProject ();
 			} else {
 				return false;
 			}
 		}
 
-		void Save (Project project)
-		{
-			if (App.Current.Config.AutoSave) {
-				App.Current.DatabaseManager.ActiveDB.Store (project);
-			}
-		}
-
 		async Task<bool> CaptureFinished (bool cancel, bool delete, bool reopen)
 		{
-			LMProject project = Project.Model;
 			ProjectType type = Project.ProjectType;
 			if (delete) {
 				if (type != ProjectType.FakeCaptureProject) {
@@ -339,7 +327,7 @@ namespace LongoMatch.Services
 					}
 				}
 				try {
-					App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (project);
+					App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (Project.Model);
 				} catch (StorageException ex) {
 					Log.Exception (ex);
 					App.Current.Dialogs.ErrorMessage (ex.Message);
