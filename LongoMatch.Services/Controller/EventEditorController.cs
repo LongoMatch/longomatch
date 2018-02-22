@@ -37,6 +37,16 @@ namespace LongoMatch.Services.Controller
 	// TODO [LON-995]: Don't inherit from controller
 	public class EventEditorService : ControllerBase, IEventEditorService
 	{
+		public void Init (/*ILMTeamTaggerController teamtagger <-- When the publish in EditEvent is removed*/)
+		{
+
+		}
+
+		public void SetDefaultCallbacks (TimelineVM timeline)
+		{
+			timeline.EditionCommand.SetCallback (async evt => await EditEvent ((TimelineEventVM)evt));
+		}
+
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			// FIXME: REMOVE THIS
