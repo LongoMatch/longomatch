@@ -7,7 +7,7 @@ using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Interfaces;
-using VAS.Core.Interfaces.Service;
+using VAS.Core.Interfaces.Services;
 
 namespace Tests.Services.ViewModel
 {
