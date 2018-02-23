@@ -19,6 +19,7 @@ using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
+using LongoMatch.Core.Interfaces.Services;
 
 namespace LongoMatch.Services.Controller
 {
@@ -38,6 +39,7 @@ namespace LongoMatch.Services.Controller
 	[Controller (LMDrawingToolState.NAME)]
 	public class LMTeamTaggerController : ControllerBase
 	{
+		ILMEventsService eventsService;
 		LMTeamTaggerVM teamTagger;
 		LMProjectVM project;
 		VideoPlayerVM videoPlayer;
@@ -49,6 +51,11 @@ namespace LongoMatch.Services.Controller
 		List<LMPlayerVM> homeBenchPlayers = new List<LMPlayerVM> ();
 		List<LMPlayerVM> awayStartingPlayers = new List<LMPlayerVM> ();
 		List<LMPlayerVM> awayBenchPlayers = new List<LMPlayerVM> ();
+
+		public void Init (ILMEventsService evService)
+		{
+			eventsService = evService;
+		}
 
 		LMProjectVM Project {
 			get {
@@ -188,8 +195,8 @@ namespace LongoMatch.Services.Controller
 		{
 			if (isAnalysis) {
 				SubstitutionReason reason;
-				var player1Model = player1.TypedModel;
-				var player2Model = player2.TypedModel;
+				var newPlayer1 = player1;
+				var newPlayer2 = player2;
 				if (team.BenchPlayersList.Contains (player1) && team.BenchPlayersList.Contains (player2)) {
 					reason = SubstitutionReason.BenchPositionChange;
 				} else if (!team.BenchPlayersList.Contains (player1) && !team.BenchPlayersList.Contains (player2)) {
@@ -197,17 +204,11 @@ namespace LongoMatch.Services.Controller
 				} else if (team.BenchPlayersList.Contains (player1)) {
 					reason = SubstitutionReason.PlayersSubstitution;
 				} else {
-					player1Model = player2.TypedModel;
-					player2Model = player1.TypedModel;
+					newPlayer1 = player2;
+					newPlayer2 = player1;
 					reason = SubstitutionReason.PlayersSubstitution;
 				}
-				App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
-					Team = team.TypedModel,
-					Player1 = player1Model,
-					Player2 = player2Model,
-					SubstitutionReason = reason,
-					Time = teamTagger.CurrentTime
-				});
+				eventsService.CreatePlayerSubstitutionEvent (team, newPlayer1, newPlayer2, reason, teamTagger.CurrentTime);
 				UpdateLineup ();
 			} else {
 				team.SubViewModel.ViewModels.Swap (player1, player2);

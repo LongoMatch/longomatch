@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Interfaces.Services;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.Controller;
 using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
@@ -112,9 +113,7 @@ namespace LongoMatch.Services.State
 		{
 			GetService<IProjectAnalysisService> ().SetDefaultCallbacks (ViewModel);
 			GetService<IEventEditorService> ().SetDefaultCallbacks (ViewModel.Project.Timeline);
-
-			// LMProjectAnalysisVM's commands:
-			ViewModel.ShowStatsCommand.SetCallback (() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = ViewModel.Project.Model }));
+			GetService<ILMEventsService> ().SetDefaultCallbacks (ViewModel);
 
 			ViewModel.ShowWarningLimitation.SetCallback (() => { });
 			((LimitationCommand)ViewModel.ShowWarningLimitation).LimitationCondition = () => ViewModel.Project.FileSet.Count () > 1;
@@ -201,6 +200,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateControllers (dynamic data)
 		{
 			editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
+			GetService<LMTeamTaggerController> ().Init (GetService<ILMEventsService> ());
 		}
 	}
 }

@@ -55,24 +55,6 @@ namespace LongoMatch.Core.Events
 	{
 	}
 
-	public class ShowProjectStatsEvent : Event
-	{
-		public Project Project { get; set; }
-	}
-
-	public class PlayerSubstitutionEvent : Event
-	{
-		public LMTeam Team { get; set; }
-
-		public LMPlayer Player1 { get; set; }
-
-		public LMPlayer Player2 { get; set; }
-
-		public SubstitutionReason SubstitutionReason { get; set; }
-
-		public Time Time { get; set; }
-	}
-
 	public class TeamTagsChangedEvent : Event
 	{
 	}
