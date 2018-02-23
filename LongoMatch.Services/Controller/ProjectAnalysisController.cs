@@ -46,12 +46,12 @@ namespace LongoMatch.Services
 	{
 		LMProjectAnalysisVM viewModel;
 
-		public ICapturerBin Capturer {
+		public LMProjectVM Project {
 			set;
 			get;
 		}
 
-		public LMProjectVM Project {
+		public VideoRecorderVM VideoRecorder {
 			set;
 			get;
 		}
@@ -70,7 +70,7 @@ namespace LongoMatch.Services
 				if (viewModel != null) {
 					Project = viewModel.Project;
 					VideoPlayer = viewModel.VideoPlayer;
-					Capturer = viewModel.Capturer;
+					VideoRecorder = viewModel.VideoRecorder;
 					Project.CloseHandled = false;
 					Log.Debug ("Loading project " + viewModel.Project + " " + viewModel.Project.ProjectType);
 				}
@@ -91,11 +91,11 @@ namespace LongoMatch.Services
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.CLOSE),
 										() => ViewModel.CloseCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_RECORDING_PERIOD),
-			                            () => Capturer?.StartPeriod ()));
+										() => VideoRecorder?.StartRecordingCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.STOP_RECORDING_PERIOD),
-			                            () => Capturer?.StopPeriod ()));
+										() => VideoRecorder?.StopRecordingCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.TOGGLE_CAPTURE_CLOCK),
-			                            ToggleCapturer));
+										ToggleCapturer));
 			return actions;
 		}
 
@@ -197,12 +197,12 @@ namespace LongoMatch.Services
 				Log.Debug ("Saving capture project: " + project.ID);
 
 #if !OSTYPE_ANDROID && !OSTYPE_IOS
-				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
+				RemuxOutputFile (VideoRecorder.Settings.EncodingSettings);
 #endif
 
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = App.Current.MultimediaToolkit.DiscoverFile (filePath);
-				project.Periods.Reset (Capturer.Periods);
+				project.Periods.Reset (VideoRecorder.Periods);
 				App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
 				return true;
 			} catch (Exception ex) {
@@ -242,7 +242,7 @@ namespace LongoMatch.Services
 
 				// Check if we need to show or not the stop and save button
 				bool isCapturing;
-				if (Capturer.Periods == null || Capturer.Periods.Count == 0)
+				if (VideoRecorder.Periods == null || VideoRecorder.Periods.Count == 0)
 					isCapturing = false;
 				else
 					isCapturing = true;
@@ -270,10 +270,6 @@ namespace LongoMatch.Services
 				return false;
 
 			Log.Debug ("Closing project " + Project.ShortDescription);
-
-			if (Capturer != null) {
-				Capturer.Close ();
-			}
 
 			bool saveOk = true;
 			if (save) {
@@ -309,7 +305,7 @@ namespace LongoMatch.Services
 			if (Project.ProjectType == ProjectType.FileProject) {
 				return UpdateProject (project);
 			} else if (Project.ProjectType == ProjectType.FakeCaptureProject) {
-				project.Periods.Reset (Capturer.Periods);
+				project.Periods.Reset (VideoRecorder.Periods);
 				return UpdateProject (project);
 			} else if (Project.ProjectType == ProjectType.CaptureProject ||
 					   Project.ProjectType == ProjectType.URICaptureProject) {
@@ -333,7 +329,7 @@ namespace LongoMatch.Services
 			if (delete) {
 				if (type != ProjectType.FakeCaptureProject) {
 					try {
-						File.Delete (Capturer.CaptureSettings.EncodingSettings.OutputFile);
+						File.Delete (VideoRecorder.Settings.EncodingSettings.OutputFile);
 					} catch (Exception ex1) {
 						Log.Exception (ex1);
 					}
@@ -389,13 +385,13 @@ namespace LongoMatch.Services
 
 		void ToggleCapturer ()
 		{
-			if (Capturer == null) {
+			if (VideoRecorder == null) {
 				return;
 			}
-			if (Capturer.Capturing) {
-				Capturer.PausePeriod ();
+			if (VideoRecorder.Recording) {
+				VideoRecorder.PauseClockCommand.Execute ();
 			} else {
-				Capturer.ResumePeriod ();
+				VideoRecorder.ResumeClockCommand.Execute ();
 			}
 		}
 	}

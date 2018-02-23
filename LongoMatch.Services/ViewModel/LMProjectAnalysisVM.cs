@@ -11,11 +11,12 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer, ILMTeamTaggerDealer
+	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, IVideoRecorderDealer, ILMTeamTaggerDealer
 	{
 		public LMProjectAnalysisVM ()
 		{
@@ -56,12 +57,11 @@ namespace LongoMatch.Services.ViewModel
 			}
 		}
 
-		public ICapturerBin Capturer {
-			get;
-			set;
-		}
-
-		public CaptureSettings CaptureSettings {
+		/// <summary>
+		/// Gets or set the video recorder.
+		/// </summary>
+		/// <value>The video recorder.</value>
+		public VideoRecorderVM VideoRecorder {
 			get;
 			set;
 		}

@@ -93,18 +93,6 @@ namespace LongoMatch.Gui.Component
 			centralpane.Unmap ();
 		}
 
-		public IVideoPlayerController Player {
-			get {
-				return playercapturer.ViewModel.Player;
-			}
-		}
-
-		public ICapturerBin Capturer {
-			get {
-				return playercapturer.Capturer;
-			}
-		}
-
 		public LMProjectAnalysisVM ViewModel {
 			get {
 				return viewModel;
@@ -112,15 +100,13 @@ namespace LongoMatch.Gui.Component
 			set {
 				viewModel = value;
 				codingwidget.ViewModel = viewModel;
-				playercapturer.ViewModel = viewModel?.VideoPlayer;
 				playsSelection.ViewModel = viewModel?.Project;
+				playercapturer.SetViewModel (viewModel);
 				if (ViewModel != null) {
 					if (viewModel.Project.Model.ProjectType == ProjectType.FileProject) {
 						playercapturer.Mode = PlayerViewOperationMode.Analysis;
 					} else {
 						playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-						Capturer.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
-						Capturer.Periods = viewModel.Project.Model.Periods.ToList ();
 					}
 				}
 			}

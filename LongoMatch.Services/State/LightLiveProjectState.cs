@@ -12,6 +12,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.ViewModel;
 using VAS.Services.State;
+using VAS.Services.Service;
 
 namespace LongoMatch.Services.State
 {
@@ -21,7 +22,8 @@ namespace LongoMatch.Services.State
 	/// </summary>
 	public class LightLiveProjectState : ScreenState<LMProjectAnalysisVM>
 	{
-		 public const string NAME = "LightLiveProject";
+		public const string NAME = "LightLiveProject";
+		VideoRecoderService service;
 
 		/// <summary>
 		/// Gets the name of the state
@@ -33,6 +35,12 @@ namespace LongoMatch.Services.State
 			}
 		}
 
+		public override Task<bool> UnloadState ()
+		{
+			service.Close ();
+			return base.UnloadState ();
+		}
+
 		public override async Task<bool> LoadState (dynamic data)
 		{
 			if (!await Initialize (data)) {
@@ -40,7 +48,7 @@ namespace LongoMatch.Services.State
 			}
 
 			try {
-				ViewModel.Capturer.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
+				service.Run ();
 				return true;
 			} catch {
 				return false;
@@ -55,9 +63,12 @@ namespace LongoMatch.Services.State
 		{
 			ViewModel = new LMProjectAnalysisVM ();
 			ViewModel.Project.Model = data.Project.Model;
-			ViewModel.CaptureSettings = data.CaptureSettings;
-			// FIXME: use this hack until the capturer uses a controller
-			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
+			service = new VideoRecoderService ();
+			// Fixme; these props should probably be passed view constructor as they are impepinable
+			ViewModel.VideoRecorder = new VideoRecorderVM (data.CaptureSettings, ViewModel.Project.FileSet.First (),
+														   App.Current.MultimediaToolkit.GetCapturer (), service);
+			ViewModel.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
+			ViewModel.Periods = viewModel.Project.Model.Periods.ToList ();
 		}
 	}
 }
