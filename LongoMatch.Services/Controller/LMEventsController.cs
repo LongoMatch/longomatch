@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Hotkeys;
+using LongoMatch.Core.Interfaces.Services;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.State;
@@ -33,6 +34,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Interfaces.Services;
 using VAS.Core.MVVMC;
+using VAS.Core.Store;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
 using KeyAction = VAS.Core.Hotkeys.KeyAction;
@@ -43,23 +45,23 @@ namespace LongoMatch.Services
 	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	[Controller (LiveProjectAnalysisState.NAME)]
 	[Controller (LightLiveProjectState.NAME)]
-	public class LMEventsController : EventsController
+	public class LMEventsController : EventsController, ILMEventsService
 	{
+		IEventEditorService editorService;
 		LMProjectAnalysisVM viewModel;
+
+		public void Init (IEventEditorService evEditorService)
+		{
+			editorService = evEditorService;
+		}
 
 		public override async Task Start ()
 		{
 			await base.Start ();
-			App.Current.EventsBroker.Subscribe<LoadTimelineEventEvent<TimelineEventVM>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
-			App.Current.EventsBroker.Subscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 		}
 
 		public override async Task Stop ()
 		{
-			App.Current.EventsBroker.Unsubscribe<LoadTimelineEventEvent<TimelineEventVM>> (HandleLoadTimelineEvent);
-			App.Current.EventsBroker.Unsubscribe<PlayerSubstitutionEvent> (HandlePlayerSubstitutionEvent);
-			App.Current.EventsBroker.Unsubscribe<ShowProjectStatsEvent> (HandleShowProjectStatsEvent);
 			await base.Stop ();
 		}
 
@@ -77,13 +79,14 @@ namespace LongoMatch.Services
 			base.SetViewModel (viewModel);
 		}
 
-		// FIXME: remove this when the video capturer is ported to MVVM
-		void HandleLoadTimelineEvent (LoadTimelineEventEvent<TimelineEventVM> e)
+		public void SetDefaultCallbacks (LMProjectAnalysisVM projectAnalysisVM)
 		{
-			VideoPlayer.LoadEvent (e.Object, e.Playing);
+			projectAnalysisVM.ShowStatsCommand.SetCallback (() => ShowProjectStats (projectAnalysisVM.Project));
+			// TODO: This should be in the base class
+			projectAnalysisVM.Project.Timeline.LoadEventCommand.SetCallback (args => LoadTimelineEvent ((LoadTimelineEventEvent<TimelineEventVM>)args));
 		}
 
-		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)
+		public void CreatePlayerSubstitutionEvent (LMTeamVM team, LMPlayerVM player1, LMPlayerVM player2, SubstitutionReason substitutionReason, Time time)
 		{
 			if (CheckTimelineEventsLimitation ()) {
 				return;
@@ -91,10 +94,11 @@ namespace LongoMatch.Services
 			LMTimelineEvent evt;
 
 			try {
-				evt = viewModel.Project.Model.SubsitutePlayer (e.Team, e.Player1, e.Player2, e.SubstitutionReason, e.Time);
+				evt = viewModel.Project.Model.SubsitutePlayer (team.TypedModel, player1.TypedModel, player2.TypedModel, substitutionReason, time);
 
 				var timelineEventVM = viewModel.Project.Timeline.FullTimeline.Where (x => x.Model == evt).FirstOrDefault ();
 
+				// FIXME: Move to a service call, but keep the event for the LicenseLimitationService
 				App.Current.EventsBroker.Publish (
 					new EventCreatedEvent {
 						TimelineEvent = timelineEventVM
@@ -105,9 +109,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleShowProjectStatsEvent (ShowProjectStatsEvent e)
+		public void ShowProjectStats (LMProjectVM project)
 		{
-			App.Current.GUIToolkit.ShowProjectStats (e.Project);
+			// FIXME: WTF is that doing there? It should be moved to a state, without all the addins things
+			App.Current.GUIToolkit.ShowProjectStats (project.Model);
 		}
 
 		void DeleteLoadedEvent ()
@@ -115,6 +120,7 @@ namespace LongoMatch.Services
 			if (LoadedPlay?.Model == null) {
 				return;
 			}
+			// FIXME: Move to a service call, but keep the event for the LicenseLimitationService
 			App.Current.EventsBroker.Publish (
 				new EventsDeletedEvent {
 					TimelineEvents = new List<TimelineEventVM> { LoadedPlay }
@@ -131,7 +137,6 @@ namespace LongoMatch.Services
 			VideoPlayer.PauseCommand.Execute (false);
 
 			// FIXME: Not awaited!
-			IEventEditorService editorService = App.Current.DependencyRegistry.Retrieve<IEventEditorService> ();
 			editorService.EditEvent (LoadedPlay);
 
 			if (playing) {
