@@ -40,7 +40,8 @@ namespace LongoMatch.Services.State
 			}
 
 			try {
-				ViewModel.Capturer.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
+				// FIXME: What should it be calling?
+				//ViewModel.VideoRecorder.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
 				return true;
 			} catch {
 				return false;
@@ -57,7 +58,7 @@ namespace LongoMatch.Services.State
 			ViewModel.Project.Model = data.Project.Model;
 			ViewModel.CaptureSettings = data.CaptureSettings;
 			// FIXME: use this hack until the capturer uses a controller
-			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
+			//ViewModel.VideoRecorder = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
 		}
 	}
 }

@@ -114,6 +114,7 @@ namespace LongoMatch.Services.State
 			GetService<IProjectAnalysisService> ().SetDefaultCallbacks (ViewModel);
 			GetService<IEventEditorService> ().SetDefaultCallbacks (ViewModel.Project.Timeline);
 			GetService<ILMEventsService> ().SetDefaultCallbacks (ViewModel);
+			GetService<IVideoRecorderService> ().SetDefaultCallbacks (ViewModel.VideoRecorder);
 
 			ViewModel.ShowWarningLimitation.SetCallback (() => { });
 			((LimitationCommand)ViewModel.ShowWarningLimitation).LimitationCondition = () => ViewModel.Project.FileSet.Count () > 1;

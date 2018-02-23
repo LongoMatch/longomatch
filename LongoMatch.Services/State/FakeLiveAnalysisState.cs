@@ -45,7 +45,8 @@ namespace LongoMatch.Services.State
 		protected override Task<bool> LoadProject ()
 		{
 			try {
-				ViewModel.Capturer.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
+				// FIXME: What should it be calling?
+				//ViewModel.Recorder.Run (ViewModel.CaptureSettings, ViewModel.Project.FileSet.First ().Model);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				App.Current.Dialogs.ErrorMessage (ex.Message);
@@ -61,7 +62,7 @@ namespace LongoMatch.Services.State
 			ViewModel.CaptureSettings = data.CaptureSettings;
 			ViewModel.VideoPlayer = new VideoPlayerVM ();
 			// FIXME: use this hack until the capturer uses a controller
-			ViewModel.Capturer = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
+			//ViewModel.Recorder = (ICapturerBin)(Panel.GetType ().GetProperty ("Capturer").GetValue (Panel));
 			CreateLimitation ();
 		}
 

@@ -81,7 +81,7 @@ namespace LongoMatch.Services
 
 		public void SetDefaultCallbacks (LMProjectAnalysisVM projectAnalysisVM)
 		{
-			base.SetDefaultCallbacks (projectAnalysisVM.Project.Timeline);
+			base.SetDefaultCallbacks (projectAnalysisVM.Project.Timeline, projectAnalysisVM.VideoRecorder);
 			projectAnalysisVM.ShowStatsCommand.SetCallback (() => ShowProjectStats (projectAnalysisVM.Project));
 		}
 

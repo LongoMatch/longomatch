@@ -47,7 +47,7 @@ namespace LongoMatch.Services
 	{
 		LMProjectAnalysisVM viewModel;
 
-		public ICapturerBin Capturer {
+		public VideoRecorderVM Capturer {
 			set;
 			get;
 		}
@@ -67,7 +67,7 @@ namespace LongoMatch.Services
 			set {
 				viewModel = value;
 				if (viewModel != null) {
-					Capturer = viewModel.Capturer;
+					Capturer = viewModel.VideoRecorder;
 					Log.Debug ("Loading project " + Project + " " + Project.ProjectType);
 				}
 			}
@@ -86,9 +86,9 @@ namespace LongoMatch.Services
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.CLOSE),
 										() => ViewModel.CloseCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.START_RECORDING_PERIOD),
-										() => Capturer?.StartPeriod ()));
+										() => Capturer?.StartRecordingCommand.Execute (true)));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.STOP_RECORDING_PERIOD),
-										() => Capturer?.StopPeriod ()));
+										() => Capturer?.StopRecordingCommand.Execute ()));
 			actions.Add (new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.TOGGLE_CAPTURE_CLOCK),
 										ToggleCapturer));
 			return actions;
@@ -99,7 +99,14 @@ namespace LongoMatch.Services
 			projectAnalysisVM.SaveCommand.SetCallback (
 				() => Save (),
 				() => projectAnalysisVM.Project.Edited);
+			// FIXME: Should we call one from the other?
+			projectAnalysisVM.VideoRecorder.SaveCommand.SetCallback (
+				() => projectAnalysisVM.SaveCommand.Execute (),
+				() => projectAnalysisVM.Project.Edited);
 			projectAnalysisVM.CloseCommand.SetCallback (async () => await Close ());
+			// FIXME: Should we call one from the other?
+			projectAnalysisVM.VideoRecorder.CancelCommand.SetCallback (
+				async () => await projectAnalysisVM.CloseCommand.ExecuteAsync ());
 		}
 
 		public override async Task Start ()
@@ -194,7 +201,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Saving capture project: " + project.ID);
 
 #if !OSTYPE_ANDROID && !OSTYPE_IOS
-				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
+				RemuxOutputFile (Capturer.Settings.EncodingSettings);
 #endif
 
 				Log.Debug ("Reloading saved file: " + filePath);
@@ -268,7 +275,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Closing project " + Project.ShortDescription);
 
 			if (Capturer != null) {
-				Capturer.Close ();
+				Capturer.StopRecordingCommand.Execute (false);
 			}
 
 			bool saveOk = true;
@@ -321,7 +328,7 @@ namespace LongoMatch.Services
 			if (delete) {
 				if (type != ProjectType.FakeCaptureProject) {
 					try {
-						File.Delete (Capturer.CaptureSettings.EncodingSettings.OutputFile);
+						File.Delete (Capturer.Settings.EncodingSettings.OutputFile);
 					} catch (Exception ex1) {
 						Log.Exception (ex1);
 					}
@@ -380,10 +387,10 @@ namespace LongoMatch.Services
 			if (Capturer == null) {
 				return;
 			}
-			if (Capturer.Capturing) {
-				Capturer.PausePeriod ();
+			if (Capturer.Recording) {
+				Capturer.PauseClockCommand.Execute ();
 			} else {
-				Capturer.ResumePeriod ();
+				Capturer.ResumeClockCommand.Execute ();
 			}
 		}
 	}
