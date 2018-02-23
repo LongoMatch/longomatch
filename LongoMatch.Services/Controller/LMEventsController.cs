@@ -81,9 +81,8 @@ namespace LongoMatch.Services
 
 		public void SetDefaultCallbacks (LMProjectAnalysisVM projectAnalysisVM)
 		{
+			base.SetDefaultCallbacks (projectAnalysisVM.Project.Timeline);
 			projectAnalysisVM.ShowStatsCommand.SetCallback (() => ShowProjectStats (projectAnalysisVM.Project));
-			// TODO: This should be in the base class
-			projectAnalysisVM.Project.Timeline.LoadEventCommand.SetCallback (args => LoadTimelineEvent ((LoadTimelineEventEvent<TimelineEventVM>)args));
 		}
 
 		public void CreatePlayerSubstitutionEvent (LMTeamVM team, LMPlayerVM player1, LMPlayerVM player2, SubstitutionReason substitutionReason, Time time)

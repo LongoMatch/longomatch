@@ -3,12 +3,12 @@
 
 using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
-using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.Interfaces.Services;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.Services
 {
-	public interface ILMEventsService : IController
+	public interface ILMEventsService : IEventsService
 	{
 		void ShowProjectStats (LMProjectVM project);
 
