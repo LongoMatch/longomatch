@@ -29,5 +29,7 @@ namespace LongoMatch.Core.Resources.Styles
 		public static Color BorderSelection = Color.Parse ("#428C41");
 
 		public static Color DetailsViewSeparator = Color.Parse ("#FFB2B2B2");
+
+		public static Color BenchShieldBackground = Color.Parse ("#3B3B3CFF");
 	}
 }
