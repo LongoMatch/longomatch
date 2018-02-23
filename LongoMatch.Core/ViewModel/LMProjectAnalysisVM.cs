@@ -14,7 +14,7 @@ using VAS.Core.ViewModel;
 
 namespace LongoMatch.Core.ViewModel
 {
-	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, ICapturerBinDealer, ILMTeamTaggerDealer
+	public class LMProjectAnalysisVM : ProjectAnalysisVM<LMProjectVM>, IVideoRecorderDealer, ILMTeamTaggerDealer
 	{
 		public LMProjectAnalysisVM ()
 		{
@@ -51,7 +51,7 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
-		public ICapturerBin Capturer {
+		public VideoRecorderVM VideoRecorder {
 			get;
 			set;
 		}
