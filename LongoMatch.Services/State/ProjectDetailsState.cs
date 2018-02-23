@@ -2,10 +2,9 @@
 //  Copyright (C) 2018 Fluendo S.A.
 //
 //
-using System;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
+using System.Linq;
 using LongoMatch.Services.ViewModel;
+using VAS.Core.Resources;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.State
@@ -23,6 +22,9 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = data;
+			if (ViewModel.LoadedProject.Preview == null) {
+				ViewModel.LoadedProject.Model.FileSet.FirstOrDefault ().Preview = App.Current.ResourcesLocator.LoadImage (Images.DefaultCardBackground);
+			}
 		}
 	}
 }
