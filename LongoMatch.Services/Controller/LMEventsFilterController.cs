@@ -19,6 +19,8 @@ using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>
 namespace LongoMatch.Services.Controller
 {
 	[Controller (ProjectAnalysisState.NAME)]
+	[Controller (LiveProjectAnalysisState.NAME)]
+	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	/// <summary>
 	/// Events filter controller.
 	/// This controller manages events filters and filtering for views where projects are used.
