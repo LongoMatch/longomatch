@@ -32,6 +32,8 @@ namespace LongoMatch.Services
 	/// </summary>
 	// FIXME: This controller should be removed once we add bidings to the few commands impleted here.
 	[Controller (ProjectAnalysisState.NAME)]
+	[Controller (LiveProjectAnalysisState.NAME)]
+	[Controller (FakeLiveProjectAnalysisState.NAME)]
 	public class LMPlaylistController : PlaylistController
 	{
 		IVideoPlayerController Player {
