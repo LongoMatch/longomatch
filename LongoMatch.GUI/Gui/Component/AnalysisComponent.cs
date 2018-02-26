@@ -29,6 +29,7 @@ using VAS.UI.Helpers;
 using VAS.UI.Helpers.Gtk2;
 using Constants = LongoMatch.Core.Common.Constants;
 using VKeyAction = VAS.Core.Hotkeys.KeyAction;
+using VAS.Core.ViewModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -99,12 +100,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public ICapturerBin Capturer {
-			get {
-				return playercapturer.Capturer;
-			}
-		}
-
 		public LMProjectAnalysisVM ViewModel {
 			get {
 				return viewModel;
@@ -119,8 +114,8 @@ namespace LongoMatch.Gui.Component
 						playercapturer.Mode = PlayerViewOperationMode.Analysis;
 					} else {
 						playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-						Capturer.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
-						Capturer.Periods = viewModel.Project.Model.Periods.ToList ();
+						ViewModel.VideoRecorder.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
+						ViewModel.VideoRecorder.Periods = viewModel.Project.Model.Periods.ToList ();
 					}
 				}
 			}
