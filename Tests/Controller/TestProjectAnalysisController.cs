@@ -49,7 +49,7 @@ namespace Tests.Controller
 		Mock<IMultimediaToolkit> mtkMock;
 		Mock<IGUIToolkit> gtkMock;
 		Mock<ICapturer> capturerMock;
-		Mock<ICapturerBin> capturerBinMock;
+		//Mock<ICapturerBin> capturerBinMock;
 		Mock<IStateController> stateControllerMock;
 		VideoPlayerController player;
 		ProjectAnalysisController projectsManager;
@@ -102,11 +102,11 @@ namespace Tests.Controller
 			App.Current.GUIToolkit = gtkMock.Object;
 			mockList.Add (gtkMock);
 
-			capturerBinMock = new Mock<ICapturerBin> ();
-			capturerBinMock.Setup (w => w.Capturer).Returns (capturerMock.Object);
-			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
-			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
-			mockList.Add (capturerBinMock);
+			//capturerBinMock = new Mock<ICapturerBin> ();
+			//capturerBinMock.Setup (w => w.Capturer).Returns (capturerMock.Object);
+			//capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
+			//capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
+			//mockList.Add (capturerBinMock);
 
 			player = new VideoPlayerController ();
 			videoPlayerVM = new VideoPlayerVM ();
@@ -201,7 +201,7 @@ namespace Tests.Controller
 				transitions.Add (obj.Name);
 			});
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
@@ -216,7 +216,7 @@ namespace Tests.Controller
 			Assert.IsTrue (projectsManager.ViewModel.Project.CloseHandled);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.Project.Model);
-			capturerBinMock.Verify (c => c.Close (), Times.Once ());
+			//capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			stateControllerMock.Verify (e => e.MoveToHome (false), Times.Once);
 		}
 
@@ -228,7 +228,7 @@ namespace Tests.Controller
 				transitions.Add (obj.Name);
 			});
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
@@ -239,7 +239,7 @@ namespace Tests.Controller
 					Reopen = true
 				}
 			);
-			capturerBinMock.Verify (c => c.Close (), Times.Once ());
+			//capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			/* We are not prompted to quit the capture */
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
@@ -254,7 +254,7 @@ namespace Tests.Controller
 		{
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
@@ -268,7 +268,7 @@ namespace Tests.Controller
 			Assert.AreEqual (project, projectsManager.Project.Model);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.CaptureProject;
@@ -287,7 +287,7 @@ namespace Tests.Controller
 			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
 			App.Current.Dialogs = mockDialogs.Object;
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;
@@ -309,7 +309,7 @@ namespace Tests.Controller
 			Mock<IDialogs> mockDialogs = new Mock<IDialogs> ();
 			App.Current.Dialogs = mockDialogs.Object;
 
-			projectsManager.Capturer = capturerBinMock.Object;
+			//projectsManager.Capturer = capturerBinMock.Object;
 			projectsManager.ViewModel.Project.Model = project;
 			projectsManager.ViewModel.CaptureSettings = settings;
 			projectsManager.ViewModel.Project.ProjectType = ProjectType.FileProject;

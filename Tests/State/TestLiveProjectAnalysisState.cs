@@ -37,7 +37,7 @@ namespace Tests.State
 	public class TestLiveProjectAnalysisState
 	{
 		Mock<IMultimediaToolkit> mtkMock;
-		Mock<ICapturerBin> capturerMock;
+		//Mock<ICapturerBin> capturerMock;
 		LiveProjectAnalysisState state;
 		LMProject project;
 		LMProjectVM projectVM;
@@ -53,7 +53,7 @@ namespace Tests.State
 			var playerMock = new Mock<IVideoPlayer> ();
 			mtkMock = new Mock<IMultimediaToolkit> ();
 			var framesCapturerMock = new Mock<IFramesCapturer> ();
-			capturerMock = new Mock<ICapturerBin> ();
+			//capturerMock = new Mock<ICapturerBin> ();
 			mtkMock.Setup (m => m.GetFramesCapturer ()).Returns (framesCapturerMock.Object);
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			App.Current.MultimediaToolkit = mtkMock.Object;
@@ -68,14 +68,14 @@ namespace Tests.State
 			projectVM = new LMProjectVM { Model = project };
 			analysisVM = new LMProjectAnalysisVM { Project = projectVM };
 			var panel = new Mock<Utils.IDummyCapturerPanel> ();
-			panel.Setup (p => p.Capturer).Returns (capturerMock.Object);
+			//panel.Setup (p => p.Capturer).Returns (capturerMock.Object);
 			state.Panel = panel.Object;
 		}
 
 		[TearDown]
-		public void TearDown()
+		public void TearDown ()
 		{
-			capturerMock.ResetCalls ();
+			//capturerMock.ResetCalls ();
 		}
 
 		[Test]
@@ -85,7 +85,7 @@ namespace Tests.State
 			bool ret = await state.LoadState (analysisVM);
 
 			// Assert
-			capturerMock.Verify (c => c.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ()), Times.Once);
+			//capturerMock.Verify (c => c.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ()), Times.Once);
 			Assert.AreNotEqual (projectVM, state.ViewModel.Project);
 			Assert.AreEqual (project, state.ViewModel.Project.Model);
 			Assert.IsTrue (ret);
@@ -115,8 +115,8 @@ namespace Tests.State
 		[Test]
 		public async Task LoadState_VideoPlayerException_TransitionCancelled ()
 		{
-			capturerMock.Setup (p => p.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ())).
-						Throws<Exception> ();
+			//capturerMock.Setup (p => p.Run (It.IsAny<CaptureSettings> (), It.IsAny<MediaFile> ())).
+			//Throws<Exception> ();
 
 			// Act
 			bool ret = await state.LoadState (analysisVM);

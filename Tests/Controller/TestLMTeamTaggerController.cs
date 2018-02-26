@@ -19,7 +19,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
+using LongoMatch.Core.Interfaces.Services;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services;
@@ -42,7 +44,7 @@ namespace Tests.Controller
 	{
 		LMTeamTaggerController controller;
 		LMTaggingController taggingController;
-		LMEventsController eventsController;
+		Mock<ILMEventsService> eventsControllerMock;
 		LMTeamTaggerVM teamTagger;
 		VideoPlayerVM videoPlayer;
 		LMProjectVM project;
@@ -90,10 +92,9 @@ namespace Tests.Controller
 			projectVM = new LMProjectVM { Model = Utils.CreateProject () };
 			viewModel.Project = projectVM;
 			await ControllerSetUp (viewModel);
-			eventsController = new LMEventsController ();
-			eventsController.SetViewModel (viewModel);
-			await eventsController.Start ();
+			eventsControllerMock = new Mock<ILMEventsService> ();
 
+			controller.Init (eventsControllerMock.Object);
 
 			taggingController = new LMTaggingController ();
 			taggingController.SetViewModel (new ProjectAnalysisVM<LMProjectVM> { VideoPlayer = videoPlayer, Project = projectVM });
@@ -104,10 +105,9 @@ namespace Tests.Controller
 		public async Task TearDownAsync ()
 		{
 			await controller.Stop ();
-			eventsController?.Stop ();
-			eventsController = null;
 			taggingController?.Stop ();
 			taggingController = null;
+			eventsControllerMock.ResetCalls ();
 		}
 
 		[Test]
@@ -219,13 +219,11 @@ namespace Tests.Controller
 		[Test]
 		public async Task TestSubstitutionsIsNotEmmitedClickSamePlayer ()
 		{
-			bool substEventEmitted = false;
 			bool emitedPropertyChange = false;
 			int times = 0;
 			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => substEventEmitted = true);
 			teamTagger.PropertyChanged += (sender, e) => {
 				if (sender == teamTagger.HomeTeam && e.PropertyName == nameof (teamTagger.HomeTeam.FieldPlayersList)) {
 					emitedPropertyChange = true;
@@ -239,16 +237,17 @@ namespace Tests.Controller
 			Assert.IsFalse (clickedPlayer1.Tagged);
 			Assert.IsFalse (teamTagger.HomeTeam.Selection.Any ());
 			Assert.IsFalse (emitedPropertyChange);
-			Assert.IsFalse (substEventEmitted);
 			Assert.AreEqual (0, times);
+			eventsControllerMock.Verify (c => c.CreatePlayerSubstitutionEvent (
+												It.IsAny<LMTeamVM> (), It.IsAny<LMPlayerVM> (), It.IsAny<LMPlayerVM> (),
+												It.IsAny<SubstitutionReason> (), It.IsAny<Time> ()), Times.Never ()
+										);
 		}
 
 		[Test]
 		public async Task Substitution_IsEmitted_WithAbsoluteCurrentTime ()
 		{
-			bool substEventEmitted = false;
 			bool emitedPropertyChange = false;
-			Time substTime = new Time (0);
 			int times = 0;
 			await AnalysisSetUpAsync ();
 			teamTagger.SubstitutionMode = true;
@@ -256,10 +255,6 @@ namespace Tests.Controller
 			videoPlayer.CurrentTime = new Time (10000);
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => {
-				substEventEmitted = true;
-				substTime = ev.Time;
-			});
 			teamTagger.PropertyChanged += (sender, e) => {
 				if (sender == teamTagger.HomeTeam && e.PropertyName == nameof (teamTagger.HomeTeam.FieldPlayersList)) {
 					emitedPropertyChange = true;
@@ -273,12 +268,14 @@ namespace Tests.Controller
 			Assert.IsFalse (clickedPlayer1.Tagged);
 			Assert.IsFalse (clickedPlayer2.Tagged);
 			Assert.IsFalse (teamTagger.HomeTeam.Selection.Any ());
-			Assert.AreSame (clickedPlayer2, teamTagger.HomeTeam.FieldPlayersList.First ());
-			Assert.AreSame (clickedPlayer1, teamTagger.HomeTeam.BenchPlayersList.First ());
+			Assert.AreSame (clickedPlayer2.TypedModel, teamTagger.HomeTeam.FieldPlayersList.First ().TypedModel);
+			Assert.AreSame (clickedPlayer1.TypedModel, teamTagger.HomeTeam.BenchPlayersList.First ().TypedModel);
 			Assert.IsTrue (emitedPropertyChange);
-			Assert.IsTrue (substEventEmitted);
 			Assert.AreEqual (1, times);
-			Assert.AreEqual (videoPlayer.AbsoluteCurrentTime, substTime);
+			eventsControllerMock.Verify (c => c.CreatePlayerSubstitutionEvent (
+												It.IsAny<LMTeamVM> (), It.IsAny<LMPlayerVM> (), It.IsAny<LMPlayerVM> (),
+												It.IsAny<SubstitutionReason> (), videoPlayer.AbsoluteCurrentTime), Times.Once ()
+										);
 		}
 
 		[Test]
@@ -346,7 +343,6 @@ namespace Tests.Controller
 			teamTagger.SubstitutionMode = true;
 			videoPlayer.AbsoluteCurrentTime = new Time (20001);
 			videoPlayer.CurrentTime = new Time (10000);
-			App.Current.EventsBroker.Subscribe<PlayerSubstitutionEvent> ((ev) => Assert.AreEqual (20001, ev.Time.MSeconds));
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 
@@ -357,6 +353,10 @@ namespace Tests.Controller
 
 			Assert.AreSame (clickedPlayer1, teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ());
 			Assert.AreSame (clickedPlayer2, teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ());
+			eventsControllerMock.Verify (c => c.CreatePlayerSubstitutionEvent (
+												It.IsAny<LMTeamVM> (), It.IsAny<LMPlayerVM> (), It.IsAny<LMPlayerVM> (),
+												It.IsAny<SubstitutionReason> (), It.Is<Time> (t => t.Equals (new Time (2001)))), Times.Once ()
+										);
 
 			videoPlayer.AbsoluteCurrentTime = new Time (30000);
 			videoPlayer.CurrentTime = new Time (20000);

@@ -116,19 +116,16 @@ namespace Tests.Controller
 		{
 			int currentCount = projectVM.Timeline.FullTimeline.Count ();
 
-			App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
-				Team = projectVM.Model.LocalTeamTemplate,
-				Player1 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
-				Player2 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
-				Time = new Time (200),
-				SubstitutionReason = SubstitutionReason.PlayersSubstitution
-			});
+			controller.CreatePlayerSubstitutionEvent (projectVM.HomeTeam,
+													  projectVM.HomeTeam.Cast<LMPlayerVM> ().First (),
+													  projectVM.HomeTeam.Cast<LMPlayerVM> ().Last (),
+													  SubstitutionReason.PlayersSubstitution, new Time (200));
 
 			Assert.AreEqual (currentCount + 1, projectVM.Timeline.FullTimeline.Count ());
 			Assert.AreSame (projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
-			                ((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).In);
+							((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).In);
 			Assert.AreSame (projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
-			                ((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).Out);
+							((SubstitutionEvent)projectVM.Timeline.FullTimeline.Model [currentCount]).Out);
 			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
 										  Times.Never);
 		}
@@ -140,13 +137,10 @@ namespace Tests.Controller
 								 .Returns (false);
 			int currentCount = projectVM.Timeline.FullTimeline.Count ();
 
-			App.Current.EventsBroker.Publish (new PlayerSubstitutionEvent {
-				Team = projectVM.Model.LocalTeamTemplate,
-				Player1 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().First (),
-				Player2 = projectVM.Model.LocalTeamTemplate.List.OfType<LMPlayer> ().Last (),
-				Time = new Time (200),
-				SubstitutionReason = SubstitutionReason.PlayersSubstitution
-			});
+			controller.CreatePlayerSubstitutionEvent (projectVM.HomeTeam,
+													  projectVM.HomeTeam.Cast<LMPlayerVM> ().First (),
+													  projectVM.HomeTeam.Cast<LMPlayerVM> ().Last (),
+													  SubstitutionReason.PlayersSubstitution, new Time (200));
 
 			Assert.AreEqual (currentCount, projectVM.Timeline.FullTimeline.Count ());
 			mockLimitationService.Verify (ls => ls.MoveToUpgradeDialog (VASCountLimitedObjects.TimelineEvents.ToString ()),
