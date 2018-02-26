@@ -246,7 +246,7 @@ namespace Tests
 
 		public interface IDummyCapturerPanel : IPanel
 		{
-			ICapturerBin Capturer { get; set; }
+			//ICapturerBin Capturer { get; set; }
 		}
 	}
 
