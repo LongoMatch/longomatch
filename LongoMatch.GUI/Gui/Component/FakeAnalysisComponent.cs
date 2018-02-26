@@ -64,11 +64,11 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public ICapturerBin Capturer {
-			get {
-				return capturerbin;
-			}
-		}
+		//public ICapturerBin Capturer {
+		//	get {
+		//		return capturerbin;
+		//	}
+		//}
 
 		public LMProjectAnalysisVM ViewModel {
 			get {
