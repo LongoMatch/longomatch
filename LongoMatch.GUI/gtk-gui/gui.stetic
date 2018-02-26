@@ -5,8 +5,6 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../../bin/LongoMatch.Drawing.dll" />
-    <widget-library name="../../../bin/LongoMatch.Services.dll" />
     <widget-library name="../../../bin/VAS.Drawing.Cairo.dll" />
     <widget-library name="../../../bin/VAS.UI.dll" />
     <widget-library name="../../../bin/VAS.UI.Helpers.Gtk2.dll" />

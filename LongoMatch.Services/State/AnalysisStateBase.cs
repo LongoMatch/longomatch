@@ -114,34 +114,10 @@ namespace LongoMatch.Services.State
 			GetService<IProjectAnalysisService> ().SetDefaultCallbacks (ViewModel);
 			GetService<IEventEditorService> ().SetDefaultCallbacks (ViewModel.Project.Timeline);
 			GetService<ILMEventsService> ().SetDefaultCallbacks (ViewModel);
-			GetService<IVideoRecorderService> ().SetDefaultCallbacks (ViewModel.VideoRecorder);
+			GetService<IPlaylistService> ().SetDefaultCallbacks (ViewModel.Playlists);
 
 			ViewModel.ShowWarningLimitation.SetCallback (() => { });
 			((LimitationCommand)ViewModel.ShowWarningLimitation).LimitationCondition = () => ViewModel.Project.FileSet.Count () > 1;
-
-			// PlaylistCollectionVM's commands:
-			ViewModel.Playlists.NewCommand.SetCallback (() => App.Current.EventsBroker.Publish (new CreateEvent<PlaylistVM> ()));
-			ViewModel.Playlists.DeleteCommand.SetCallback (() => App.Current.EventsBroker.Publish (new DeleteEvent<PlaylistVM> ()));
-			ViewModel.Playlists.EditCommand.SetCallback (
-				() => App.Current.EventsBroker.Publish (new EditEvent<PlaylistVM> { Object = ViewModel.Playlists.Selection.First () }),
-				() => { return ViewModel.Playlists.Selection.Count == 1; }
-			);
-			ViewModel.Playlists.RenderCommand.SetCallback (
-				() => App.Current.EventsBroker.Publish (new RenderPlaylistEvent { Playlist = ViewModel.Playlists.Selection.First () }),
-				() => { return ViewModel.Playlists.Selection.Count == 1; }
-			);
-			ViewModel.Playlists.InsertVideoCommand.SetCallback (
-				position => App.Current.EventsBroker.Publish (new InsertVideoInPlaylistEvent { Position = (PlaylistPosition)position }),
-				PlaylistHasChildsItemsSelected
-			);
-			ViewModel.Playlists.InsertVideoCommand.SetCallback (
-				position => App.Current.EventsBroker.Publish (new InsertImageInPlaylistEvent { Position = (PlaylistPosition)position }),
-				PlaylistHasChildsItemsSelected
-			);
-			ViewModel.Playlists.EditPlaylistElementCommand.SetCallback (
-				() => App.Current.EventsBroker.Publish (new EditEvent<PlaylistElementVM> { Object = GetFirstSelectedPlaylistElement () }),
-				CheckJustOneElementSelectedAndIsNotVideo
-			);
 
 			/* FIXME: There are still some things missing here:
 			 * DashboardVM has several commands to manage buttons, the dashboard mode, and some behaviour changes. All that logic should also be set from the state.
@@ -161,42 +137,6 @@ namespace LongoMatch.Services.State
 					public Command DeleteLastEventCommand { get; }
 			 */
 		}
-
-		// FIXME: All these methods are moved from PlaylistCollectionVM. We should find a way to reuse them in other states
-		bool PlaylistHasChildsItemsSelected ()
-		{
-			if (!ViewModel.Playlists.Selection.Any ()) {
-				foreach (var playlist in ViewModel.Playlists.ViewModels) {
-					if (playlist.Selection.Any ()) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-
-		PlaylistElementVM GetFirstSelectedPlaylistElement ()
-		{
-			foreach (var playlist in ViewModel.Playlists.ViewModels) {
-				if (playlist.Selection.Any ()) {
-					return (PlaylistElementVM)playlist.Selection.First ();
-				}
-			}
-			return null;
-		}
-
-		bool CheckJustOneElementSelectedAndIsNotVideo ()
-		{
-			List<PlaylistElementVM> elements = new List<PlaylistElementVM> ();
-			if (!ViewModel.Playlists.Selection.Any ()) {
-				foreach (var playlist in ViewModel.Playlists.ViewModels) {
-					elements.AddRange (playlist.Selection);
-				}
-			}
-			return (elements.Count == 1 && !(elements [0] is PlaylistVideoVM));
-		}
-
-		// FIXME END
 
 		protected override void CreateControllers (dynamic data)
 		{

@@ -32,7 +32,7 @@ namespace LongoMatch.Services.State
 	/// <summary>
 	/// A state for fake live analysis of projects.
 	/// </summary>
-	public class FakeLiveProjectAnalysisState : AnalysisStateBase
+	public class FakeLiveProjectAnalysisState : LiveAnalysisStateBase
 	{
 		public const string NAME = "FakeLiveProjectAnalysis";
 

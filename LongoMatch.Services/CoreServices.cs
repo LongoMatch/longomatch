@@ -140,6 +140,7 @@ namespace LongoMatch.Services
 			App.Current.DependencyRegistry.Register<IViewModelFactoryService> (new ViewModelFactoryService ());
 			App.Current.DependencyRegistry.Register<IEventEditorService, EventEditorService> ();
 			App.Current.DependencyRegistry.Register<IDrawingsService, DrawingsService> ();
+			App.Current.DependencyRegistry.Register<IPlaylistService, LMPlaylistController> ();
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
 			App.Current.EventsBroker = new EventsBroker ();

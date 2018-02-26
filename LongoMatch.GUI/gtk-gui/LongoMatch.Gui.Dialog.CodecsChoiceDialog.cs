@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.CodecsChoiceDialog
 			this.Name = "LongoMatch.Gui.Dialog.CodecsChoiceDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
 			this.DestroyWithParent = true;
@@ -69,7 +69,11 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n\nTo acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n\nTo avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. ");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString (@"As explained and detailed in the <a href=""http://www.longomatch.com/open-source.html"">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  
+
+To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=""http://www.longomatch.com/open-source.html"">OpenSource project</a> page.
+
+To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. ");
 			this.label1.UseMarkup = true;
 			this.label1.Wrap = true;
 			this.label1.Justify = ((global::Gtk.Justification)(3));
@@ -98,6 +102,8 @@ namespace LongoMatch.Gui.Dialog
 			// Container child buttonOk.Gtk.Container+ContainerChild
 			this.buttonOKimage = new global::VAS.UI.Helpers.ImageView ();
 			this.buttonOKimage.Name = "buttonOKimage";
+			this.buttonOKimage.Circular = false;
+			this.buttonOKimage.HasShadow = false;
 			this.buttonOk.Add (this.buttonOKimage);
 			this.AddActionWidget (this.buttonOk, -3);
 			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8 [this.buttonOk]));

@@ -20,7 +20,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.FramesCaptureProgressDialog
 			this.Name = "LongoMatch.Gui.Dialog.FramesCaptureProgressDialog";
 			this.Title = global::VAS.Core.Catalog.GetString ("Capture Progress");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Dialog);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			this.BorderWidth = ((uint)(3));
@@ -47,6 +47,8 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.image = new global::VAS.UI.Helpers.ImageView ();
 			this.image.Name = "image";
+			this.image.Circular = false;
+			this.image.HasShadow = false;
 			this.vbox2.Add (this.image);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.image]));
 			w3.PackType = ((global::Gtk.PackType)(1));

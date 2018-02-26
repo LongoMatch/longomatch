@@ -24,82 +24,81 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Label visitorPlaysList;
 
-		protected virtual void Build()
+		protected virtual void Build ()
 		{
-			global::Stetic.Gui.Initialize(this);
+			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Component.EventsListWidget
-			global::Stetic.BinContainer.Attach(this);
+			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.EventsListWidget";
 			// Container child LongoMatch.Gui.Component.EventsListWidget.Gtk.Container+ContainerChild
-			this.vbox1 = new global::Gtk.VBox();
+			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Name = "vbox1";
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.limitWidgetAlignment = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
+			this.limitWidgetAlignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.limitWidgetAlignment.Name = "limitWidgetAlignment";
 			this.limitWidgetAlignment.LeftPadding = ((uint)(2));
 			this.limitWidgetAlignment.RightPadding = ((uint)(17));
 			// Container child limitWidgetAlignment.Gtk.Container+ContainerChild
-			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget();
+			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget ();
 			this.limitationWidget.Events = ((global::Gdk.EventMask)(256));
 			this.limitationWidget.Name = "limitationWidget";
-			this.limitWidgetAlignment.Add(this.limitationWidget);
-			this.vbox1.Add(this.limitWidgetAlignment);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.limitWidgetAlignment]));
+			this.limitWidgetAlignment.Add (this.limitationWidget);
+			this.vbox1.Add (this.limitWidgetAlignment);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.limitWidgetAlignment]));
 			w2.Position = 0;
 			w2.Expand = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.playsnotebook = new global::Gtk.Notebook();
+			this.playsnotebook = new global::Gtk.Notebook ();
 			this.playsnotebook.CanFocus = true;
 			this.playsnotebook.Name = "playsnotebook";
 			this.playsnotebook.CurrentPage = 0;
 			this.playsnotebook.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.eventsScrolledWindow = new global::Gtk.ScrolledWindow();
+			this.eventsScrolledWindow = new global::Gtk.ScrolledWindow ();
 			this.eventsScrolledWindow.CanFocus = true;
 			this.eventsScrolledWindow.Name = "eventsScrolledWindow";
 			this.eventsScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-			this.playsnotebook.Add(this.eventsScrolledWindow);
+			this.playsnotebook.Add (this.eventsScrolledWindow);
 			// Notebook tab
-			this.playsList1 = new global::Gtk.Label();
+			this.playsList1 = new global::Gtk.Label ();
 			this.playsList1.Name = "playsList1";
-			this.playsList1.LabelProp = global::VAS.Core.Catalog.GetString("Events");
-			this.playsnotebook.SetTabLabel(this.eventsScrolledWindow, this.playsList1);
-			this.playsList1.ShowAll();
+			this.playsList1.LabelProp = global::VAS.Core.Catalog.GetString ("Events");
+			this.playsnotebook.SetTabLabel (this.eventsScrolledWindow, this.playsList1);
+			this.playsList1.ShowAll ();
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.homescrolledwindow = new global::Gtk.ScrolledWindow();
+			this.homescrolledwindow = new global::Gtk.ScrolledWindow ();
 			this.homescrolledwindow.CanFocus = true;
 			this.homescrolledwindow.Name = "homescrolledwindow";
 			this.homescrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
-			this.playsnotebook.Add(this.homescrolledwindow);
-			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook[this.homescrolledwindow]));
+			this.playsnotebook.Add (this.homescrolledwindow);
+			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook [this.homescrolledwindow]));
 			w4.Position = 1;
 			// Notebook tab
-			this.localPlaysList = new global::Gtk.Label();
+			this.localPlaysList = new global::Gtk.Label ();
 			this.localPlaysList.Name = "localPlaysList";
-			this.playsnotebook.SetTabLabel(this.homescrolledwindow, this.localPlaysList);
-			this.localPlaysList.ShowAll();
+			this.playsnotebook.SetTabLabel (this.homescrolledwindow, this.localPlaysList);
+			this.localPlaysList.ShowAll ();
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.awayscrolledwindow = new global::Gtk.ScrolledWindow();
+			this.awayscrolledwindow = new global::Gtk.ScrolledWindow ();
 			this.awayscrolledwindow.CanFocus = true;
 			this.awayscrolledwindow.Name = "awayscrolledwindow";
 			this.awayscrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
-			this.playsnotebook.Add(this.awayscrolledwindow);
-			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook[this.awayscrolledwindow]));
+			this.playsnotebook.Add (this.awayscrolledwindow);
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook [this.awayscrolledwindow]));
 			w5.Position = 2;
 			// Notebook tab
-			this.visitorPlaysList = new global::Gtk.Label();
+			this.visitorPlaysList = new global::Gtk.Label ();
 			this.visitorPlaysList.Name = "visitorPlaysList";
-			this.playsnotebook.SetTabLabel(this.awayscrolledwindow, this.visitorPlaysList);
-			this.visitorPlaysList.ShowAll();
-			this.vbox1.Add(this.playsnotebook);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.playsnotebook]));
+			this.playsnotebook.SetTabLabel (this.awayscrolledwindow, this.visitorPlaysList);
+			this.visitorPlaysList.ShowAll ();
+			this.vbox1.Add (this.playsnotebook);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.playsnotebook]));
 			w6.Position = 1;
-			this.Add(this.vbox1);
-			if ((this.Child != null))
-			{
-				this.Child.ShowAll();
+			this.Add (this.vbox1);
+			if ((this.Child != null)) {
+				this.Child.ShowAll ();
 			}
-			this.Hide();
+			this.Hide ();
 		}
 	}
 }

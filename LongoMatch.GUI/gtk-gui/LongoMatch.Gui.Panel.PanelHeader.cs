@@ -20,58 +20,62 @@ namespace LongoMatch.Gui.Panel
 
 		private global::VAS.UI.Helpers.ImageView backrectbuttonimage;
 
-		protected virtual void Build()
+		protected virtual void Build ()
 		{
-			global::Stetic.Gui.Initialize(this);
+			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Panel.PanelHeader
-			global::Stetic.BinContainer.Attach(this);
+			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Panel.PanelHeader";
 			// Container child LongoMatch.Gui.Panel.PanelHeader.Gtk.Container+ContainerChild
-			this.headereventbox = new global::Gtk.EventBox();
+			this.headereventbox = new global::Gtk.EventBox ();
 			this.headereventbox.Name = "headereventbox";
 			// Container child headereventbox.Gtk.Container+ContainerChild
-			this.headerhbox = new global::Gtk.HBox();
+			this.headerhbox = new global::Gtk.HBox ();
 			this.headerhbox.HeightRequest = 60;
 			this.headerhbox.Name = "headerhbox";
 			this.headerhbox.Spacing = 6;
 			// Container child headerhbox.Gtk.Box+BoxChild
-			this.logoimage = new global::VAS.UI.Helpers.ImageView();
+			this.logoimage = new global::VAS.UI.Helpers.ImageView ();
 			this.logoimage.Name = "logoimage";
-			this.headerhbox.Add(this.logoimage);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.headerhbox[this.logoimage]));
+			this.logoimage.Circular = false;
+			this.logoimage.HasShadow = false;
+			this.headerhbox.Add (this.logoimage);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.logoimage]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
-			this.titlelabel = new global::Gtk.Label();
+			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
 			this.titlelabel.LabelProp = "<span font_desc=\"22\"><b>Title</b></span>";
 			this.titlelabel.UseMarkup = true;
 			this.titlelabel.Justify = ((global::Gtk.Justification)(2));
-			this.headerhbox.Add(this.titlelabel);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.headerhbox[this.titlelabel]));
+			this.headerhbox.Add (this.titlelabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.titlelabel]));
 			w2.Position = 1;
 			w2.Expand = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
-			this.applyroundedbutton = new global::Gtk.Button();
+			this.applyroundedbutton = new global::Gtk.Button ();
 			this.applyroundedbutton.WidthRequest = 80;
 			this.applyroundedbutton.HeightRequest = 40;
 			this.applyroundedbutton.CanFocus = true;
 			this.applyroundedbutton.Name = "applyroundedbutton";
 			this.applyroundedbutton.FocusOnClick = false;
 			// Container child applyroundedbutton.Gtk.Container+ContainerChild
-			this.applyroundedbuttonimage = new global::VAS.UI.Helpers.ImageView();
+			this.applyroundedbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.applyroundedbuttonimage.Name = "applyroundedbuttonimage";
-			this.applyroundedbutton.Add(this.applyroundedbuttonimage);
-			this.headerhbox.Add(this.applyroundedbutton);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.headerhbox[this.applyroundedbutton]));
+			this.applyroundedbuttonimage.Circular = false;
+			this.applyroundedbuttonimage.HasShadow = false;
+			this.applyroundedbutton.Add (this.applyroundedbuttonimage);
+			this.headerhbox.Add (this.applyroundedbutton);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.applyroundedbutton]));
 			w4.PackType = ((global::Gtk.PackType)(1));
 			w4.Position = 2;
 			w4.Expand = false;
 			w4.Fill = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
-			this.backrectbutton = new global::Gtk.Button();
+			this.backrectbutton = new global::Gtk.Button ();
 			this.backrectbutton.WidthRequest = 80;
 			this.backrectbutton.HeightRequest = 40;
 			this.backrectbutton.CanFocus = true;
@@ -79,22 +83,23 @@ namespace LongoMatch.Gui.Panel
 			this.backrectbutton.FocusOnClick = false;
 			this.backrectbutton.BorderWidth = ((uint)(10));
 			// Container child backrectbutton.Gtk.Container+ContainerChild
-			this.backrectbuttonimage = new global::VAS.UI.Helpers.ImageView();
+			this.backrectbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.backrectbuttonimage.Name = "backrectbuttonimage";
-			this.backrectbutton.Add(this.backrectbuttonimage);
-			this.headerhbox.Add(this.backrectbutton);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.headerhbox[this.backrectbutton]));
+			this.backrectbuttonimage.Circular = false;
+			this.backrectbuttonimage.HasShadow = false;
+			this.backrectbutton.Add (this.backrectbuttonimage);
+			this.headerhbox.Add (this.backrectbutton);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.backrectbutton]));
 			w6.PackType = ((global::Gtk.PackType)(1));
 			w6.Position = 3;
 			w6.Expand = false;
 			w6.Fill = false;
-			this.headereventbox.Add(this.headerhbox);
-			this.Add(this.headereventbox);
-			if ((this.Child != null))
-			{
-				this.Child.ShowAll();
+			this.headereventbox.Add (this.headerhbox);
+			this.Add (this.headereventbox);
+			if ((this.Child != null)) {
+				this.Child.ShowAll ();
 			}
-			this.Hide();
+			this.Hide ();
 		}
 	}
 }

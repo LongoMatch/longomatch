@@ -64,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("  Events   ");
 			this.label1.Justify = ((global::Gtk.Justification)(2));
-			this.label1.Angle = 90;
+			this.label1.Angle = 90D;
 			this.notebook.SetTabLabel (this.eventslistwidget, this.label1);
 			this.label1.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Playlists");
-			this.label3.Angle = 90;
+			this.label3.Angle = 90D;
 			this.notebook.SetTabLabel (this.playlistwidget, this.label3);
 			this.label3.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Component
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("  Filters  ");
-			this.label2.Angle = 90;
+			this.label2.Angle = 90D;
 			this.notebook.SetTabLabel (this.filtersvbox, this.label2);
 			this.label2.ShowAll ();
 			this.hbox3.Add (this.notebook);
