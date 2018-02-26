@@ -28,6 +28,6 @@ namespace LongoMatch.Core.Resources.Styles
 		public static Color PlayerBackground => App.Current.Style.ColorWhite;
 		public static Color BorderSelection = Color.Parse ("#428C41");
 
-		public static Color DetailsViewSeparator = Color.Parse ("#FFB2B2B2");
+		public static Color DetailsViewSeparator = Color.Parse ("#B2B2B2FF");
 	}
 }
