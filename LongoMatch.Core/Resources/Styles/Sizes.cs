@@ -35,6 +35,8 @@ namespace LongoMatch.Core.Resources.Styles
 		public const double DetailsContentFontSize = 11;
 		public const double DetailsFieldIconsHeight = 56;
 
+		public const double DetailsViewFontSize = 14;
+
 		public const double DefaultIconHeight = 24;
 		public const double DefaultIconWidth = 24;
 
