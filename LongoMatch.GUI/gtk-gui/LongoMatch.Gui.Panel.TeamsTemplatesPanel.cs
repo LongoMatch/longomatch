@@ -123,7 +123,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
 			this.teamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.teamimage.Name = "teamimage";
-			this.teamimage.Yalign = 1F;
+			this.teamimage.Circular = false;
+			this.teamimage.HasShadow = false;
 			this.templateimagealignment.Add (this.teamimage);
 			this.teameditorbuttonbar.Add (this.templateimagealignment);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.templateimagealignment]));
@@ -157,8 +158,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child newteambutton.Gtk.Container+ContainerChild
 			this.newteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.newteamimage.Name = "newteamimage";
-			this.newteamimage.Xpad = 5;
-			this.newteamimage.Ypad = 5;
+			this.newteamimage.Circular = false;
+			this.newteamimage.HasShadow = false;
 			this.newteambutton.Add (this.newteamimage);
 			this.hbox8.Add (this.newteambutton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.newteambutton]));
@@ -172,8 +173,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child importteambutton.Gtk.Container+ContainerChild
 			this.importteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.importteamimage.Name = "importteamimage";
-			this.importteamimage.Xpad = 5;
-			this.importteamimage.Ypad = 5;
+			this.importteamimage.Circular = false;
+			this.importteamimage.HasShadow = false;
 			this.importteambutton.Add (this.importteamimage);
 			this.hbox8.Add (this.importteambutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.importteambutton]));
@@ -187,8 +188,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child saveteambutton.Gtk.Container+ContainerChild
 			this.saveteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.saveteamimage.Name = "saveteamimage";
-			this.saveteamimage.Xpad = 5;
-			this.saveteamimage.Ypad = 5;
+			this.saveteamimage.Circular = false;
+			this.saveteamimage.HasShadow = false;
 			this.saveteambutton.Add (this.saveteamimage);
 			this.hbox8.Add (this.saveteambutton);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.saveteambutton]));
@@ -202,8 +203,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child exportteambutton.Gtk.Container+ContainerChild
 			this.exportteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.exportteamimage.Name = "exportteamimage";
-			this.exportteamimage.Xpad = 5;
-			this.exportteamimage.Ypad = 5;
+			this.exportteamimage.Circular = false;
+			this.exportteamimage.HasShadow = false;
 			this.exportteambutton.Add (this.exportteamimage);
 			this.hbox8.Add (this.exportteambutton);
 			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.exportteambutton]));
@@ -217,8 +218,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child deleteteambutton.Gtk.Container+ContainerChild
 			this.deleteteamimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deleteteamimage.Name = "deleteteamimage";
-			this.deleteteamimage.Xpad = 5;
-			this.deleteteamimage.Ypad = 5;
+			this.deleteteamimage.Circular = false;
+			this.deleteteamimage.HasShadow = false;
 			this.deleteteambutton.Add (this.deleteteamimage);
 			this.hbox8.Add (this.deleteteambutton);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.deleteteambutton]));
@@ -238,6 +239,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
 			this.vseparatorimage = new global::VAS.UI.Helpers.ImageView ();
 			this.vseparatorimage.Name = "vseparatorimage";
+			this.vseparatorimage.Circular = false;
+			this.vseparatorimage.HasShadow = false;
 			this.teameditorbuttonbar.Add (this.vseparatorimage);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.vseparatorimage]));
 			w18.Position = 2;
@@ -269,8 +272,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child newplayerbutton1.Gtk.Container+ContainerChild
 			this.newplayerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.newplayerimage.Name = "newplayerimage";
-			this.newplayerimage.Xpad = 5;
-			this.newplayerimage.Ypad = 5;
+			this.newplayerimage.Circular = false;
+			this.newplayerimage.HasShadow = false;
 			this.newplayerbutton1.Add (this.newplayerimage);
 			this.hbox7.Add (this.newplayerbutton1);
 			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.newplayerbutton1]));
@@ -284,8 +287,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child deleteplayerbutton.Gtk.Container+ContainerChild
 			this.deleteplayerimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deleteplayerimage.Name = "deleteplayerimage";
-			this.deleteplayerimage.Xpad = 5;
-			this.deleteplayerimage.Ypad = 5;
+			this.deleteplayerimage.Circular = false;
+			this.deleteplayerimage.HasShadow = false;
 			this.deleteplayerbutton.Add (this.deleteplayerimage);
 			this.hbox7.Add (this.deleteplayerbutton);
 			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.deleteplayerbutton]));
@@ -309,7 +312,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child playerheaderalignment.Gtk.Container+ContainerChild
 			this.playerheaderimage = new global::VAS.UI.Helpers.ImageView ();
 			this.playerheaderimage.Name = "playerheaderimage";
-			this.playerheaderimage.Ypad = 14;
+			this.playerheaderimage.Circular = false;
+			this.playerheaderimage.HasShadow = false;
 			this.playerheaderalignment.Add (this.playerheaderimage);
 			this.teameditorbuttonbar.Add (this.playerheaderalignment);
 			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.playerheaderalignment]));
@@ -325,7 +329,7 @@ namespace LongoMatch.Gui.Panel
 			this.hbox1.Spacing = 15;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.teamsvbox = new global::Gtk.VBox ();
-			this.teamsvbox.WidthRequest = 280;
+			this.teamsvbox.WidthRequest = 320;
 			this.teamsvbox.Name = "teamsvbox";
 			this.teamsvbox.Spacing = 6;
 			// Container child teamsvbox.Gtk.Box+BoxChild

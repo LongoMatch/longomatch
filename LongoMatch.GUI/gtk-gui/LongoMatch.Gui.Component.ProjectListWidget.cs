@@ -18,82 +18,83 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 
-		protected virtual void Build()
+		protected virtual void Build ()
 		{
-			global::Stetic.Gui.Initialize(this);
+			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Component.ProjectListWidget
-			global::Stetic.BinContainer.Attach(this);
+			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.ProjectListWidget";
 			// Container child LongoMatch.Gui.Component.ProjectListWidget.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox();
+			this.vbox2 = new global::Gtk.VBox ();
 			this.vbox2.Name = "vbox2";
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox();
+			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.focusimage = new global::VAS.UI.Helpers.ImageView();
+			this.focusimage = new global::VAS.UI.Helpers.ImageView ();
 			this.focusimage.Name = "focusimage";
-			this.hbox1.Add(this.focusimage);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.focusimage]));
+			this.focusimage.Circular = false;
+			this.focusimage.HasShadow = false;
+			this.hbox1.Add (this.focusimage);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.focusimage]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.filterEntry = new global::Gtk.Entry();
+			this.filterEntry = new global::Gtk.Entry ();
 			this.filterEntry.WidthRequest = 100;
 			this.filterEntry.CanFocus = true;
 			this.filterEntry.Name = "filterEntry";
 			this.filterEntry.IsEditable = true;
 			this.filterEntry.InvisibleChar = '●';
-			this.hbox1.Add(this.filterEntry);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.filterEntry]));
+			this.hbox1.Add (this.filterEntry);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterEntry]));
 			w2.Position = 1;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.sortcombobox = global::Gtk.ComboBox.NewText();
-			this.sortcombobox.AppendText(global::VAS.Core.Catalog.GetString("Sort by name"));
-			this.sortcombobox.AppendText(global::VAS.Core.Catalog.GetString("Sort by date"));
-			this.sortcombobox.AppendText(global::VAS.Core.Catalog.GetString("Sort by modification date"));
-			this.sortcombobox.AppendText(global::VAS.Core.Catalog.GetString("Sort by season"));
-			this.sortcombobox.AppendText(global::VAS.Core.Catalog.GetString("Sort by competition"));
+			this.sortcombobox = global::Gtk.ComboBox.NewText ();
+			this.sortcombobox.AppendText (global::VAS.Core.Catalog.GetString ("Sort by name"));
+			this.sortcombobox.AppendText (global::VAS.Core.Catalog.GetString ("Sort by date"));
+			this.sortcombobox.AppendText (global::VAS.Core.Catalog.GetString ("Sort by modification date"));
+			this.sortcombobox.AppendText (global::VAS.Core.Catalog.GetString ("Sort by season"));
+			this.sortcombobox.AppendText (global::VAS.Core.Catalog.GetString ("Sort by competition"));
 			this.sortcombobox.WidthRequest = 150;
 			this.sortcombobox.Name = "sortcombobox";
 			this.sortcombobox.Active = 0;
-			this.hbox1.Add(this.sortcombobox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.sortcombobox]));
+			this.hbox1.Add (this.sortcombobox);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.sortcombobox]));
 			w3.Position = 2;
 			w3.Expand = false;
 			w3.Fill = false;
-			this.vbox2.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+			this.vbox2.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
 			w4.Padding = ((uint)(5));
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget();
+			this.limitationWidget = new global::LongoMatch.Gui.Component.LMLimitationWidget ();
 			this.limitationWidget.Events = ((global::Gdk.EventMask)(256));
 			this.limitationWidget.Name = "limitationWidget";
-			this.vbox2.Add(this.limitationWidget);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.limitationWidget]));
+			this.vbox2.Add (this.limitationWidget);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.limitationWidget]));
 			w5.Position = 1;
 			w5.Expand = false;
 			w5.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow();
+			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow1.CanFocus = true;
 			this.scrolledwindow1.Name = "scrolledwindow1";
 			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			this.vbox2.Add(this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
+			this.vbox2.Add (this.scrolledwindow1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
 			w6.Position = 2;
-			this.Add(this.vbox2);
-			if ((this.Child != null))
-			{
-				this.Child.ShowAll();
+			this.Add (this.vbox2);
+			if ((this.Child != null)) {
+				this.Child.ShowAll ();
 			}
-			this.Show();
-			this.filterEntry.Changed += new global::System.EventHandler(this.OnFilterentryChanged);
+			this.Show ();
+			this.filterEntry.Changed += new global::System.EventHandler (this.OnFilterentryChanged);
 		}
 	}
 }

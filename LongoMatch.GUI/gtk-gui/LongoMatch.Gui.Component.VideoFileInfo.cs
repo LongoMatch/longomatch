@@ -52,6 +52,8 @@ namespace LongoMatch.Gui.Component
 			this.snapshotimage = new global::VAS.UI.Helpers.ImageView ();
 			this.snapshotimage.WidthRequest = 100;
 			this.snapshotimage.Name = "snapshotimage";
+			this.snapshotimage.Circular = false;
+			this.snapshotimage.HasShadow = false;
 			this.hbox1.Add (this.snapshotimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.snapshotimage]));
 			w1.Position = 0;

@@ -72,13 +72,13 @@ namespace LongoMatch.Gui.Dialog
 			this.slidetable.RowSpacing = ((uint)(6));
 			this.slidetable.ColumnSpacing = ((uint)(6));
 			// Container child slidetable.Gtk.Table+TableChild
-			this.durationspinbutton = new global::Gtk.SpinButton (1, 100, 1);
+			this.durationspinbutton = new global::Gtk.SpinButton (1D, 100D, 1D);
 			this.durationspinbutton.CanFocus = true;
 			this.durationspinbutton.Name = "durationspinbutton";
-			this.durationspinbutton.Adjustment.PageIncrement = 10;
-			this.durationspinbutton.ClimbRate = 1;
+			this.durationspinbutton.Adjustment.PageIncrement = 10D;
+			this.durationspinbutton.ClimbRate = 1D;
 			this.durationspinbutton.Numeric = true;
-			this.durationspinbutton.Value = 1;
+			this.durationspinbutton.Value = 1D;
 			this.slidetable.Add (this.durationspinbutton);
 			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.slidetable [this.durationspinbutton]));
 			w5.LeftAttach = ((uint)(1));

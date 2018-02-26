@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.SnapshotsDialog
 			this.Name = "LongoMatch.Gui.Dialog.SnapshotsDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Dialog);
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Gravity = ((global::Gdk.Gravity)(5));
 			this.SkipPagerHint = true;
@@ -85,13 +85,13 @@ namespace LongoMatch.Gui.Dialog
 			w6.RightAttach = ((uint)(2));
 			w6.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.spinbutton1 = new global::Gtk.SpinButton (1, 25, 1);
+			this.spinbutton1 = new global::Gtk.SpinButton (1D, 25D, 1D);
 			this.spinbutton1.CanFocus = true;
 			this.spinbutton1.Name = "spinbutton1";
-			this.spinbutton1.Adjustment.PageIncrement = 10;
-			this.spinbutton1.ClimbRate = 1;
+			this.spinbutton1.Adjustment.PageIncrement = 10D;
+			this.spinbutton1.ClimbRate = 1D;
 			this.spinbutton1.Numeric = true;
-			this.spinbutton1.Value = 1;
+			this.spinbutton1.Value = 1D;
 			this.table1.Add (this.spinbutton1);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.spinbutton1]));
 			w7.TopAttach = ((uint)(2));

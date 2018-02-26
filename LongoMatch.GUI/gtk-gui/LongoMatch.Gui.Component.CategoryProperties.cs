@@ -264,11 +264,11 @@ namespace LongoMatch.Gui.Component
 			w14.XOptions = ((global::Gtk.AttachOptions)(0));
 			w14.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child timetable.Gtk.Table+TableChild
-			this.lagtimebutton = new global::Gtk.SpinButton (0, 1000, 1);
+			this.lagtimebutton = new global::Gtk.SpinButton (0D, 1000D, 1D);
 			this.lagtimebutton.CanFocus = true;
 			this.lagtimebutton.Name = "lagtimebutton";
-			this.lagtimebutton.Adjustment.PageIncrement = 1;
-			this.lagtimebutton.ClimbRate = 1;
+			this.lagtimebutton.Adjustment.PageIncrement = 1D;
+			this.lagtimebutton.ClimbRate = 1D;
 			this.lagtimebutton.Numeric = true;
 			this.timetable.Add (this.lagtimebutton);
 			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.timetable [this.lagtimebutton]));
@@ -278,11 +278,11 @@ namespace LongoMatch.Gui.Component
 			w15.RightAttach = ((uint)(2));
 			w15.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child timetable.Gtk.Table+TableChild
-			this.leadtimebutton = new global::Gtk.SpinButton (0, 1000, 1);
+			this.leadtimebutton = new global::Gtk.SpinButton (0D, 1000D, 1D);
 			this.leadtimebutton.CanFocus = true;
 			this.leadtimebutton.Name = "leadtimebutton";
-			this.leadtimebutton.Adjustment.PageIncrement = 1;
-			this.leadtimebutton.ClimbRate = 1;
+			this.leadtimebutton.Adjustment.PageIncrement = 1D;
+			this.leadtimebutton.ClimbRate = 1D;
 			this.leadtimebutton.Numeric = true;
 			this.timetable.Add (this.leadtimebutton);
 			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.timetable [this.leadtimebutton]));
@@ -465,13 +465,13 @@ namespace LongoMatch.Gui.Component
 			w31.RightAttach = ((uint)(2));
 			w31.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child cattable.Gtk.Table+TableChild
-			this.tprbutton = new global::Gtk.SpinButton (1, 10, 1);
+			this.tprbutton = new global::Gtk.SpinButton (1D, 10D, 1D);
 			this.tprbutton.CanFocus = true;
 			this.tprbutton.Name = "tprbutton";
-			this.tprbutton.Adjustment.PageIncrement = 1;
-			this.tprbutton.ClimbRate = 1;
+			this.tprbutton.Adjustment.PageIncrement = 1D;
+			this.tprbutton.ClimbRate = 1D;
 			this.tprbutton.Numeric = true;
-			this.tprbutton.Value = 2;
+			this.tprbutton.Value = 2D;
 			this.cattable.Add (this.tprbutton);
 			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.cattable [this.tprbutton]));
 			w32.TopAttach = ((uint)(1));
@@ -530,11 +530,11 @@ namespace LongoMatch.Gui.Component
 			w37.XOptions = ((global::Gtk.AttachOptions)(0));
 			w37.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child scoretable.Gtk.Table+TableChild
-			this.pointsbutton = new global::Gtk.SpinButton (0, 1000, 1);
+			this.pointsbutton = new global::Gtk.SpinButton (0D, 1000D, 1D);
 			this.pointsbutton.CanFocus = true;
 			this.pointsbutton.Name = "pointsbutton";
-			this.pointsbutton.Adjustment.PageIncrement = 1;
-			this.pointsbutton.ClimbRate = 1;
+			this.pointsbutton.Adjustment.PageIncrement = 1D;
+			this.pointsbutton.ClimbRate = 1D;
 			this.pointsbutton.Numeric = true;
 			this.scoretable.Add (this.pointsbutton);
 			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.scoretable [this.pointsbutton]));

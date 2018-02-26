@@ -86,12 +86,12 @@ namespace LongoMatch.Gui.Component
 			// Container child frame3.Gtk.Container+ContainerChild
 			this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment2.Name = "GtkAlignment2";
-			this.GtkAlignment2.LeftPadding = ((uint)(12));
+			this.GtkAlignment2.LeftPadding = ((uint)(10));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
 			this.generaltable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), false);
 			this.generaltable.Name = "generaltable";
 			this.generaltable.RowSpacing = ((uint)(6));
-			this.generaltable.ColumnSpacing = ((uint)(6));
+			this.generaltable.ColumnSpacing = ((uint)(50));
 			// Container child generaltable.Gtk.Table+TableChild
 			this.fpscombobox = global::Gtk.ComboBox.NewText ();
 			this.fpscombobox.AppendText (global::VAS.Core.Catalog.GetString ("25 fps"));
@@ -133,12 +133,12 @@ namespace LongoMatch.Gui.Component
 			// Container child frame1.Gtk.Container+ContainerChild
 			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment.Name = "GtkAlignment";
-			this.GtkAlignment.LeftPadding = ((uint)(12));
+			this.GtkAlignment.LeftPadding = ((uint)(10));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			this.rendertable = new global::Gtk.Table (((uint)(7)), ((uint)(2)), false);
 			this.rendertable.Name = "rendertable";
 			this.rendertable.RowSpacing = ((uint)(6));
-			this.rendertable.ColumnSpacing = ((uint)(6));
+			this.rendertable.ColumnSpacing = ((uint)(50));
 			// Container child rendertable.Gtk.Table+TableChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
@@ -250,6 +250,7 @@ namespace LongoMatch.Gui.Component
 			this.watermarkSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.watermarkSelector.Events = ((global::Gdk.EventMask)(256));
 			this.watermarkSelector.Name = "watermarkSelector";
+			this.watermarkSelector.ResetButtonHeight = 0;
 			this.rendertable.Add (this.watermarkSelector);
 			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.rendertable [this.watermarkSelector]));
 			w16.TopAttach = ((uint)(6));
@@ -276,12 +277,12 @@ namespace LongoMatch.Gui.Component
 			// Container child frame2.Gtk.Container+ContainerChild
 			this.GtkAlignment1 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment1.Name = "GtkAlignment1";
-			this.GtkAlignment1.LeftPadding = ((uint)(12));
+			this.GtkAlignment1.LeftPadding = ((uint)(10));
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
 			this.capturetable = new global::Gtk.Table (((uint)(3)), ((uint)(2)), false);
 			this.capturetable.Name = "capturetable";
 			this.capturetable.RowSpacing = ((uint)(6));
-			this.capturetable.ColumnSpacing = ((uint)(6));
+			this.capturetable.ColumnSpacing = ((uint)(50));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.captureenccombo = global::Gtk.ComboBox.NewText ();
 			this.captureenccombo.Name = "captureenccombo";

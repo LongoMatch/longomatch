@@ -316,7 +316,6 @@ namespace LongoMatch.Gui.Panel
 			w25.Position = 0;
 			// Container child rbox.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox1.Name = "hbuttonbox1";
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.openbutton = new global::Gtk.Button ();
 			this.openbutton.TooltipMarkup = "Open";
@@ -326,6 +325,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child openbutton.Gtk.Container+ContainerChild
 			this.openbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.openbuttonimage.Name = "openbuttonimage";
+			this.openbuttonimage.Circular = false;
+			this.openbuttonimage.HasShadow = false;
 			this.openbutton.Add (this.openbuttonimage);
 			this.hbuttonbox1.Add (this.openbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.openbutton]));
@@ -340,6 +341,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child savebutton.Gtk.Container+ContainerChild
 			this.savebuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.savebuttonimage.Name = "savebuttonimage";
+			this.savebuttonimage.Circular = false;
+			this.savebuttonimage.HasShadow = false;
 			this.savebutton.Add (this.savebuttonimage);
 			this.hbuttonbox1.Add (this.savebutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w29 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.savebutton]));
@@ -355,6 +358,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child exportbutton.Gtk.Container+ContainerChild
 			this.exportbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.exportbuttonimage.Name = "exportbuttonimage";
+			this.exportbuttonimage.Circular = false;
+			this.exportbuttonimage.HasShadow = false;
 			this.exportbutton.Add (this.exportbuttonimage);
 			this.hbuttonbox1.Add (this.exportbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
@@ -370,6 +375,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child resyncbutton.Gtk.Container+ContainerChild
 			this.resyncbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.resyncbuttonimage.Name = "resyncbuttonimage";
+			this.resyncbuttonimage.Circular = false;
+			this.resyncbuttonimage.HasShadow = false;
 			this.resyncbutton.Add (this.resyncbuttonimage);
 			this.hbuttonbox1.Add (this.resyncbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.resyncbutton]));
@@ -385,6 +392,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child deletebutton.Gtk.Container+ContainerChild
 			this.deletebuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.deletebuttonimage.Name = "deletebuttonimage";
+			this.deletebuttonimage.Circular = false;
+			this.deletebuttonimage.HasShadow = false;
 			this.deletebutton.Add (this.deletebuttonimage);
 			this.hbuttonbox1.Add (this.deletebutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w35 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.deletebutton]));

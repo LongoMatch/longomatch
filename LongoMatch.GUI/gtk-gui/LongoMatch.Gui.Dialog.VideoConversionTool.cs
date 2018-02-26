@@ -40,14 +40,14 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::Gtk.Button buttonOk;
 
-		protected virtual void Build()
+		protected virtual void Build ()
 		{
-			global::Stetic.Gui.Initialize(this);
+			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.VideoConversionTool
 			this.HeightRequest = 0;
 			this.Name = "LongoMatch.Gui.Dialog.VideoConversionTool";
-			this.Title = global::VAS.Core.Catalog.GetString("Video converter tool");
-			this.Icon = global::Stetic.IconLoader.LoadIcon(this, "longomatch", global::Gtk.IconSize.Menu);
+			this.Title = global::VAS.Core.Catalog.GetString ("Video converter tool");
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
@@ -60,72 +60,76 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.eventbox1 = new global::Gtk.EventBox();
+			this.eventbox1 = new global::Gtk.EventBox ();
 			this.eventbox1.Name = "eventbox1";
 			// Container child eventbox1.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox();
+			this.vbox2 = new global::Gtk.VBox ();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow();
+			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow1.CanFocus = true;
 			this.scrolledwindow1.Name = "scrolledwindow1";
 			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w2 = new global::Gtk.Viewport();
+			global::Gtk.Viewport w2 = new global::Gtk.Viewport ();
 			w2.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
-			this.filesbox = new global::Gtk.VBox();
+			this.filesbox = new global::Gtk.VBox ();
 			this.filesbox.Name = "filesbox";
 			this.filesbox.Spacing = 6;
-			w2.Add(this.filesbox);
-			this.scrolledwindow1.Add(w2);
-			this.vbox2.Add(this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
+			w2.Add (this.filesbox);
+			this.scrolledwindow1.Add (w2);
+			this.vbox2.Add (this.scrolledwindow1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
 			w5.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.addbutton1 = new global::Gtk.Button();
+			this.addbutton1 = new global::Gtk.Button ();
 			this.addbutton1.Name = "addbutton1";
 			this.addbutton1.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child addbutton1.Gtk.Container+ContainerChild
-			this.addimage = new global::VAS.UI.Helpers.ImageView();
+			this.addimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addimage.Name = "addimage";
-			this.addbutton1.Add(this.addimage);
-			this.vbox2.Add(this.addbutton1);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.addbutton1]));
+			this.addimage.Circular = false;
+			this.addimage.HasShadow = false;
+			this.addbutton1.Add (this.addimage);
+			this.vbox2.Add (this.addbutton1);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.addbutton1]));
 			w7.Position = 1;
 			w7.Expand = false;
 			w7.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.hseparator1 = new global::Gtk.HSeparator();
+			this.hseparator1 = new global::Gtk.HSeparator ();
 			this.hseparator1.Name = "hseparator1";
-			this.vbox2.Add(this.hseparator1);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hseparator1]));
+			this.vbox2.Add (this.hseparator1);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hseparator1]));
 			w8.Position = 2;
 			w8.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox();
+			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.HeightRequest = 130;
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.convertimage = new global::VAS.UI.Helpers.ImageView();
+			this.convertimage = new global::VAS.UI.Helpers.ImageView ();
 			this.convertimage.WidthRequest = 170;
 			this.convertimage.Name = "convertimage";
-			this.hbox1.Add(this.convertimage);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.convertimage]));
+			this.convertimage.Circular = false;
+			this.convertimage.HasShadow = false;
+			this.hbox1.Add (this.convertimage);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.convertimage]));
 			w9.Position = 0;
 			w9.Expand = false;
 			w9.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.table1 = new global::Gtk.Table(((uint)(3)), ((uint)(2)), false);
+			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(2)), false);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.bitratecombobox = global::Gtk.ComboBox.NewText();
+			this.bitratecombobox = global::Gtk.ComboBox.NewText ();
 			this.bitratecombobox.Name = "bitratecombobox";
-			this.table1.Add(this.bitratecombobox);
-			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1[this.bitratecombobox]));
+			this.table1.Add (this.bitratecombobox);
+			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1 [this.bitratecombobox]));
 			w10.TopAttach = ((uint)(1));
 			w10.BottomAttach = ((uint)(2));
 			w10.LeftAttach = ((uint)(1));
@@ -133,41 +137,41 @@ namespace LongoMatch.Gui.Dialog
 			w10.XOptions = ((global::Gtk.AttachOptions)(4));
 			w10.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.filenamelabel = new global::Gtk.Label();
+			this.filenamelabel = new global::Gtk.Label ();
 			this.filenamelabel.Name = "filenamelabel";
 			this.filenamelabel.Xalign = 1F;
-			this.filenamelabel.LabelProp = global::VAS.Core.Catalog.GetString("File name: ");
-			this.table1.Add(this.filenamelabel);
-			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.table1[this.filenamelabel]));
+			this.filenamelabel.LabelProp = global::VAS.Core.Catalog.GetString ("File name: ");
+			this.table1.Add (this.filenamelabel);
+			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.table1 [this.filenamelabel]));
 			w11.TopAttach = ((uint)(2));
 			w11.BottomAttach = ((uint)(3));
 			w11.XOptions = ((global::Gtk.AttachOptions)(4));
 			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.label2 = new global::Gtk.Label();
+			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 1F;
-			this.label2.LabelProp = global::VAS.Core.Catalog.GetString("Size: ");
-			this.table1.Add(this.label2);
-			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table1[this.label2]));
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Size: ");
+			this.table1.Add (this.label2);
+			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table1 [this.label2]));
 			w12.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.label3 = new global::Gtk.Label();
+			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 1F;
-			this.label3.LabelProp = global::VAS.Core.Catalog.GetString("Bitrate: ");
-			this.table1.Add(this.label3);
-			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table1[this.label3]));
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Bitrate: ");
+			this.table1.Add (this.label3);
+			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w13.TopAttach = ((uint)(1));
 			w13.BottomAttach = ((uint)(2));
 			w13.XOptions = ((global::Gtk.AttachOptions)(4));
 			w13.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.mediafilechooser1 = new global::VAS.UI.Component.MediaFileChooser();
+			this.mediafilechooser1 = new global::VAS.UI.Component.MediaFileChooser ();
 			this.mediafilechooser1.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilechooser1.Name = "mediafilechooser1";
-			this.table1.Add(this.mediafilechooser1);
-			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1[this.mediafilechooser1]));
+			this.table1.Add (this.mediafilechooser1);
+			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1 [this.mediafilechooser1]));
 			w14.TopAttach = ((uint)(2));
 			w14.BottomAttach = ((uint)(3));
 			w14.LeftAttach = ((uint)(1));
@@ -175,26 +179,26 @@ namespace LongoMatch.Gui.Dialog
 			w14.XOptions = ((global::Gtk.AttachOptions)(4));
 			w14.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.sizecombobox = global::Gtk.ComboBox.NewText();
+			this.sizecombobox = global::Gtk.ComboBox.NewText ();
 			this.sizecombobox.Name = "sizecombobox";
-			this.table1.Add(this.sizecombobox);
-			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.table1[this.sizecombobox]));
+			this.table1.Add (this.sizecombobox);
+			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.table1 [this.sizecombobox]));
 			w15.LeftAttach = ((uint)(1));
 			w15.RightAttach = ((uint)(2));
 			w15.XOptions = ((global::Gtk.AttachOptions)(4));
 			w15.YOptions = ((global::Gtk.AttachOptions)(4));
-			this.hbox1.Add(this.table1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.table1]));
+			this.hbox1.Add (this.table1);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.table1]));
 			w16.Position = 1;
-			this.vbox2.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+			this.vbox2.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
 			w17.PackType = ((global::Gtk.PackType)(1));
 			w17.Position = 3;
 			w17.Expand = false;
 			w17.Fill = false;
-			this.eventbox1.Add(this.vbox2);
-			w1.Add(this.eventbox1);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1[this.eventbox1]));
+			this.eventbox1.Add (this.vbox2);
+			w1.Add (this.eventbox1);
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1 [this.eventbox1]));
 			w19.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.VideoConversionTool.ActionArea
 			global::Gtk.HButtonBox w20 = this.ActionArea;
@@ -203,37 +207,36 @@ namespace LongoMatch.Gui.Dialog
 			w20.BorderWidth = ((uint)(5));
 			w20.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonCancel = new global::Gtk.Button();
+			this.buttonCancel = new global::Gtk.Button ();
 			this.buttonCancel.CanDefault = true;
 			this.buttonCancel.CanFocus = true;
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.UseStock = true;
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
-			this.AddActionWidget(this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonCancel]));
+			this.AddActionWidget (this.buttonCancel, -6);
+			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20 [this.buttonCancel]));
 			w21.Expand = false;
 			w21.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button();
+			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.UseStock = true;
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget(this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonOk]));
+			this.AddActionWidget (this.buttonOk, -5);
+			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20 [this.buttonOk]));
 			w22.Position = 1;
 			w22.Expand = false;
 			w22.Fill = false;
-			if ((this.Child != null))
-			{
-				this.Child.ShowAll();
+			if ((this.Child != null)) {
+				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 882;
 			this.DefaultHeight = 408;
-			this.Show();
+			this.Show ();
 		}
 	}
 }

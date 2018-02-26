@@ -99,14 +99,15 @@ namespace LongoMatch.Services
 			projectAnalysisVM.SaveCommand.SetCallback (
 				() => Save (),
 				() => projectAnalysisVM.Project.Edited);
-			// FIXME: Should we call one from the other?
-			projectAnalysisVM.VideoRecorder.SaveCommand.SetCallback (
-				() => projectAnalysisVM.SaveCommand.Execute (),
-				() => projectAnalysisVM.Project.Edited);
 			projectAnalysisVM.CloseCommand.SetCallback (async () => await Close ());
-			// FIXME: Should we call one from the other?
-			projectAnalysisVM.VideoRecorder.CancelCommand.SetCallback (
-				async () => await projectAnalysisVM.CloseCommand.ExecuteAsync ());
+			if (projectAnalysisVM.VideoRecorder != null) {
+				// FIXME: Should we call one from the other?
+				projectAnalysisVM.VideoRecorder.SaveCommand.SetCallback (
+					() => projectAnalysisVM.SaveCommand.Execute (),
+					() => projectAnalysisVM.Project.Edited);
+				projectAnalysisVM.VideoRecorder.CancelCommand.SetCallback (
+					async () => await projectAnalysisVM.CloseCommand.ExecuteAsync ());
+			}
 		}
 
 		public override async Task Start ()

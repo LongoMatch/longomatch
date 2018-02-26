@@ -104,13 +104,13 @@ namespace LongoMatch.Gui.Dialog
 			w7.BottomAttach = ((uint)(2));
 			w7.XOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.playersspinbutton = new global::Gtk.SpinButton (1, 100, 1);
+			this.playersspinbutton = new global::Gtk.SpinButton (1D, 100D, 1D);
 			this.playersspinbutton.CanFocus = true;
 			this.playersspinbutton.Name = "playersspinbutton";
-			this.playersspinbutton.Adjustment.PageIncrement = 10;
-			this.playersspinbutton.ClimbRate = 1;
+			this.playersspinbutton.Adjustment.PageIncrement = 10D;
+			this.playersspinbutton.ClimbRate = 1D;
 			this.playersspinbutton.Numeric = true;
-			this.playersspinbutton.Value = 15;
+			this.playersspinbutton.Value = 15D;
 			this.table1.Add (this.playersspinbutton);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.playersspinbutton]));
 			w8.TopAttach = ((uint)(1));

@@ -122,6 +122,8 @@ namespace LongoMatch.Gui.Component
 			// Container child addcatbutton.Gtk.Container+ContainerChild
 			this.addcatbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addcatbuttonimage.Name = "addcatbuttonimage";
+			this.addcatbuttonimage.Circular = false;
+			this.addcatbuttonimage.HasShadow = false;
 			this.addcatbutton.Add (this.addcatbuttonimage);
 			this.hbuttonbox2.Add (this.addcatbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w2 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addcatbutton]));
@@ -134,6 +136,8 @@ namespace LongoMatch.Gui.Component
 			// Container child addtimerbutton.Gtk.Container+ContainerChild
 			this.addtimerbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addtimerbuttonimage.Name = "addtimerbuttonimage";
+			this.addtimerbuttonimage.Circular = false;
+			this.addtimerbuttonimage.HasShadow = false;
 			this.addtimerbutton.Add (this.addtimerbuttonimage);
 			this.hbuttonbox2.Add (this.addtimerbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addtimerbutton]));
@@ -147,6 +151,8 @@ namespace LongoMatch.Gui.Component
 			// Container child addscorebutton.Gtk.Container+ContainerChild
 			this.addscorebuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addscorebuttonimage.Name = "addscorebuttonimage";
+			this.addscorebuttonimage.Circular = false;
+			this.addscorebuttonimage.HasShadow = false;
 			this.addscorebutton.Add (this.addscorebuttonimage);
 			this.hbuttonbox2.Add (this.addscorebutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addscorebutton]));
@@ -160,6 +166,8 @@ namespace LongoMatch.Gui.Component
 			// Container child addcardbutton.Gtk.Container+ContainerChild
 			this.addcardbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addcardbuttonimage.Name = "addcardbuttonimage";
+			this.addcardbuttonimage.Circular = false;
+			this.addcardbuttonimage.HasShadow = false;
 			this.addcardbutton.Add (this.addcardbuttonimage);
 			this.hbuttonbox2.Add (this.addcardbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addcardbutton]));
@@ -173,6 +181,8 @@ namespace LongoMatch.Gui.Component
 			// Container child addtagbutton.Gtk.Container+ContainerChild
 			this.addtagbuttonimage = new global::VAS.UI.Helpers.ImageView ();
 			this.addtagbuttonimage.Name = "addtagbuttonimage";
+			this.addtagbuttonimage.Circular = false;
+			this.addtagbuttonimage.HasShadow = false;
 			this.addtagbutton.Add (this.addtagbuttonimage);
 			this.hbuttonbox2.Add (this.addtagbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addtagbutton]));
@@ -227,6 +237,7 @@ namespace LongoMatch.Gui.Component
 			this.fieldSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.fieldSelector.Events = ((global::Gdk.EventMask)(256));
 			this.fieldSelector.Name = "fieldSelector";
+			this.fieldSelector.ResetButtonHeight = 0;
 			this.positionsbox.Add (this.fieldSelector);
 			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.positionsbox [this.fieldSelector]));
 			w17.Position = 0;
@@ -236,6 +247,7 @@ namespace LongoMatch.Gui.Component
 			this.hfieldSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.hfieldSelector.Events = ((global::Gdk.EventMask)(256));
 			this.hfieldSelector.Name = "hfieldSelector";
+			this.hfieldSelector.ResetButtonHeight = 0;
 			this.positionsbox.Add (this.hfieldSelector);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.positionsbox [this.hfieldSelector]));
 			w18.Position = 1;
@@ -245,6 +257,7 @@ namespace LongoMatch.Gui.Component
 			this.goalSelector = new global::VAS.UI.Component.ImagePreviewWidget ();
 			this.goalSelector.Events = ((global::Gdk.EventMask)(256));
 			this.goalSelector.Name = "goalSelector";
+			this.goalSelector.ResetButtonHeight = 0;
 			this.positionsbox.Add (this.goalSelector);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.positionsbox [this.goalSelector]));
 			w19.Position = 2;
@@ -284,6 +297,8 @@ namespace LongoMatch.Gui.Component
 			// Container child applybutton.Gtk.Container+ContainerChild
 			this.applyimage = new global::VAS.UI.Helpers.ImageView ();
 			this.applyimage.Name = "applyimage";
+			this.applyimage.Circular = false;
+			this.applyimage.HasShadow = false;
 			this.applybutton.Add (this.applyimage);
 			this.periodsbox.Add (this.applybutton);
 			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.applybutton]));
