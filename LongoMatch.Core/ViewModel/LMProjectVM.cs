@@ -57,8 +57,6 @@ namespace LongoMatch.Core.ViewModel
 			}
 			set {
 				base.Model = value;
-				HomeTeam.Model = base.Model.LocalTeamTemplate;
-				AwayTeam.Model = base.Model.VisitorTeamTemplate;
 			}
 		}
 
