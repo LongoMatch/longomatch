@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Panel
 			set {
 				if (viewModel != null) {
 					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
-					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
+					viewModel.LoadedItem.PropertyChanged -= HandleLoadedTemplateChanged;
 				}
 				viewModel = value;
 				ctx.UpdateViewModel (viewModel);
@@ -151,9 +151,9 @@ namespace LongoMatch.Gui.Panel
 						Add (dashboard);
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
-					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					viewModel.LoadedTemplate.Mode = DashboardMode.Edit;
-					dashboardwidget.ViewModel = viewModel.LoadedTemplate;
+					viewModel.LoadedItem.PropertyChanged += HandleLoadedTemplateChanged;
+					viewModel.LoadedItem.Mode = DashboardMode.Edit;
+					dashboardwidget.ViewModel = viewModel.LoadedItem;
 					UpdateLoadedTemplate ();
 				}
 			}
@@ -259,7 +259,7 @@ namespace LongoMatch.Gui.Panel
 		void UpdateLoadedTemplate ()
 		{
 			dashboardwidget.Sensitive = true;
-			Select (ViewModel.LoadedTemplate);
+			Select (ViewModel.LoadedItem);
 		}
 
 		void HandleEnterTemplateButton (object sender, EventArgs e)

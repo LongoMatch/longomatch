@@ -38,7 +38,7 @@ namespace LongoMatch.Services.ViewModel
 
 		public DashboardsManagerVM ()
 		{
-			AddButton = LoadedTemplate.AddButton;
+			AddButton = LoadedItem.AddButton;
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Add, Sizes.TemplatesIconSize);
 			NewCommand.IconName = Icons.Add;
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.Save, Sizes.TemplatesIconSize);
@@ -76,7 +76,7 @@ namespace LongoMatch.Services.ViewModel
 		/// <value>The make default command.</value>
 		public Command MakeDefaultCommand { get; private set; }
 
-		public DashboardVM Dashboard => LoadedTemplate;
+		public DashboardVM Dashboard => LoadedItem;
 
 		/// <summary>
 		/// ViewModel for the Bar chart used to display count limitations in the Limitation Widget
@@ -112,7 +112,7 @@ namespace LongoMatch.Services.ViewModel
 
 		public async Task ShowDetails (DashboardVM viewModel)
 		{
-			this.LoadedTemplate = viewModel;
+			this.LoadedItem = viewModel;
 			dynamic properties = new ExpandoObject ();
 			properties.viewModel = this;
 

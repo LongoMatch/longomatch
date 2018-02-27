@@ -42,19 +42,19 @@ namespace LongoMatch.Core.ViewModel
 
 		public TeamsManagerVM ()
 		{
-			LoadedTemplate = new LMTeamVM ();
+			LoadedItem = new LMTeamVM ();
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.TemplatesIconSize);
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", Sizes.TemplatesIconSize);
 			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", Sizes.TemplatesIconSize);
 			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", Sizes.TemplatesIconSize);
 			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", Sizes.TemplatesIconSize);
 			TeamTagger = new LMTeamTaggerVM ();
-			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
+			TeamTagger.HomeTeam = (LMTeamVM)LoadedItem;
 			TeamTagger.AwayTeam = null;
 			TeamTagger.Background = App.Current.HHalfFieldBackground;
 			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			TeamEditor = new LMTeamEditorVM ();
-			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
+			TeamEditor.Team = (LMTeamVM)LoadedItem;
 			TeamEditor.Team.TemplateEditorMode = true;
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();

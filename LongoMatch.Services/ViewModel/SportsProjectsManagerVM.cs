@@ -35,7 +35,7 @@ namespace LongoMatch.Services.ViewModel
 		public SportsProjectsManagerVM ()
 		{
 			ResyncCommand = new LimitationAsyncCommand (VASFeature.OpenMultiCamera.ToString (), Resync,
-														() => LoadedProject.FileSet.Count () > 1);
+														() => LoadedItem.FileSet.Count () > 1);
 		}
 
 		protected override void DisposeManagedResources ()

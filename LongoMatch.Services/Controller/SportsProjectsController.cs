@@ -66,17 +66,17 @@ namespace LongoMatch.Services.Controller
 
 		async Task HandleResync (ResyncEvent ev)
 		{
-			if (!ViewModel.LoadedProject.FileSet.Model.CheckFiles ()) {
+			if (!ViewModel.LoadedItem.FileSet.Model.CheckFiles ()) {
 				// Show message in order to load video.
-				if (!App.Current.GUIToolkit.SelectMediaFiles (ViewModel.LoadedProject.FileSet.Model)) {
+				if (!App.Current.GUIToolkit.SelectMediaFiles (ViewModel.LoadedItem.FileSet.Model)) {
 					return;
 				}
 			}
 
 			dynamic data = new System.Dynamic.ExpandoObject ();
 
-			ViewModel.LoadedProject.Model.Load ();
-			data.ProjectVM = ViewModel.LoadedProject;
+			ViewModel.LoadedItem.Model.Load ();
+			data.ProjectVM = ViewModel.LoadedItem;
 			data.SynchronizeEventsWithPeriods = false;
 			await App.Current.StateController.MoveTo (CameraSynchronizationEditorState.NAME, data);
 			ViewModel.SaveCommand.EmitCanExecuteChanged ();
@@ -84,7 +84,7 @@ namespace LongoMatch.Services.Controller
 
 		void HandleOpen (OpenEvent<LMProject> arg)
 		{
-			if (ViewModel.LoadedProject != null) {
+			if (ViewModel.LoadedItem != null) {
 				// We get the selection instead of LoadedProject because it can be modified without saving.
 				// Also we don't use the selected VM directly because it's disposed on unload
 				LMProjectVM selectedVM = new LMProjectVM { Model = ViewModel.Selection.First ().Model };

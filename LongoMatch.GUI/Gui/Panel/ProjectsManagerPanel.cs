@@ -171,8 +171,8 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleViewModelPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof (ViewModel.LoadedProject) && sender == ViewModel) {
-				LoadProject (ViewModel.LoadedProject);
+			if (e.PropertyName == nameof (ViewModel.LoadedItem) && sender == ViewModel) {
+				LoadProject (ViewModel.LoadedItem);
 			}
 		}
 
@@ -227,7 +227,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleChanged (object sender, EventArgs e)
 		{
-			if (ViewModel.LoadedProject == null) {
+			if (ViewModel.LoadedItem == null) {
 				return;
 			}
 
