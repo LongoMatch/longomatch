@@ -22,9 +22,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = data;
-			if (ViewModel.LoadedProject.Preview == null) {
-				ViewModel.LoadedProject.Model.FileSet.FirstOrDefault ().Preview = App.Current.ResourcesLocator.LoadImage (Images.DefaultCardBackground);
-			}
+			ViewModel.LoadedProject.Model.Load ();
 		}
 	}
 }
