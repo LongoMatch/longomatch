@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Panel
 			set {
 				if (viewModel != null) {
 					viewModel.ViewModels.CollectionChanged -= HandleCollectionChanged;
-					viewModel.LoadedTemplate.PropertyChanged -= HandleLoadedTemplateChanged;
+					viewModel.LoadedItem.PropertyChanged -= HandleLoadedTemplateChanged;
 					foreach (LMTeamVM team in viewModel.ViewModels) {
 						Remove (team);
 					}
@@ -154,10 +154,10 @@ namespace LongoMatch.Gui.Panel
 						Add (team);
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
-					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+					viewModel.LoadedItem.PropertyChanged += HandleLoadedTemplateChanged;
 					teamtemplateeditor1.ViewModel = viewModel.TeamEditor;
 					teamtemplateeditor1.TeamTagger = viewModel.TeamTagger;
-					Select (ViewModel.LoadedTemplate);
+					Select (ViewModel.LoadedItem);
 				}
 			}
 		}
@@ -322,7 +322,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Model") {
-				Select (ViewModel.LoadedTemplate);
+				Select (ViewModel.LoadedItem);
 			}
 		}
 

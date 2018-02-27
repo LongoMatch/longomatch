@@ -62,7 +62,7 @@ namespace Tests.Controller
 		{
 			controller = new LMTeamEditorController ();
 			var teamsManager = new TeamsManagerVM ();
-			teamsManager.LoadedTemplate.Model = LMTeam.DefaultTemplate (5);
+			teamsManager.LoadedItem.Model = LMTeam.DefaultTemplate (5);
 			viewModel = teamsManager.TeamEditor;
 
 			controller.SetViewModel (teamsManager);

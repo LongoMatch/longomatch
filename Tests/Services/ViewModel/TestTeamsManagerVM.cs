@@ -48,13 +48,13 @@ namespace Tests.Services.ViewModel
 		[Test]
 		public void TestLoadedTemplateType ()
 		{
-			Assert.IsInstanceOf (typeof (LMTeamVM), viewModel.LoadedTemplate);
+			Assert.IsInstanceOf (typeof (LMTeamVM), viewModel.LoadedItem);
 		}
 
 		[Test]
 		public void TestTeamsManagerInitialization ()
 		{
-			Assert.AreSame (viewModel.LoadedTemplate, viewModel.TeamTagger.HomeTeam);
+			Assert.AreSame (viewModel.LoadedItem, viewModel.TeamTagger.HomeTeam);
 			Assert.AreEqual (viewModel.TeamTagger.AwayTeam, null);
 			Assert.IsTrue (viewModel.TeamTagger.ShowSubstitutionButtons);
 			Assert.IsFalse (viewModel.TeamTagger.Compact);
@@ -66,7 +66,7 @@ namespace Tests.Services.ViewModel
 		[Test]
 		public void TestTeamEditorInitialization ()
 		{
-			Assert.AreSame (viewModel.LoadedTemplate, viewModel.TeamEditor.Team);
+			Assert.AreSame (viewModel.LoadedItem, viewModel.TeamEditor.Team);
 			Assert.IsTrue (viewModel.TeamEditor.Team.TemplateEditorMode);
 		}
 	}
