@@ -21,6 +21,11 @@ namespace LongoMatch.Services.State
 			}
 		}
 
+		public DashboardDetailsState ()
+		{
+			ViewModelOwner = false;
+		}
+
 		protected override void CreateViewModel (dynamic data)
 		{
 			var vm = data.viewModel as DashboardsManagerVM;

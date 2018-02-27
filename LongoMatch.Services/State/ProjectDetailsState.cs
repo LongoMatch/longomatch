@@ -19,6 +19,11 @@ namespace LongoMatch.Services.State
 			}
 		}
 
+		public ProjectDetailsState ()
+		{
+			ViewModelOwner = false;
+		}
+
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = data;
