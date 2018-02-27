@@ -18,6 +18,7 @@
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.State;
 using LongoMatch.Services.States;
 using VAS.Core;
 using VAS.Core.Events;
@@ -29,6 +30,7 @@ using VAS.Services.Controller;
 
 namespace LongoMatch.Services.Controller
 {
+	[ControllerAttribute (DashboardDetailsState.NAME)]
 	[ControllerAttribute (DashboardsManagerState.NAME)]
 	public class DashboardsController : TemplatesController<Dashboard, DashboardVM, DashboardButton, DashboardButtonVM>
 	{
