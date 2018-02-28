@@ -31,6 +31,9 @@ namespace LongoMatch.Services.State
 			vm.Dashboard.Mode = DashboardMode.Code;
 			vm.Dashboard.FitMode = FitMode.Fit;
 
+			//FIXME: this is a temp fix until we start using the new MVVM architecture
+			vm.MoveBackOnDelete = true;
+
 			ViewModel = vm;
 		}
 	}
