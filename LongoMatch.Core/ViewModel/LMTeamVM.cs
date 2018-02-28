@@ -30,8 +30,15 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMTeamVM : TeamVM
 	{
-		public LMTeam TypedModel {
-			get {
+		public LMTeamVM()
+		{
+			FieldPlayersList = new List<LMPlayerVM>();
+			BenchPlayersList = new List<LMPlayerVM>();
+		}
+		public LMTeam TypedModel
+		{
+			get
+			{
 				return (LMTeam)base.Model;
 			}
 		}
