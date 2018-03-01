@@ -35,7 +35,7 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class LMPlayersTaggerView : CanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
+	public class LMPlayersTaggerView : FixedSizeCanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
 	{
 
 		/* This object can be used like single object filling a canvas or embedded
@@ -51,11 +51,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		const int MIN_PLAYERS_ROWS = 5;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		LMTeam homeTeam, awayTeam;
-		Dictionary<LMPlayerVM, LMPlayerView> homePlayerToPlayerObject;
-		Dictionary<LMPlayerVM, LMPlayerView> awayPlayerToPlayerObject;
-		List<LMPlayerView> homePlayingPlayers, awayPlayingPlayers;
-		List<LMPlayerView> homeBenchPlayers, awayBenchPlayers;
-		List<LMPlayerView> homePlayers, awayPlayers;
 		BenchObject homeBench, awayBench;
 		LMPlayerView clickedPlayer;
 		ButtonObject clickedButton;
@@ -68,21 +63,18 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public LMPlayersTaggerView ()
 		{
 			Position = new Point (0, 0);
-			homeBench = new BenchObject ();
-			awayBench = new BenchObject ();
+			homeBench = new BenchObject { TeamType = TeamType.LOCAL };
+			awayBench = new BenchObject { TeamType = TeamType.VISITOR };
 			offset = new Point (0, 0);
 			scaleX = scaleY = 1;
-			homePlayerToPlayerObject = new Dictionary<LMPlayerVM, LMPlayerView> ();
-			awayPlayerToPlayerObject = new Dictionary<LMPlayerVM, LMPlayerView> ();
 			field = new FieldObject ();
-			SelectedPlayers = new List<LMPlayer> ();
+			// SelectedPlayers = new List<LMPlayer> ();
 			LoadSubsButtons ();
 			LoadTeamsButtons ();
 		}
 
 		protected override void DisposeManagedResources ()
 		{
-			ClearPlayers ();
 			homeBench.Dispose ();
 			awayBench.Dispose ();
 			field.Dispose ();
@@ -93,21 +85,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			base.DisposeManagedResources ();
 		}
 
-		public Point Position {
-			get;
-			set;
-		}
-
-		public double Width {
-			get;
-			set;
-		}
-
-		public double Height {
-			get;
-			set;
-		}
-
 		/// <summary>
 		/// Gets or sets the color of the background.
 		/// </summary>
@@ -116,12 +93,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public List<LMPlayer> SelectedPlayers {
+		// Fixme: it seems that has no utility used from the menu and it seems always empty
+		/* public List<LMPlayer> SelectedPlayers {
 			get;
 			set;
-		}
+		} */
 
-		public ObservableCollection<LMTeam> SelectedTeams {
+		// Fixme: it seems that has no utility used from the menu and it seems always empty
+		/* public ObservableCollection<LMTeam> SelectedTeams {
 			get {
 				ObservableCollection<LMTeam> teams = new ObservableCollection<LMTeam> ();
 				if (homeButton.Active) {
@@ -132,7 +111,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 				return teams;
 			}
-		}
+		} */
 
 		public LMTeamTaggerVM ViewModel {
 			get {
@@ -142,7 +121,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				if (viewModel != null) {
 					viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
 				}
+
 				viewModel = value;
+				homeBench.SetViewModel (viewModel?.HomeTeam);
+				awayBench.SetViewModel (viewModel?.AwayTeam);
+				field.SetViewModel (viewModel);
+
 				if (viewModel != null) {
 					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 					viewModel.Sync ();
@@ -157,26 +141,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		public void LoadTeams ()
 		{
-			int [] homeF = null, awayF = null;
 			int playerSize, colSize, border;
 
 			NTeams = 0;
 
 			SetFieldBackground ();
-			ClearPlayers ();
-			homePlayingPlayers = awayPlayingPlayers = null;
-
-			homePlayers = new List<LMPlayerView> ();
-			awayPlayers = new List<LMPlayerView> ();
 
 			if (ViewModel.HomeTeam != null) {
 				homeTeam = ViewModel.HomeTeam.TypedModel;
-				homeTeam.UpdateColors ();
-				homePlayingPlayers = GetPlayersViews (ViewModel.HomeTeam.FieldPlayersList, TeamType.LOCAL);
-				homeBenchPlayers = GetPlayersViews (ViewModel.HomeTeam.BenchPlayersList, TeamType.LOCAL);
-				homePlayers.AddRange (homePlayingPlayers);
-				homePlayers.AddRange (homeBenchPlayers);
-				homeF = homeTeam.Formation;
 				if (ViewModel.HomeTeam.Icon == null) {
 					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 					homeButton.MaskColor = Colors.DefaultShield;
@@ -188,12 +160,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (ViewModel.AwayTeam != null) {
 				awayTeam = ViewModel.AwayTeam.TypedModel;
-				awayTeam.UpdateColors ();
-				awayPlayingPlayers = GetPlayersViews (ViewModel.AwayTeam.FieldPlayersList, TeamType.VISITOR);
-				awayBenchPlayers = GetPlayersViews (ViewModel.AwayTeam.BenchPlayersList, TeamType.VISITOR);
-				awayPlayers.AddRange (awayPlayingPlayers);
-				awayPlayers.AddRange (awayBenchPlayers);
-				awayF = awayTeam.Formation;
 				if (ViewModel.AwayTeam.Icon == null) {
 					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 					awayButton.MaskColor = Colors.DefaultShield;
@@ -204,14 +170,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				NTeams++;
 			}
 
-			colSize = ColumnSize;
+			// Fixme: pending to decide how to handle this
+			colSize = field.ColumnSize;
 			playerSize = colSize * 90 / 100;
-
+			field.PlayerSize = playerSize;
 			BenchWidth (colSize, field.Height, playerSize);
-			field.LoadTeams (ViewModel.Background, homeF, awayF, homePlayingPlayers,
-				awayPlayingPlayers, playerSize, NTeams);
-			homeBench.BenchPlayers = homeBenchPlayers;
-			awayBench.BenchPlayers = awayBenchPlayers;
 			homeBench.Height = awayBench.Height = field.Height;
 
 			border = Sizes.TeamTaggerBenchBorder;
@@ -228,42 +191,31 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				field.Position = new Point (homeBench.Width + 2 * border, 0);
 				awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
 			}
+
 			Update ();
 		}
 
 		public override void ResetDrawArea ()
 		{
 			base.ResetDrawArea ();
-			if (homePlayers != null) {
-				foreach (CanvasObject co in homePlayers) {
-					co.ResetDrawArea ();
-				}
-			}
-			if (awayPlayers != null) {
-				foreach (CanvasObject co in awayPlayers) {
-					co.ResetDrawArea ();
-				}
-			}
 			subPlayers.ResetDrawArea ();
 			subInjury.ResetDrawArea ();
 			homeButton.ResetDrawArea ();
 			awayButton.ResetDrawArea ();
 		}
 
-		void BenchWidth (int colSize, int height, int playerSize)
+		void BenchWidth (int colSize, double height, int playerSize)
 		{
 			int maxPlayers, playersPerColumn, playersPerRow;
 			double ncolSize;
 
 			ncolSize = colSize;
+			maxPlayers = Math.Max (ViewModel.HomeTeam.BenchPlayersList.Count(), ViewModel.AwayTeam?.BenchPlayersList.Count() ?? 0);
 
-			maxPlayers = Math.Max (
-				homeBenchPlayers != null ? homeBenchPlayers.Count : 0,
-				awayBenchPlayers != null ? awayBenchPlayers.Count : 0);
-			playersPerColumn = height / colSize;
+			playersPerColumn = (int)(height / colSize);
 			if (ViewModel.Compact) {
-				/* Try with 4/4, 3/4 and 2/4 of the original column size
-				 * to fit all players in a single column */
+				// Try with 4/4, 3/4 and 2/4 of the original column size
+				// to fit all players in a single column 
 				for (int i = 4; i > 1; i--) {
 					ncolSize = (double)colSize * i / 4;
 					playersPerColumn = (int)(height / ncolSize);
@@ -278,24 +230,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			homeBench.PlayersPerRow = awayBench.PlayersPerRow =
 				(int)Math.Ceiling ((double)maxPlayers / playersPerColumn);
 			homeBench.Width = awayBench.Width = (int)ncolSize * homeBench.PlayersPerRow;
-		}
-
-		void ClearPlayers ()
-		{
-			if (homePlayers != null) {
-				foreach (LMPlayerView po in homePlayers) {
-					po.Dispose ();
-				}
-				homePlayers = null;
-			}
-			if (awayPlayers != null) {
-				foreach (LMPlayerView po in awayPlayers) {
-					po.Dispose ();
-				}
-				awayPlayers = null;
-			}
-			homePlayerToPlayerObject.Clear ();
-			awayPlayerToPlayerObject.Clear ();
 		}
 
 		void LoadSubsButtons ()
@@ -332,64 +266,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayButton.RedrawEvent += (co, area) => {
 				EmitRedrawEvent (awayButton, area);
 			};
-		}
-
-		int ColumnSize {
-			get {
-				int width, optWidth, optHeight, count = 0, max = 0;
-
-				width = field.Width / NTeams;
-				if (homeTeam != null && awayTeam != null) {
-					count = Math.Max (homeTeam.Formation.Count (),
-						awayTeam.Formation.Count ());
-					max = Math.Max (homeTeam.Formation.Max (),
-						awayTeam.Formation.Max ());
-				} else if (homeTeam != null) {
-					count = homeTeam.Formation.Count ();
-					max = homeTeam.Formation.Max ();
-				} else if (awayTeam != null) {
-					count = awayTeam.Formation.Count ();
-					max = awayTeam.Formation.Max ();
-				}
-				optWidth = width / count;
-				optHeight = field.Height / Math.Max (MIN_PLAYERS_ROWS, max);
-				return Math.Min (optWidth, optHeight);
-			}
-		}
-
-		List<LMPlayerView> GetPlayersViews (IEnumerable<LMPlayerVM> players, TeamType team)
-		{
-			List<LMPlayerView> playerObjects;
-			Color color = null;
-
-			if (team == TeamType.LOCAL) {
-				color = App.Current.Style.HomeTeamColor;
-			} else {
-				color = App.Current.Style.AwayTeamColor;
-			}
-
-			playerObjects = new List<LMPlayerView> ();
-			foreach (var player in players) {
-				LMPlayerView po = new LMPlayerView { Team = team };
-				po.ViewModel = player;
-				po.ClickedEvent += HandlePlayerClickedEvent;
-				po.RedrawEvent += (co, area) => {
-					EmitRedrawEvent (po, area);
-				};
-				playerObjects.Add (po);
-				if ((team == TeamType.LOCAL) && !homePlayerToPlayerObject.ContainsKey (player)) {
-					homePlayerToPlayerObject.Add (player, po);
-				} else if ((team == TeamType.VISITOR) && !awayPlayerToPlayerObject.ContainsKey (player)) {
-					awayPlayerToPlayerObject.Add (player, po);
-				}
-			}
-			return playerObjects;
-		}
-
-		void HandlePlayerClickedEvent (ICanvasObject co)
-		{
-			LMPlayerView player = co as LMPlayerView;
-			ViewModel.PlayerClick (player.ViewModel, modifier);
 		}
 
 		bool ButtonClickPressed (Point point, ButtonModifier modif, params ButtonObject [] buttons)
@@ -471,6 +347,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				clickedPlayer.ClickReleased ();
 				modifier = ButtonModifier.None;
 			}
+
+			ReDraw ();
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -567,8 +445,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			if (ViewModel.HomeTeam != null) {
 				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
-					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.FieldPlayersList), sender, ViewModel.HomeTeam) ||
-					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.BenchPlayersList), sender, ViewModel.HomeTeam))) {
+				     ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.HomeTeam.FieldPlayersList)}", sender, ViewModel.HomeTeam) ||
+				     ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.HomeTeam.BenchPlayersList)}", sender, ViewModel.HomeTeam))) {
 					LoadTeams ();
 					ReDraw ();
 				}
@@ -581,11 +459,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			if (ViewModel.AwayTeam != null) {
 				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
-					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.FieldPlayersList), sender, ViewModel.AwayTeam) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.BenchPlayersList), sender, ViewModel.AwayTeam))) {
+				     ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.HomeTeam.FieldPlayersList)}", sender, ViewModel.AwayTeam) ||
+				     ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.HomeTeam.BenchPlayersList)}", sender, ViewModel.AwayTeam))) {
 					LoadTeams ();
 					ReDraw ();
 				}
+
 				if (ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel.AwayTeam) ||
 					ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.Tagged), sender, ViewModel)) {
 					awayButton.Active = ViewModel.AwayTeam.Tagged;

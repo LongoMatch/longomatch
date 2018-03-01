@@ -16,10 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
@@ -27,7 +25,6 @@ using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing;
 
@@ -59,11 +56,11 @@ namespace LongoMatch.Drawing.Widgets
 			base.DisposeManagedResources ();
 		}
 
-		public ObservableCollection<LMTeam> SelectedTeams {
+		/* public ObservableCollection<LMTeam> SelectedTeams {
 			get {
 				return tagger.SelectedTeams;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// Gets or sets the color of the background.
@@ -92,16 +89,16 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			List<LMPlayer> players = tagger.SelectedPlayers;
+			List<LMPlayer> players = new List<LMPlayer> (); // tagger.SelectedPlayers;
 
-			if (players.Count == 0) {
+			// if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
 					players = new List<LMPlayer> { (sel.Drawable as LMPlayerView).ViewModel.TypedModel };
 				}
-			} else {
+			/* } else {
 				players = tagger.SelectedPlayers;
-			}
+			}*/
 
 			if (ShowMenuEvent != null) {
 				ShowMenuEvent (players);

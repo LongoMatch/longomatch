@@ -27,6 +27,7 @@ namespace LongoMatch.Services.Controller
 	/// emit substitutions events, update the players in the field/bench based on the current
 	/// playing time, formation, etc.
 	/// </summary>
+	[Controller (TeamDetailsState.NAME)]
 	[Controller (NewProjectState.NAME)]
 	[Controller (TeamsManagerState.NAME)]
 	[Controller (ProjectAnalysisState.NAME)]
@@ -351,8 +352,8 @@ namespace LongoMatch.Services.Controller
 			foreach (var player in benchPlayers) {
 				player.Playing = false;
 			}
-			team.FieldPlayersList = fieldPlayers;
-			team.BenchPlayersList = benchPlayers;
+			team.FieldPlayersList.Reset (fieldPlayers);
+			team.BenchPlayersList.Reset (benchPlayers);
 		}
 
 		void UpdateLineup ()

@@ -36,6 +36,7 @@ namespace LongoMatch.Services.States
 			uiFlow = new Dictionary<string, Func<IScreenState>> ();
 			uiFlow.Add (HomeState.NAME, () => new HomeState ());
 			uiFlow.Add (TeamsManagerState.NAME, () => new TeamsManagerState ());
+			uiFlow.Add (TeamDetailsState.NAME, () => new TeamDetailsState ());
 			uiFlow.Add (DashboardsManagerState.NAME, () => new DashboardsManagerState ());
 			uiFlow.Add (DashboardDetailsState.NAME, () => new DashboardDetailsState ());
 			uiFlow.Add (PreferencesState.NAME, () => new PreferencesState ());

@@ -15,12 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
@@ -28,10 +25,13 @@ using VAS.Core.Resources.Styles;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
-using VAS.Core.Filters;
 using VAS.Core.Resources;
+using System.Threading.Tasks;
+using System.Dynamic;
+using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.State;
 
-namespace LongoMatch.Core.ViewModel
+namespace LongoMatch.Services.ViewModel
 {
 	/// <summary>
 	/// ViewModel for the teams manager.
@@ -42,6 +42,7 @@ namespace LongoMatch.Core.ViewModel
 
 		public TeamsManagerVM ()
 		{
+			ShowDetailsCommand = new AsyncCommand<LMTeamVM> (ShowDetails, (vm) => vm != null);
 			LoadedTemplate = new LMTeamVM ();
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", Sizes.TemplatesIconSize);
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", Sizes.TemplatesIconSize);
@@ -61,6 +62,8 @@ namespace LongoMatch.Core.ViewModel
 				LimitationChart = null;
 			}
 		}
+
+		public LMTeamVM Team => (LMTeamVM)LoadedTemplate;
 
 		/// <summary>
 		/// Gets the team tagger.
@@ -110,6 +113,14 @@ namespace LongoMatch.Core.ViewModel
 			return menu;
 		}
 
+		async Task ShowDetails (TeamVM viewModel)
+		{
+			this.LoadedTemplate = viewModel;
+			dynamic properties = new ExpandoObject ();
+			properties.viewModel = this;
+
+			await App.Current.StateController.MoveTo (TeamDetailsState.NAME, properties, false);
+		}
 	}
 }
 
