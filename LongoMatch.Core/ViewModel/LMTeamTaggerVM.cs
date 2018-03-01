@@ -22,6 +22,7 @@ namespace LongoMatch.Core.ViewModel
 			SelectionMode = MultiSelectionMode.Single;
 			CurrentTime = new Time (0);
 		}
+
 		/// <summary>
 		/// Gets or sets the home team.
 		/// </summary>

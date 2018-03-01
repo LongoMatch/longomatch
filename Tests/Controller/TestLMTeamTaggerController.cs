@@ -191,7 +191,7 @@ namespace Tests.Controller
 			var clickedPlayer1 = teamTagger.HomeTeam.FieldPlayersList.FirstOrDefault ();
 			var clickedPlayer2 = teamTagger.HomeTeam.BenchPlayersList.FirstOrDefault ();
 			teamTagger.PropertyChanged += (sender, e) => {
-				if (sender == teamTagger.HomeTeam && e.PropertyName == nameof (teamTagger.HomeTeam.FieldPlayersList)) {
+				if (sender == teamTagger.HomeTeam && e.PropertyName == "Collection_" + nameof (teamTagger.HomeTeam.FieldPlayersList)) {
 					emitedPropertyChange = true;
 					times++;
 				}
@@ -261,7 +261,7 @@ namespace Tests.Controller
 				substTime = ev.Time;
 			});
 			teamTagger.PropertyChanged += (sender, e) => {
-				if (sender == teamTagger.HomeTeam && e.PropertyName == nameof (teamTagger.HomeTeam.FieldPlayersList)) {
+				if (sender == teamTagger.HomeTeam && e.PropertyName == "Collection_" + nameof (teamTagger.HomeTeam.FieldPlayersList)) {
 					emitedPropertyChange = true;
 					times++;
 				}

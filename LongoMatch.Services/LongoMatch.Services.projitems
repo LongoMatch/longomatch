@@ -62,6 +62,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)LMPreviewService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\DashboardDetailsState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\TeamDetailsState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

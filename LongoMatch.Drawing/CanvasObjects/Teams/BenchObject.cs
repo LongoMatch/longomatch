@@ -15,7 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -24,54 +28,57 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class BenchObject : CanvasObject, ICanvasSelectableObject
+	public class BenchObject : FixedSizeCanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamVM>
 	{
+		public event EventHandler SizeChanged;
+
+		LMTeamVM teamVM;
+		List<LMPlayerView> benchPlayers;
+
 		public BenchObject ()
 		{
-			BenchPlayers = new List<LMPlayerView> ();
+			benchPlayers = new List<LMPlayerView> ();
 		}
 
-		public List<LMPlayerView> BenchPlayers {
-			get;
-			set;
+		protected override void DisposeManagedResources ()
+		{
+			ClearPlayers ();
 		}
 
-		public bool SubstitutionMode {
-			get;
-			set;
+		public int PlayersPerRow { get; set; }
+
+		public TeamType TeamType { get; set; }
+
+		public bool SubstitutionMode { get; set; }
+
+		public int PlayersSize { get; set; }
+
+		public LMTeamVM ViewModel {
+			get => teamVM;
+			set {
+				if (teamVM != null) {
+					teamVM.BenchPlayersList.CollectionChanged -= HandleCollectionChanged;
+				}
+				teamVM = value;
+				if (teamVM != null) {
+					LoadBench ();
+					teamVM.BenchPlayersList.CollectionChanged += HandleCollectionChanged;
+				}
+			}
 		}
 
-		public Point Position {
-			get;
-			set;
-		}
-
-		public double Width {
-			get;
-			set;
-		}
-
-		public double Height {
-			get;
-			set;
-		}
-
-		public int PlayersPerRow {
-			get;
-			set;
-		}
-
-		public int PlayersSize {
-			get;
-			set;
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamVM)viewModel;
 		}
 
 		public void Update ()
 		{
-			if (BenchPlayers == null) {
+			if (benchPlayers == null || PlayersPerRow == 0 || ViewModel == null) {
 				return;
 			}
-			for (int i = 0; i < BenchPlayers.Count; i++) {
+
+			for (int i = 0; i < benchPlayers.Count; i++) {
 				LMPlayerView po;
 				double x, y;
 				double s = Width / PlayersPerRow;
@@ -79,15 +86,22 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				x = s * (i % PlayersPerRow) + s / 2;
 				y = s * (i / PlayersPerRow) + s / 2;
 
-				po = BenchPlayers [i];
+				po = benchPlayers [i];
 				po.Size = PlayersSize;
 				po.Center = new Point (x, y);
 			}
+
+			if (PlayersPerRow == 1) {
+				Height = benchPlayers [benchPlayers.Count - 1].Center.Y + PlayersSize;
+				SizeChanged?.Invoke (this, new EventArgs ());
+			}
+
+			ReDraw ();
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			if (BenchPlayers == null || Position == null) {
+			if (benchPlayers == null || Position == null) {
 				return;
 			}
 			tk.Begin ();
@@ -96,7 +110,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.LineWidth = 0;
 			tk.DrawRectangle (new Point (0, 0), Width, Height);
 
-			foreach (LMPlayerView po in BenchPlayers) {
+			foreach (LMPlayerView po in benchPlayers) {
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
 				po.Circular = false;
@@ -110,13 +124,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			Selection selection = null;
 
-			if (BenchPlayers == null || Position == null) {
+			if (benchPlayers == null || Position == null) {
 				return selection;
 			}
 
 			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 
-			foreach (LMPlayerView po in BenchPlayers) {
+			foreach (LMPlayerView po in benchPlayers) {
 				selection = po.GetSelection (point, precision);
 				if (selection != null)
 					break;
@@ -126,6 +140,44 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		public void Move (Selection s, Point p, Point start)
 		{
+		}
+
+		void LoadBench () {
+			ViewModel.TypedModel.UpdateColors ();
+			ClearPlayers ();
+			AddPlayers ();
+			Update ();
+		}
+
+		void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Reset) {
+				LoadBench ();
+			}
+		}
+
+		void HandlePlayerClickedEvent (ICanvasObject co)
+		{
+			LMPlayerView player = co as LMPlayerView;
+			ViewModel.PlayerClick (player.ViewModel, ButtonModifier.None); //)modifier); Store the modifier in the canvas object
+			ReDraw (); 
+		}
+
+		void AddPlayers () {
+			foreach (LMPlayerVM player in teamVM.BenchPlayersList) {
+				var playerView = new LMPlayerView { Team = TeamType, ViewModel = player };
+				benchPlayers.Add (playerView);
+				playerView.ClickedEvent += HandlePlayerClickedEvent;
+			}
+		}
+
+		void ClearPlayers () {
+			foreach (var player in benchPlayers) {
+				player.ClickedEvent -= HandlePlayerClickedEvent;
+				player.Dispose ();
+			}
+
+			benchPlayers.Clear ();
 		}
 	}
 }

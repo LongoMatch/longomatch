@@ -15,8 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -25,31 +30,24 @@ using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class FieldObject : CanvasObject, ICanvasSelectableObject
+	public class FieldObject : FixedSizeCanvasObject, ICanvasSelectableObject, ICanvasObjectView<LMTeamTaggerVM>
 	{
+		const int MIN_PLAYERS_ROWS = 5;
+
 		int [] homeFormation;
 		int [] awayFormation;
-		int playerSize;
-		Image background;
+		LMTeamTaggerVM viewModel;
 
 		public FieldObject ()
 		{
 			Position = new Point (0, 0);
+			HomePlayingPlayers = new List<LMPlayerView> ();
+			AwayPlayingPlayers = new List<LMPlayerView> ();
 		}
 
-		public int Width {
-			get;
-			set;
-		}
-
-		public int Height {
-			get;
-			set;
-		}
-
-		public Point Position {
-			get;
-			set;
+		protected override void DisposeManagedResources ()
+		{
+			ClearPlayers ();
 		}
 
 		public bool SubstitutionMode {
@@ -57,61 +55,91 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public List<LMPlayerView> HomePlayingPlayers {
-			get;
-			set;
-		}
+		List<LMPlayerView> HomePlayingPlayers { get; set; }
 
-		public List<LMPlayerView> AwayPlayingPlayers {
-			get;
-			set;
-		}
+		List<LMPlayerView> AwayPlayingPlayers { get; set; }
 
-		public Image Background {
+		public Image Background { get; set; }
+
+		public int PlayerSize { get; set; }
+
+		public bool FieldResizable { get; set; }
+
+		public int ColumnSize {
 			get {
-				return background;
-			}
-			set {
-				background = value;
+				int width, optWidth, optHeight, count = 0, max = 0;
+
+				width = (int)(Width / NTeams);
+				if (ViewModel == null) {
+					return 0;
+				}else if (ViewModel.HomeTeam != null && ViewModel.AwayTeam != null) {
+					count = Math.Max (ViewModel.HomeTeam.Formation.Count (), ViewModel.AwayTeam.Formation.Count ());
+					max = Math.Max (ViewModel.HomeTeam.Formation.Max (), ViewModel.AwayTeam.Formation.Max ());
+				} else if (ViewModel.HomeTeam != null) {
+					count = ViewModel.HomeTeam.Formation.Count ();
+					max = ViewModel.HomeTeam.Formation.Max ();
+				} else if (ViewModel.AwayTeam != null) {
+					count = ViewModel.AwayTeam.Formation.Count ();
+					max = ViewModel.AwayTeam.Formation.Max ();
+				}
+				optWidth = width / count;
+				optHeight = (int)(Height / Math.Max (MIN_PLAYERS_ROWS, max));
+				return Math.Min (optWidth, optHeight);
 			}
 		}
 
-		public void LoadTeams (Image backgroundImg, int [] homeF, int [] awayF,
-							   List<LMPlayerView> homeT, List<LMPlayerView> awayT,
-							   int size, int nteams)
+		public void LoadTeams ()
 		{
-			background = backgroundImg;
-			homeFormation = homeF;
-			awayFormation = awayF;
-			HomePlayingPlayers = homeT;
-			AwayPlayingPlayers = awayT;
-			playerSize = size;
-			NTeams = nteams;
+			Background = ViewModel.Background;
+			LoadField ();
+			NTeams = GetNumTeams ();
 			Update ();
 		}
 
 		public void Update ()
 		{
+			if (FieldResizable) {
+				PlayerSize = ColumnSize * 90 / 100;
+			}
+
 			if (homeFormation != null) {
 				UpdateTeam (HomePlayingPlayers, homeFormation, TeamType.LOCAL);
 			}
 			if (awayFormation != null) {
 				UpdateTeam (AwayPlayingPlayers, awayFormation, TeamType.VISITOR);
 			}
+
+			ReDraw ();
 		}
 
-		public int NTeams {
-			get;
-			set;
+		public int NTeams { get; set; }
+
+		public LMTeamTaggerVM ViewModel { 
+			get { return viewModel; }
+			set {
+				if (viewModel != null) {
+					viewModel.PropertyChanged -= HandlePropertyChanged;
+				}
+				viewModel = value;
+				if (viewModel != null) {
+					LoadTeams ();
+					viewModel.PropertyChanged += HandlePropertyChanged;
+				}
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (LMTeamTaggerVM)viewModel;
 		}
 
 		void UpdateTeam (List<LMPlayerView> players, int [] formation, TeamType team)
 		{
-			int index = 0, offsetX;
-			int width, colWidth;
+			int index = 0;
+			double width, colWidth, offsetX;
 			Color color;
 
-			width = Width / NTeams;
+			width = (Width / NTeams);
 			colWidth = width / formation.Length;
 			if (team == TeamType.LOCAL) {
 				color = App.Current.Style.HomeTeamColor;
@@ -145,7 +173,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 						rowY = Height - (rowHeight * row + rowHeight / 2);
 					}
 
-					po.Size = playerSize;
+					po.Size = PlayerSize;
 					po.Center = new Point (colX, rowY);
 					index++;
 					if (players.Count == index)
@@ -158,20 +186,21 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			tk.Begin ();
 			tk.TranslateAndScale (Position, new Point (1, 1));
-			if (background != null) {
-				tk.DrawImage (background);
+			if (Background != null) {
+				tk.DrawImage (new Point(0, 0), Width, Height, Background, ScaleMode.AspectFit);
 			}
+
 			if (HomePlayingPlayers != null) {
 				foreach (LMPlayerView po in HomePlayingPlayers) {
 					po.SubstitutionMode = SubstitutionMode;
-					po.Size = playerSize;
+					po.Size = PlayerSize;
 					po.Draw (tk, area);
 				}
 			}
 			if (AwayPlayingPlayers != null) {
 				foreach (LMPlayerView po in AwayPlayingPlayers) {
 					po.SubstitutionMode = SubstitutionMode;
-					po.Size = playerSize;
+					po.Size = PlayerSize;
 					po.Draw (tk, area);
 				}
 			}
@@ -203,6 +232,84 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		public void Move (Selection s, Point p, Point start)
 		{
+		}
+
+		void LoadField () {
+			homeFormation = ViewModel.HomeTeam?.Formation;
+			awayFormation = ViewModel.AwayTeam?.Formation;
+			ViewModel.HomeTeam?.TypedModel.UpdateColors ();
+			ViewModel.AwayTeam?.TypedModel.UpdateColors ();
+			ClearPlayers ();
+			AddPlayers ();
+			Update ();
+		}
+
+		void HandlePlayerClickedEvent (ICanvasObject co)
+		{
+			LMPlayerView player = co as LMPlayerView;
+			ViewModel.PlayerClick (player.ViewModel, ButtonModifier.None); //)modifier); Store the modifier in the canvas object
+			ReDraw ();
+		}
+
+		void AddPlayers () {
+			if (ViewModel.HomeTeam != null) {
+				foreach (var player in ViewModel.HomeTeam.FieldPlayersList) {
+					var playerView = new LMPlayerView { Team = TeamType.LOCAL, ViewModel = player };
+					HomePlayingPlayers.Add (playerView);
+					playerView.ClickedEvent += HandlePlayerClickedEvent;
+				}
+			}
+
+			if ((ViewModel.AwayTeam != null)) {
+				foreach (var player in ViewModel.AwayTeam.FieldPlayersList) {
+					var playerView = new LMPlayerView { Team = TeamType.VISITOR, ViewModel = player };
+					AwayPlayingPlayers.Add (playerView);
+					playerView.ClickedEvent += HandlePlayerClickedEvent;
+				}
+			}
+		}
+
+		void ClearPlayers ()
+		{
+			foreach (var player in HomePlayingPlayers) {
+				player.ClickedEvent -= HandlePlayerClickedEvent;
+				player.Dispose ();
+			}
+
+			foreach (var player in AwayPlayingPlayers) {
+				player.ClickedEvent -= HandlePlayerClickedEvent;
+				player.Dispose ();
+			}
+
+			HomePlayingPlayers.Clear ();
+			AwayPlayingPlayers.Clear ();
+		}
+
+		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (ViewModel.HomeTeam != null) {
+				if (ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.HomeTeam.FieldPlayersList)}", sender, ViewModel.HomeTeam)) {
+					LoadField ();
+				}
+			}
+
+			if (ViewModel.AwayTeam != null) {
+				if (ViewModel.NeedsSync (e.PropertyName, $"Collection_{nameof (ViewModel.AwayTeam.FieldPlayersList)}", sender, ViewModel.AwayTeam)) {
+					LoadField ();
+				}
+			}
+		}
+
+		int GetNumTeams () {
+			int nTeams = 0;
+			if (ViewModel.HomeTeam != null) {
+				nTeams++;
+			}
+			if (ViewModel.AwayTeam != null) {
+				nTeams++;
+			}
+
+			return nTeams;
 		}
 	}
 }
