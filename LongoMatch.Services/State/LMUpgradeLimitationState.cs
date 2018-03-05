@@ -29,11 +29,11 @@ namespace LongoMatch.Services.State
 					ViewModel.Header = featureLimitation.DetailInfo;
 				} else {
 					ViewModel.Header = Catalog.GetString (
-						$"The {featureLimitation.DisplayName} is not available in the {App.Current.LicenseManager.LicenseStatus.PlanName} plan");
+						$"{featureLimitation.DisplayName} is not available in the {App.Current.LicenseManager.LicenseStatus.PlanName} version");
 				}
 			} else if (limitation is CountLimitationVM) {
 				ViewModel.Header = Catalog.GetString (
-					$"You have reached the limit of {limitation.DisplayName} available for your plan");
+					$"You have reached the limit of {limitation.DisplayName} available for your version");
 			} else {
 				ViewModel.Header = Catalog.GetString ("Unlock your team's potential with LongoMatch PRO");
 			}
