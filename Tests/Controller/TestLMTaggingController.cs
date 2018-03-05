@@ -17,7 +17,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +26,6 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
-using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Events;
@@ -100,6 +98,48 @@ namespace Tests.Controller
 		}
 
 		[Test]
+		public void GetDefaultKeyActions_GetKeyActions_AllDashboardButtonsRegistered ()
+		{
+			// Arrange
+			KeyContext context = new KeyContext ();
+
+			// Action
+			context.KeyActions.AddRange ((List<KeyAction>)controller.GetDefaultKeyActions ());
+
+			// Assert
+			Assert.AreEqual (19, context.KeyActions.Count);
+		}
+
+		[Test]
+		public void KeyActions_HotkeyPerformed_ActionRaised ()
+		{
+			// Arrange
+			KeyContext context = new KeyContext ();
+			context.KeyActions.AddRange ((List<KeyAction>)controller.GetDefaultKeyActions ());
+			App.Current.KeyContextManager.AddContext (context);
+			HotKey key = App.Current.Keyboard.ParseName ("h");
+			projectVM.Dashboard.ViewModels [12].HotKey.Model = key;
+			HotKey key2 = App.Current.Keyboard.ParseName ("y");
+			projectVM.Dashboard.ViewModels [14].HotKey.Model = key2;
+			HotKey key3 = App.Current.Keyboard.ParseName ("j");
+			projectVM.Dashboard.ViewModels [16].HotKey.Model = key3;
+
+			int taggedElements = 0;
+			App.Current.EventsBroker.Subscribe<NewTagEvent> ((x) => {
+				taggedElements++;
+			});
+
+			// Act
+			App.Current.KeyContextManager.HandleKeyPressed (key);
+			ExpireTime ();
+			App.Current.KeyContextManager.HandleKeyPressed (key2);
+			ExpireTime ();
+
+			// Assert
+			Assert.AreEqual (2, taggedElements);
+		}
+
+		[Test]
 		public void HandleSubcategories_OneSubElementTagged_TempContextCreated ()
 		{
 			// Arrange
@@ -123,10 +163,7 @@ namespace Tests.Controller
 			int existentContexts = App.Current.KeyContextManager.CurrentKeyContexts.Count;
 			App.Current.KeyContextManager.HandleKeyPressed (key);
 			App.Current.KeyContextManager.HandleKeyPressed (subkey);
-			resetEvent.Reset ();
-			Thread.Sleep (1000); // time has to be expired
-			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
-			resetEvent.WaitOne (1000);
+			ExpireTime ();
 
 			// Assert
 			Assert.IsTrue (newTagEventCreated);
@@ -145,18 +182,12 @@ namespace Tests.Controller
 
 			// Act
 			bool taggedStart = projectVM.HomeTeam.Tagged;
-			resetEvent.Reset ();
 			App.Current.KeyContextManager.HandleKeyPressed (key);
-			Thread.Sleep (1000);
-			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
-			resetEvent.WaitOne (1000);
+			ExpireTime ();
 
 			bool taggedOnce = projectVM.HomeTeam.Tagged;
-			resetEvent.Reset ();
 			App.Current.KeyContextManager.HandleKeyPressed (key);
-			Thread.Sleep (1000);
-			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
-			resetEvent.WaitOne (1000);
+			ExpireTime ();
 			bool taggedTwice = projectVM.HomeTeam.Tagged;
 
 			// Assert
@@ -179,23 +210,17 @@ namespace Tests.Controller
 									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
 									.Tagged;
 
-			resetEvent.Reset ();
 			App.Current.KeyContextManager.HandleKeyPressed (homeTeamKey);
 			App.Current.KeyContextManager.HandleKeyPressed (player1Key);
-			Thread.Sleep (1000);
-			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
-			resetEvent.WaitOne (1000);
+			ExpireTime ();
 
 			bool taggedOnce = projectVM.HomeTeam.ViewModels
 									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
 									.Tagged;
 
-			resetEvent.Reset ();
 			App.Current.KeyContextManager.HandleKeyPressed (homeTeamKey);
 			App.Current.KeyContextManager.HandleKeyPressed (player1Key);
-			Thread.Sleep (1000);
-			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
-			resetEvent.WaitOne (1000);
+			ExpireTime ();
 
 			bool taggedTwice = projectVM.HomeTeam.ViewModels
 									.FirstOrDefault (x => ((LMPlayerVM)x).Number == Convert.ToInt32 ("1"))
@@ -204,6 +229,17 @@ namespace Tests.Controller
 			// Assert
 			Assert.AreEqual (taggedStart, !taggedOnce);
 			Assert.AreEqual (taggedOnce, !taggedTwice);
+		}
+
+		/// <summary>
+		/// Expires the time to perform hotkey actions.
+		/// </summary>
+		void ExpireTime ()
+		{
+			resetEvent.Reset ();
+			Thread.Sleep (1000); // time has to be expired
+			Task.Factory.StartNew (() => timer.Raise (x => x.Elapsed += null, new EventArgs () as ElapsedEventArgs));
+			resetEvent.WaitOne (1000);
 		}
 	}
 }
