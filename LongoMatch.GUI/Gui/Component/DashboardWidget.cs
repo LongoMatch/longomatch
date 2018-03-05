@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Component
 				ctx.UpdateViewModel (viewModel);
 				if (viewModel != null) {
 					// Start with disabled widget until something get selected
-					tagproperties.Tagger = null;
+					tagproperties.ViewModel = null;
 					propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 					popupbutton.Active = !value.DisablePopupWindow;
 					viewModel.FitMode = FitMode.Fit;
@@ -212,10 +212,10 @@ namespace LongoMatch.Gui.Component
 		void UpdateSelection ()
 		{
 			if (viewModel.Selection.Count == 1) {
-				tagproperties.Tagger = viewModel.Selection [0].Model;
+				tagproperties.ViewModel = viewModel.Selection [0];
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_TAGS;
 			} else {
-				tagproperties.Tagger = null;
+				tagproperties.ViewModel = null;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 			}
 		}

@@ -22,19 +22,26 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using Pango;
-using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
+using VAS.Core.ViewModel;
 using Helpers = VAS.UI.Helpers;
-using Point = VAS.Core.Common.Point;
 using VASColor = VAS.Core.Common.Color;
 
 namespace LongoMatch.Gui.Component
 {
+
+	// FIXME: THIS VIEW MUST BE PORTED TO MVVM
+
+	/// <summary>
+	/// Category properties view. This view is used to change a dashboard button properties.
+	/// </summary>
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class CategoryProperties : Gtk.Bin
+	public partial class CategoryProperties : Gtk.Bin, IView<DashboardButtonVM>
 	{
 		public event EventHandler EditedEvent;
 
@@ -50,6 +57,9 @@ namespace LongoMatch.Gui.Component
 		Time lastLeadTime;
 		bool edited, ignore;
 
+		BindingContext ctx;
+		DashboardButtonVM viewModel;
+
 		public CategoryProperties ()
 		{
 			this.Build ();
@@ -61,7 +71,6 @@ namespace LongoMatch.Gui.Component
 			tprbutton.ValueChanged += HandleTagsPerRowValueChanged;
 			leadtimebutton.ValueChanged += HandleLeadTimeChanged;
 			lagtimebutton.ValueChanged += HandleLagTimeChanged;
-			changebuton.Clicked += HandleChangeHotkey;
 			sortmethodcombobox.Changed += HandleSortMethodChanged;
 			fieldcombobox.Changed += HandlePositionChanged;
 			hfieldcombobox.Changed += HandlePositionChanged;
@@ -99,6 +108,82 @@ namespace LongoMatch.Gui.Component
 			Tagger = null;
 
 			UpdateGui ();
+			//Bind ();
+		}
+
+		public override void Dispose ()
+		{
+			Dispose (true);
+			base.Dispose ();
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (Disposed) {
+				return;
+			}
+			if (disposing) {
+				Destroy ();
+			}
+			Disposed = true;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			Log.Verbose ($"Destroying {GetType ()}");
+			ctx?.Dispose ();
+			ctx = null;
+			ViewModel = null;
+			base.OnDestroyed ();
+
+			Disposed = true;
+		}
+
+		protected bool Disposed { get; private set; } = false;
+
+		/// <summary>
+		/// Gets or sets the ViewModel binded to the IView.
+		/// </summary>
+		/// <value>The ViewModel.</value>
+		public DashboardButtonVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				Tagger = viewModel?.Model; // FIXME: Use the viewmodel when refactoring this view to MVVMC
+										   //ctx.UpdateViewModel (viewModel);
+				hotKeyView.ViewModel = viewModel?.HotKey;
+				//viewModel.Sync ();
+			}
+		}
+
+		/// <summary>
+		/// Sets the view model.
+		/// </summary>
+		/// <param name="viewModel">View model.</param>
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = (DashboardButtonVM)viewModel;
+		}
+
+		/// <summary>
+		/// Bind this instance.
+		/// </summary>
+		void Bind ()
+		{
+			//ctx = this.GetBindingContext ();
+			//ctx.Add (nameentry.Bind (e => e.Text, vm => ((AnalysisEventButtonVM)vm).Name, null, string.Empty));
+			//ctx.Add (colorbutton1.Bind (vm => ((AnalysisEventButtonVM)vm).BackgroundColor));
+			//ctx.Add (textcolorbutton.Bind (vm => ((AnalysisEventButtonVM)vm).TextColor));
+			//ctx.Add (leadtimebutton.Bind (vm => ((AnalysisEventButtonVM)vm).Start.TotalSeconds,
+			//							 new VASInt32Converter ()));
+			//ctx.Add (lagtimebutton.Bind (vm => ((AnalysisEventButtonVM)vm).Stop.TotalSeconds, new VASInt32Converter ()));
+			//ctx.Add (tprbutton.Bind (vm => ((AnalysisEventButtonVM)vm).TagsPerRow, new VASInt32Converter ()));
+			//ctx.Add (sortmethodcombobox.Bind (vm => ((AnalysisEventButtonVM)vm).EventType.Model.SortMethodString));
+			//ctx.Add (pointsbutton.Bind (vm => ((ScoreButton)((AnalysisEventButtonVM)vm).Model).Score.Points, //?
+			//							new VASInt32Converter ()));
+			//ctx.Add (groupentry.Bind (vm => ((TagButton)((AnalysisEventButtonVM)vm).Model).Tag.Group)); //?
 		}
 
 		public bool Edited {
@@ -115,8 +200,7 @@ namespace LongoMatch.Gui.Component
 
 		public EventType EventType {
 			set {
-				EventButton button = new EventButton { EventType = value };
-				Tagger = button;
+				Tagger = new EventButton { EventType = value };
 				timetable.Visible = false;
 				texttable.Visible = false;
 			}
@@ -170,10 +254,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private void  UpdateGui ()
+		private void UpdateGui ()
 		{
 			ignore = true;
-			
+
 			cattable.Visible = catButton != null;
 			timetable.Visible = timedButton != null;
 			postable.Visible = eventButton != null;
@@ -186,10 +270,6 @@ namespace LongoMatch.Gui.Component
 				nameentry.Text = button.Name;
 				colorbutton1.Color = Helpers.Misc.ToGdkColor (button.BackgroundColor);
 				textcolorbutton.Color = Helpers.Misc.ToGdkColor (button.TextColor);
-				if (button.HotKey != null && button.HotKey.Defined)
-					hotKeyLabel.Text = button.HotKey.ToString ();
-				else
-					hotKeyLabel.Text = Catalog.GetString ("none");
 			} else {
 				nameentry.Text = "";
 				colorbutton1.Color = new Gdk.Color (0, 0, 0);
@@ -199,7 +279,6 @@ namespace LongoMatch.Gui.Component
 				leadtimebutton.Value = 0;
 				lagtimebutton.Value = 0;
 				sortmethodcombobox.Active = 0;
-				hotKeyLabel.Text = Catalog.GetString ("none");
 			}
 			if (timedButton != null) {
 				lastLeadTime = timedButton.Start;
@@ -234,23 +313,6 @@ namespace LongoMatch.Gui.Component
 			}
 			ignore = false;
 			Edited = false;
-		}
-
-		void HandleChangeHotkey (object sender, System.EventArgs e)
-		{
-			if (ignore)
-				return;
-
-			HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (button.HotKey);
-			if (hotkey != null) {
-				try {
-					Dashboard.ChangeHotkey (button, hotkey);
-					UpdateGui ();
-					Edited = true;
-				} catch (HotkeyAlreadyInUse ex) {
-					App.Current.Dialogs.ErrorMessage (ex.Message, this);
-				}
-			}
 		}
 
 		void HandlePositionChanged (object sender, EventArgs e)
