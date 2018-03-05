@@ -61,7 +61,7 @@ namespace LongoMatch
 
 		internal protected static void InitConstants ()
 		{
-			Current.Copyright = Constants.COPYRIGHT;
+			Current.Copyright = $"Copyright ©2014-{DateTime.Now.Year} FLUENDO S.A.\nCopyright ©2007-2014 Andoni Morales Alastruey";
 			Current.License = Constants.LICENSE;
 			Current.SoftwareName = Constants.SOFTWARE_NAME;
 			Current.SoftwareIconName = Constants.LOGO_ICON;

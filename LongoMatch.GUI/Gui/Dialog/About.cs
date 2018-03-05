@@ -21,7 +21,7 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
-	public class AboutDialog: Gtk.AboutDialog
+	public class AboutDialog : Gtk.AboutDialog
 	{
 		public AboutDialog (Version version)
 		{
@@ -30,10 +30,8 @@ namespace LongoMatch.Gui.Dialog
 			Copyright = App.Current.Copyright;
 			Website = Constants.WEBSITE;
 			License = App.Current.License;
-			Authors = new string[] { "Andoni Morales Alastruey", "Fluendo" };
-			TranslatorCredits = Constants.TRANSLATORS;
 			WrapLicense = true;
-			SetUrlHook (delegate(Gtk.AboutDialog dialog, string url) {
+			SetUrlHook (delegate (Gtk.AboutDialog dialog, string url) {
 				try {
 					System.Diagnostics.Process.Start (url);
 				} catch {

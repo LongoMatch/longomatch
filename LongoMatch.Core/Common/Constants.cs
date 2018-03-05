@@ -34,8 +34,6 @@ namespace LongoMatch.Core.Common
 
 		new public const string DEFAULT_DB_NAME = "longomatch";
 
-		public const string COPYRIGHT = "Copyright ©2014-2015 FLUENDO S.A.\nCopyright ©2007-2014 Andoni Morales Alastruey";
-
 		public const string PORTABLE_FILE = "longomatch.portable";
 
 		public const string LICENSE =
@@ -48,30 +46,6 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.";
-
-		public const string TRANSLATORS =
-			@"Andoni Morales Alastruey (es)
-Aron Xu (cn_ZH)
-Barkın Tanmann (tr)
-Bruno Brouard (fr)
-Daniel Nylander (sv)
-G. Baylard (fr)
-Joan Charmant (fr)
-João Paulo Azevedo (pt)
-Joe Hansen (da)
-Jorge González (es)
-Kenneth Nielsen (da)
-Kjartan Maraas (nb)
-Peter Strikwerda (nl)
-Laurent Coudeur (fr)
-Marek Cernocky (cs)
-Mario Blättermann (de)
-Matej Urbančič (sl)
-Maurizio Napolitano (it)
-Pavel Bárta (cs)
-Petr Kovar (cs)
-Pop Eugen (po)
-Xavier Queralt Mateu (ca)";
 
 #if !DEBUG
 		public const string WEBSITE = "https://longomatch.com";
