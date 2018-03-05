@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ using LongoMatch.Core.Hotkeys;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Controller;
+using LongoMatch.Services.ViewModel;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Events;

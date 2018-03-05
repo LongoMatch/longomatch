@@ -321,7 +321,7 @@ namespace LongoMatch.Gui.Component
 				return;
 
 			bool tag = false, trayectory = false;
-			
+
 			ReadPositionCombo (sender as ComboBox, out tag, out trayectory);
 			if (sender == fieldcombobox) {
 				eventButton.EventType.TagFieldPosition = tag;
