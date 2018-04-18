@@ -51,7 +51,7 @@ namespace LongoMatch.Gui
 		LimitationCommand databaseManagerCommand;
 		LimitationCommand newProjectCommand;
 		LimitationCommand importCommand;
-
+		LimitationCommand presentationsManagerCommand;
 
 		#region Constructors
 
@@ -84,6 +84,11 @@ namespace LongoMatch.Gui
 			importCommand = new LimitationCommand (LongoMatchCountLimitedObjects.Projects.ToString (), () => {
 				App.Current.EventsBroker.Publish (new ImportProjectEvent ());
 			});
+			presentationsManagerCommand = new LimitationAsyncCommand (
+				LongoMatchFeature.PresentationsManager.ToString (),
+				async () => {
+					await App.Current.StateController.MoveTo ("PresentationManager", null, true);
+				});
 		}
 
 		#endregion
@@ -286,6 +291,9 @@ namespace LongoMatch.Gui
 						Active = FullScreenAction.Active
 					}
 				);
+			};
+			PresentationManagerAction.Activated += (object sender, EventArgs e) => {
+				presentationsManagerCommand.Execute ();
 			};
 		}
 

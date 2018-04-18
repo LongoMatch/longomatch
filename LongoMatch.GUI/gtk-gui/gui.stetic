@@ -967,6 +967,12 @@ Sort by competition</property>
         <property name="ShortLabel" translatable="yes">Enter license key</property>
         <signal name="Activated" handler="HandleEnterLicenseKeyAction" />
       </action>
+      <action id="PresentationManagerAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;&lt;Mod2&gt;e</property>
+        <property name="Label" translatable="yes">Presentation Manager</property>
+        <property name="ShortLabel" translatable="yes">Presentation Manager</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -998,6 +1004,7 @@ Sort by competition</property>
                     <node type="Menuitem" action="CategoriesTemplatesManagerAction" />
                     <node type="Menuitem" action="TeamsTemplatesManagerAction" />
                     <node type="Menuitem" action="DatabasesManagerAction" />
+                    <node type="Menuitem" action="PresentationManagerAction" />
                     <node type="Separator" />
                     <node type="Separator" />
                     <node type="Menuitem" action="VideoConverterToolAction" />
@@ -4038,7 +4045,7 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel">
+              <widget class="Gtk.Label" id="GtkLabel1">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Rendering&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
