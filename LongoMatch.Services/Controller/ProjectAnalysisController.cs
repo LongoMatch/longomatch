@@ -322,7 +322,7 @@ namespace LongoMatch.Services
 		void Save (Project project)
 		{
 			if (App.Current.Config.AutoSave) {
-				App.Current.DatabaseManager.ActiveDB.Store (project);
+				App.Current.DatabaseManager.ActiveDB.Store ((LMProject)project);
 			}
 		}
 
