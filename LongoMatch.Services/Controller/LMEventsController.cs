@@ -66,15 +66,24 @@ namespace LongoMatch.Services
 		public override IEnumerable<KeyAction> GetDefaultKeyActions ()
 		{
 			yield return new KeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.DELETE),
-			                            DeleteLoadedEvent);
+										DeleteLoadedEvent);
 			yield return new KeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.EDIT_SELECTED_EVENT),
-			                            EditLoadedEvent);
+										EditLoadedEvent);
 		}
 
 		public override void SetViewModel (IViewModel viewModel)
 		{
 			this.viewModel = (LMProjectAnalysisVM)viewModel;
 			base.SetViewModel (viewModel);
+		}
+
+		public override async Task<bool> DeletePlays (IEnumerable<TimelineEvent> plays, bool askConfirmation = true)
+		{
+			var deleted = await base.DeletePlays (plays, askConfirmation);
+			if (deleted) {
+				(viewModel?.Project?.Model as LMProject)?.UpdateScore ();
+			}
+			return deleted;
 		}
 
 		// FIXME: remove this when the video capturer is ported to MVVM
