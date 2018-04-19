@@ -339,7 +339,10 @@ namespace LongoMatch.Services
 					}
 				}
 				try {
-					App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (project);
+					var exists = App.Current.DatabaseManager.ActiveDB.Exists<LMProject> (project);
+					if (exists) {
+						App.Current.DatabaseManager.ActiveDB.Delete<LMProject> (project);
+					}
 				} catch (StorageException ex) {
 					Log.Exception (ex);
 					App.Current.Dialogs.ErrorMessage (ex.Message);
