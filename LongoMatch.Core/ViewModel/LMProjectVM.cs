@@ -54,18 +54,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The description.</value>
 		public string Description {
 			get {
-				if (Stateful && description != null) {
-					return description;
-				} else {
-					return Model.Description.Description;
-				}
+				return Model.Description.Description;
 			}
 			set {
-				if (Stateful) {
-					description = value;
-				} else {
-					Model.Description.Description = value;
-				}
+				Model.Description.Description = value;
 			}
 		}
 
@@ -145,18 +137,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The match date.</value>
 		public DateTime MatchDate {
 			get {
-				if (Stateful && matchDate != default (DateTime)) {
-					return matchDate;
-				} else {
-					return Model.Description.MatchDate;
-				}
+				return Model.Description.MatchDate;
 			}
 			set {
-				if (Stateful) {
-					matchDate = value;
-				} else {
-					Model.Description.MatchDate = value;
-				}
+				Model.Description.MatchDate = value;
 			}
 		}
 
@@ -166,18 +150,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The season.</value>
 		public string Season {
 			get {
-				if (Stateful && season != null) {
-					return season;
-				} else {
-					return Model.Description.Season;
-				}
+				return Model.Description.Season;
 			}
 			set {
-				if (Stateful) {
-					season = value;
-				} else {
-					Model.Description.Season = value;
-				}
+				Model.Description.Season = value;
 			}
 		}
 
@@ -187,18 +163,10 @@ namespace LongoMatch.Core.ViewModel
 		/// <value>The competition.</value>
 		public string Competition {
 			get {
-				if (Stateful && competition != null) {
-					return competition;
-				} else {
-					return Model.Description.Competition;
-				}
+				return Model.Description.Competition;
 			}
 			set {
-				if (Stateful) {
-					competition = value;
-				} else {
-					Model.Description.Competition = value;
-				}
+				Model.Description.Competition = value;
 			}
 		}
 
@@ -242,18 +210,6 @@ namespace LongoMatch.Core.ViewModel
 		/// </summary>
 		/// <value><c>true</c> if close has been handled; otherwise, <c>false</c>.</value>
 		public bool CloseHandled { get; set; }
-
-		public override void CommitState ()
-		{
-			Model.Description.Description = description;
-			description = null;
-			Model.Description.Season = season;
-			season = null;
-			Model.Description.Competition = competition;
-			competition = null;
-			Model.Description.MatchDate = matchDate;
-			matchDate = default (DateTime);
-		}
 
 		protected override void SyncLoadedModel ()
 		{

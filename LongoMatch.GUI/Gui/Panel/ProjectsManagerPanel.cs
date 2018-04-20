@@ -192,12 +192,9 @@ namespace LongoMatch.Gui.Panel
 				VideoFileInfo vfi = new VideoFileInfo ();
 
 				vfi.SetMediaFileSet (project.FileSet, mf);
-				vfi.Changed += HandleChanged;
 
 				vfi.ShowAll ();
-
 				videoFileInfos.Add (vfi);
-
 				videofileinfo_vbox.PackStart (vfi, true, true, 0);
 			}
 
@@ -208,16 +205,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			App.Current.StateController.MoveBack ();
 		}
-
-		void HandleChanged (object sender, EventArgs e)
-		{
-			if (ViewModel.LoadedProject == null) {
-				return;
-			}
-
-			ViewModel.SaveCommand.EmitCanExecuteChanged ();
-		}
-
 
 		void Bind ()
 		{

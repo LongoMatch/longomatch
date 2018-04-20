@@ -75,12 +75,13 @@ namespace LongoMatch.Services.Controller
 
 		void HandleOpen (OpenEvent<LMProject> arg)
 		{
-			if (ViewModel.LoadedProject != null) {
-				// We get the selection instead of LoadedProject because it can be modified without saving.
-				// Also we don't use the selected VM directly because it's disposed on unload
-				LMProjectVM selectedVM = new LMProjectVM {Model = ViewModel.Selection.First ().Model};
-				LMStateHelper.OpenProject (selectedVM);
+			if (ViewModel.LoadedProject == null) {
+				return;
 			}
+			// We get the selection instead of LoadedProject because it can be modified without saving.
+			// Also we don't use the selected VM directly because it's disposed on unload
+			LMProjectVM selectedVM = new LMProjectVM { Model = ViewModel.Selection.First ().Model };
+			LMStateHelper.OpenProject (selectedVM);
 		}
 	}
 }
