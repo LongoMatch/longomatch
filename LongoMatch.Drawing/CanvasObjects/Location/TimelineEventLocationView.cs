@@ -47,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 				}
 				viewModel = value;
 				if (viewModel != null) {
-					Points = EventPoints;
+					SetFieldPositionType ();
 					viewModel.PropertyChanged += HandleViewModelPropertyChanged;
 				}
 			}
@@ -81,8 +81,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 			}
 		}
 
-		IList<Point> EventPoints { get => ViewModel.Model.CoordinatesInFieldPosition (FieldPosition)?.Points; }
-
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (LMTimelineEventVM)viewModel;
@@ -93,12 +91,30 @@ namespace LongoMatch.Drawing.CanvasObjects.Location
 			if (ViewModel.NeedsSync (e, nameof (ViewModel.Visible)) ||
 				ViewModel.NeedsSync (e, nameof (ViewModel.Color)) ||
 				ViewModel.NeedsSync (e, $"Collection_{nameof (ViewModel.FieldPosition.Points)}")) {
-				// FIXME: Add positions to the VM
-				var eventPoints = EventPoints;
-				if (eventPoints?.Any () ?? false) {
-					Points = eventPoints;
+				SetFieldPositionType ();
+
+				if (Points?.Any () ?? false) {
 					ReDraw ();
 				}
+			}
+		}
+
+		void SetFieldPositionType ()
+		{
+			RangeObservableCollection<Point> points = null;
+			switch (FieldPosition) {
+			case FieldPositionType.Field:
+				points = ViewModel.FieldPosition?.Points;
+				break;
+			case FieldPositionType.HalfField:
+				points = ViewModel.HalfFieldPosition?.Points;
+				break;
+			case FieldPositionType.Goal:
+				points = ViewModel.GoalPosition?.Points;
+				break;
+			}
+			if (points?.Count > 0) {
+				Points = points;
 			}
 		}
 	}

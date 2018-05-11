@@ -38,6 +38,32 @@ namespace LongoMatch.Core.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Position of this event in the half field.
+		/// </summary>
+		/// <value>The field position.</value>
+		public Coordinates HalfFieldPosition {
+			get {
+				return Model?.HalfFieldPosition;
+			}
+			set {
+				Model.HalfFieldPosition = value;
+			}
+		}
+
+		/// <summary>
+		/// Position of this event in the goal.
+		/// </summary>
+		/// <value>The field position.</value>
+		public Coordinates GoalPosition {
+			get {
+				return Model?.GoalPosition;
+			}
+			set {
+				Model.GoalPosition = value;
+			}
+		}
+
 		public Color TeamColor {
 			get {
 				if (Model.Teams.Count == 1) {
