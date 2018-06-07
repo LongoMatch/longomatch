@@ -61,13 +61,6 @@ namespace LongoMatch.DB
 			AddView (typeof (Dashboard), new DashboardsView (this));
 			AddView (typeof (LMPlayer), new PlayersView (this));
 		}
-
-		protected override void InitializeDocumentTypeMappings ()
-		{
-			base.InitializeDocumentTypeMappings ();
-			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof (Playlist), "Playlist");
-			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof (MediaFileSet), "MediaFileSet");
-		}
 	}
 }
 
