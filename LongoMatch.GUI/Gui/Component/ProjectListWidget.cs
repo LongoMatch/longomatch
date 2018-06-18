@@ -70,6 +70,9 @@ namespace LongoMatch.Gui.Component
 				ctx.UpdateViewModel (viewModel);
 				limitationWidget.SetViewModel (viewModel?.LimitationChart);
 				treeview.SetViewModel (viewModel);
+				if (viewModel != null) {
+					ViewModel.SortType = (ProjectSortType)sortcombobox.Active;
+				}
 			}
 		}
 
